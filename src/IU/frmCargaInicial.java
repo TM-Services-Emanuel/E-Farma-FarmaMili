@@ -24,8 +24,8 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         cargarIcono();
         Iniciar();
         Titulo();
-
     }
+    
     public static void prepararBD() {
         try {
             con = (MariaDbConnection) new ConexionBD().getConexion();
@@ -107,10 +107,9 @@ public final class frmCargaInicial extends javax.swing.JFrame {
 
         rSPanelGradiente1 = new rojeru_san.rspanel.RSPanelGradiente();
         jProgressBar1 = new javax.swing.JProgressBar();
-        rSPanelImage1 = new rojeru_san.rspanel.RSPanelImage();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         lblCarga = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -119,6 +118,7 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         rSPanelGradiente1.setColorPrimario(new java.awt.Color(255, 255, 255));
         rSPanelGradiente1.setColorSecundario(new java.awt.Color(230, 230, 230));
         rSPanelGradiente1.setGradiente(rojeru_san.rspanel.RSPanelGradiente.Gradiente.CENTRAL);
+        rSPanelGradiente1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jProgressBar1.setBackground(new java.awt.Color(255, 255, 255));
         jProgressBar1.setForeground(new java.awt.Color(254, 50, 0));
@@ -127,62 +127,21 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         jProgressBar1.setOpaque(true);
         jProgressBar1.setString("");
         jProgressBar1.setStringPainted(true);
-
-        rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/GettyImages-1172906735-1024x608.jpg"))); // NOI18N
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/tm_services - 256.png"))); // NOI18N
+        rSPanelGradiente1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 418, 690, 4));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fast-farma.png"))); // NOI18N
+        rSPanelGradiente1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 9, 271, 80));
 
-        lblCarga.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
-        lblCarga.setForeground(new java.awt.Color(17, 35, 46));
+        lblCarga.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        lblCarga.setForeground(new java.awt.Color(255, 255, 255));
         lblCarga.setText("Carga");
         lblCarga.setFocusable(false);
         lblCarga.setInheritsPopupMenu(false);
         lblCarga.setPreferredSize(new java.awt.Dimension(25, 14));
+        rSPanelGradiente1.add(lblCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 380, -1));
 
-        javax.swing.GroupLayout rSPanelImage1Layout = new javax.swing.GroupLayout(rSPanelImage1);
-        rSPanelImage1.setLayout(rSPanelImage1Layout);
-        rSPanelImage1Layout.setHorizontalGroup(
-            rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelImage1Layout.createSequentialGroup()
-                .addGroup(rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(rSPanelImage1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(lblCarga, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        rSPanelImage1Layout.setVerticalGroup(
-            rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelImage1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 244, Short.MAX_VALUE)
-                .addComponent(lblCarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(rSPanelImage1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        javax.swing.GroupLayout rSPanelGradiente1Layout = new javax.swing.GroupLayout(rSPanelGradiente1);
-        rSPanelGradiente1.setLayout(rSPanelGradiente1Layout);
-        rSPanelGradiente1Layout.setHorizontalGroup(
-            rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                .addGroup(rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rSPanelImage1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
-        );
-        rSPanelGradiente1Layout.setVerticalGroup(
-            rSPanelGradiente1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelGradiente1Layout.createSequentialGroup()
-                .addComponent(rSPanelImage1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CARGA_INICIAL_1.png"))); // NOI18N
+        rSPanelGradiente1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -192,7 +151,9 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -329,6 +290,5 @@ public final class frmCargaInicial extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JLabel lblCarga;
     private rojeru_san.rspanel.RSPanelGradiente rSPanelGradiente1;
-    private rojeru_san.rspanel.RSPanelImage rSPanelImage1;
     // End of variables declaration//GEN-END:variables
 }

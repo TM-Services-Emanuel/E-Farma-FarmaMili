@@ -11,7 +11,8 @@ public class ConexionBD {
     //private final String ruta = "192.168.1.1:3306";
     private final String bd = "bd_farmacia";
     private final String usuario = "root";
-    private final String password = "";
+    //private final String password = "";
+    private final String password = "emanuel4744832";
 
     public Connection getConexion() {
         MariaDbConnection cn = null;
