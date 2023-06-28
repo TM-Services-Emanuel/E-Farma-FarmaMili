@@ -120,11 +120,9 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         rSPanelGradiente1.setGradiente(rojeru_san.rspanel.RSPanelGradiente.Gradiente.CENTRAL);
         rSPanelGradiente1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jProgressBar1.setBackground(new java.awt.Color(255, 255, 255));
-        jProgressBar1.setForeground(new java.awt.Color(254, 50, 0));
-        jProgressBar1.setBorderPainted(false);
+        jProgressBar1.setBackground(new java.awt.Color(17, 35, 46));
+        jProgressBar1.setForeground(new java.awt.Color(17, 35, 46));
         jProgressBar1.setEnabled(false);
-        jProgressBar1.setOpaque(true);
         jProgressBar1.setString("");
         jProgressBar1.setStringPainted(true);
         rSPanelGradiente1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 418, 690, 4));
@@ -138,7 +136,7 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         lblCarga.setFocusable(false);
         lblCarga.setInheritsPopupMenu(false);
         lblCarga.setPreferredSize(new java.awt.Dimension(25, 14));
-        rSPanelGradiente1.add(lblCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 380, -1));
+        rSPanelGradiente1.add(lblCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 400, 380, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CARGA_INICIAL_1.png"))); // NOI18N
         rSPanelGradiente1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
