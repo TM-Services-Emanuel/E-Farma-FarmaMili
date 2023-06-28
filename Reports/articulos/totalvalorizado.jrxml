@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="totalvalorizado" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dcfa484b-0f5e-4c8d-b963-e8d787a8063c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bd_farmacia"/>
+	<queryString language="SQL">
+		<![CDATA[select SUM((v_articulo_activo.costo * v_articulo_activo.stock)) AS totalfinal FROM v_articulo_activo]]>
+	</queryString>
+	<field name="totalfinal" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="totalfinal"/>
+		<property name="com.jaspersoft.studio.field.label" value="totalfinal"/>
+	</field>
+	<detail>
+		<band height="96" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="60" width="800" height="30" backcolor="#EBEBEB" uuid="da60bbf7-80c2-4d95-989d-c698d48e0ce8"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="60" width="320" height="30" forecolor="#050505" backcolor="#E3E3E3" uuid="890c32e9-856d-4fd0-a3c0-76319eadd05f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5e085798-ab03-4966-b9c6-5782590aae6f"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR TOTAL DE LOS ARTICULOS GESTIONADOS]]></text>
+			</staticText>
+			<textField pattern="#,##0.###;#,##0.###-" isBlankWhenNull="true">
+				<reportElement x="700" y="60" width="100" height="29" forecolor="#050505" backcolor="#E3E3E3" uuid="2dae8668-50de-425a-8c0e-6458959457ee">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5e085798-ab03-4966-b9c6-5782590aae6f"/>
+				</reportElement>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{totalfinal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="List_Articulos_Lab" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71318667-a4bc-4bae-bffa-2c671fd2d2a8">
+	<property name="template.engine" value="tabular_template"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bd_farmacia"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<leftPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+			<rightPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tableDataset" uuid="fe7bf99f-19f7-4eb4-b02f-4d2fc54c9833">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bd_farmacia"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="647"/>
+		<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="353"/>
+		<parameter name="Parameter1" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="cod" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="cod"/>
+			<property name="com.jaspersoft.studio.field.label" value="cod"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="barra" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="barra"/>
+			<property name="com.jaspersoft.studio.field.label" value="barra"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="descripcion" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+			<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="principio" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="principio"/>
+			<property name="com.jaspersoft.studio.field.label" value="principio"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="accion" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="accion"/>
+			<property name="com.jaspersoft.studio.field.label" value="accion"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="codFam" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="codFam"/>
+			<property name="com.jaspersoft.studio.field.label" value="codFam"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="fam" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="fam"/>
+			<property name="com.jaspersoft.studio.field.label" value="fam"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="prov" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="prov"/>
+			<property name="com.jaspersoft.studio.field.label" value="prov"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="codLab" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="codLab"/>
+			<property name="com.jaspersoft.studio.field.label" value="codLab"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="lab" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="lab"/>
+			<property name="com.jaspersoft.studio.field.label" value="lab"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="costo" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="costo"/>
+			<property name="com.jaspersoft.studio.field.label" value="costo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="iva" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="iva"/>
+			<property name="com.jaspersoft.studio.field.label" value="iva"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="costoiva" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="costoiva"/>
+			<property name="com.jaspersoft.studio.field.label" value="costoiva"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="stock" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="stock"/>
+			<property name="com.jaspersoft.studio.field.label" value="stock"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="stockmin" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="stockmin"/>
+			<property name="com.jaspersoft.studio.field.label" value="stockmin"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="venci" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="venci"/>
+			<property name="com.jaspersoft.studio.field.label" value="venci"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ppublico" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="ppublico"/>
+			<property name="com.jaspersoft.studio.field.label" value="ppublico"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ganstandar" class="java.lang.Double">
+			<property name="com.jaspersoft.studio.field.name" value="ganstandar"/>
+			<property name="com.jaspersoft.studio.field.label" value="ganstandar"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="gan" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="gan"/>
+			<property name="com.jaspersoft.studio.field.label" value="gan"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="des" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="des"/>
+			<property name="com.jaspersoft.studio.field.label" value="des"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="pventa" class="java.lang.Long">
+			<property name="com.jaspersoft.studio.field.name" value="pventa"/>
+			<property name="com.jaspersoft.studio.field.label" value="pventa"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="venta" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="venta"/>
+			<property name="com.jaspersoft.studio.field.label" value="venta"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="tipo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="tipo"/>
+			<property name="com.jaspersoft.studio.field.label" value="tipo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="activo" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="activo"/>
+			<property name="com.jaspersoft.studio.field.label" value="activo"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="ind" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="ind"/>
+			<property name="com.jaspersoft.studio.field.label" value="ind"/>
+			<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<group name="codLab">
+			<groupExpression><![CDATA[$F{codLab}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="Parameter1" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[2]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT *
+FROM v_articulo
+ORDER BY v_articulo.`codLab`  ASC, v_articulo.`descripcion` ASC]]>
+	</queryString>
+	<field name="cod" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="cod"/>
+		<property name="com.jaspersoft.studio.field.label" value="cod"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="barra" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="barra"/>
+		<property name="com.jaspersoft.studio.field.label" value="barra"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="principio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="principio"/>
+		<property name="com.jaspersoft.studio.field.label" value="principio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="accion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="accion"/>
+		<property name="com.jaspersoft.studio.field.label" value="accion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codFam" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="codFam"/>
+		<property name="com.jaspersoft.studio.field.label" value="codFam"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fam" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="fam"/>
+		<property name="com.jaspersoft.studio.field.label" value="fam"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="prov" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="prov"/>
+		<property name="com.jaspersoft.studio.field.label" value="prov"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codLab" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="codLab"/>
+		<property name="com.jaspersoft.studio.field.label" value="codLab"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="lab" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="lab"/>
+		<property name="com.jaspersoft.studio.field.label" value="lab"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="costo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="costo"/>
+		<property name="com.jaspersoft.studio.field.label" value="costo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="iva" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="iva"/>
+		<property name="com.jaspersoft.studio.field.label" value="iva"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="costoiva" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="costoiva"/>
+		<property name="com.jaspersoft.studio.field.label" value="costoiva"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="stock" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="stock"/>
+		<property name="com.jaspersoft.studio.field.label" value="stock"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="stockmin" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="stockmin"/>
+		<property name="com.jaspersoft.studio.field.label" value="stockmin"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="venci" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="venci"/>
+		<property name="com.jaspersoft.studio.field.label" value="venci"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ppublico" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="ppublico"/>
+		<property name="com.jaspersoft.studio.field.label" value="ppublico"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ganstandar" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.name" value="ganstandar"/>
+		<property name="com.jaspersoft.studio.field.label" value="ganstandar"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="gan" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="gan"/>
+		<property name="com.jaspersoft.studio.field.label" value="gan"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="des" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="des"/>
+		<property name="com.jaspersoft.studio.field.label" value="des"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pventa" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="pventa"/>
+		<property name="com.jaspersoft.studio.field.label" value="pventa"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="venta" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="venta"/>
+		<property name="com.jaspersoft.studio.field.label" value="venta"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipo"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="activo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="activo"/>
+		<property name="com.jaspersoft.studio.field.label" value="activo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ind" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ind"/>
+		<property name="com.jaspersoft.studio.field.label" value="ind"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="v_articulo"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<title>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="1" y="0" width="552" height="30" uuid="b29fc01f-fd05-4c6c-ad25-729ebb8514a6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="15" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE PRODUCTOS PARA INVENTARIO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="45">
+			<textField textAdjust="ScaleFont">
+				<reportElement x="1" y="0" width="553" height="15" forecolor="#000000" backcolor="#F5F2F2" uuid="5213f6ca-da9f-4fc2-8172-17ab3945af78">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#E8E6E6"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codLab}+" - "+$F{lab}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="30" width="100" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="002f4723-1004-48a9-8aef-4cec4b9c8cd8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="08a9e3ae-bc41-4c1c-a82c-633c6b4fa2b1"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ CODBARRA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="30" width="278" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="52b5c98c-15a5-489c-9cca-8d9a770226ab">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7f551db2-71e3-4dad-bcea-7307ab61d97a"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ DESCRIPCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="30" width="41" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="f26149b2-c7c1-4f57-af18-88d013af1224">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="047a5e98-2ae5-41e0-86c6-42bfc50ad8fc"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACTUAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="30" width="39" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="c5fe4a35-6d70-43eb-878b-67b23eff4dfd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eebef64b-d885-457f-990d-b4028c849819"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="458" y="30" width="45" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="ccc8173f-8926-4c52-9141-1fa4c9863193">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3527e401-8338-41b9-8380-170fc93ecc24"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="503" y="30" width="50" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="955dc09e-9103-48d2-941b-f88968b39690">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3527e401-8338-41b9-8380-170fc93ecc24"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACTIVO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="15" width="175" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="e7ffe6c6-0842-4a89-9baa-dc5d240d92a6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="047a5e98-2ae5-41e0-86c6-42bfc50ad8fc"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25" lineStyle="Double"/>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[STOCK]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="15" forecolor="#000000" uuid="3b1b1a3d-6b84-4101-bd03-faa7907795c8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="08a9e3ae-bc41-4c1c-a82c-633c6b4fa2b1"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{barra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="278" height="15" forecolor="#000000" uuid="1b93f5a5-0ee2-4cdc-bac5-0fc364068f4a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7f551db2-71e3-4dad-bcea-7307ab61d97a"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" "+$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="378" y="0" width="41" height="15" forecolor="#000000" uuid="d6403635-ad30-440d-87ee-90901683ef35">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="047a5e98-2ae5-41e0-86c6-42bfc50ad8fc"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{stock}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="419" y="0" width="39" height="15" forecolor="#000000" uuid="4bc3f442-b195-4e27-ab3d-f4a86ddbf501">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eebef64b-d885-457f-990d-b4028c849819"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{stockmin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="503" y="0" width="50" height="15" forecolor="#000000" uuid="e615dd48-1819-466e-8298-a942602c8c40">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3527e401-8338-41b9-8380-170fc93ecc24"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{activo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="458" y="0" width="45" height="15" forecolor="#000000" backcolor="#FFFFFF" uuid="6dfa67e8-6a29-4cd2-a2e4-e37ac52b55b0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3527e401-8338-41b9-8380-170fc93ecc24"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="12" forecolor="#000000" uuid="60a29f83-8bb0-4b69-92ac-888f173aaac1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="12" forecolor="#000000" uuid="914c1dcc-b571-4617-a035-3fb335cfdef9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="12" forecolor="#000000" uuid="ce458e10-d4e7-414a-89d6-20daa72b73f1">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
