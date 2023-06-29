@@ -4,7 +4,6 @@ import Componentes.Mensajes;
 import Datos.GestionarImagen;
 import IU.JPanelConFondo;
 import IU.dlgFondo;
-import IU.frmPrincipal;
 import Modelo.Imagen;
 import java.awt.Image;
 
@@ -32,7 +31,7 @@ public class ControlImagen {
         String nombreImagen = "/Recursos/" + im.getImgFondo();
         System.out.println("buscar NombreImagen: "+nombreImagen);
         ((JPanelConFondo) dlgFondo.panelFondo).setImagen(nombreImagen);
-        ((JPanelConFondo) frmPrincipal.panelFondo).setImagen(nombreImagen);
+        //((JPanelConFondo) frmPrincipal.panelFondo).setImagen(nombreImagen);
     }
 
     public void establecerFondo(String cod) {
