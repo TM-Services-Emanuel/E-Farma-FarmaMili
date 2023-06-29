@@ -24,6 +24,7 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         cargarIcono();
         Iniciar();
         Titulo();
+        jProgressBar1.setVisible(false);
     }
     
     public static void prepararBD() {
@@ -109,6 +110,7 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         jProgressBar1 = new javax.swing.JProgressBar();
         jLabel2 = new javax.swing.JLabel();
         lblCarga = new javax.swing.JLabel();
+        barProgress = new RSMaterialComponent.RSProgressMaterial();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -136,7 +138,13 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         lblCarga.setFocusable(false);
         lblCarga.setInheritsPopupMenu(false);
         lblCarga.setPreferredSize(new java.awt.Dimension(25, 14));
-        rSPanelGradiente1.add(lblCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 400, 380, -1));
+        rSPanelGradiente1.add(lblCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 386, 380, 20));
+
+        barProgress.setForeground(new java.awt.Color(255, 255, 255));
+        barProgress.setFocusable(false);
+        barProgress.setTimeProgress(2500);
+        barProgress.setWidthProgress(3);
+        rSPanelGradiente1.add(barProgress, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 30, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CARGA_INICIAL_1.png"))); // NOI18N
         rSPanelGradiente1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -159,46 +167,46 @@ public final class frmCargaInicial extends javax.swing.JFrame {
 
     public void velocidadDeCarga() throws InterruptedException {
         for (int i = 0; i <= 100; i++) {
-            Thread.sleep(30L);
+            Thread.sleep(100L);
             jProgressBar1.setValue(i);
             if (i == 00) {
-                lblCarga.setText(" Cargando y Activando componentes necesarios...");
+                lblCarga.setText(" Cargando libreria de componentes y controladores necesarios");
             }
             if (i == 10) {
-                lblCarga.setText(" Comenzando inicio del Sistema...");
+                lblCarga.setText(" Levantando los modelos y datos de software");
             }
             if (i == 20) {
-                lblCarga.setText(" Iniciando conexion con la Base de Datos E-Farm...");
+                lblCarga.setText(" Comprobando conexion con la base de datos");
             }
             if (i == 25) {
-                lblCarga.setText(" Conexion exitosa.");
+                lblCarga.setText(" Conexion exitosa");
             }
             if (i == 30) {
-                lblCarga.setText(" Cargando Reportes e Interfaz de usuario...");
+                lblCarga.setText(" Cargando los reportes pretinentes y las interfaces de usuario");
             }
             if (i == 40) {
-                lblCarga.setText(" Verificando Perfiles de Acceso...");
+                lblCarga.setText(" Verificando perfiles de acceso...");
             }
             if (i == 50) {
                 lblCarga.setText(" Verificando Usuarios...");
             }
             if (i == 60) {
-                lblCarga.setText(" Verificación completada con exito.");
+                lblCarga.setText(" Verificación completada con exito");
             }
             if (i == 65) {
                 lblCarga.setText(" Cargando Listas de funciones...");
             }
             if (i == 70) {
-                lblCarga.setText(" Cargando Módulos de operación...");
+                lblCarga.setText(" Cargando módulos de operación...");
             }
             if (i == 75) {
-                lblCarga.setText(" Carga de listas y modulos Terminada.");
+                lblCarga.setText(" Carga de listas y modulos Terminada");
             }
             if (i == 80) {
-                lblCarga.setText(" El sistema se ha ejecutado sin ningún inconveniente.");
+                lblCarga.setText(" El software se ejecutara sin ningún inconveniente");
             }
             if (i == 95) {
-                lblCarga.setText(" Bienvenido al Sistema E-Farm.");
+                lblCarga.setText(" Bienvenido a FAST-FARMA");
             }
         }
     }
@@ -283,6 +291,7 @@ public final class frmCargaInicial extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private RSMaterialComponent.RSProgressMaterial barProgress;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JProgressBar jProgressBar1;
