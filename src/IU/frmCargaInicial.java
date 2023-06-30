@@ -107,11 +107,11 @@ public final class frmCargaInicial extends javax.swing.JFrame {
     private void initComponents() {
 
         rSPanelGradiente1 = new rojeru_san.rspanel.RSPanelGradiente();
-        jProgressBar1 = new javax.swing.JProgressBar();
         jLabel2 = new javax.swing.JLabel();
         lblCarga = new javax.swing.JLabel();
         barProgress = new RSMaterialComponent.RSProgressMaterial();
         jLabel1 = new javax.swing.JLabel();
+        jProgressBar1 = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -121,13 +121,6 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         rSPanelGradiente1.setColorSecundario(new java.awt.Color(230, 230, 230));
         rSPanelGradiente1.setGradiente(rojeru_san.rspanel.RSPanelGradiente.Gradiente.CENTRAL);
         rSPanelGradiente1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jProgressBar1.setBackground(new java.awt.Color(17, 35, 46));
-        jProgressBar1.setForeground(new java.awt.Color(17, 35, 46));
-        jProgressBar1.setEnabled(false);
-        jProgressBar1.setString("");
-        jProgressBar1.setStringPainted(true);
-        rSPanelGradiente1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 418, 690, 4));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fast-farma.png"))); // NOI18N
         rSPanelGradiente1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 9, 271, 80));
@@ -147,7 +140,14 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         rSPanelGradiente1.add(barProgress, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 30, 30));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CARGA_INICIAL_1.png"))); // NOI18N
-        rSPanelGradiente1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        rSPanelGradiente1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 430));
+
+        jProgressBar1.setBackground(new java.awt.Color(17, 35, 46));
+        jProgressBar1.setForeground(new java.awt.Color(17, 35, 46));
+        jProgressBar1.setEnabled(false);
+        jProgressBar1.setString("");
+        jProgressBar1.setStringPainted(true);
+        rSPanelGradiente1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 418, 690, 4));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,9 +157,7 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(rSPanelGradiente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();

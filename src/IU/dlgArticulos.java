@@ -55,12 +55,6 @@ public class dlgArticulos extends javax.swing.JDialog {
         mbtnEliminar = new javax.swing.JMenuItem();
         grupoBotones = new javax.swing.ButtonGroup();
         buttonGroup1 = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
-        btnNuevo = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbProductos = new javax.swing.JTable()
         {
@@ -69,10 +63,20 @@ public class dlgArticulos extends javax.swing.JDialog {
                 return false;
             }
         };
+        rSPanelImage1 = new rojeru_san.rspanel.RSPanelImage();
+        jPanel1 = new javax.swing.JPanel();
+        btnNuevo = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        PanelContenedor = new rojeru_san.rspanel.RSPanelImage();
+        rSButtonIconUno1 = new RSMaterialComponent.RSButtonIconUno();
+        Separador = new javax.swing.JSeparator();
+        LabelTitulo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         itemNuevoE = new javax.swing.JMenuItem();
@@ -121,6 +125,40 @@ public class dlgArticulos extends javax.swing.JDialog {
                 formWindowStateChanged(evt);
             }
         });
+
+        tbProductos.setBackground(new java.awt.Color(255, 255, 204));
+        tbProductos.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 10)); // NOI18N
+        tbProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbProductos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tbProductos.setComponentPopupMenu(jPopupMenu1);
+        tbProductos.getTableHeader().setResizingAllowed(false);
+        tbProductos.getTableHeader().setReorderingAllowed(false);
+        tbProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbProductosMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbProductosMousePressed(evt);
+            }
+        });
+        tbProductos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbProductosKeyPressed(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbProductos);
+
+        rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo.png"))); // NOI18N
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setLayout(new java.awt.GridLayout(1, 6));
@@ -190,38 +228,6 @@ public class dlgArticulos extends javax.swing.JDialog {
         });
         jPanel1.add(btnSalir);
 
-        tbProductos.setBackground(new java.awt.Color(255, 255, 204));
-        tbProductos.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 10)); // NOI18N
-        tbProductos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tbProductos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        tbProductos.setComponentPopupMenu(jPopupMenu1);
-        tbProductos.getTableHeader().setResizingAllowed(false);
-        tbProductos.getTableHeader().setReorderingAllowed(false);
-        tbProductos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbProductosMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                tbProductosMousePressed(evt);
-            }
-        });
-        tbProductos.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tbProductosKeyPressed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tbProductos);
-
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -256,9 +262,9 @@ public class dlgArticulos extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 1029, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,13 +276,50 @@ public class dlgArticulos extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 51));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Teclas Arriba/Abajo para Navegar | Enter para Seleccionar el Artículo");
-        jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel2.setOpaque(true);
+        PanelContenedor.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PanelContenedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        rSButtonIconUno1.setBackground(new java.awt.Color(0, 102, 0));
+        rSButtonIconUno1.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        rSButtonIconUno1.setForegroundHover(new java.awt.Color(0, 102, 0));
+        rSButtonIconUno1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        rSButtonIconUno1.setRippleColor(java.awt.Color.white);
+        rSButtonIconUno1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        PanelContenedor.add(rSButtonIconUno1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
+
+        Separador.setForeground(new java.awt.Color(204, 204, 204));
+        PanelContenedor.add(Separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 65, 76, 3));
+
+        LabelTitulo.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo.setText("NUEVO");
+        PanelContenedor.add(LabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 70, -1, -1));
+
+        javax.swing.GroupLayout rSPanelImage1Layout = new javax.swing.GroupLayout(rSPanelImage1);
+        rSPanelImage1.setLayout(rSPanelImage1Layout);
+        rSPanelImage1Layout.setHorizontalGroup(
+            rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelImage1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(PanelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        rSPanelImage1Layout.setVerticalGroup(
+            rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelImage1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(rSPanelImage1Layout.createSequentialGroup()
+                .addComponent(PanelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 22, Short.MAX_VALUE))
+        );
 
         jMenu1.setText("Opciones");
         jMenu1.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
@@ -385,27 +428,17 @@ public class dlgArticulos extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(rSPanelImage1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(rSPanelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -758,6 +791,9 @@ public class dlgArticulos extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LabelTitulo;
+    private rojeru_san.rspanel.RSPanelImage PanelContenedor;
+    private javax.swing.JSeparator Separador;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnNuevo;
@@ -773,7 +809,6 @@ public class dlgArticulos extends javax.swing.JDialog {
     private javax.swing.JMenuItem itemOrdenN;
     private javax.swing.JMenuItem itemSalir;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -787,6 +822,8 @@ public class dlgArticulos extends javax.swing.JDialog {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JMenuItem mbtnEliminar;
     private javax.swing.JMenuItem mbtnMmodificar;
+    private RSMaterialComponent.RSButtonIconUno rSButtonIconUno1;
+    private rojeru_san.rspanel.RSPanelImage rSPanelImage1;
     public static javax.swing.JTable tbProductos;
     public static javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
