@@ -25,18 +25,19 @@ public class dlgArticulos extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         titulo();
+        Barra_Menu.setVisible(false);
         jasper = new ReporteF();
         cabe.Articulos(tbProductos);
         controlArticulo.filtrarGral(tbProductos, "");
         Renders();
         txtBuscar.requestFocus();
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Gestor de artículos");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Gestor de artículos");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Gestor de artículos");
         }
     }
 
@@ -55,6 +56,26 @@ public class dlgArticulos extends javax.swing.JDialog {
         mbtnEliminar = new javax.swing.JMenuItem();
         grupoBotones = new javax.swing.ButtonGroup();
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        PanelContenedor = new rojeru_san.rspanel.RSPanelImage();
+        btnNuevo = new RSMaterialComponent.RSButtonIconUno();
+        Separador = new javax.swing.JSeparator();
+        LabelTitulo = new javax.swing.JLabel();
+        PanelContenedor1 = new rojeru_san.rspanel.RSPanelImage();
+        btnModificar = new RSMaterialComponent.RSButtonIconUno();
+        Separador1 = new javax.swing.JSeparator();
+        LabelTitulo1 = new javax.swing.JLabel();
+        PanelContenedor2 = new rojeru_san.rspanel.RSPanelImage();
+        btnEliminar = new RSMaterialComponent.RSButtonIconUno();
+        Separador2 = new javax.swing.JSeparator();
+        LabelTitulo2 = new javax.swing.JLabel();
+        PanelContenedor3 = new rojeru_san.rspanel.RSPanelImage();
+        rSButtonIconUno4 = new RSMaterialComponent.RSButtonIconUno();
+        Separador3 = new javax.swing.JSeparator();
+        LabelTitulo3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtBuscar = new RSMaterialComponent.RSTextFieldMaterialIcon();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbProductos = new javax.swing.JTable()
         {
@@ -63,21 +84,8 @@ public class dlgArticulos extends javax.swing.JDialog {
                 return false;
             }
         };
-        rSPanelImage1 = new rojeru_san.rspanel.RSPanelImage();
-        jPanel1 = new javax.swing.JPanel();
-        btnNuevo = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        txtBuscar = new javax.swing.JTextField();
-        PanelContenedor = new rojeru_san.rspanel.RSPanelImage();
-        rSButtonIconUno1 = new RSMaterialComponent.RSButtonIconUno();
-        Separador = new javax.swing.JSeparator();
-        LabelTitulo = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        btnSalir1 = new RSMaterialComponent.RSButtonIconUno();
+        Barra_Menu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         itemNuevoE = new javax.swing.JMenuItem();
         itemModificarE = new javax.swing.JMenuItem();
@@ -112,6 +120,7 @@ public class dlgArticulos extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setUndecorated(true);
         setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
@@ -126,8 +135,169 @@ public class dlgArticulos extends javax.swing.JDialog {
             }
         });
 
-        tbProductos.setBackground(new java.awt.Color(255, 255, 204));
-        tbProductos.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 10)); // NOI18N
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setOpaque(false);
+
+        PanelContenedor.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PanelContenedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnNuevo.setBackground(new java.awt.Color(0, 102, 0));
+        btnNuevo.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnNuevo.setForegroundHover(new java.awt.Color(0, 102, 0));
+        btnNuevo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnNuevo.setRippleColor(java.awt.Color.white);
+        btnNuevo.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+        PanelContenedor.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
+
+        Separador.setForeground(new java.awt.Color(204, 204, 204));
+        PanelContenedor.add(Separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 65, 76, 3));
+
+        LabelTitulo.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo.setText("NUEVO");
+        PanelContenedor.add(LabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 70, -1, -1));
+
+        PanelContenedor1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PanelContenedor1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnModificar.setBackground(new java.awt.Color(255, 102, 0));
+        btnModificar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnModificar.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
+        btnModificar.setRippleColor(java.awt.Color.white);
+        btnModificar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        PanelContenedor1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
+
+        Separador1.setForeground(new java.awt.Color(204, 204, 204));
+        PanelContenedor1.add(Separador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 65, 76, 3));
+
+        LabelTitulo1.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo1.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo1.setText("MODIFICAR");
+        PanelContenedor1.add(LabelTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 70, 90, -1));
+
+        PanelContenedor2.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PanelContenedor2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnEliminar.setBackground(new java.awt.Color(205, 0, 0));
+        btnEliminar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnEliminar.setForegroundHover(new java.awt.Color(205, 0, 0));
+        btnEliminar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnEliminar.setRippleColor(java.awt.Color.white);
+        btnEliminar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        PanelContenedor2.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
+
+        Separador2.setForeground(new java.awt.Color(204, 204, 204));
+        PanelContenedor2.add(Separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 65, 76, 3));
+
+        LabelTitulo2.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo2.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo2.setText("ELIMINAR");
+        PanelContenedor2.add(LabelTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 70, 90, -1));
+
+        PanelContenedor3.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PanelContenedor3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        rSButtonIconUno4.setBackground(new java.awt.Color(0, 153, 255));
+        rSButtonIconUno4.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        rSButtonIconUno4.setForegroundHover(new java.awt.Color(0, 153, 255));
+        rSButtonIconUno4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REFRESH);
+        rSButtonIconUno4.setRippleColor(java.awt.Color.white);
+        rSButtonIconUno4.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        rSButtonIconUno4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonIconUno4ActionPerformed(evt);
+            }
+        });
+        PanelContenedor3.add(rSButtonIconUno4, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
+
+        Separador3.setForeground(new java.awt.Color(204, 204, 204));
+        PanelContenedor3.add(Separador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 65, 76, 3));
+
+        LabelTitulo3.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo3.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo3.setText("ACTUALIZAR");
+        PanelContenedor3.add(LabelTitulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 70, 90, -1));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(PanelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PanelContenedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PanelContenedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PanelContenedor3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PanelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PanelContenedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PanelContenedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(PanelContenedor3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
+        );
+
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 1, 410, 100));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo_2.5.png"))); // NOI18N
+        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, -10, 690, 120));
+
+        txtBuscar.setBorder(null);
+        txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
+        txtBuscar.setColorIcon(new java.awt.Color(17, 35, 46));
+        txtBuscar.setColorMaterial(new java.awt.Color(17, 35, 46));
+        txtBuscar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtBuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        txtBuscar.setPhColor(new java.awt.Color(102, 102, 102));
+        txtBuscar.setPlaceholder("Buscador de Productos");
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
+        jPanel3.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 70, 669, 30));
+
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+
+        tbProductos.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
         tbProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -139,8 +309,11 @@ public class dlgArticulos extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tbProductos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tbProductos.setComponentPopupMenu(jPopupMenu1);
+        tbProductos.setGridColor(new java.awt.Color(204, 204, 204));
+        tbProductos.setRowHeight(20);
+        tbProductos.setShowGrid(true);
+        tbProductos.setShowVerticalLines(false);
         tbProductos.getTableHeader().setResizingAllowed(false);
         tbProductos.getTableHeader().setReorderingAllowed(false);
         tbProductos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -158,168 +331,20 @@ public class dlgArticulos extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tbProductos);
 
-        rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo.png"))); // NOI18N
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 110, 1356, 509));
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.setLayout(new java.awt.GridLayout(1, 6));
-
-        btnNuevo.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/addproducto.png"))); // NOI18N
-        btnNuevo.setText("Nuevo-F1");
-        btnNuevo.setToolTipText("Registrar Nuevo Artículo");
-        btnNuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnNuevo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir1.setBackground(new java.awt.Color(255, 255, 255));
+        btnSalir1.setBackgroundHover(new java.awt.Color(205, 0, 0));
+        btnSalir1.setForegroundText(new java.awt.Color(17, 35, 46));
+        btnSalir1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir1.setRippleColor(java.awt.Color.white);
+        btnSalir1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnSalir1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
+                btnSalir1ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnNuevo);
-
-        btnModificar.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/modificarproducto.png"))); // NOI18N
-        btnModificar.setText("Modif-F5");
-        btnModificar.setToolTipText("Modificar Artículo");
-        btnModificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnModificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnModificar);
-
-        btnEliminar.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/deleteproducto.png"))); // NOI18N
-        btnEliminar.setText("Elim-Supr");
-        btnEliminar.setToolTipText("Eliminar Artículo");
-        btnEliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnEliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnEliminar);
-
-        jButton1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/page_refresh.png"))); // NOI18N
-        jButton1.setText("Actualizar Listado");
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton1);
-
-        btnSalir.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back40.png"))); // NOI18N
-        btnSalir.setText("Salir-Alt+F4");
-        btnSalir.setToolTipText("Salir");
-        btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSalir.setPreferredSize(new java.awt.Dimension(53, 47));
-        btnSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnSalir);
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 10)); // NOI18N
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/search15.png"))); // NOI18N
-        jLabel3.setText("Buscador de Artículos:");
-        jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
-
-        txtBuscar.setBackground(new java.awt.Color(255, 255, 204));
-        txtBuscar.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtBuscarActionPerformed(evt);
-            }
-        });
-        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtBuscarKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtBuscarKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtBuscarKeyTyped(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtBuscar)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        PanelContenedor.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
-        PanelContenedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        rSButtonIconUno1.setBackground(new java.awt.Color(0, 102, 0));
-        rSButtonIconUno1.setBackgroundHover(new java.awt.Color(255, 255, 255));
-        rSButtonIconUno1.setForegroundHover(new java.awt.Color(0, 102, 0));
-        rSButtonIconUno1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
-        rSButtonIconUno1.setRippleColor(java.awt.Color.white);
-        rSButtonIconUno1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
-        PanelContenedor.add(rSButtonIconUno1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
-
-        Separador.setForeground(new java.awt.Color(204, 204, 204));
-        PanelContenedor.add(Separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 65, 76, 3));
-
-        LabelTitulo.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
-        LabelTitulo.setForeground(new java.awt.Color(17, 35, 46));
-        LabelTitulo.setText("NUEVO");
-        PanelContenedor.add(LabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 70, -1, -1));
-
-        javax.swing.GroupLayout rSPanelImage1Layout = new javax.swing.GroupLayout(rSPanelImage1);
-        rSPanelImage1.setLayout(rSPanelImage1Layout);
-        rSPanelImage1Layout.setHorizontalGroup(
-            rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelImage1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(PanelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        rSPanelImage1Layout.setVerticalGroup(
-            rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(rSPanelImage1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(rSPanelImage1Layout.createSequentialGroup()
-                .addComponent(PanelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
-        );
+        jPanel3.add(btnSalir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 4, 25, 25));
 
         jMenu1.setText("Opciones");
         jMenu1.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
@@ -402,7 +427,7 @@ public class dlgArticulos extends javax.swing.JDialog {
         });
         jMenu1.add(itemSalir);
 
-        jMenuBar1.add(jMenu1);
+        Barra_Menu.add(jMenu1);
 
         jMenu2.setText("Reporte");
         jMenu2.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
@@ -418,27 +443,19 @@ public class dlgArticulos extends javax.swing.JDialog {
         });
         jMenu2.add(itemNuevoE1);
 
-        jMenuBar1.add(jMenu2);
+        Barra_Menu.add(jMenu2);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(Barra_Menu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(rSPanelImage1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1360, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(rSPanelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -453,11 +470,6 @@ public class dlgArticulos extends javax.swing.JDialog {
             modelos.setSelectionInterval(number, number);
         }
     }//GEN-LAST:event_tbProductosMousePressed
-
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
-        nuevoArticulo();
-    }//GEN-LAST:event_btnNuevoActionPerformed
     void nuevoArticulo() {
         dlgGestArticulos gestArticulos = new dlgGestArticulos(null, true);
         gestArticulos.setLocationRelativeTo(null);
@@ -486,11 +498,6 @@ public class dlgArticulos extends javax.swing.JDialog {
         dlgGestArticulos.CalculoIVAC();
         a.setVisible(true);
     }//GEN-LAST:event_mbtnMmodificarActionPerformed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-        modArticulo();
-    }//GEN-LAST:event_btnModificarActionPerformed
     void modArticulo() {
         int x = tbProductos.getSelectedRow();
         if (x < 0) {
@@ -522,10 +529,7 @@ public class dlgArticulos extends javax.swing.JDialog {
         }
 
     }
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        delArticulo();
-    }//GEN-LAST:event_btnEliminarActionPerformed
+
     void delArticulo() {
         try {
             int x = tbProductos.getSelectedRow();
@@ -560,34 +564,6 @@ public class dlgArticulos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_mbtnEliminarActionPerformed
 
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
-        if (rpta == 0) {
-            this.dispose();
-        }else{
-            txtBuscar.requestFocus();
-        }
-    }//GEN-LAST:event_btnSalirActionPerformed
-
-    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        // TODO add your handling code here:
-        System.out.println(txtBuscar.getText().trim().length());
-        try {
-            String cod = txtBuscar.getText();
-            cabe.Articulos(tbProductos);
-            CabecerasTablas.limpiarTablas(tbProductos);
-            controlArticulo.filtrarGral(tbProductos, cod);
-            /*cabe.Articulos(tbProductos);
-            controlArticulo.listArticulo(tbProductos, "cod");
-            CabecerasTablas.limpiarTablas(tbProductos);
-            controlArticulo.filtrarGral(tbProductos, cod);*/
-            Renders();
-        } catch (Exception e) {
-            System.out.println("Mensaje de Error: " + e.getMessage());
-        }
-    }//GEN-LAST:event_txtBuscarKeyReleased
-
     private void tbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
@@ -617,16 +593,6 @@ public class dlgArticulos extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_tbProductosMouseClicked
-
-    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
-        // TODO add your handling code here:
-        char c = evt.getKeyChar();
-        if (Character.isLowerCase(c)) {
-            String cad = ("" + c).toUpperCase();
-            c = cad.charAt(0);
-            evt.setKeyChar(c);
-        }
-    }//GEN-LAST:event_txtBuscarKeyTyped
 
     private void itemNuevoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoEActionPerformed
         // TODO add your handling code here:
@@ -667,7 +633,7 @@ public class dlgArticulos extends javax.swing.JDialog {
 
     private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
         // TODO add your handling code here:
-        btnSalirActionPerformed(null);
+        btnSalir1ActionPerformed(null);
     }//GEN-LAST:event_itemSalirActionPerformed
 
     private void tbProductosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbProductosKeyPressed
@@ -701,11 +667,6 @@ public class dlgArticulos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tbProductosKeyPressed
 
-    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
-        // TODO add your handling code here:
-        System.out.println(txtBuscar.getText().length());
-    }//GEN-LAST:event_txtBuscarActionPerformed
-
     private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
 
     }//GEN-LAST:event_formWindowLostFocus
@@ -713,19 +674,6 @@ public class dlgArticulos extends javax.swing.JDialog {
     private void formWindowStateChanged(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowStateChanged
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowStateChanged
-
-    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (tbProductos.getRowCount() <= 0) {
-                txtBuscar.requestFocus();
-                txtBuscar.selectAll();
-            } else {
-                tbProductos.requestFocus();
-                tbProductos.getSelectionModel().setSelectionInterval(0, 0);
-            }
-        }
-    }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void itemNuevoE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoE1ActionPerformed
         // TODO add your handling code here:
@@ -740,14 +688,83 @@ public class dlgArticulos extends javax.swing.JDialog {
         //
     }//GEN-LAST:event_itemNuevoE1ActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void rSButtonIconUno4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconUno4ActionPerformed
         // TODO add your handling code here:
         cabe.Articulos(tbProductos);
         controlArticulo.filtrarGral(tbProductos, "");
         Renders();
         txtBuscar.setText("");
         txtBuscar.requestFocus();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_rSButtonIconUno4ActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        nuevoArticulo();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        modArticulo();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        delArticulo();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+        System.out.println(txtBuscar.getText().length());
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (tbProductos.getRowCount() <= 0) {
+                txtBuscar.requestFocus();
+                txtBuscar.selectAll();
+            } else {
+                tbProductos.requestFocus();
+                tbProductos.getSelectionModel().setSelectionInterval(0, 0);
+            }
+        }
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        // TODO add your handling code here:
+        System.out.println(txtBuscar.getText().trim().length());
+        try {
+            String cod = txtBuscar.getText();
+            cabe.Articulos(tbProductos);
+            CabecerasTablas.limpiarTablas(tbProductos);
+            controlArticulo.filtrarGral(tbProductos, cod);
+            /*cabe.Articulos(tbProductos);
+            controlArticulo.listArticulo(tbProductos, "cod");
+            CabecerasTablas.limpiarTablas(tbProductos);
+            controlArticulo.filtrarGral(tbProductos, cod);*/
+            Renders();
+        } catch (Exception e) {
+            System.out.println("Mensaje de Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
+            evt.setKeyChar(c);
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
+        // TODO add your handling code here:
+        int rpta = Mensajes.confirmar("¿Seguro que desea cerrar este formulario?");
+        if (rpta == 0) {
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnSalir1ActionPerformed
 
     public static void main(String args[]) {
 
@@ -791,13 +808,23 @@ public class dlgArticulos extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar Barra_Menu;
     private javax.swing.JLabel LabelTitulo;
+    private javax.swing.JLabel LabelTitulo1;
+    private javax.swing.JLabel LabelTitulo2;
+    private javax.swing.JLabel LabelTitulo3;
     private rojeru_san.rspanel.RSPanelImage PanelContenedor;
+    private rojeru_san.rspanel.RSPanelImage PanelContenedor1;
+    private rojeru_san.rspanel.RSPanelImage PanelContenedor2;
+    private rojeru_san.rspanel.RSPanelImage PanelContenedor3;
     private javax.swing.JSeparator Separador;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnSalir;
+    private javax.swing.JSeparator Separador1;
+    private javax.swing.JSeparator Separador2;
+    private javax.swing.JSeparator Separador3;
+    private RSMaterialComponent.RSButtonIconUno btnEliminar;
+    private RSMaterialComponent.RSButtonIconUno btnModificar;
+    private RSMaterialComponent.RSButtonIconUno btnNuevo;
+    private RSMaterialComponent.RSButtonIconUno btnSalir1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup grupoBotones;
     private javax.swing.JMenuItem itemEliminarE;
@@ -808,13 +835,11 @@ public class dlgArticulos extends javax.swing.JDialog {
     private javax.swing.JMenuItem itemOrdenC;
     private javax.swing.JMenuItem itemOrdenN;
     private javax.swing.JMenuItem itemSalir;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
@@ -822,9 +847,8 @@ public class dlgArticulos extends javax.swing.JDialog {
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JMenuItem mbtnEliminar;
     private javax.swing.JMenuItem mbtnMmodificar;
-    private RSMaterialComponent.RSButtonIconUno rSButtonIconUno1;
-    private rojeru_san.rspanel.RSPanelImage rSPanelImage1;
+    private RSMaterialComponent.RSButtonIconUno rSButtonIconUno4;
     public static javax.swing.JTable tbProductos;
-    public static javax.swing.JTextField txtBuscar;
+    public static RSMaterialComponent.RSTextFieldMaterialIcon txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

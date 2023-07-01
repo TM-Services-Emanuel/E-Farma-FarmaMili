@@ -110,8 +110,8 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         lblCarga = new javax.swing.JLabel();
         barProgress = new RSMaterialComponent.RSProgressMaterial();
-        jLabel1 = new javax.swing.JLabel();
         jProgressBar1 = new javax.swing.JProgressBar();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -137,17 +137,17 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         barProgress.setFocusable(false);
         barProgress.setTimeProgress(2500);
         barProgress.setWidthProgress(3);
-        rSPanelGradiente1.add(barProgress, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 30, 30));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CARGA_INICIAL_1.png"))); // NOI18N
-        rSPanelGradiente1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 430));
+        rSPanelGradiente1.add(barProgress, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 375, 30, 30));
 
         jProgressBar1.setBackground(new java.awt.Color(17, 35, 46));
         jProgressBar1.setForeground(new java.awt.Color(17, 35, 46));
         jProgressBar1.setEnabled(false);
         jProgressBar1.setString("");
         jProgressBar1.setStringPainted(true);
-        rSPanelGradiente1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 418, 690, 4));
+        rSPanelGradiente1.add(jProgressBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, 130, 20));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CARGA_INICIAL_1.png"))); // NOI18N
+        rSPanelGradiente1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 410));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,7 +165,7 @@ public final class frmCargaInicial extends javax.swing.JFrame {
 
     public void velocidadDeCarga() throws InterruptedException {
         for (int i = 0; i <= 100; i++) {
-            Thread.sleep(100L);
+            Thread.sleep(60L);
             jProgressBar1.setValue(i);
             if (i == 00) {
                 lblCarga.setText(" Cargando libreria de componentes y controladores necesarios");
