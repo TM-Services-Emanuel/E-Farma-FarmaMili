@@ -1,26 +1,21 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Fecha;
 import Componentes.Mensajes;
 import Componentes.ReporteF;
 import Componentes.cargarComboBox;
 import java.awt.Toolkit;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
 
     public ReporteF jasper;
-    public static ResultSet rs;
-    public static MariaDbStatement sentencia;
-    public static MariaDbConnection con;
-    static String Fdesde;
-    static String Fhasta;
-    static int codLab;
+    static DataSourceService dss = new DataSourceService();
 
-    public dlgReporteLaboratorioFecha(java.awt.Frame parent, boolean modal) {
+    public dlgReporteLaboratorioFecha(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         jasper = new ReporteF();
@@ -29,7 +24,7 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
         invisible();
         CargarCombos();
     }
-    
+
     private void CargarCombos() {
         cargarComboBox.cargar(cboLaboratorio, "SELECT * FROM laboratorio WHERE lab_indicador='S'");
     }
@@ -38,26 +33,11 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
         lbFechaActual.setText(Fecha.fechaFormulario());
         lbFechaActualR.setText(Fecha.fechaCorrecta());
     }
-    
-    private void invisible(){
+
+    private void invisible() {
         txtFDesdeR.setVisible(false);
         txtFHastaR.setVisible(false);
         lbFechaActualR.setVisible(false);
-    }
-
-    public static void prepararBD() {
-        {
-            try {
-                con = (MariaDbConnection) new ConexionBD().getConexion();
-                if (con == null) {
-                    System.out.println("No hay Conexion con la Base de Datos");
-                } else {
-                    sentencia = (MariaDbStatement) con.createStatement();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -354,40 +334,37 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         // TODO add your handling code here:
+        int codLab = 0;
         if (cboLaboratorio.getSelectedIndex() == 0) {
             Mensajes.error("Seleccione un Laboratorio");
             cboLaboratorio.requestFocus();
-            cboLaboratorio.setPopupVisible(true);     
-        }else{
+            cboLaboratorio.setPopupVisible(true);
+        } else {
             try {
-                    prepararBD();
-                    String lab;
-                    lab = cboLaboratorio.getSelectedItem().toString();
-                    try {
-                        rs = sentencia.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + lab + "'");
-                        rs.last();
-                        codLab = rs.getInt("lab_codigo");
-                        rs.close();
-                    } catch (SQLException ex) {
-                        Mensajes.error("Error al querer obtener ID del laboratorio");
-                    }
-                } catch (Exception pr) {
-                    Mensajes.informacion("No existe Reporte para este Laboratorio");
+                try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + cboLaboratorio.getSelectedItem().toString() + "'")) {
+                    rs.last();
+                    codLab = rs.getInt("lab_codigo");
+                    rs.close();
+                } catch (SQLException ex) {
+                    Mensajes.error("Error al querer obtener ID del laboratorio");
                 }
-            if (rbLaboratorioA.isSelected()) {
-            jasper.reporteTresParametroHorizontal("\\Reports\\ventas\\VTporLaboratorio.jasper", "codLab", codLab, "desde", Date.valueOf(lbFechaActualR.getText().trim()), "hasta", Date.valueOf(lbFechaActualR.getText().trim()));
-        }else if(rbLaboratorioF.isSelected()){
-            if(txtFDesde.getText().trim().isEmpty()){
-                Mensajes.informacion("Fije la fecha desde");
-            }else if(txtFHasta.getText().trim().isEmpty()){
-                Mensajes.informacion("Fije la fecha hasta");
-            }else if(Date.valueOf(txtFDesdeR.getText().trim()).after(Date.valueOf(txtFHastaR.getText().trim()))){
-                Mensajes.error("Error en los parametros fijados.\nFavor verifique las fechas Desde y Hasta.");
-            }else{
-                jasper.reporteTresParametroHorizontal("\\Reports\\ventas\\VTporLaboratorio.jasper", "codLab", codLab, "desde", Date.valueOf(txtFDesdeR.getText().trim()), "hasta", Date.valueOf(txtFHastaR.getText().trim()));
+            } catch (Exception pr) {
+                Mensajes.informacion("No existe Reporte para este Laboratorio");
             }
-        }
-            
+            if (rbLaboratorioA.isSelected()) {
+                jasper.reporteTresParametroHorizontal("\\Reports\\ventas\\VTporLaboratorio.jasper", "codLab", codLab, "desde", Date.valueOf(lbFechaActualR.getText().trim()), "hasta", Date.valueOf(lbFechaActualR.getText().trim()));
+            } else if (rbLaboratorioF.isSelected()) {
+                if (txtFDesde.getText().trim().isEmpty()) {
+                    Mensajes.informacion("Fije la fecha desde");
+                } else if (txtFHasta.getText().trim().isEmpty()) {
+                    Mensajes.informacion("Fije la fecha hasta");
+                } else if (Date.valueOf(txtFDesdeR.getText().trim()).after(Date.valueOf(txtFHastaR.getText().trim()))) {
+                    Mensajes.error("Error en los parametros fijados.\nFavor verifique las fechas Desde y Hasta.");
+                } else {
+                    jasper.reporteTresParametroHorizontal("\\Reports\\ventas\\VTporLaboratorio.jasper", "codLab", codLab, "desde", Date.valueOf(txtFDesdeR.getText().trim()), "hasta", Date.valueOf(txtFHastaR.getText().trim()));
+                }
+            }
+
         }
     }//GEN-LAST:event_btnGenerarActionPerformed
 
@@ -466,8 +443,8 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 dlgReporteLaboratorioFecha dialog = new dlgReporteLaboratorioFecha(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -476,6 +453,8 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
                     }
                 });
                 dialog.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(dlgReporteLaboratorioFecha.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }

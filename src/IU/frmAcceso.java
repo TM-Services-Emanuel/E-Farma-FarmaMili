@@ -12,24 +12,25 @@ import java.awt.event.KeyEvent;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public final class frmAcceso extends javax.swing.JFrame {
+
     public frmAcceso() {
         initComponents();
         titulo();
         cargarIcono();
-        try { 
-            lblIP.setText("HOST IP : "+traerIP.getIP());
-            lblHost.setText("HOST: "+traerIP.getHostname());
+        try {
+            lblIP.setText("HOST IP : " + traerIP.getIP());
+            lblHost.setText("HOST: " + traerIP.getHostname());
         } catch (Exception e) {
         }
         txtUsuario.requestFocus();
-        
+
     }
-    
-    void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Bienvenido");
-        }else{
-            this.setTitle("Bienvendo a "+Software.getSoftware());
+        } else {
+            this.setTitle("Bienvendo a " + Software.getSoftware());
         }
     }
 
@@ -197,15 +198,14 @@ public final class frmAcceso extends javax.swing.JFrame {
 
     private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
-        int limite=10;
-        if (txtUsuario.getText().length()== limite)
-        {
+        int limite = 10;
+        if (txtUsuario.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtUsuarioKeyTyped
@@ -226,15 +226,14 @@ public final class frmAcceso extends javax.swing.JFrame {
 
     private void psPaswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_psPaswordKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
-        int limite=15;
-        if (psPasword.getText().length()== limite)
-        {
+        int limite = 15;
+        if (psPasword.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_psPaswordKeyTyped
@@ -253,11 +252,12 @@ public final class frmAcceso extends javax.swing.JFrame {
         try {
             ControlLogeo.logear();
             controlPerfil.perfil();
+            
             this.dispose();
         } catch (Exception e) {
             txtUsuario.requestFocus();
             txtUsuario.selectAll();
-            System.out.println("Error al cargar Principal: "+e.toString());
+            System.out.println("Error al cargar Principal: " + e.toString());
         }
     }//GEN-LAST:event_btnEntrarActionPerformed
 
@@ -271,6 +271,7 @@ public final class frmAcceso extends javax.swing.JFrame {
             Mensajes.error("No se pudo cargo icono");
         }
     }
+
     /*void LookAndFeel() {
         //Look And Feel
         System.setProperty(
@@ -287,7 +288,7 @@ public final class frmAcceso extends javax.swing.JFrame {
             System.out.println("Error al cargar el tema");
         }
     }*/
-    /*public void LookAndFeel2() {
+ /*public void LookAndFeel2() {
         //Look And Feel
         System.setProperty(
                 "Quaqua.tabLayoutPolicy", "wrap"
@@ -299,36 +300,34 @@ public final class frmAcceso extends javax.swing.JFrame {
             Mensajes.informacion("Error al cargar el tema");
         }
     }*/
-    
+
     /**
      * @param args the command line arguments
      * @throws javax.swing.UnsupportedLookAndFeelException
      */
-    public static void main(String args[])throws UnsupportedLookAndFeelException {
-       /* Set the Nimbus look and feel */
-       //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-       /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    public static void main(String args[]) throws UnsupportedLookAndFeelException {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-        */
-       try {
-       for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-       if ("Nimbus".equals(info.getName())) {
-       javax.swing.UIManager.setLookAndFeel(info.getClassName());
-       break;
-       }
-       }
-       } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-       java.util.logging.Logger.getLogger(frmAcceso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-       }
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(frmAcceso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
         //</editor-fold>
-        
-       //</editor-fold>
-           
 
+        //</editor-fold>
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new frmAcceso().setVisible(true);
-       });
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

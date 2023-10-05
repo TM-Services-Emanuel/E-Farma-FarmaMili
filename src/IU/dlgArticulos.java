@@ -10,6 +10,7 @@ import Controladores.controlArticulo;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ListSelectionModel;
@@ -21,7 +22,7 @@ public class dlgArticulos extends javax.swing.JDialog {
     clsExportarExcel Export;
     public ReporteF jasper;
 
-    public dlgArticulos(java.awt.Frame parent, boolean modal) {
+    public dlgArticulos(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         titulo();
@@ -51,11 +52,6 @@ public class dlgArticulos extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        mbtnMmodificar = new javax.swing.JMenuItem();
-        mbtnEliminar = new javax.swing.JMenuItem();
-        grupoBotones = new javax.swing.ButtonGroup();
-        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         PanelContenedor = new rojeru_san.rspanel.RSPanelImage();
@@ -99,24 +95,6 @@ public class dlgArticulos extends javax.swing.JDialog {
         itemSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         itemNuevoE1 = new javax.swing.JMenuItem();
-
-        mbtnMmodificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/modificarproducto - copia.png"))); // NOI18N
-        mbtnMmodificar.setText("     Modificar");
-        mbtnMmodificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mbtnMmodificarActionPerformed(evt);
-            }
-        });
-        jPopupMenu1.add(mbtnMmodificar);
-
-        mbtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/deleteproducto - copia.png"))); // NOI18N
-        mbtnEliminar.setText("     Eliminar");
-        mbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mbtnEliminarActionPerformed(evt);
-            }
-        });
-        jPopupMenu1.add(mbtnEliminar);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -193,9 +171,9 @@ public class dlgArticulos extends javax.swing.JDialog {
         PanelContenedor2.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
         PanelContenedor2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnEliminar.setBackground(new java.awt.Color(205, 0, 0));
+        btnEliminar.setBackground(new java.awt.Color(255, 0, 0));
         btnEliminar.setBackgroundHover(new java.awt.Color(255, 255, 255));
-        btnEliminar.setForegroundHover(new java.awt.Color(205, 0, 0));
+        btnEliminar.setForegroundHover(new java.awt.Color(255, 0, 0));
         btnEliminar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
         btnEliminar.setRippleColor(java.awt.Color.white);
         btnEliminar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
@@ -247,8 +225,11 @@ public class dlgArticulos extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addComponent(PanelContenedor, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(PanelContenedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(PanelContenedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(PanelContenedor3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -269,7 +250,6 @@ public class dlgArticulos extends javax.swing.JDialog {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo_2.5.png"))); // NOI18N
         jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, -10, 690, 120));
 
-        txtBuscar.setBorder(null);
         txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
         txtBuscar.setColorIcon(new java.awt.Color(17, 35, 46));
         txtBuscar.setColorMaterial(new java.awt.Color(17, 35, 46));
@@ -309,7 +289,6 @@ public class dlgArticulos extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tbProductos.setComponentPopupMenu(jPopupMenu1);
         tbProductos.setGridColor(new java.awt.Color(204, 204, 204));
         tbProductos.setRowHeight(20);
         tbProductos.setShowGrid(true);
@@ -331,7 +310,7 @@ public class dlgArticulos extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tbProductos);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 110, 1356, 509));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 110, 1356, 529));
 
         btnSalir1.setBackground(new java.awt.Color(255, 255, 255));
         btnSalir1.setBackgroundHover(new java.awt.Color(205, 0, 0));
@@ -476,32 +455,10 @@ public class dlgArticulos extends javax.swing.JDialog {
         gestArticulos.Nuevo();
         gestArticulos.setVisible(true);
 
-    }
-    private void mbtnMmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbtnMmodificarActionPerformed
-        // TODO add your handling code here:
-        dlgGestArticulos a = new dlgGestArticulos(null, true);
-        a.setLocationRelativeTo(null);
-        controlArticulo.aModifcar();
-        dlgGestArticulos.btnNuevo.setEnabled(false);
-        dlgGestArticulos.itemNuevo.setEnabled(false);
-        dlgGestArticulos.btnModificar.setEnabled(true);
-        dlgGestArticulos.itemModificar.setEnabled(true);
-        dlgGestArticulos.btnGuardar.setEnabled(false);
-        dlgGestArticulos.itemGuardar.setEnabled(false);
-        dlgGestArticulos.btnCancelar.setEnabled(true);
-        dlgGestArticulos.itemCancelar.setEnabled(true);
-        dlgGestArticulos.txtCodBarra.requestFocus();
-        //dlgGestAriculos1.txtStock.setEnabled(false);
-        a.modcbLaboratorio();
-        a.modcbProveedor();
-        a.modcbFamilia();
-        dlgGestArticulos.CalculoIVAC();
-        a.setVisible(true);
-    }//GEN-LAST:event_mbtnMmodificarActionPerformed
-    void modArticulo() {
+    }    void modArticulo() {
         int x = tbProductos.getSelectedRow();
-        if (x < 0) {
-            Mensajes.informacion("Seleccione una fila de la tabla");
+        if (x <= 0) {
+            Mensajes.Sistema("El formulario ABM no puede ser procesado.\nSeleccione en la tabla el producto que desea modificar.");
         } else {
             try {
                 dlgGestArticulos a = new dlgGestArticulos(null, true);
@@ -543,27 +500,9 @@ public class dlgArticulos extends javax.swing.JDialog {
                 txtBuscar.requestFocus();
             }
         } catch (Exception e) {
-            Mensajes.error("Seleccione una fila de la tabla");
+            Mensajes.Sistema("La eliminación no puede ser procesada.\nSeleccione en la tabla el producto que desea eliminar definitivamente de la base de datos.");
         }
     }
-    private void mbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mbtnEliminarActionPerformed
-        // TODO add your handling code here:
-        try {
-            int x = tbProductos.getSelectedRow();
-            String desc = tbProductos.getValueAt(x, 5).toString();
-            int rpta = Mensajes.confirmar("Desea realmente eliminar " + desc + " de la lista");
-            if (rpta == 0) {
-                controlArticulo.delArticulo();
-                CabecerasTablas.limpiarTablas(tbProductos);
-                controlArticulo.listArticulo(tbProductos, "cod");
-                txtBuscar.setText("");
-                txtBuscar.requestFocus();
-            }
-        } catch (Exception e) {
-            Mensajes.informacion("Seleccione una fila de la tabla");
-        }
-    }//GEN-LAST:event_mbtnEliminarActionPerformed
-
     private void tbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
@@ -572,7 +511,7 @@ public class dlgArticulos extends javax.swing.JDialog {
                 a.setLocationRelativeTo(null);
                 controlArticulo.aModifcar();
                 //a.setTitle("Gestionar Productos");
-                dlgGestArticulos.btnNuevo.setEnabled(false);
+                dlgGestArticulos.btnModificar.setEnabled(false);
                 dlgGestArticulos.itemNuevo.setEnabled(false);
                 dlgGestArticulos.btnModificar.setEnabled(true);
                 dlgGestArticulos.itemModificar.setEnabled(true);
@@ -643,7 +582,7 @@ public class dlgArticulos extends javax.swing.JDialog {
                 dlgGestArticulos a = new dlgGestArticulos(null, true);
                 a.setLocationRelativeTo(null);
                 controlArticulo.aModifcar();
-                dlgGestArticulos.btnNuevo.setEnabled(false);
+                dlgGestArticulos.btnModificar.setEnabled(false);
                 dlgGestArticulos.itemNuevo.setEnabled(false);
                 dlgGestArticulos.btnModificar.setEnabled(true);
                 dlgGestArticulos.itemModificar.setEnabled(true);
@@ -781,29 +720,26 @@ public class dlgArticulos extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(dlgArticulos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(dlgArticulos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(dlgArticulos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(dlgArticulos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 dlgArticulos dialog = new dlgArticulos(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
+                    
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
                     }
                 });
                 dialog.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(dlgArticulos.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }
@@ -825,8 +761,6 @@ public class dlgArticulos extends javax.swing.JDialog {
     private RSMaterialComponent.RSButtonIconUno btnModificar;
     private RSMaterialComponent.RSButtonIconUno btnNuevo;
     private RSMaterialComponent.RSButtonIconUno btnSalir1;
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.ButtonGroup grupoBotones;
     private javax.swing.JMenuItem itemEliminarE;
     private javax.swing.JMenuItem itemExportar;
     private javax.swing.JMenuItem itemModificarE;
@@ -840,13 +774,10 @@ public class dlgArticulos extends javax.swing.JDialog {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
-    private javax.swing.JMenuItem mbtnEliminar;
-    private javax.swing.JMenuItem mbtnMmodificar;
     private RSMaterialComponent.RSButtonIconUno rSButtonIconUno4;
     public static javax.swing.JTable tbProductos;
     public static RSMaterialComponent.RSTextFieldMaterialIcon txtBuscar;

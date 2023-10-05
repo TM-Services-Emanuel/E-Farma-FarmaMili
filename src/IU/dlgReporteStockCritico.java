@@ -1,24 +1,20 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Mensajes;
 import Componentes.ReporteF;
 import Componentes.cargarComboBox;
 import java.awt.Toolkit;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class dlgReporteStockCritico extends javax.swing.JDialog {
 
     public ReporteF jasper;
-    public static ResultSet rs;
-    public static MariaDbStatement sentencia;
-    public static MariaDbConnection con;
-    static int codLab;
-    static int codFam;
+    static DataSourceService dss = new DataSourceService();
 
-    public dlgReporteStockCritico(java.awt.Frame parent, boolean modal) {
+    public dlgReporteStockCritico(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         jasper = new ReporteF();
@@ -29,21 +25,6 @@ public class dlgReporteStockCritico extends javax.swing.JDialog {
     private void CargarCombos() {
         cargarComboBox.cargar(cbLaboratorio, "SELECT * FROM laboratorio WHERE lab_indicador='S'");
         cargarComboBox.cargar(cbFamilia, "SELECT * FROM familia WHERE fam_indicador='S'");
-    }
-
-    public static void prepararBD() {
-        {
-            try {
-                con = (MariaDbConnection) new ConexionBD().getConexion();
-                if (con == null) {
-                    System.out.println("No hay Conexion con la Base de Datos");
-                } else {
-                    sentencia = (MariaDbStatement) con.createStatement();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -239,25 +220,22 @@ public class dlgReporteStockCritico extends javax.swing.JDialog {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         // TODO add your handling code here:
+        int codLab;
+        int codFam;
         if (rbReporteG.isSelected()) {
             jasper.StockCrGral(/*System.getProperty("user.dir")+*/"\\Reports\\articulos\\controlstock.jasper");
         } else if (rbReporteL.isSelected()) {
             if (cbLaboratorio.getSelectedIndex() != 0) {
-                try {
-                    prepararBD();
-                    String lab;
-                    lab = cbLaboratorio.getSelectedItem().toString();
-                    try {
-                        rs = sentencia.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + lab + "'");
-                        rs.last();
-                        codLab = rs.getInt("lab_codigo");
-                        rs.close();
-                    } catch (SQLException ex) {
-                        Mensajes.error("Error al querer obtener ID del laboratorio");
-                    }
+                try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + cbLaboratorio.getSelectedItem().toString() + "'")) {
+                    rs.last();
+                    codLab = rs.getInt("lab_codigo");
+                    rs.close();
+                    st.close();
+                    cn.close();
                     jasper.StockCrL("\\Reports\\articulos\\controlstockxlaboratorio.jasper", "codLab", codLab);
+                    jasper.cerrar();
                 } catch (Exception pr) {
-                    Mensajes.informacion("No existe Reporte para este Laboratorio");
+                    Mensajes.error("Error al querer obtener ID del laboratorio");
                 }
             } else {
                 Mensajes.error("Seleccione un Laboratorio");
@@ -267,21 +245,16 @@ public class dlgReporteStockCritico extends javax.swing.JDialog {
 
         } else {
             if (cbFamilia.getSelectedIndex() != 0) {
-                try {
-                    prepararBD();
-                    String fam;
-                    fam = cbFamilia.getSelectedItem().toString();
-                    try {
-                        rs = sentencia.executeQuery("SELECT * FROM familia WHERE fam_nombre='" + fam + "'");
-                        rs.last();
-                        codFam = rs.getInt("fam_codigo");
-                        rs.close();
-                    } catch (SQLException ex) {
-                        Mensajes.error("Error al querer obtener ID de la Familia");
-                    }
+                try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM familia WHERE fam_nombre='" + cbFamilia.getSelectedItem().toString() + "'")) {
+                    rs.last();
+                    codFam = rs.getInt("fam_codigo");
+                    rs.close();
+                    st.close();
+                    cn.close();
                     jasper.StockCrL("\\Reports\\articulos\\controlstockxfamilia.jasper", "codFam", codFam);
+                    jasper.cerrar();
                 } catch (Exception pr) {
-                    Mensajes.informacion("No existe Reporte para esta Familia");
+                    Mensajes.error("Error al querer obtener ID de la Familia");
                 }
             } else {
                 Mensajes.error("Seleccione una Familia");
@@ -326,20 +299,16 @@ public class dlgReporteStockCritico extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(dlgReporteStockCritico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(dlgReporteStockCritico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(dlgReporteStockCritico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(dlgReporteStockCritico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        
+        //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 dlgReporteStockCritico dialog = new dlgReporteStockCritico(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -348,6 +317,8 @@ public class dlgReporteStockCritico extends javax.swing.JDialog {
                     }
                 });
                 dialog.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(dlgReporteStockCritico.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }

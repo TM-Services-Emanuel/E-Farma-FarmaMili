@@ -1,33 +1,28 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Mensajes;
 import Componentes.Software;
 import Componentes.cargarComboBox;
 import Componentes.validarCampos;
 import Controladores.CabecerasTablas;
+import Controladores.ControlLogeo;
 import Controladores.controlPuntoEmisionMovil;
 import Datos.GestionarPuntoEmisionMovil;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 
 public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
 
     CabecerasTablas cabe = new CabecerasTablas();
-    public MariaDbStatement sentencia;
-    public MariaDbConnection con;
-    private ResultSet rs;
+    static DataSourceService dss = new DataSourceService();
 
     public dlgPuntoEmisionMovil(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        prepararBD();
         cargarComboBox.cargar(cboTimbrado, "SELECT * FROM timbrado WHERE estado='Activo'");
         titulo();
         cabe.PuntoEmision(tbPuntoEmision);
@@ -40,22 +35,6 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
             this.setTitle("Gestionar Punto de Emisión");
         } else {
             this.setTitle(Software.getSoftware() + " - Gestionar Punto de Emisión");
-        }
-    }
-
-    private void prepararBD() {
-        {
-            try {
-                con = (MariaDbConnection) new ConexionBD().getConexion();
-                if (con == null) {
-                    System.out.println("No hay Conexion con la Base de Datos");
-                } else {
-                    sentencia = (MariaDbStatement) con.createStatement();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-
         }
     }
 
@@ -100,42 +79,42 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
 
     public void modcboTimbrado(String idTimbrado) {
         DefaultComboBoxModel ml = new DefaultComboBoxModel();
-        try {
-            rs = sentencia.executeQuery("SELECT * FROM timbrado WHERE estado='Activo'");
+        String sqlTimbs = "SELECT * FROM timbrado WHERE estado='Activo'";
+        String sqlTimbEsp = "SELECT * FROM timbrado WHERE idtimbrado=" + idTimbrado;
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sqlTimbs); ResultSet rss = st.executeQuery(sqlTimbEsp)) {
             ml.addElement("SELEC. UNA OPCIÓN");
             while (rs.next()) {
                 ml.addElement(rs.getString("descripcion"));
-
             }
-            ResultSet rss = sentencia.executeQuery("SELECT * FROM timbrado WHERE idtimbrado=" + idTimbrado);
             rss.first();
             Object descripcion = (Object) rss.getString("descripcion");
             cboTimbrado.setModel(ml);
             cboTimbrado.setSelectedItem(descripcion);
+            rs.close();
+            rss.close();
+            st.close();
+            cn.close();
         } catch (SQLException ew) {
-            //Mensajes.error("TIENES UN ERROR AL CARGAR LOS LABORATORIOS: "+ew.getMessage().toUpperCase());
+            System.out.println("Error mod timbrado: " + ew.getMessage());
         }
 
-        try {
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("select * from timbrado where idtimbrado=" + idTimbrado)) {
+            rs.first();
             try {
-                rs = sentencia.executeQuery("select * from timbrado where idtimbrado=" + idTimbrado);
-                rs.first();
-                try {
-                    if (rs.getRow() != 0) {
-                        lbFechaTimbrado.setText("VALIDEZ: " + rs.getString(3) + " - " + rs.getString(4));
-                        txtEstablecimiento.requestFocus();
-                    } else {
-                        System.out.println("No se puede cargar Fecha timbrado.");
-                    }
-                } catch (SQLException ee) {
-                    System.out.println(ee.getMessage());
+                if (rs.getRow() != 0) {
+                    lbFechaTimbrado.setText("VALIDEZ: " + rs.getString(3) + " - " + rs.getString(4));
+                    txtEstablecimiento.requestFocus();
+                } else {
+                    System.out.println("No se puede cargar Fecha timbrado.");
                 }
-                rs.close();
-            } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+            } catch (SQLException ee) {
+                System.out.println(ee.getMessage());
             }
-
-        } catch (Exception e) {
+            rs.close();
+            st.close();
+            cn.close();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -501,7 +480,7 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                     .addComponent(cbTickeet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(rbInactivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                            .addComponent(rbInactivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -694,7 +673,7 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         Blanco.setLayout(BlancoLayout);
         BlancoLayout.setHorizontalGroup(
             BlancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Oscuro, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+            .addComponent(Oscuro, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
             .addGroup(BlancoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BlancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -798,11 +777,11 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Blanco, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+            .addComponent(Blanco, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Blanco, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(Blanco, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -812,6 +791,7 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         // TODO add your handling code here:
         int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
         if (rpta == 0) {
+            ControlLogeo.Timbrado_Ticket();
             this.dispose();
         }
 
@@ -1027,7 +1007,7 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         String tipo = tbPuntoEmision.getValueAt(fila, 9).toString();
         String ip = tbPuntoEmision.getValueAt(fila, 10).toString();
         String estado = tbPuntoEmision.getValueAt(fila, 11).toString();
-        String impPred= tbPuntoEmision.getValueAt(fila, 12).toString();
+        String impPred = tbPuntoEmision.getValueAt(fila, 12).toString();
 
         txtCod.setText(cod);
         modcboTimbrado(itTimbrado);
@@ -1158,8 +1138,7 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 try {
                     int idT;
                     idT = Integer.parseInt(cargarComboBox.getCodidgo(cboTimbrado));
-                    try {
-                        rs = sentencia.executeQuery("select * from timbrado where idtimbrado=" + idT);
+                    try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("select * from timbrado where idtimbrado=" + idT)) {
                         rs.first();
                         try {
                             if (rs.getRow() != 0) {
@@ -1172,6 +1151,8 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                             System.out.println(ee.getMessage());
                         }
                         rs.close();
+                        st.close();
+                        cn.close();
                     } catch (SQLException ex) {
                         System.out.println(ex.getMessage());
                     }
@@ -1266,7 +1247,7 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
     private void txtFFinKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFFinKeyPressed
         // TODO add your handling code here:
         validarCampos.soloNumeros(txtFFin);
-        validarCampos.cantCaracteres(txtFFin, 6);
+        validarCampos.cantCaracteres(txtFFin, 10);
     }//GEN-LAST:event_txtFFinKeyPressed
 
     private void txtFActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFActualActionPerformed

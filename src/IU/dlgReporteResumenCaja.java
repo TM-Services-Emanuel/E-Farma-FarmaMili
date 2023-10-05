@@ -1,50 +1,30 @@
 package IU;
 
-import Componentes.ConexionBD;
 import Componentes.Fecha;
 import Componentes.Mensajes;
 import Componentes.ReporteF;
 import Componentes.cargarComboBox;
 import java.awt.Toolkit;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class dlgReporteResumenCaja extends javax.swing.JDialog {
 
     public ReporteF jasper;
-    public static ResultSet rs;
-    public static MariaDbStatement sentencia;
-    public static MariaDbConnection con;
 
-    public dlgReporteResumenCaja(java.awt.Frame parent, boolean modal) {
+    public dlgReporteResumenCaja(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         jasper = new ReporteF();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png")));
         invisible();
         rbCajaF.doClick();
-        cargarComboBox.cargarCaja(cboCajaN, "SELECT * FROM caja WHERE ca_fechainicio='"+txtFDesdeR.getText()+"'");
+        cargarComboBox.cargarCaja(cboCajaN, "SELECT * FROM caja WHERE ca_fechainicio='" + txtFDesdeR.getText() + "'");
     }
 
-    
-    private void invisible(){
+    private void invisible() {
         txtFDesdeR.setVisible(false);
-    }
-
-    public static void prepararBD() {
-        {
-            try {
-                con = (MariaDbConnection) new ConexionBD().getConexion();
-                if (con == null) {
-                    System.out.println("No hay Conexion con la Base de Datos");
-                } else {
-                    sentencia = (MariaDbStatement) con.createStatement();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -252,28 +232,23 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         // TODO add your handling code here:
-        try{
-           if(rbCajaF.isSelected()){
-            if(txtFDesde.getText().trim().isEmpty()){
-                Mensajes.informacion("Fije una fecha para el reporte");
-            }else if(cboCajaN.getSelectedItem().toString().equals("SELEC.")){
-                Mensajes.informacion("Indique el N° de caja para generar el reporte");
-            }else{
-                System.out.println(cboCajaN.getSelectedItem().toString());
-                jasper.reporteUnParametroVertical("\\Reports\\caja\\ResumenCaja.jasper", "caja", Integer.parseInt(cboCajaN.getSelectedItem().toString()));
-                //jasper.reporteUnParametroVertical("\\Reports\\caja\\TotalVContado.jasper", "caja", Integer.parseInt(cboCajaN.getSelectedItem().toString()));
-                //jasper.reporteUnParametroVertical("\\Reports\\caja\\TotalIngreso.jasper", "caja", Integer.parseInt(cboCajaN.getSelectedItem().toString()));
-                //jasper.reporteUnParametroVertical("\\Reports\\caja\\TotalCContado.jasper", "caja", Integer.parseInt(cboCajaN.getSelectedItem().toString()));
-                //jasper.reporteUnParametroVertical("\\Reports\\caja\\TotalGastos.jasper", "caja", Integer.parseInt(cboCajaN.getSelectedItem().toString()));
-                //jasper.reporteUnParametroVertical("\\Reports\\caja\\TotalVCredito.jasper", "caja", Integer.parseInt(cboCajaN.getSelectedItem().toString()));
-                //jasper.reporteUnParametroVertical("\\Reports\\caja\\TotalCCredito.jasper", "caja", Integer.parseInt(cboCajaN.getSelectedItem().toString()));
+        try {
+            if (rbCajaF.isSelected()) {
+                if (txtFDesde.getText().trim().isEmpty()) {
+                    Mensajes.informacion("Fije una fecha para el reporte");
+                } else if (cboCajaN.getSelectedItem().toString().equals("SELEC.")) {
+                    Mensajes.informacion("Indique el N° de caja para generar el reporte");
+                } else {
+                    System.out.println(cboCajaN.getSelectedItem().toString());
+                    jasper.reporteUnParametroVertical("\\Reports\\caja\\ResumenCaja.jasper", "caja", Integer.valueOf(cboCajaN.getSelectedItem().toString()));
+                    jasper.cerrar();
+                }
             }
-        } 
-        }catch(Exception e){
+        } catch (NumberFormatException e) {
             Mensajes.error("Ocurrio un error generando el reporte");
-            
+
         }
-        
+
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void rbCajaFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCajaFActionPerformed
@@ -291,11 +266,11 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
 
     private void txtFDesdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFDesdeActionPerformed
         // TODO add your handling code here:
-        if(!txtFDesdeR.getText().isEmpty()){
+        if (!txtFDesdeR.getText().isEmpty()) {
             cboCajaN.setEnabled(true);
-            cargarComboBox.cargarCaja(cboCajaN, "SELECT * FROM caja WHERE ca_fechainicio='"+txtFDesdeR.getText()+"'");
+            cargarComboBox.cargarCaja(cboCajaN, "SELECT * FROM caja WHERE ca_fechainicio='" + txtFDesdeR.getText() + "'");
         }
-        
+
     }//GEN-LAST:event_txtFDesdeActionPerformed
 
     /**
@@ -341,8 +316,8 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 dlgReporteResumenCaja dialog = new dlgReporteResumenCaja(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -351,6 +326,8 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
                     }
                 });
                 dialog.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(dlgReporteResumenCaja.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }

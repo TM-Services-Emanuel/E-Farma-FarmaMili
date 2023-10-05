@@ -1,6 +1,6 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.Empresa;
 import Componentes.Fecha;
 import Componentes.ReporteF;
 import Componentes.Mensajes;
@@ -9,49 +9,45 @@ import Componentes.Software;
 import Componentes.generarCodigos;
 import Componentes.traerIP;
 import Controladores.ControlLogeo;
-import Datos.GestionarImagen;
-import Modelo.Imagen;
 import java.awt.Toolkit;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class frmPrincipal extends javax.swing.JFrame {
+
     public ReporteF jasper;
 
-    public MariaDbStatement sentencia;
-    public MariaDbConnection con;
-    private ResultSet rs;
-
-    public frmPrincipal() {
+    public frmPrincipal() throws SQLException {
+        ControlLogeo.Empresa();
         initComponents();
+        informacionGral();
+        ControlLogeo.Timbrado_Ticket();
         jasper = new ReporteF();
         this.setExtendedState(frmPrincipal.MAXIMIZED_BOTH);
-        lbDIP.setText("HOST IP : "+traerIP.getIP());
         titulo();
-        prepararBD();
         Iniciar();
         cargarIcono();
-        //cargarTapiz();
-        informacionGral();
+        invisible();
+    }
+
+    private void invisible() {
         mnNCProveedor.setVisible(false);
         mnPagoProveedor.setVisible(false);
         mnNCVenta.setVisible(false);
         mnGNCVenta.setVisible(false);
-        lbversion.setText("Versión del Software: "+Software.getVersion());
     }
-    
-    void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Ventana principal");
-        }else{
-            this.setTitle("Ventana principal del sistema "+Software.getSoftware()+" - "+Software.getDescripcion());
+        } else {
+            this.setTitle("Ventana principal del sistema " + Software.getSoftware() + " - " + Software.getDescripcion());
         }
-        if(Software.getVersion().equals("null")){
+        if (Software.getVersion().equals("null")) {
             lbversion.setText("Versión del Software: No disponible");
-        }else{
-            lbversion.setText("Versión del Software: "+Software.getVersion());
+        } else {
+            lbversion.setText("Versión del Software: " + Software.getVersion() + Fecha.soloAnho() + " - TM•SERVICES, Todos los derechos reservados.");
         }
     }
 
@@ -67,36 +63,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    /*void cargarTapiz() {
-        try {
-            Imagen imagen = GestionarImagen.fondoPrincipal();
-            String nombre = "/Recursos/" + imagen.getImgFondo();
-            ((JPanelConFondo) panelFondo).setImagen(nombre);
-        } catch (Exception e) {
-            Mensajes.informacion("Error al cargar Fondo del Sistema.");
-        }
-    }*/
-
-    void prepararBD() {
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos");
-            } else {
-                sentencia = (MariaDbStatement) con.createStatement();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void informacionGral() {
-        try {
-            rs = sentencia.executeQuery("select * from v_sucursal where em_visualizar='SI' and em_indicador='S'");
+    /*public void informacionGral() {
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("select * from v_sucursal where em_visualizar='SI' and em_indicador='S'")) {
             rs.first();
             try {
                 if (rs.getRow() != 0) {
-                    //txtCod.setText(rs.getString(1));
                     lbSucursal.setText(rs.getString(2));
                     lbEmpresa.setText(rs.getString(3));
                 } else {
@@ -108,10 +79,29 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 System.out.println(ee.getMessage());
             }
             rs.close();
-
+            st.close();
+            cn.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+    }*/
+    public static void informacionGral() {
+        try {
+            if (Empresa.getHabilitado().equals("SI")) {
+                lbSucursal.setText(Empresa.getSucursal());
+                lbNombreFantasia.setText(Empresa.getEmpresa());
+                lbEmpresa.setText(Empresa.getRazonSocial());
+                lbRUC.setText(Empresa.getRUC());
+            } else if (Empresa.getHabilitado().equals("NO")) {
+                lbSucursal.setText("");
+                lbNombreFantasia.setText("");
+                lbEmpresa.setText("");
+                lbRUC.setText("");
+            }
+        } catch (Exception e) {
+            System.out.println("Informacion Gral: " + e.getMessage());
+        }
+        lbDIP.setText("HOST IP : " + traerIP.getIP());
     }
 
     @SuppressWarnings("unchecked")
@@ -131,8 +121,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         lbSucursal = new javax.swing.JLabel();
-        lbRuc = new javax.swing.JLabel();
+        lbRUC = new javax.swing.JLabel();
         lbEmpresa = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        lbNombreFantasia = new javax.swing.JLabel();
         CONTENEDOR_ACCESO = new rojeru_san.rspanel.RSPanelImage();
         encabezado_2 = new javax.swing.JLabel();
         jSeparator17 = new javax.swing.JSeparator();
@@ -182,10 +174,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jSeparator18 = new javax.swing.JToolBar.Separator();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JToolBar.Separator();
         jLabel13 = new javax.swing.JLabel();
         lbversion = new javax.swing.JLabel();
@@ -319,6 +307,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         CONTENEDOR.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoBlanco - copia.png"))); // NOI18N
 
         CONTENEDOR_EMPRESA.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR1.png"))); // NOI18N
+        CONTENEDOR_EMPRESA.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         encabezado_1.setBackground(new java.awt.Color(255, 255, 255));
         encabezado_1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -326,97 +315,56 @@ public final class frmPrincipal extends javax.swing.JFrame {
         encabezado_1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         encabezado_1.setText("INFORMACIÓN DE LA EMPRESA");
         encabezado_1.setOpaque(true);
+        CONTENEDOR_EMPRESA.add(encabezado_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(89, 26, 210, 20));
 
         jSeparator13.setForeground(new java.awt.Color(204, 204, 204));
+        CONTENEDOR_EMPRESA.add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 59, 340, 4));
 
         iconoEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Logo_FM - copia.png"))); // NOI18N
+        CONTENEDOR_EMPRESA.add(iconoEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 70, -1, 90));
 
         jSeparator11.setForeground(new java.awt.Color(204, 204, 204));
+        CONTENEDOR_EMPRESA.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 173, 340, -1));
 
-        jLabel3.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(17, 35, 46));
         jLabel3.setText("RAZÓN SOCIAL:");
+        CONTENEDOR_EMPRESA.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 204, 105, -1));
 
-        jLabel16.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        jLabel16.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(17, 35, 46));
         jLabel16.setText("R.U.C.:");
+        CONTENEDOR_EMPRESA.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 226, 105, -1));
 
-        jLabel6.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(17, 35, 46));
         jLabel6.setText("SUCURSAL:");
+        CONTENEDOR_EMPRESA.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 248, 105, -1));
 
-        lbSucursal.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        lbSucursal.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lbSucursal.setForeground(new java.awt.Color(0, 153, 204));
         lbSucursal.setText("NOMBRE SUCURSAL");
+        CONTENEDOR_EMPRESA.add(lbSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 248, 237, -1));
 
-        lbRuc.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
-        lbRuc.setForeground(new java.awt.Color(0, 153, 204));
-        lbRuc.setText("RUC FARMACIA");
+        lbRUC.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        lbRUC.setForeground(new java.awt.Color(0, 153, 204));
+        lbRUC.setText("RUC FARMACIA");
+        CONTENEDOR_EMPRESA.add(lbRUC, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 226, 237, -1));
 
-        lbEmpresa.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        lbEmpresa.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lbEmpresa.setForeground(new java.awt.Color(0, 153, 204));
         lbEmpresa.setText("NOMBRE FARMACIA");
+        CONTENEDOR_EMPRESA.add(lbEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 204, 237, -1));
 
-        javax.swing.GroupLayout CONTENEDOR_EMPRESALayout = new javax.swing.GroupLayout(CONTENEDOR_EMPRESA);
-        CONTENEDOR_EMPRESA.setLayout(CONTENEDOR_EMPRESALayout);
-        CONTENEDOR_EMPRESALayout.setHorizontalGroup(
-            CONTENEDOR_EMPRESALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CONTENEDOR_EMPRESALayout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(encabezado_1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CONTENEDOR_EMPRESALayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(CONTENEDOR_EMPRESALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CONTENEDOR_EMPRESALayout.createSequentialGroup()
-                        .addComponent(iconoEmpresa)
-                        .addGap(44, 44, 44))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CONTENEDOR_EMPRESALayout.createSequentialGroup()
-                        .addGroup(CONTENEDOR_EMPRESALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(CONTENEDOR_EMPRESALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(CONTENEDOR_EMPRESALayout.createSequentialGroup()
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lbEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(CONTENEDOR_EMPRESALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(CONTENEDOR_EMPRESALayout.createSequentialGroup()
-                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lbRuc, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(CONTENEDOR_EMPRESALayout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lbSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(CONTENEDOR_EMPRESALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jSeparator13, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
-                                .addComponent(jSeparator11)))
-                        .addGap(23, 23, 23))))
-        );
-        CONTENEDOR_EMPRESALayout.setVerticalGroup(
-            CONTENEDOR_EMPRESALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CONTENEDOR_EMPRESALayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(encabezado_1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator13, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(iconoEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(CONTENEDOR_EMPRESALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(lbEmpresa))
-                .addGap(3, 3, 3)
-                .addGroup(CONTENEDOR_EMPRESALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16)
-                    .addComponent(lbRuc))
-                .addGap(3, 3, 3)
-                .addGroup(CONTENEDOR_EMPRESALayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(lbSucursal))
-                .addContainerGap(24, Short.MAX_VALUE))
-        );
+        jLabel24.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(17, 35, 46));
+        jLabel24.setText("NOMBRE FANTASÍA:");
+        CONTENEDOR_EMPRESA.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 182, 105, -1));
+
+        lbNombreFantasia.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        lbNombreFantasia.setForeground(new java.awt.Color(0, 153, 204));
+        lbNombreFantasia.setText("NOMBRE FANTASÍA");
+        CONTENEDOR_EMPRESA.add(lbNombreFantasia, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 182, 237, -1));
 
         CONTENEDOR_ACCESO.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR1.png"))); // NOI18N
 
@@ -429,27 +377,27 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jSeparator17.setForeground(new java.awt.Color(204, 204, 204));
 
-        jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 13)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 11)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(17, 35, 46));
         jLabel2.setText("NOMBRE:");
 
-        jLabel4.setFont(new java.awt.Font("Roboto Black", 0, 13)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Roboto Black", 0, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(17, 35, 46));
         jLabel4.setText("USUARIO:");
 
-        jLabel7.setFont(new java.awt.Font("Roboto Black", 0, 13)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Roboto Black", 0, 11)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(17, 35, 46));
         jLabel7.setText("PERFIL:");
 
-        lbPerfil.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        lbPerfil.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lbPerfil.setForeground(new java.awt.Color(0, 153, 204));
         lbPerfil.setText("PERFIL");
 
-        lbUsuario.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        lbUsuario.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lbUsuario.setForeground(new java.awt.Color(0, 153, 204));
         lbUsuario.setText("USUARIO");
 
-        lblUsuario.setFont(new java.awt.Font("Roboto", 0, 13)); // NOI18N
+        lblUsuario.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lblUsuario.setForeground(new java.awt.Color(0, 153, 204));
         lblUsuario.setText("FUNCIONARIO");
 
@@ -523,11 +471,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 .addGroup(CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(lblUsuario))
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
                     .addComponent(lbUsuario))
-                .addGap(3, 3, 3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(lbPerfil))
@@ -553,10 +501,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         CONTENEDORLayout.setVerticalGroup(
             CONTENEDORLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CONTENEDORLayout.createSequentialGroup()
-                .addComponent(CONTENEDOR_EMPRESA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CONTENEDOR_EMPRESA, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CONTENEDOR_ACCESO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(343, Short.MAX_VALUE))
+                .addContainerGap(312, Short.MAX_VALUE))
         );
 
         jPanel2.setOpaque(false);
@@ -639,7 +587,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         btnVentas.setBackground(new java.awt.Color(0, 102, 0));
         btnVentas.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnVentas.setForegroundHover(new java.awt.Color(0, 102, 0));
-        btnVentas.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REMOVE);
+        btnVentas.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SHOPPING_CART);
         btnVentas.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnVentas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -663,7 +611,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         btnCompras.setBackground(new java.awt.Color(255, 102, 255));
         btnCompras.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnCompras.setForegroundHover(new java.awt.Color(255, 102, 255));
-        btnCompras.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnCompras.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SHOPPING_BASKET);
         btnCompras.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnCompras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -818,7 +766,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                     .addGroup(panelImage1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(1326, Short.MAX_VALUE))))
+                        .addContainerGap(1323, Short.MAX_VALUE))))
         );
         panelImage1Layout.setVerticalGroup(
             panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -843,43 +791,37 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jLabel5.setText("    ");
         jToolBar1.add(jLabel5);
 
-        lblFecha.setFont(new java.awt.Font("Roboto Black", 0, 11)); // NOI18N
+        lblFecha.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         lblFecha.setForeground(new java.awt.Color(255, 255, 255));
         lblFecha.setText("Fecha: ");
         jToolBar1.add(lblFecha);
 
         jLabel9.setText("   ");
         jToolBar1.add(jLabel9);
-        jToolBar1.add(jSeparator18);
 
-        jLabel10.setText("   ");
-        jToolBar1.add(jLabel10);
-
-        jLabel8.setFont(new java.awt.Font("Roboto Black", 0, 11)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Data base name: bd_farmacia - port: 3306");
-        jToolBar1.add(jLabel8);
-
-        jLabel12.setText("   ");
-        jToolBar1.add(jLabel12);
+        jSeparator3.setBackground(new java.awt.Color(255, 255, 255));
+        jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
         jToolBar1.add(jSeparator3);
 
         jLabel13.setText("   ");
         jToolBar1.add(jLabel13);
 
-        lbversion.setFont(new java.awt.Font("Roboto Black", 0, 11)); // NOI18N
+        lbversion.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         lbversion.setForeground(new java.awt.Color(255, 255, 255));
         lbversion.setText("Versión del Software:");
         jToolBar1.add(lbversion);
 
         jLabel14.setText("   ");
         jToolBar1.add(jLabel14);
+
+        jSeparator22.setBackground(new java.awt.Color(255, 255, 255));
+        jSeparator22.setForeground(new java.awt.Color(255, 255, 255));
         jToolBar1.add(jSeparator22);
 
         jLabel15.setText("   ");
         jToolBar1.add(jLabel15);
 
-        lbDIP.setFont(new java.awt.Font("Roboto Black", 0, 11)); // NOI18N
+        lbDIP.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         lbDIP.setForeground(new java.awt.Color(255, 255, 255));
         lbDIP.setText("IP:");
         jToolBar1.add(lbDIP);
@@ -2070,7 +2012,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             dlgVendedor vend = new dlgVendedor(this, true);
-            vend.setSize(1100, 490);
+            //vend.setSize(1100, 490);
             vend.setLocationRelativeTo(null);
             vend.setVisible(true);
         } catch (Exception e) {
@@ -2109,11 +2051,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void mnGVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnGVActionPerformed
         // TODO add your handling code here:
-            try {
+        try {
             dlgConsultarFacturas cf = new dlgConsultarFacturas(this, false);
             cf.setLocationRelativeTo(null);
             cf.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("No hay conexión con el servidor");
         }
         //Mensajes.informacion("ESTA FUNCION ESTARA DISPONIBLE EN LA SIGUIENTE ACTUALIZACION");
@@ -2121,21 +2063,24 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem36ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem36ActionPerformed
         // TODO add your handling code here:
-       try {
+        try {
             dlgReporteArticulos rsc = new dlgReporteArticulos(this, false);
             rsc.setLocationRelativeTo(null);
             rsc.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_jMenuItem36ActionPerformed
 
     private void jMenuItem42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem42ActionPerformed
-        // TODO add your handling code here:
-        ReporteF nr;
-        nr = new ReporteF();
-       // nr.MostrarReporte(System.getProperty("user.dir") + "/Reportes/Clientes/Clientes.jasper", "ReporteF de Clientes", "Clientes.pdf");
-        nr.cerrar();
+        try {
+            // TODO add your handling code here:
+            ReporteF nr;
+            nr = new ReporteF();
+            nr.cerrar();
+        } catch (SQLException ex) {
+            System.out.println("Error levantando reporte: " + ex.getMessage());
+        }
     }//GEN-LAST:event_jMenuItem42ActionPerformed
 
     private void mnGPEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnGPEActionPerformed
@@ -2195,7 +2140,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         }
     }
-    
+
     void abrirImpresoras() {
         try {
             dlgImpresoras impre = new dlgImpresoras(this, true);
@@ -2209,11 +2154,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     void abrirFactura() {
         try {
-            dlgVentas factura = new dlgVentas(null,true);
-                factura.requestFocus();
-                factura.setLocationRelativeTo(null);
-                factura.setVisible(true);            
-        } catch (Exception e) {
+            dlgVentas factura = new dlgVentas(null, true);
+            factura.requestFocus();
+            factura.setLocationRelativeTo(null);
+            factura.setVisible(true);
+        } catch (SQLException e) {
             Mensajes.informacion("Servidor no esta activo");
         }
 
@@ -2224,7 +2169,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             dlgCompras compras = new dlgCompras(this, false);
             compras.setLocationRelativeTo(null);
             compras.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("Servidor no esta activo");
         }
 
@@ -2246,11 +2191,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
             dlgArticulos articulo = new dlgArticulos(this, true);
             articulo.setLocationRelativeTo(null);
             articulo.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("Servidor no esta activo");
         }
     }
-    
+
     void abrirTimbradoMovil() {
         try {
             dlgTimbradoMovil TimbradoM = new dlgTimbradoMovil(this, true);
@@ -2260,7 +2205,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             Mensajes.informacion("Servidor no esta activo");
         }
     }
-    
+
     void abrirPuntoEmisionMovil() {
         try {
             dlgPuntoEmisionMovil PPM = new dlgPuntoEmisionMovil(this, true);
@@ -2292,7 +2237,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void mnGCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnGCActionPerformed
         // TODO add your handling code here:
-            try {
+        try {
             dlgConsultarCompras consCompras = new dlgConsultarCompras(this, true);
             consCompras.setLocationRelativeTo(null);
             consCompras.setVisible(true);
@@ -2308,7 +2253,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             dlgReporteResumenCaja rsc = new dlgReporteResumenCaja(this, false);
             rsc.setLocationRelativeTo(null);
             rsc.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_jMenuItem26ActionPerformed
@@ -2378,11 +2323,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem65ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem65ActionPerformed
         // TODO add your handling code here:
-         try {
+        try {
             dlgReporteRankingFecha rsc = new dlgReporteRankingFecha(this, false);
             rsc.setLocationRelativeTo(null);
             rsc.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_jMenuItem65ActionPerformed
@@ -2393,7 +2338,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             dlgReporteTotalVentas rsc = new dlgReporteTotalVentas(this, false);
             rsc.setLocationRelativeTo(null);
             rsc.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_jMenuItem66ActionPerformed
@@ -2504,7 +2449,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             dlgConsultarCreditos cc = new dlgConsultarCreditos(this, true);
             cc.setLocationRelativeTo(null);
             cc.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_mnGVEActionPerformed
@@ -2545,7 +2490,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             dlgReporteStockValorizado rsc = new dlgReporteStockValorizado(this, false);
             rsc.setLocationRelativeTo(null);
             rsc.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_jMenuItem38ActionPerformed
@@ -2553,7 +2498,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void jMenuItem48ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem48ActionPerformed
         // TODO add your handling code here:
         Mensajes.Sistema("Este reporte se encuentra bloqueado en estos momentos.\nPara más información comuniquese con el proveedor del sistema.");
-       /* try {
+        /* try {
             dlgReporteComisionesGenerados rsc = new dlgReporteComisionesGenerados(this, false);
             rsc.setLocationRelativeTo(null);
             rsc.setVisible(true);
@@ -2573,7 +2518,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             dlgReporteLaboratorioFecha rsc = new dlgReporteLaboratorioFecha(this, false);
             rsc.setLocationRelativeTo(null);
             rsc.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_jMenuItem67ActionPerformed
@@ -2594,7 +2539,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             dlgConsultarFacturasLegal cf = new dlgConsultarFacturasLegal(this, true);
             cf.setLocationRelativeTo(null);
             cf.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_mnGFLActionPerformed
@@ -2605,7 +2550,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
             dlgConsultarCreditosFacturas cc = new dlgConsultarCreditosFacturas(this, true);
             cc.setLocationRelativeTo(null);
             cc.setVisible(true);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_mnGVE1ActionPerformed
@@ -2617,7 +2562,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
         // TODO add your handling code here:
-         CerrarCesion();
+        CerrarCesion();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     private void btnArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArticulosActionPerformed
@@ -2640,8 +2585,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         String fe = generarCodigos.getFecha("SELECT ca_fechainicio FROM caja where ca_indicador='S' ORDER BY ca_id DESC LIMIT 1");
         if (!fe.equals(Fecha.fechaCorrecta())) {
             Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara poder comenzar a vender sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
-        } else { 
-                abrirFactura();
+        } else {
+            abrirFactura();
         }
     }//GEN-LAST:event_btnVentasActionPerformed
 
@@ -2717,7 +2662,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
         }*/
         //</editor-fold>
         java.awt.EventQueue.invokeLater(() -> {
-            new frmPrincipal().setVisible(true);
+            try {
+                new frmPrincipal().setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2754,9 +2703,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemLaboratorio;
     private javax.swing.JMenuItem itemSucursal;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -2769,12 +2716,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenuItem jMenuItem1;
     public static javax.swing.JMenuItem jMenuItem10;
@@ -2817,7 +2764,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator15;
     private javax.swing.JPopupMenu.Separator jSeparator16;
     private javax.swing.JSeparator jSeparator17;
-    private javax.swing.JToolBar.Separator jSeparator18;
     private javax.swing.JPopupMenu.Separator jSeparator19;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator20;
@@ -2843,10 +2789,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator8;
     private javax.swing.JPopupMenu.Separator jSeparator9;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel lbDIP;
+    private static javax.swing.JLabel lbDIP;
     public static javax.swing.JLabel lbEmpresa;
+    public static javax.swing.JLabel lbNombreFantasia;
     public static javax.swing.JLabel lbPerfil;
-    public static javax.swing.JLabel lbRuc;
+    public static javax.swing.JLabel lbRUC;
     public static javax.swing.JLabel lbSucursal;
     public static javax.swing.JLabel lbUsuario;
     private javax.swing.JLabel lblFecha;

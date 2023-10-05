@@ -1,6 +1,6 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.ReporteF;
@@ -21,33 +21,23 @@ import br.com.adilson.util.PrinterMatrix;
 import java.awt.HeadlessException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.DecimalFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
 
     CabecerasTablas cabe = new CabecerasTablas();
-    public static MariaDbConnection con;
-    public static MariaDbStatement st;
-    public static ResultSet rss;
-
-    public static String UsuarioL = "";
     public ReporteF jasper;
-    static String emp;
-    static String dir;
-    static String cel;
-
     private static String ImpresoraPred;
+    static DataSourceService dss = new DataSourceService();
 
-    public dlgConsultarCreditosFacturas(java.awt.Frame parent, boolean modal) {
+    public dlgConsultarCreditosFacturas(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         titulo();
-        prepararBD();
         jasper = new ReporteF();
         cabe.consFacturasCreditos(tblFactura);
         controlFactura.listFacturasCreditoPendienteGeneral(tblFactura);
@@ -84,28 +74,16 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
         txtImporteL.setVisible(false);
     }
 
-    public static void prepararBD() {
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos");
-            } else {
-                st = (MariaDbStatement) con.createStatement();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public static void lineaCredito(String cod) {
         String sql = "select cli_limitecuenta from clientes where cli_codigo=" + cod;
-        try {
-            rss = st.executeQuery(sql);
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rss = st.executeQuery(sql)) {
             rss.first();
             txtLimiteCreditoL.setText(rss.getString(1));
             DecimalFormat df = new DecimalFormat("#,###");
             txtLimiteCredito.setText(df.format(Integer.valueOf(txtLimiteCreditoL.getText().trim().replace(".", "").replace(",", ""))));
             rss.close();
+            st.close();
+            cn.close();
         } catch (SQLException e) {
             Mensajes.error("Error consultado línea de crédito del clinte: " + e.getMessage());
         }
@@ -113,8 +91,7 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
 
     public static void sumarCuentas(String cod) {
         String sql = "SELECT SUM(fac_totalfinal) FROM factura_l WHERE clientes_cli_codigo=" + cod + " AND estado='PENDIENTE' AND fac_indicador='S'";
-        try {
-            rss = st.executeQuery(sql);
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rss = st.executeQuery(sql)) {
             rss.first();
             String cuenta = rss.getString(1);
             DecimalFormat df = new DecimalFormat("#,###");
@@ -126,6 +103,8 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
                 txtDeudaTotal.setText(df.format(Integer.valueOf(txtDeudaTotalL.getText().trim().replace(".", "").replace(",", ""))));
             }
             rss.close();
+            st.close();
+            cn.close();
         } catch (SQLException e) {
             Mensajes.error("Error calculando la deuda del clinte: " + e.getMessage());
         }
@@ -152,30 +131,18 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
     public static void imprimirTicket_Pago() {
 
         try {
-            String ip = traerIP.getIP();
-            prepararBD();
-            try {
-                rss = st.executeQuery("SELECT * FROM v_puntoemision3 WHERE tipo='T' AND estado='Activo' AND ip='" + ip.trim() + "'");
+            String sqlIP = "SELECT * FROM v_puntoemision3 WHERE tipo='T' AND estado='Activo' AND ip='" + traerIP.getIP() + "'";
+            try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rss = st.executeQuery(sqlIP)) {
                 rss.last();
                 do {
                     ImpresoraPred = rss.getString("imp_pred").trim();
                     System.out.println(ImpresoraPred);
                 } while (rss.next());
                 rss.close();
+                st.close();
+                cn.close();
             } catch (SQLException ex) {
                 //Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir Ticket de venta.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
-            }
-            try {
-                prepararBD();
-                String sql = "select em_razonsocial, em_direccion, em_celular from empresa where em_indicador='S'";
-                rss = st.executeQuery(sql);
-                try {
-                    rss.first();
-                    emp = rss.getString(1);
-                } catch (SQLException e) {
-                }
-            } catch (SQLException ee) {
-                System.out.println(ee.getMessage());
             }
             PrinterMatrix printer = new PrinterMatrix();
             Extenso e = new Extenso();
@@ -183,17 +150,16 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
             e.setNumber(0);
             //Definir el tamanho del papel para la impresion de dinamico y 32 columnas
             //int filas = 8;
-            int tamaño =25;
+            int tamaño = 25;
             printer.setOutSize(tamaño, 40);
 
-    
             printer.printTextWrap(1, 1, 10, 40, "COMPROBANTE DE PAGO");
             printer.printTextWrap(2, 1, 1, 40, "****************************************");
-            printer.printTextWrap(3, 1, 1, 40, "PAGO NRO:"+txtCodIngreso.getText());
-            printer.printTextWrap(4, 1, 1, 40, "FECHA:"+Fecha.fechaFormulario());
-            printer.printTextWrap(5, 1, 1, 40, "RECIBI DE:"+txtCliente.getText());
-            printer.printTextWrap(6, 1, 1, 40, "GUARANIES:"+txtImporte.getText());
-            printer.printTextWrap(7, 1, 1, 40, "DESCRIPCION:"+cbDetalleIngreso.getSelectedItem());
+            printer.printTextWrap(3, 1, 1, 40, "PAGO NRO:" + txtCodIngreso.getText());
+            printer.printTextWrap(4, 1, 1, 40, "FECHA:" + Fecha.fechaFormulario());
+            printer.printTextWrap(5, 1, 1, 40, "RECIBI DE:" + txtCliente.getText());
+            printer.printTextWrap(6, 1, 1, 40, "GUARANIES:" + txtImporte.getText());
+            printer.printTextWrap(7, 1, 1, 40, "DESCRIPCION:" + cbDetalleIngreso.getSelectedItem());
             printer.printTextWrap(8, 1, 1, 40, "EN CONCEPTO DE:");
             printer.printTextWrap(9, 1, 1, 40, printer.alinharADireita(1, txtObservacion.getText()));
             printer.printTextWrap(11, 1, 1, 40, "***************************************");
@@ -213,7 +179,7 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
             if (inputStream == null) {
                 return;
             }
-            
+
             PrinterService printService = new PrinterService();
             printService.printString3(ImpresoraPred, inputStream);
             byte[] cutP = new byte[]{0x1d, 'V', 1};
@@ -234,7 +200,6 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
             } else {
                 System.err.println("No existen impresoras instaladas");
             }*/
-
             inputStream.close();
             //imprimirFin(subTotal, total, dineroR, devolucion); //ESTE METODO NO SE UTILIZARA
 
@@ -917,12 +882,10 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void llamarReporteFactura() {
+    public void llamarReporteFactura() throws SQLException {
         ReporteF gr;
         gr = new ReporteF();
-        //int codF = Integer.parseInt(txtCodFactura.getText());
-        //gr.MostrarReporteConParametro(System.getProperty("user.dir")+"/Reportes/Facturas/Factura.jasper", "Factura de Venta", codF,"Facturas/Fact-"+codF+".pdf");
-        //gr.cerrar();
+        gr.cerrar();
     }
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
@@ -947,13 +910,12 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
                         if (condicion.equals("CONTADO")) {
                             //imprimirTicket(fecha, hora, fact, caja, condicion, total);
                             try {
-                                UsuarioL = Login.getUsuarioLogueado();
                                 StringBuilder sql = new StringBuilder("INSERT INTO reimpresiones (re_fac_codigo, re_descripcion, re_tipo, fecha, usuario) VALUES (");
                                 sql.append(cod).append(", ");
                                 sql.append("'RE-IMPRESION DE TICKET','");
                                 sql.append(condicion).append("',");
                                 sql.append("now(),'");
-                                sql.append(UsuarioL).append("')");
+                                sql.append(Login.getUsuarioLogueado()).append("')");
                                 String msg = Operacion.exeOperacion(sql.toString());
                                 if (msg == null) {
                                     System.out.println("la re-impresion ha sido registrada");
@@ -967,13 +929,12 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
                         } else {
                             jasper.BoletaCreditoRE("\\Reports\\ventas\\venta_credito_reimpresion.jasper", "cod", Integer.parseInt(cod));
                             try {
-                                UsuarioL = Login.getUsuarioLogueado();
                                 StringBuilder sql = new StringBuilder("INSERT INTO reimpresiones (re_fac_codigo, re_descripcion, re_tipo, fecha, usuario) VALUES (");
                                 sql.append(cod).append(", ");
                                 sql.append("'RE-IMPRESION DE BOLETA CRÉDITO','");
                                 sql.append(condicion).append("',");
                                 sql.append("now(),'");
-                                sql.append(UsuarioL).append("')");
+                                sql.append(Login.getUsuarioLogueado()).append("')");
                                 String msg = Operacion.exeOperacion(sql.toString());
                                 if (msg == null) {
                                     System.out.println("la re-impresion ha sido registrada");
@@ -1244,15 +1205,19 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
         //</editor-fold>
 
         java.awt.EventQueue.invokeLater(() -> {
-            dlgConsultarCreditosFacturas dialog = new dlgConsultarCreditosFacturas(new javax.swing.JFrame(), true);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
-                }
-            });
-            dialog.setVisible(true);
+            try {
+                dlgConsultarCreditosFacturas dialog = new dlgConsultarCreditosFacturas(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(dlgConsultarCreditosFacturas.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

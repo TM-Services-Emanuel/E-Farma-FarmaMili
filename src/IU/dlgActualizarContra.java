@@ -5,32 +5,27 @@
  */
 package IU;
 
-import Componentes.ConexionBD;
 import Componentes.Login;
+import Componentes.Mensajes;
 import Componentes.Operacion;
-import java.sql.SQLException;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 
 /**
  *
  * @author ADMIN
  */
 public class dlgActualizarContra extends javax.swing.JDialog {
+
     String UsuarioL = "";
     String PasswordU = "";
     String idUsuarioL = "";
-    public MariaDbStatement sentencia;
-    public MariaDbConnection con;
     private String passfinal;
-
 
     public dlgActualizarContra(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setTitle("Cambiar contraseña");
-        prepararBD();
         UsuarioL = Login.getUsuarioLogueado();
         PasswordU = Login.getPasswordLogeado();
         idUsuarioL = Login.getIdLogueado();
@@ -47,25 +42,13 @@ public class dlgActualizarContra extends javax.swing.JDialog {
         }
     }
 
-    private void prepararBD() {
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos");
-            } else {
-                sentencia = (MariaDbStatement) con.createStatement();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     private void limpiarCampos() {
         //txtCod.setText("");
         txtPassActual.setText("");
         txtPassNuevo.setText("");
         txtPassConfirmar.setText("");
     }
+
     private void habilitarCampos(boolean b) {
         txtPassNuevo.setEnabled(b);
         txtPassConfirmar.setEnabled(b);
@@ -91,6 +74,7 @@ public class dlgActualizarContra extends javax.swing.JDialog {
             menuitemGuardar.setEnabled(false);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -293,17 +277,15 @@ public class dlgActualizarContra extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-            System.out.println(txtPassNuevo.getText());
-        int resp = JOptionPane.showConfirmDialog(this, "¿Desea modificar su contraseña de acceso?",
-            "Aviso", JOptionPane.YES_NO_OPTION);
+        int resp = Mensajes.confirmar("¿Desea modificar su contraseña de acceso?");
         if (resp == JOptionPane.YES_OPTION) {
             try {
-                String sql="Update usuario set usu_password='"+passfinal+"', usu='"+UsuarioL+"' where usu_codigo="+idUsuarioL;
+                String sql = "Update usuario set usu_password='" + passfinal + "', usu='" + UsuarioL + "' where usu_codigo=" + idUsuarioL;
                 Operacion.exeOperacion(sql);
-                JOptionPane.showMessageDialog(this, "Contraseña modificada exitosamente" + "\n" + "Cierre Sesion para actualizar los datos de ingreso al sistema.");
+                Mensajes.Sistema("Contraseña modificada exitosamente\nCierre Sesion para actualizar los datos de ingreso al sistema.");
                 this.dispose();
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Error al cambiar contraseña", "Mensaje", 0);
+            } catch (HeadlessException ex) {
+                Mensajes.error("Error al cambiar contraseña");
             }
             btnCancelarActionPerformed(null);
         }
@@ -341,18 +323,18 @@ public class dlgActualizarContra extends javax.swing.JDialog {
 
     private void txtPassConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassConfirmarActionPerformed
         // TODO add your handling code here:
-        if (txtPassConfirmar.getText().equals("")) {
+        if (String.valueOf(txtPassConfirmar.getPassword()).equals("")) {
             txtPassConfirmar.requestFocus();
         } else {
-            if (txtPassNuevo.getText().equals(txtPassConfirmar.getText())) {
-                passfinal = txtPassConfirmar.getText();
+            if (String.valueOf(txtPassNuevo.getPassword()).equals(String.valueOf(txtPassConfirmar.getPassword()))) {
+                passfinal = String.valueOf(txtPassConfirmar.getPassword());
                 btnGuardar.setEnabled(true);
                 menuitemGuardar.setEnabled(true);
                 btnGuardar.requestFocus();
             } else {
                 btnGuardar.setEnabled(false);
                 menuitemGuardar.setEnabled(false);
-                JOptionPane.showMessageDialog(null, "Las contraseñas no coinciden, vuelva a interntarlo", "Mensaje", 2);
+                Mensajes.Sistema("Las contraseñas no coinciden, vuelva a interntarlo");
             }
         }
     }//GEN-LAST:event_txtPassConfirmarActionPerformed
@@ -372,7 +354,7 @@ public class dlgActualizarContra extends javax.swing.JDialog {
         /* if (!txtPassActual.getText().isEmpty()) {
             validarPass();
         }
-        */
+         */
     }//GEN-LAST:event_txtPassActualFocusLost
 
     private void txtPassActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActualActionPerformed

@@ -1,24 +1,20 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Mensajes;
 import Componentes.ReporteF;
 import Componentes.cargarComboBox;
 import java.awt.Toolkit;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class dlgReporteArticulos extends javax.swing.JDialog {
 
     public ReporteF jasper;
-    public static ResultSet rs;
-    public static MariaDbStatement sentencia;
-    public static MariaDbConnection con;
-    static int codLab;
-    static int codFam;
+    static DataSourceService dss = new DataSourceService();
 
-    public dlgReporteArticulos(java.awt.Frame parent, boolean modal) {
+    public dlgReporteArticulos(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         jasper = new ReporteF();
@@ -30,21 +26,6 @@ public class dlgReporteArticulos extends javax.swing.JDialog {
         cargarComboBox.cargar(cbLaboratorioInventario, "SELECT * FROM laboratorio WHERE lab_indicador='S'");
         cargarComboBox.cargar(cbLaboratorioLista, "SELECT * FROM laboratorio WHERE lab_indicador='S'");
         //cargarComboBox.cargar(cbFamilia, "SELECT * FROM familia WHERE fam_indicador='S'");
-    }
-
-    public static void prepararBD() {
-        {
-            try {
-                con = (MariaDbConnection) new ConexionBD().getConexion();
-                if (con == null) {
-                    System.out.println("No hay Conexion con la Base de Datos");
-                } else {
-                    sentencia = (MariaDbStatement) con.createStatement();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -278,19 +259,18 @@ public class dlgReporteArticulos extends javax.swing.JDialog {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         // TODO add your handling code here:
-        if(rbListadoG.isSelected()){
+        int codLab = 0;
+        if (rbListadoG.isSelected()) {
             jasper.ListadoArticuloG("\\Reports\\articulos\\Listado_ArticulosGral.jasper");
-        }else if(rbListadoL.isSelected()){
+        } else if (rbListadoL.isSelected()) {
             if (cbLaboratorioLista.getSelectedIndex() != 0) {
                 try {
-                    prepararBD();
-                    String lab;
-                    lab = cbLaboratorioLista.getSelectedItem().toString();
-                    try {
-                        rs = sentencia.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + lab + "'");
+                    try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + cbLaboratorioLista.getSelectedItem().toString() + "'")) {
                         rs.last();
                         codLab = rs.getInt("lab_codigo");
                         rs.close();
+                        st.close();
+                        cn.close();
                     } catch (SQLException ex) {
                         Mensajes.error("Error al querer obtener ID del laboratorio");
                     }
@@ -302,20 +282,18 @@ public class dlgReporteArticulos extends javax.swing.JDialog {
                 Mensajes.error("Seleccione un Laboratorio");
                 cbLaboratorioLista.requestFocus();
                 cbLaboratorioLista.setPopupVisible(true);
-            }            
-        }else if (rbInventarioG.isSelected()) {
-              jasper.InventarioArticuloG("\\Reports\\articulos\\inventario_articulos_Gral.jasper");
+            }
+        } else if (rbInventarioG.isSelected()) {
+            jasper.InventarioArticuloG("\\Reports\\articulos\\inventario_articulos_Gral.jasper");
         } else if (rbInventarioL.isSelected()) {
             if (cbLaboratorioInventario.getSelectedIndex() != 0) {
                 try {
-                    prepararBD();
-                    String lab;
-                    lab = cbLaboratorioInventario.getSelectedItem().toString();
-                    try {
-                        rs = sentencia.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + lab + "'");
+                    try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + cbLaboratorioInventario.getSelectedItem().toString() + "'")){
                         rs.last();
                         codLab = rs.getInt("lab_codigo");
                         rs.close();
+                        st.close();
+                        cn.close();
                     } catch (SQLException ex) {
                         Mensajes.error("Error al querer obtener ID del laboratorio");
                     }
@@ -385,8 +363,8 @@ public class dlgReporteArticulos extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 dlgReporteArticulos dialog = new dlgReporteArticulos(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -395,6 +373,8 @@ public class dlgReporteArticulos extends javax.swing.JDialog {
                     }
                 });
                 dialog.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(dlgReporteArticulos.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }

@@ -13,7 +13,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class controlVendedor {
-    static String UsuarioL="";
     public static void aModificar() {
         int x = dlgVendedor.tablaEmpleados.getSelectedRow();
         DefaultTableModel m = (DefaultTableModel) dlgVendedor.tablaEmpleados.getModel();
@@ -27,8 +26,8 @@ public class controlVendedor {
         dlgGestVendedor.txtTelefono.setText(v.getTelefono());
         dlgGestVendedor.txtCelular.setText(v.getCelular());
         dlgGestVendedor.txtSueldo.setText(df.format(Integer.valueOf(v.getSueldo())));
-        dlgGestVendedor.txtComision.setText(String.valueOf(v.getComision()));
-        dlgGestVendedor.txaS.setText(v.getObs());
+        //dlgGestVendedor.txtComision.setText(String.valueOf(v.getComision()));
+        //dlgGestVendedor.txaS.setText(v.getObs());
         
     }
 
@@ -57,7 +56,7 @@ public class controlVendedor {
         }else{
             sueldo = Integer.parseInt(dlgGestVendedor.txtSueldo.getText().replace(".", "").replace(",", ""));
         }
-        if(dlgGestVendedor.txtComision.getText().trim()==null){
+        /*if(dlgGestVendedor.txtComision.getText().trim()==null){
             comis=0;
         }else{
             comis = Double.parseDouble(dlgGestVendedor.txtComision.getText());
@@ -66,15 +65,15 @@ public class controlVendedor {
             obs="''";
         }else{
             obs = dlgGestVendedor.txaS.getText().toUpperCase();
-        }
-        ven = new Vendedor(codV, nombreV, direccion, telef, celu, sueldo, comis, obs);
+        }*/
+        //ven = new Vendedor(codV, nombreV, direccion, telef, celu, sueldo, comis, obs);
         return ven;
     }
 
     public static String addVendedor() {
         String msg;
         Vendedor v = capturarCampos();
-        String usuario = UsuarioL=Login.getUsuarioLogueado();
+        String usuario = Login.getUsuarioLogueado();
         msg = GestionarVendedor.addVendedor(v, usuario);
         if (msg == null) {
             Mensajes.informacion("Empleado Registrado");
@@ -99,7 +98,7 @@ public class controlVendedor {
     public static String actVendedor() {
         String msg;
         Vendedor v = capturarCampos();
-        String usuario = UsuarioL=Login.getUsuarioLogueado();
+        String usuario = Login.getUsuarioLogueado();
         msg = GestionarVendedor.actVendedor(v, usuario);
         if (msg == null) {
             Mensajes.informacion("Empleado Actualizado");
@@ -113,7 +112,7 @@ public class controlVendedor {
         int x = dlgVendedor.tablaEmpleados.getSelectedRow();
         String msg;
         String cod = dlgVendedor.tablaEmpleados.getValueAt(x, 0).toString();
-        String usuario = UsuarioL=Login.getUsuarioLogueado();
+        String usuario = Login.getUsuarioLogueado();
         msg = GestionarVendedor.delVendedor(cod, usuario);
         if (msg == null) {
             Mensajes.informacion("Empleado Eliminado");

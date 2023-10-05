@@ -1,6 +1,6 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.DecimalFormatRenderer;
 import Componentes.Fecha;
 import Componentes.Login;
@@ -11,8 +11,9 @@ import Componentes.RenderDecimal;
 import Componentes.RenderDecimal2;
 import Componentes.ReporteF;
 import Componentes.Software;
+import Componentes.Tickets;
+import Componentes.Timbrado;
 import Componentes.generarCodigos;
-import Componentes.traerIP;
 import Componentes.validarCampos;
 import Controladores.CabecerasTablas;
 import Controladores.controlFactura;
@@ -22,32 +23,21 @@ import Datos.GestionarVendedor;
 import java.awt.event.KeyEvent;
 import Modelo.Articulo;
 import Modelo.Vendedor;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.DecimalFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 
 public final class dlgVentas extends javax.swing.JDialog {
 
-    public static MariaDbConnection con;
-    public static MariaDbStatement stTransaccion;
-    public static MariaDbStatement st;
-    public static ResultSet rss;
     public static int PrecioVenta;
     public static double costoiva;
     public static double descuento;
-    public static String UsuarioL = "";
     public ReporteF jasper;
-    static String emp;
-    static String dir;
-    static String cel;
 
-    public static ResultSet rs;
-
-    private static int idEmision;
-    private static String Timbrado;
+    /*private static int idEmision;
+    private static String Timbr;
     private static String Establecimiento;
     private static String Emision;
     private static String Desde;
@@ -58,21 +48,20 @@ public final class dlgVentas extends javax.swing.JDialog {
     private static int facturaactualT;
     private static int facturafin;
     private static int facturafinT;
-    private static String ImpresoraPred;
+    private static String ImpresoraPred;*/
     Numero_a_Letra L;
+    static DataSourceService dss = new DataSourceService();
 
-    public dlgVentas(java.awt.Frame parent, boolean modal) {
+    public dlgVentas(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         titulo();
-        prepararBD();
         jasper = new ReporteF();
         CabecerasTablas.ventas(tbDetalle);
         Cancelar();
         pintarCondicion();
-        //Rendes();
         Invisible();
-        L= new Numero_a_Letra();
+        L = new Numero_a_Letra();
         txtCodVendedorF.setText("");
         txtCodVendedorT.setText("");
     }
@@ -142,20 +131,6 @@ public final class dlgVentas extends javax.swing.JDialog {
         txtFechaReal.setVisible(false);
         txtCodF.setVisible(false);
         txtCodT.setVisible(false);
-    }
-
-    public static void prepararBD() {
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos");
-            } else {
-                stTransaccion = (MariaDbStatement) con.createStatement();
-                st = (MariaDbStatement) con.createStatement();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     public void cant() {
@@ -230,164 +205,147 @@ public final class dlgVentas extends javax.swing.JDialog {
     }
 
     public static void obtenerNFactura() {
-        String ip = traerIP.getIP();
-        prepararBD();
-        try {
-            rs = st.executeQuery("SELECT * FROM v_puntoemision3 WHERE ip='" + ip.trim() + "' AND tipo='L' AND estado='Activo'");
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT facturaactual FROM v_puntoemision3 WHERE idemision=" + Timbrado.getIdEmision())) {
             rs.last();
             do {
-                idEmision = rs.getInt("idemision");
-                Timbrado = rs.getString("timbra");
-                Establecimiento = rs.getString("establecimiento");
-                Emision = rs.getString("puntoemision");
-                Desde = rs.getString("fechadesde");
-                Hasta = rs.getString("fechahasta");
-                facturaactual = rs.getInt("facturaactual");
-                facturafin = rs.getInt("facturafin");
-                lbTimbrado.setText("TIMBRADO " + Timbrado);
-                lbValidaz.setText("VALIDO DESDE: " + Desde + " HASTA: " + Hasta);
-
-                if (facturaactual <= facturafin) {
-                    txtidEmision.setText(String.valueOf(idEmision));
-                    txtEstablecimiento.setText(Establecimiento);
-                    txtEmision.setText(Emision);
-                    switch (String.valueOf(facturaactual).length()) {
+                int facturaactual = rs.getInt("facturaactual");
+                lbTimbrado.setText("TIMBRADO " + Timbrado.getTimbrado());
+                lbValidaz.setText("VALIDO DESDE: " + Timbrado.getDesde() + " HASTA: " + Timbrado.getHasta());
+                int FA = facturaactual + 1;
+                if (FA <= Timbrado.getFacturaFin()) {
+                    txtidEmision.setText(String.valueOf(Timbrado.getIdEmision()));
+                    txtEstablecimiento.setText(Timbrado.getEstablecimiento());
+                    txtEmision.setText(Timbrado.getPuntoExpedicion());
+                    switch (String.valueOf(FA).length()) {
                         case 1 ->
-                            txtFacturaN.setText("000000" + (facturaactual + 1));
+                            txtFacturaN.setText("000000" + String.valueOf(FA));
                         case 2 ->
-                            txtFacturaN.setText("00000" + (facturaactual + 1));
+                            txtFacturaN.setText("00000" + String.valueOf(FA));
                         case 3 ->
-                            txtFacturaN.setText("0000" + (facturaactual + 1));
+                            txtFacturaN.setText("0000" + String.valueOf(FA));
                         case 4 ->
-                            txtFacturaN.setText("000" + (facturaactual + 1));
+                            txtFacturaN.setText("000" + String.valueOf(FA));
                         case 5 ->
-                            txtFacturaN.setText("00" + (facturaactual + 1));
+                            txtFacturaN.setText("00" + String.valueOf(FA));
                         case 6 ->
-                            txtFacturaN.setText("0" + (facturaactual + 1));
+                            txtFacturaN.setText("0" + String.valueOf(FA));
                         case 7 ->
-                            txtFacturaN.setText(String.valueOf(facturaactual + 1));
+                            txtFacturaN.setText(String.valueOf(FA));
                         default -> {
                         }
                     }
+                    OpcionesEmision.dispose();
+                    dlgFinFacturaL.setSize(418, 530);
+                    dlgFinFacturaL.setLocationRelativeTo(null);
+                    dlgFinFacturaL.setModal(true);
+                    dlgFinFacturaL.setTitle("Confirmar Venta");
+                    String cod = GestionarFactura.getFactura();
+                    txtCodF.setText(cod);
+                    txtCodVendedorF.setText("");
+                    dlgFinFacturaL.setVisible(true);
+                    txtCodVendedorF.requestFocus();
+                }else{
+                    Mensajes.Sistema("Se ha alcanzado la cantidad máxima de facturas habilitadas para este puento de expedición");
                 }
-
             } while (rs.next());
             rs.close();
-            OpcionesEmision.dispose();
-            dlgFinFacturaL.setSize(418, 530);
-            dlgFinFacturaL.setLocationRelativeTo(null);
-            dlgFinFacturaL.setModal(true);
-            dlgFinFacturaL.setTitle("Confirmar Venta");
-            String cod = GestionarFactura.getFactura();
-            txtCodF.setText(cod);
-            txtCodVendedorF.setText("");
-            dlgFinFacturaL.setVisible(true);
-            txtCodVendedorF.requestFocus();
-            
+            st.close();
+            cn.close();
 
         } catch (SQLException ex) {
             Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir factura legal.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
         }
     }
-    
+
     public static void ComprobarNF() {
-        prepararBD();
-        try {
-            rs = st.executeQuery("SELECT * FROM v_puntoemision3 WHERE idemision="+txtidEmision.getText().trim());
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT facturaactual FROM v_puntoemision3 WHERE idemision=" + txtidEmision.getText().trim())) {
             rs.last();
             do {
-                facturaactual = rs.getInt("facturaactual");
-                facturafin = rs.getInt("facturafin");
-                if (facturaactual <= facturafin) {
-                    txtEstablecimiento.setText(Establecimiento);
-                    txtEmision.setText(Emision);
-                    switch (String.valueOf(facturaactual).length()) {
+                int facturaactual = rs.getInt("facturaactual");
+                int FA = facturaactual + 1;
+                if (FA <= Timbrado.getFacturaFin()) {
+                    txtEstablecimiento.setText(Timbrado.getEstablecimiento());
+                    txtEmision.setText(Timbrado.getPuntoExpedicion());
+                    switch (String.valueOf(FA).length()) {
                         case 1 ->
-                            txtFacturaN.setText("000000" + (facturaactual + 1));
+                            txtFacturaN.setText("000000" + String.valueOf(FA));
                         case 2 ->
-                            txtFacturaN.setText("00000" + (facturaactual + 1));
+                            txtFacturaN.setText("00000" + String.valueOf(FA));
                         case 3 ->
-                            txtFacturaN.setText("0000" + (facturaactual + 1));
+                            txtFacturaN.setText("0000" + String.valueOf(FA));
                         case 4 ->
-                            txtFacturaN.setText("000" + (facturaactual + 1));
+                            txtFacturaN.setText("000" + String.valueOf(FA));
                         case 5 ->
-                            txtFacturaN.setText("00" + (facturaactual + 1));
+                            txtFacturaN.setText("00" + String.valueOf(FA));
                         case 6 ->
-                            txtFacturaN.setText("0" + (facturaactual + 1));
+                            txtFacturaN.setText("0" + String.valueOf(FA));
                         case 7 ->
-                            txtFacturaN.setText(String.valueOf(facturaactual + 1));
+                            txtFacturaN.setText(String.valueOf(FA));
                         default -> {
                         }
                     }
                 }
             } while (rs.next());
             rs.close();
+            st.close();
+            cn.close();
             String cod = GestionarFactura.getFactura();
             txtCodF.setText(cod);
-            
-        } catch (SQLException ex) {}
+
+        } catch (SQLException ex) {
+        }
     }
 
     public static void obtenerNTicket() {
-        String ip = traerIP.getIP();
         String cod = GestionarFactura.getCodigo();
         txtCodT.setText(cod);
-        prepararBD();
-        try {
-            rs = st.executeQuery("SELECT * FROM v_puntoemision3 WHERE tipo='T' AND estado='Activo' AND ip='" + ip.trim()+"'");
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT facturaactual FROM v_puntoemision3 WHERE idemision="+Tickets.getIdEmision())) {
             rs.last();
             do {
-                txtidEmision.setText(String.valueOf(rs.getInt("idemision")));
-                EstablecimientoT= rs.getString("establecimiento");
-                EmisionT = rs.getString("puntoemision");
-                facturaactualT = rs.getInt("facturaactual");
-                facturafinT = rs.getInt("facturafin");
-                ImpresoraPred = rs.getString("imp_pred").trim();
-                System.out.println(ImpresoraPred);
-
-                if (facturaactualT <= facturafinT) {
-                    //txtTicketN.setText(String.valueOf(facturaactualT + 1));
-                    int numero= (facturaactualT + 1);
-                            txtEPE.setText(EstablecimientoT+"-"+EmisionT+"-");
-                            txtTicketN.setText(String.valueOf(numero));
+                txtidEmision.setText(String.valueOf(Tickets.getIdEmision()));
+                int facturaactualT = rs.getInt("facturaactual");
+                int numero = (facturaactualT + 1);
+                if (numero <= Tickets.getTicketFin()) {
+                    txtEPE.setText(Tickets.getEstablecimiento() + "-" + Tickets.getPuntoExpedicion() + "-");
+                    txtTicketN.setText(String.valueOf(numero));
+                    OpcionesEmision.dispose();
+                    dlgFinTicket.setSize(433, 502);
+                    dlgFinTicket.setLocationRelativeTo(null);
+                    dlgFinTicket.setModal(true);
+                    dlgFinTicket.setTitle("Confirmar Venta");
+                    txtCodVendedorT.setText("");
+                    dlgFinTicket.setVisible(true);
+                    txtCodVendedorT.requestFocus();
+                }else{
+                    Mensajes.Sistema("Se ha alcanzado la cantidad máxima de ticket habilitadas para este puento de expedición");
                 }
             } while (rs.next());
             rs.close();
-            OpcionesEmision.dispose();
-            dlgFinTicket.setSize(433, 502);
-            dlgFinTicket.setLocationRelativeTo(null);
-            dlgFinTicket.setModal(true);
-            dlgFinTicket.setTitle("Confirmar Venta");
-            txtCodVendedorT.setText("");
-            dlgFinTicket.setVisible(true);
-            txtCodVendedorT.requestFocus();
-            
-
+            st.close();
+            cn.close();
         } catch (SQLException ex) {
             Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir Ticket de venta.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
         }
     }
-    
+
     public static void ComprobarNT() {
         String cod = GestionarFactura.getCodigo();
         txtCodT.setText(cod);
-        prepararBD();
-        try {
-            rs = st.executeQuery("SELECT * FROM v_puntoemision3 WHERE idemision="+txtidEmision.getText().trim());
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT facturaactual FROM v_puntoemision3 WHERE idemision=" + txtidEmision.getText().trim())) {
             rs.last();
             do {
-                EstablecimientoT= rs.getString("establecimiento");
-                EmisionT = rs.getString("puntoemision");
-                facturaactualT = rs.getInt("facturaactual");
-                facturafinT = rs.getInt("facturafin");
-                if (facturaactualT <= facturafinT) { 
-                    int numero= (facturaactualT + 1);
-                            txtEPE.setText(EstablecimientoT+"-"+EmisionT+"-");
-                            txtTicketN.setText(String.valueOf(numero));
+                int facturaactualT = rs.getInt("facturaactual");
+                int numero = (facturaactualT + 1);
+                if (numero <= Tickets.getTicketFin()) {
+                    txtEPE.setText(Tickets.getEstablecimiento() + "-" + Tickets.getPuntoExpedicion() + "-");
+                    txtTicketN.setText(String.valueOf(numero));
                 }
             } while (rs.next());
             rs.close();
-        } catch (SQLException ex) {}
+            st.close();
+            cn.close();
+        } catch (SQLException ex) {
+        }
     }
 
     /* public static void imprimirTicketO() {
@@ -741,13 +699,13 @@ public final class dlgVentas extends javax.swing.JDialog {
         Ticket += "\n";
         Ticket += "\n";
         Ticket += "\n";
-        
+
         try {
-            printerService.printString2(ImpresoraPred, Ticket);
+            printerService.printString2(Tickets.getImpresora(), Ticket);
             byte[] cutP = new byte[]{0x1d, 'V', 1};
-            printerService.printBytes2(ImpresoraPred, cutP);
+            printerService.printBytes2(Tickets.getImpresora(), cutP);
         } catch (Exception e) {
-        Mensajes.error("No se encuentra instalada la impresora predeterminada para este punto de impresión");
+            Mensajes.error("No se encuentra instalada la impresora predeterminada para este punto de impresión");
         }
     }
 
@@ -841,14 +799,13 @@ public final class dlgVentas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Error al imprimir " + e);
         }
     }*/
-    
-    public void llamarReporteFactura(int cod, String Letra) {
+    public void llamarReporteFactura(int cod, String Letra) throws SQLException {
         ReporteF gr;
         gr = new ReporteF();
-        //int codF = Integer.parseInt(txtCodFactura.getText());
-        gr.FacturaLegal("\\Reports\\ventas\\facturaLegal.jasper", "cod", cod,"Letra",Letra);
+        gr.FacturaLegal("\\Reports\\ventas\\facturaLegal.jasper", "cod", cod, "Letra", Letra);
         gr.cerrar();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -3244,49 +3201,47 @@ public final class dlgVentas extends javax.swing.JDialog {
     private void btnConfirmarFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarFacturaActionPerformed
         // TODO add your handling code here:
         ComprobarNF();
-        String cond=lbCond.getText();
+        String cond = lbCond.getText();
         String est;
-        if(cond.equals("CONTADO")){
-            est="ABONADO";
-        }else{
-            est="PENDIENTE";
+        if (cond.equals("CONTADO")) {
+            est = "ABONADO";
+        } else {
+            est = "PENDIENTE";
         }
-        UsuarioL = Login.getUsuarioLogueado();
-        try {
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement()){
             int resp = JOptionPane.showConfirmDialog(dlgFinFacturaL, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (resp == JOptionPane.YES_OPTION) {
                 try {
-                    prepararBD();
-                    con.setAutoCommit(false);
-                    String sql = "insert into factura_l values("+txtCodF.getText()+","+txtCodVendedorF.getText()+","+txtCodCliente.getText()+","+txtCaja.getText()+"," + txtidEmision.getText()+", '"+ txtEstablecimiento.getText()+"-"+txtEmision.getText()+"-"+txtFacturaN.getText() + "','" + cond + "','"
-                            + txtFechaReal.getText().trim() + "','" + txtHora.getText().trim() + "'," + txtTotalL.getText() + "," + txtExentaL.getText() + "," + txt5L.getText() + "," + txt10L.getText() + ",'S','" + UsuarioL + "','"+est+"')";
-                    String sql3= "update puntoemision set facturaactual="+Integer.parseInt(txtFacturaN.getText().trim())+" where idemision="+txtidEmision.getText().trim();
-                    
-                    stTransaccion.executeUpdate(sql);
-                    stTransaccion.executeUpdate(sql3);
+                    cn.setAutoCommit(false);
+                    String sql = "insert into factura_l values(" + txtCodF.getText() + "," + txtCodVendedorF.getText() + "," + txtCodCliente.getText() + "," + txtCaja.getText() + "," + txtidEmision.getText() + ", '" + txtEstablecimiento.getText() + "-" + txtEmision.getText() + "-" + txtFacturaN.getText() + "','" + cond + "','"
+                            + txtFechaReal.getText().trim() + "','" + txtHora.getText().trim() + "'," + txtTotalL.getText() + "," + txtExentaL.getText() + "," + txt5L.getText() + "," + txt10L.getText() + ",'S','" + Login.getUsuarioLogueado() + "','" + est + "')";
+                    String sql3 = "update puntoemision set facturaactual=" + Integer.valueOf(txtFacturaN.getText().trim()) + " where idemision=" + txtidEmision.getText().trim();
+
+                    st.executeUpdate(sql);
+                    st.executeUpdate(sql3);
                     int fila = tbDetalle.getRowCount();
                     for (int j = 0; j < fila; j++) {
                         String filas[] = {
-                            tbDetalle.getValueAt(j, 0).toString(), 
-                            tbDetalle.getValueAt(j, 3).toString(), 
-                            tbDetalle.getValueAt(j, 6).toString(), 
-                            tbDetalle.getValueAt(j, 7).toString(), 
+                            tbDetalle.getValueAt(j, 0).toString(),
+                            tbDetalle.getValueAt(j, 3).toString(),
+                            tbDetalle.getValueAt(j, 6).toString(),
+                            tbDetalle.getValueAt(j, 7).toString(),
                             tbDetalle.getValueAt(j, 8).toString(),
                             tbDetalle.getValueAt(j, 9).toString(),
                             tbDetalle.getValueAt(j, 10).toString()};
-                        sql = "insert into detalle_factura_l values(" + txtCodF.getText() + "," + filas[0]+ "," + filas[1].replace(".", "").replace(",", "") + "," + filas[2].replace(".", "").replace(",", "") + "," + filas[3].replace(".", "").replace(",", "") +"," + filas[4].replace(".", "").replace(",", "") +"," + filas[5].replace(".", "").replace(",", "") +"," + filas[6].replace(".", "").replace(",", "") + ")";
+                        sql = "insert into detalle_factura_l values(" + txtCodF.getText() + "," + filas[0] + "," + filas[1].replace(".", "").replace(",", "") + "," + filas[2].replace(".", "").replace(",", "") + "," + filas[3].replace(".", "").replace(",", "") + "," + filas[4].replace(".", "").replace(",", "") + "," + filas[5].replace(".", "").replace(",", "") + "," + filas[6].replace(".", "").replace(",", "") + ")";
                         String sql2 = "UPDATE articulo SET art_stock=art_stock-" + filas[1] + " WHERE  art_codigo=" + filas[0];
-                        stTransaccion.executeUpdate(sql);
-                        stTransaccion.executeUpdate(sql2);
+                        st.executeUpdate(sql);
+                        st.executeUpdate(sql2);
                     }
-                    con.commit();
-                    stTransaccion.close();
+                    cn.commit();
+                    st.close();
+                    cn.close();
                     Mensajes.informacion("VENTA REALIZADA!");
                     dlgFinFacturaL.dispose();
-                    if(cond.equals("CONTADO")){
-                        String Letra= L.Convertir((txtTotalL.getText()), true);
+                    if (cond.equals("CONTADO")) {
+                        String Letra = L.Convertir((txtTotalL.getText()), true);
                         llamarReporteFactura(Integer.parseInt(txtCodF.getText().trim()), Letra);
-                        //jasper.FacturaLegal("\\Reports\\ventas\\facturaLegal.jasper", "cod", Integer.parseInt(txtCodF.getText().trim()),"Letra",Letra);
                         CabecerasTablas.limpiarTablasVentas(tbDetalle);
                         CabecerasTablas.ventas(tbDetalle);
                         controlFactura.canCelar();
@@ -3294,10 +3249,9 @@ public final class dlgVentas extends javax.swing.JDialog {
                         txtAbonoF.setText("0");
                         txtVueltoF.setText("0");
                         cant();
-                    }else{
-                        String Letra= L.Convertir((txtTotalL.getText()), true);
+                    } else {
+                        String Letra = L.Convertir((txtTotalL.getText()), true);
                         llamarReporteFactura(Integer.parseInt(txtCodF.getText().trim()), Letra);
-                        //jasper.FacturaLegal("\\Reports\\ventas\\facturaLegal.jasper", "cod", Integer.parseInt(txtCodF.getText().trim()),"Letra",Letra);
                         CabecerasTablas.limpiarTablasVentas(tbDetalle);
                         CabecerasTablas.ventas(tbDetalle);
                         controlFactura.canCelar();
@@ -3305,14 +3259,12 @@ public final class dlgVentas extends javax.swing.JDialog {
                         txtAbonoF.setText("0");
                         txtVueltoF.setText("0");
                         cant();
-                        
+
                     }
-                    //CabecerasTablas.limpiarTablas(tbDetalle);
-                    //cabe.compras(tbDetalle);
-                    //controlFactura.canCelar();  
                 } catch (SQLException e) {
                     try {
-                        con.rollback();
+                        cn.rollback();
+                        cn.close();
                         Mensajes.error("TRANSACCION FALLIDA. LOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
                         controlFactura.canCelar();
                         dlgFinFacturaL.dispose();
@@ -3320,10 +3272,6 @@ public final class dlgVentas extends javax.swing.JDialog {
                         Mensajes.error(se.getMessage());
                     }
                 }
-                //Cancelar();
-                //txtAbono.setText("0");
-                //txtVuelto.setText("0");
-                //cant();
             }
         } catch (Exception ee) {
             System.out.println(ee.getMessage());
@@ -3404,12 +3352,12 @@ public final class dlgVentas extends javax.swing.JDialog {
 
     private void txtVueltoFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVueltoFActionPerformed
         // TODO add your handling code here:
-        if(Integer.parseInt(txtVueltoF.getText().trim().replace(".", "").replace(",", "")) < 0){
+        if (Integer.parseInt(txtVueltoF.getText().trim().replace(".", "").replace(",", "")) < 0) {
             txtAbonoF.requestFocus();
-        }else{
+        } else {
             btnConfirmarFactura.doClick();
         }
-        
+
     }//GEN-LAST:event_txtVueltoFActionPerformed
 
     private void itemBuscarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemBuscarCActionPerformed
@@ -3473,43 +3421,43 @@ public final class dlgVentas extends javax.swing.JDialog {
     private void btnConfirmarTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarTicketActionPerformed
         // TODO add your handling code here:
         ComprobarNT();
-        String cond=lbCond.getText();
+        String cond = lbCond.getText();
         String est;
-        if(cond.equals("CONTADO")){
-            est="ABONADO";
-        }else{
-            est="PENDIENTE";
+        if (cond.equals("CONTADO")) {
+            est = "ABONADO";
+        } else {
+            est = "PENDIENTE";
         }
-        UsuarioL = Login.getUsuarioLogueado();
-        try {
+        
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement()){
             int resp = JOptionPane.showConfirmDialog(dlgFinTicket, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (resp == JOptionPane.YES_OPTION) {
                 try {
-                    prepararBD();
-                    con.setAutoCommit(false);
-                    String sql = "insert into factura values("+txtCodT.getText()+","+txtCodVendedorT.getText()+","+txtCodCliente.getText()+","+txtCaja.getText()+","+txtidEmision.getText()+",'"+ txtEPE.getText()+txtTicketN.getText() + "','" + cond + "','"
-                            + txtFechaReal.getText().trim() + "','" + txtHora.getText().trim() + "'," + txtTotalL.getText() + "," + txtExentaL.getText() + "," + txt5L.getText() + "," + txt10L.getText() + ",'S','" + UsuarioL + "','"+est+"')";
-                    String sql3= "update puntoemision set facturaactual="+Integer.parseInt(txtTicketN.getText().trim())+" where idemision="+txtidEmision.getText().trim();
-                    
-                    stTransaccion.executeUpdate(sql);
-                    stTransaccion.executeUpdate(sql3);
+                    cn.setAutoCommit(false);
+                    String sql = "insert into factura values(" + txtCodT.getText() + "," + txtCodVendedorT.getText() + "," + txtCodCliente.getText() + "," + txtCaja.getText() + "," + txtidEmision.getText() + ",'" + txtEPE.getText() + txtTicketN.getText() + "','" + cond + "','"
+                            + txtFechaReal.getText().trim() + "','" + txtHora.getText().trim() + "'," + txtTotalL.getText() + "," + txtExentaL.getText() + "," + txt5L.getText() + "," + txt10L.getText() + ",'S','" + Login.getUsuarioLogueado() + "','" + est + "')";
+                    String sql3 = "update puntoemision set facturaactual=" + Integer.parseInt(txtTicketN.getText().trim()) + " where idemision=" + txtidEmision.getText().trim();
+
+                    st.executeUpdate(sql);
+                    st.executeUpdate(sql3);
                     int fila = tbDetalle.getRowCount();
                     for (int j = 0; j < fila; j++) {
                         String filas[] = {
-                            tbDetalle.getValueAt(j, 0).toString(), 
-                            tbDetalle.getValueAt(j, 3).toString(), 
-                            tbDetalle.getValueAt(j, 6).toString(), 
+                            tbDetalle.getValueAt(j, 0).toString(),
+                            tbDetalle.getValueAt(j, 3).toString(),
+                            tbDetalle.getValueAt(j, 6).toString(),
                             tbDetalle.getValueAt(j, 10).toString()};
-                        sql = "insert into detalle_factura values(" + txtCodT.getText() + "," + filas[0]+ "," + filas[1].replace(".", "").replace(",", "") + "," + filas[2].replace(".", "").replace(",", "") + "," + filas[3].replace(".", "").replace(",", "") + ")";
+                        sql = "insert into detalle_factura values(" + txtCodT.getText() + "," + filas[0] + "," + filas[1].replace(".", "").replace(",", "") + "," + filas[2].replace(".", "").replace(",", "") + "," + filas[3].replace(".", "").replace(",", "") + ")";
                         String sql2 = "UPDATE articulo SET art_stock=art_stock-" + filas[1] + " WHERE  art_codigo=" + filas[0];
-                        stTransaccion.executeUpdate(sql);
-                        stTransaccion.executeUpdate(sql2);
+                        st.executeUpdate(sql);
+                        st.executeUpdate(sql2);
                     }
-                    con.commit();
-                    stTransaccion.close();
+                    cn.commit();
+                    st.close();
+                    cn.close();
                     Mensajes.informacion("VENTA REALIZADA!");
                     dlgFinTicket.dispose();
-                    if(cond.equals("CONTADO")){
+                    if (cond.equals("CONTADO")) {
                         imprimirTicket();
                         CabecerasTablas.limpiarTablasVentas(tbDetalle);
                         CabecerasTablas.ventas(tbDetalle);
@@ -3518,23 +3466,25 @@ public final class dlgVentas extends javax.swing.JDialog {
                         txtAbonoT.setText("0");
                         txtVueltoT.setText("0");
                         cant();
-                    }else{
+                    } else {
                         CabecerasTablas.limpiarTablasVentas(tbDetalle);
                         CabecerasTablas.ventas(tbDetalle);
                         controlFactura.canCelar();
-                        jasper.BoletaCredito("\\Reports\\ventas\\venta_credito.jasper", "cod", Integer.parseInt(txtCodT.getText().trim()));
+                        jasper.BoletaCredito("\\Reports\\ventas\\venta_credito.jasper", "cod", Integer.valueOf(txtCodT.getText().trim()));
+                        jasper.cerrar();
                         Cancelar();
                         txtAbonoT.setText("0");
                         txtVueltoT.setText("0");
                         cant();
-                        
+
                     }
                     //CabecerasTablas.limpiarTablas(tbDetalle);
                     //cabe.compras(tbDetalle);
                     //controlFactura.canCelar();  
                 } catch (SQLException e) {
                     try {
-                        con.rollback();
+                        cn.rollback();
+                        cn.close();
                         Mensajes.error("TRANSACCION FALLIDA. LOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
                         controlFactura.canCelar();
                         dlgFinTicket.dispose();
@@ -3639,12 +3589,12 @@ public final class dlgVentas extends javax.swing.JDialog {
 
     private void txtVueltoTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVueltoTActionPerformed
         // TODO add your handling code here:
-        if(Integer.parseInt(txtVueltoT.getText().trim().replace(".", "").replace(",", "")) < 0){
+        if (Integer.parseInt(txtVueltoT.getText().trim().replace(".", "").replace(",", "")) < 0) {
             txtAbonoT.requestFocus();
-        }else{
+        } else {
             btnConfirmarTicket.doClick();
         }
-        
+
     }//GEN-LAST:event_txtVueltoTActionPerformed
 
     private void item_ConfirmarTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_item_ConfirmarTicketActionPerformed
@@ -3742,15 +3692,19 @@ public final class dlgVentas extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         java.awt.EventQueue.invokeLater(() -> {
-            dlgVentas dialog = new dlgVentas(new javax.swing.JFrame(), true);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
-                }
-            });
-            dialog.setVisible(true);
+            try {
+                dlgVentas dialog = new dlgVentas(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(dlgVentas.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

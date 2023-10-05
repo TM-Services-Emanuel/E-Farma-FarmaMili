@@ -1,6 +1,6 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Fecha;
 import Componentes.Mensajes;
 import Componentes.PrinterService;
@@ -14,69 +14,59 @@ import br.com.adilson.util.Extenso;
 import br.com.adilson.util.PrinterMatrix;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 
 public final class dlgCajaDia extends javax.swing.JDialog {
+
     public String NCaja;
     public static int ING;
     public static int GAS;
     public int INI;
-    
-    public static MariaDbConnection con;
-    public static MariaDbStatement st;
-    public static ResultSet rss;
-   
-    
-    
     static String hora;
     static String fecha;
     static String usuF;
     static String estado;
     private static String ImpresoraPred;
     static DecimalFormat df;
-    
+    static DataSourceService dss = new DataSourceService();
+
     public dlgCajaDia(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
         df = new DecimalFormat("#,###");
         try {
-            NCaja=(generarCodigos.ObtenerCodigo("SELECT ca_id from caja where ca_indicador='S' ORDER BY ca_id DESC LIMIT 1"));
-            System.out.println("N CAja hoy: "+NCaja);
+            NCaja = (generarCodigos.ObtenerCodigo("SELECT ca_id from caja where ca_indicador='S' ORDER BY ca_id DESC LIMIT 1"));
+            System.out.println("N CAja hoy: " + NCaja);
             Caja caj = GestionarCaja.busCaja(NCaja);
             lbInicial.setText(df.format(caj.getCaInicial()));
             txtEntregado.setText(df.format(caj.getCaEntregado()));
-            INI=((caj.getCaInicial()));
+            INI = ((caj.getCaInicial()));
             lbNCaja.setText(String.valueOf(caj.getCaId()));
-            lbApertura.setText(String.valueOf(Fecha.formatoFechaMuestra(caj.getFechaI())+" "+Fecha.formatoHoraMuestra(caj.getHoraI())));
+            lbApertura.setText(String.valueOf(Fecha.formatoFechaMuestra(caj.getFechaI()) + " " + Fecha.formatoHoraMuestra(caj.getHoraI())));
             lbUsuI.setText(String.valueOf(caj.getUsuarioI()));
-            if(caj.getIndicador().equals("S")){
+            if (caj.getIndicador().equals("S")) {
                 lbEstado.setText("ABIERTO");
-            }else{
+            } else {
                 lbEstado.setText("CERRADO");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
         totalVentasCont();
-        //totalVentasContFactura();
         totalVentasCred();
         totalCompraCont();
         totalCompraCred();
         totalGasto();
         totalIngreso();
-       // gastoTotal();
         ingresoTotal();
-        totalCaja();    
+        totalCaja();
         calcularDif();
     }
-    
+
     private static void calcularDif() {
 
         if (Integer.parseInt(lblEntregar.getText().trim().replace(".", "").replace(",", "")) >= 0) {
@@ -88,63 +78,49 @@ public final class dlgCajaDia extends javax.swing.JDialog {
             lblDiferencia.setText(df.format(diferencia));
         }
     }
-    
-    
-   public static void prepararBD() {
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos");
-            } else {
-                st = (MariaDbStatement) con.createStatement();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("VISOR DE VALORES - MOVIMIENTOS DEL DÍA");
-        }else{
-            this.setTitle(Software.getSoftware()+" - VISOR DE VALORES - MOVIMIENTOS DEL DÍA");
+        } else {
+            this.setTitle(Software.getSoftware() + " - VISOR DE VALORES - MOVIMIENTOS DEL DÍA");
         }
     }
+
     public static void imprimirCierre() {
         String ip = traerIP.getIP();
-        prepararBD();
-        try {
-            rss = st.executeQuery("SELECT * FROM v_puntoemision3 WHERE tipo='T' AND estado='Activo' AND ip='" + ip.trim()+"'");
-            rss.last();
+        String sql = "SELECT * FROM v_puntoemision3 WHERE tipo='T' AND estado='Activo' AND ip='" + ip.trim() + "'";
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+            rs.last();
             do {
-                ImpresoraPred = rss.getString("imp_pred").trim();
+                ImpresoraPred = rs.getString("imp_pred").trim();
                 System.out.println(ImpresoraPred);
-            } while (rss.next());
-            rss.close();
+            } while (rs.next());
+            rs.close();
+            st.close();
+            cn.close();
         } catch (SQLException ex) {
             //Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir Ticket de venta.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
         }
-        
+
         try {
-            try {
-                prepararBD();
-                String sql = "SELECT caja.ca_fechafin, caja.ca_horafin, caja.ca_usuariocierre, caja.ca_indicador from caja WHERE ca_id="+lbNCaja.getText();
-                rss = st.executeQuery(sql);
-                try{
-                    rss.first();
-                    if(rss.getString(4).equals("N")){
-                        fecha = rss.getString(1);
-                        hora = rss.getString(2);
-                        usuF = rss.getString(3);
-                        estado = "CERRADO";
-                    }else{
-                        fecha = "";
-                        hora = "";
-                        usuF = "";
-                        estado="ABIERTO";
-                    }
-                } catch (SQLException e) {
+            String sql2 = "SELECT caja.ca_fechafin, caja.ca_horafin, caja.ca_usuariocierre, caja.ca_indicador from caja WHERE ca_id=" + lbNCaja.getText();
+            try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql2)) {
+                rs.first();
+                if (rs.getString(4).equals("N")) {
+                    fecha = rs.getString(1);
+                    hora = rs.getString(2);
+                    usuF = rs.getString(3);
+                    estado = "CERRADO";
+                } else {
+                    fecha = "";
+                    hora = "";
+                    usuF = "";
+                    estado = "ABIERTO";
                 }
+                rs.close();
+                st.close();
+                cn.close();
             } catch (SQLException ee) {
                 System.out.println(ee.getMessage());
             }
@@ -154,38 +130,38 @@ public final class dlgCajaDia extends javax.swing.JDialog {
             e.setNumber(0);
             //Definir el tamanho del papel para la impresion de dinamico y 32 columnas
             //int filas = 8;
-            int tamaño =40;
+            int tamaño = 40;
             printer.setOutSize(tamaño, 40);
 
             //Imprimir = 1ra linea de la columa de 1 a 32
             printer.printTextWrap(1, 1, 12, 40, "TICKET DE CIERRE");
             printer.printTextWrap(2, 1, 1, 40, "****************************************");
-            printer.printTextWrap(3, 1, 1, 40, "APERTURADO POR: "+lbUsuI.getText());
-            printer.printTextWrap(4, 1, 1, 40, "FECHA: "+lbApertura.getText());
+            printer.printTextWrap(3, 1, 1, 40, "APERTURADO POR: " + lbUsuI.getText());
+            printer.printTextWrap(4, 1, 1, 40, "FECHA: " + lbApertura.getText());
             printer.printTextWrap(5, 1, 1, 40, "****************************************");
-            printer.printTextWrap(6, 1, 1, 40, "CERRADO POR: " +usuF);
-            printer.printTextWrap(7, 1, 1, 40, "FECHA: "+Fecha.formatoFechaMuestra(fecha)+" "+Fecha.formatoHoraMuestra(hora));
+            printer.printTextWrap(6, 1, 1, 40, "CERRADO POR: " + usuF);
+            printer.printTextWrap(7, 1, 1, 40, "FECHA: " + Fecha.formatoFechaMuestra(fecha) + " " + Fecha.formatoHoraMuestra(hora));
             printer.printTextWrap(8, 1, 1, 40, "****************************************");
-            printer.printTextWrap(9, 1, 1, 40, "CAJA N°: "+lbNCaja.getText());
-            printer.printTextWrap(10, 1, 1, 40, "CAJA BASE:"+lbInicial.getText());
-            printer.printTextWrap(11, 1, 1, 40, "VALOR A ENTREGAR:"+lblEntregar.getText());
-            printer.printTextWrap(12, 1, 1, 40, "VALOR ENTREGADO:"+txtEntregado.getText());
-            printer.printTextWrap(13, 1, 1, 40, "DIFERENCIA:"+lblDiferencia.getText());
-            printer.printTextWrap(14, 1, 1, 40, "ESTADO: "+estado);
+            printer.printTextWrap(9, 1, 1, 40, "CAJA N°: " + lbNCaja.getText());
+            printer.printTextWrap(10, 1, 1, 40, "CAJA BASE:" + lbInicial.getText());
+            printer.printTextWrap(11, 1, 1, 40, "VALOR A ENTREGAR:" + lblEntregar.getText());
+            printer.printTextWrap(12, 1, 1, 40, "VALOR ENTREGADO:" + txtEntregado.getText());
+            printer.printTextWrap(13, 1, 1, 40, "DIFERENCIA:" + lblDiferencia.getText());
+            printer.printTextWrap(14, 1, 1, 40, "ESTADO: " + estado);
             printer.printTextWrap(15, 1, 1, 40, "---------------------------------------");
             printer.printTextWrap(16, 1, 8, 40, "DETALLES DE MOVIMIENTOS");
             printer.printTextWrap(17, 1, 1, 40, "---------------------------------------");
             printer.printTextWrap(18, 1, 14, 40, "INGRESOS:");
-            printer.printTextWrap(19, 1, 1, 40, "VENTAS CONTADO: "+txtTicketContado.getText());
-            printer.printTextWrap(20, 1, 1, 40, "COBRANZAS Y OTROS INGRESOS: "+txtIngresos.getText());
-            printer.printTextWrap(21, 1, 1, 40, "VENTAS CREDITO: "+txtTotalVentasC.getText());
+            printer.printTextWrap(19, 1, 1, 40, "VENTAS CONTADO: " + txtTicketContado.getText());
+            printer.printTextWrap(20, 1, 1, 40, "COBRANZAS Y OTROS INGRESOS: " + txtIngresos.getText());
+            printer.printTextWrap(21, 1, 1, 40, "VENTAS CREDITO: " + txtTotalVentasC.getText());
             printer.printTextWrap(23, 1, 10, 28, "TOTAL DE INGRESOS:");
             printer.printTextWrap(23, 1, 29, 40, txtTotalIngresos.getText());
             printer.printTextWrap(24, 1, 1, 40, "---------------------------------------");
             printer.printTextWrap(25, 1, 14, 40, "EGRESOS:");
-            printer.printTextWrap(26, 1, 1, 40, "COMPRAS CONTADO: "+txtTotalCompra.getText());
-            printer.printTextWrap(27, 1, 1, 40, "PAGOS Y RETIROS: "+txtTotalGastos.getText());
-            printer.printTextWrap(28, 1, 1, 40, "COMPRAS CREDITO: "+txtTotalCompraC.getText());
+            printer.printTextWrap(26, 1, 1, 40, "COMPRAS CONTADO: " + txtTotalCompra.getText());
+            printer.printTextWrap(27, 1, 1, 40, "PAGOS Y RETIROS: " + txtTotalGastos.getText());
+            printer.printTextWrap(28, 1, 1, 40, "COMPRAS CREDITO: " + txtTotalCompraC.getText());
             printer.printTextWrap(29, 1, 1, 40, "---------------------------------------");
             printer.printTextWrap(32, 1, 6, 35, "_____________________________");
             printer.printTextWrap(33, 1, 10, 32, "FIRMA DEL RESPONSABLE");
@@ -199,19 +175,19 @@ public final class dlgCajaDia extends javax.swing.JDialog {
             try {
                 inputStream = new FileInputStream("CIERRE_CAJA.txt");
             } catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(null, "Error al guardar cierre: "+ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Error al guardar cierre: " + ex.getMessage());
             }
             if (inputStream == null) {
                 return;
             }
-            
+
             PrinterService printService = new PrinterService();
             printService.printString3(ImpresoraPred, inputStream);
             byte[] cutP = new byte[]{0x1d, 'V', 1};
             printService.printBytes2(ImpresoraPred, cutP);
-            
 
-           /* DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
+
+            /* DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
             Doc document = new SimpleDoc(inputStream, docFormat, null);
             PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
             PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
@@ -226,7 +202,7 @@ public final class dlgCajaDia extends javax.swing.JDialog {
             } else {
                 System.err.println("No existen impresoras instaladas");
             }
-*/
+             */
             inputStream.close();
             //imprimirFin(subTotal, total, dineroR, devolucion); //ESTE METODO NO SE UTILIZARA
 
@@ -234,7 +210,7 @@ public final class dlgCajaDia extends javax.swing.JDialog {
             Mensajes.error("No se encuentra instalada la impresora predeterminada para este punto de impresión");
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -853,154 +829,126 @@ public final class dlgCajaDia extends javax.swing.JDialog {
     void totalVentasCont() {
         int V_TICKET, V_FACTURA;
         try {
-            V_TICKET=Integer.parseInt(generarCodigos.getDecimales("SELECT IFNULL((select SUM(fac_totalfinal) from factura where caja_ca_id = "+NCaja+" and fac_indicador='S' and fac_tipoventa='CONTADO'),0)"));    
-            //txtTicketContado.setText(df.format(Integer.valueOf((TotalVenta.trim().replace(".", "").replace(",", "")))));
-        } catch (Exception e) {
-            V_TICKET=0;
+            V_TICKET = Integer.parseInt(generarCodigos.getDecimales("SELECT IFNULL((select SUM(fac_totalfinal) from factura where caja_ca_id = " + NCaja + " and fac_indicador='S' and fac_tipoventa='CONTADO'),0)"));
+        } catch (NumberFormatException e) {
+            V_TICKET = 0;
         }
         try {
-            V_FACTURA=Integer.parseInt(generarCodigos.getDecimales("SELECT IFNULL((select SUM(fac_totalfinal) from factura_l where caja_ca_id = "+NCaja+" and fac_indicador='S' and fac_tipoventa='CONTADO'),0)"));
-            //txtFacturaLContado.setText(df.format(Integer.valueOf((TotalVentaFactura.trim().replace(".", "").replace(",", "")))));
-        } catch (Exception e) {
-            V_FACTURA=0;
+            V_FACTURA = Integer.parseInt(generarCodigos.getDecimales("SELECT IFNULL((select SUM(fac_totalfinal) from factura_l where caja_ca_id = " + NCaja + " and fac_indicador='S' and fac_tipoventa='CONTADO'),0)"));
+        } catch (NumberFormatException e) {
+            V_FACTURA = 0;
         }
-        int TOTALVENTA=(V_TICKET+V_FACTURA);
+        int TOTALVENTA = (V_TICKET + V_FACTURA);
         txtTicketContado.setText(df.format(TOTALVENTA));
     }
-    /*void totalVentasContFactura() {
-        try {
-            String TotalVentaFactura=(generarCodigos.getDecimales("SELECT IFNULL((select SUM(fac_totalfinal) from factura_l where caja_ca_id = "+NCaja+" and fac_indicador='S' and fac_tipoventa='CONTADO'),0)"));
-            txtFacturaLContado.setText(df.format(Integer.valueOf((TotalVentaFactura.trim().replace(".", "").replace(",", "")))));
-        } catch (Exception e) {
-            txtFacturaLContado.setText("0");
-        }
-    }*/
+
     void totalVentasCred() {
         int V_TICKET, V_FACTURA;
         try {
-            V_TICKET= Integer.parseInt(generarCodigos.getDecimales("SELECT IFNULL((select SUM(fac_totalfinal) from factura where caja_ca_id = "+NCaja+" and fac_indicador='S' and fac_tipoventa='CREDITO'),0)"));
-            //txtTotalVentasC.setText(df.format(Integer.valueOf((TotalVenta.trim().replace(".", "").replace(",", "")))));   
-        } catch (Exception e) {
-            V_TICKET=0;
+            V_TICKET = Integer.parseInt(generarCodigos.getDecimales("SELECT IFNULL((select SUM(fac_totalfinal) from factura where caja_ca_id = " + NCaja + " and fac_indicador='S' and fac_tipoventa='CREDITO'),0)"));
+        } catch (NumberFormatException e) {
+            V_TICKET = 0;
         }
         try {
-            V_FACTURA= Integer.parseInt(generarCodigos.getDecimales("SELECT IFNULL((select SUM(fac_totalfinal) from factura_l where caja_ca_id = "+NCaja+" and fac_indicador='S' and fac_tipoventa='CREDITO'),0)"));
-            //txtTotalVentasC.setText(df.format(Integer.valueOf((TotalVenta.trim().replace(".", "").replace(",", "")))));   
-        } catch (Exception e) {
-            V_FACTURA=0;
+            V_FACTURA = Integer.parseInt(generarCodigos.getDecimales("SELECT IFNULL((select SUM(fac_totalfinal) from factura_l where caja_ca_id = " + NCaja + " and fac_indicador='S' and fac_tipoventa='CREDITO'),0)"));
+        } catch (NumberFormatException e) {
+            V_FACTURA = 0;
         }
-        int TOTALVENTA=(V_TICKET+V_FACTURA);
+        int TOTALVENTA = (V_TICKET + V_FACTURA);
         txtTotalVentasC.setText(df.format(TOTALVENTA));
     }
-    
+
     void totalCompraCont() {
         try {
-            String TotalCompra=(generarCodigos.getDecimales("SELECT IFNULL((select SUM(com_total) from compra where caja_ca_id = " +NCaja+ " and com_indicador='S' and com_condpago='CONTADO'),0)"));
+            String TotalCompra = (generarCodigos.getDecimales("SELECT IFNULL((select SUM(com_total) from compra where caja_ca_id = " + NCaja + " and com_indicador='S' and com_condpago='CONTADO'),0)"));
             txtTotalCompra.setText(df.format(Integer.valueOf((TotalCompra.trim().replace(".", "").replace(",", "")))));
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             txtTotalCompra.setText("0");
         }
-        
+
     }
+
     void totalCompraCred() {
         try {
-            String TotalCompra=(generarCodigos.getDecimales("SELECT IFNULL((select SUM(com_total) from compra where caja_ca_id = " +NCaja+ " and com_indicador='S' and com_condpago='CREDITO'),0)"));
+            String TotalCompra = (generarCodigos.getDecimales("SELECT IFNULL((select SUM(com_total) from compra where caja_ca_id = " + NCaja + " and com_indicador='S' and com_condpago='CREDITO'),0)"));
             txtTotalCompraC.setText(df.format(Integer.valueOf((TotalCompra.trim().replace(".", "").replace(",", "")))));
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             txtTotalCompraC.setText("0");
         }
-        
+
     }
 
     void totalGasto() {
         try {
-            String TotalGasto=(generarCodigos.getDecimales("SELECT IFNULL((select SUM(ga_importe) from gastos where caja_ca_id = " +NCaja+ " and ga_indicador='S'),0)"));
-            GAS=Integer.parseInt(TotalGasto);
+            String TotalGasto = (generarCodigos.getDecimales("SELECT IFNULL((select SUM(ga_importe) from gastos where caja_ca_id = " + NCaja + " and ga_indicador='S'),0)"));
+            GAS = Integer.parseInt(TotalGasto);
             txtTotalGastos.setText(df.format(Integer.valueOf((TotalGasto.trim().replace(".", "").replace(",", "")))));
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             txtTotalGastos.setText("0");
         }
     }
-    
+
     void totalIngreso() {
         try {
-            String TotalIngreso=(generarCodigos.getDecimales("SELECT IFNULL((select SUM(ing_importe) from ingreso where caja_ca_id = " +NCaja+ " and ing_indicador='S'),0)"));
+            String TotalIngreso = (generarCodigos.getDecimales("SELECT IFNULL((select SUM(ing_importe) from ingreso where caja_ca_id = " + NCaja + " and ing_indicador='S'),0)"));
             txtIngresos.setText(df.format(Integer.valueOf((TotalIngreso.trim().replace(".", "").replace(",", "")))));
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             txtIngresos.setText("0");
         }
-        
+
     }
 
-    /*void gastoTotal() {
+    static void ingresoTotal() {
         try {
-            StringBuilder sql = new StringBuilder("SELECT IFNULL((SELECT IFNULL((select SUM(com_total) from compra where caja_ca_id =");
-            sql.append(NCaja);sql.append(" and com_indicador='S' and com_condpago='CONTADO'),0))+");
-            sql.append("(SELECT IFNULL((select SUM(ga_importe) from gastos where caja_ca_id = ");
-            sql.append(NCaja);sql.append(" and ga_indicador='S'),0)),0)");
-            DecimalFormat df = new DecimalFormat("#,###");
-            String GastoTotal=(generarCodigos.getDecimales(sql.toString()));
-            GAS=Integer.parseInt(GastoTotal);
-            txtGastoTotal.setText(df.format(Integer.valueOf((GastoTotal.trim().replace(".", "").replace(",", "")))));
-        } catch (Exception e) {
-            txtGastoTotal.setText("0");
-        }
-    }*/
-    
-    static void ingresoTotal(){
-        try {
-            int ticket=Integer.parseInt(txtTicketContado.getText().trim().replace(",", "").replace(".", ""));
-            int ingreso=Integer.parseInt(txtIngresos.getText().trim().replace(",", "").replace(".", ""));
-            int ingresoTotal=(ticket+ingreso);
+            int ticket = Integer.parseInt(txtTicketContado.getText().trim().replace(",", "").replace(".", ""));
+            int ingreso = Integer.parseInt(txtIngresos.getText().trim().replace(",", "").replace(".", ""));
+            int ingresoTotal = (ticket + ingreso);
 
-            ING=(ingresoTotal);
+            ING = (ingresoTotal);
             txtTotalIngresos.setText((df.format(ingresoTotal)));
         } catch (NumberFormatException e) {
             txtTotalIngresos.setText("0");
         }
     }
-    
-    void totalCaja(){
-        int totalCaja=(ING-GAS);
-        String FINAL=(String.valueOf((totalCaja)));
+
+    void totalCaja() {
+        int totalCaja = (ING - GAS);
+        String FINAL = (String.valueOf((totalCaja)));
         lblEntregar.setText(df.format(Integer.valueOf((FINAL.trim().replace(".", "").replace(",", "")))));
     }
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         // TODO add your handling code here:
-        if(Integer.parseInt(txtEntregado.getText().trim().replace(".", "").replace(",", "")) <= 0){
+        if (Integer.parseInt(txtEntregado.getText().trim().replace(".", "").replace(",", "")) <= 0) {
             Mensajes.error("No se puede proceder a cerrar la caja.\nDebe de espeficicar el EFECTIVO ENTREGADO.");
-        }else{
-         int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea Cerrar la Caja y finalizar las operaciones?", "Cierre de caja", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (resp == JOptionPane.YES_OPTION) {
-            try {
-                ControlCaja.delCaja();
-                btnCerrar.setEnabled(false);
-                btnGuardar.setEnabled(false);
-                txtEntregado.setEnabled(false);
+        } else {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea Cerrar la Caja y finalizar las operaciones?", "Cierre de caja", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resp == JOptionPane.YES_OPTION) {
                 try {
-                    Caja caj = GestionarCaja.busCaja(lbNCaja.getText().trim());
-                    if (caj.getIndicador().equals("S")) {
-                        lbEstado.setText("ABIERTO");
-                    } else {
-                        lbEstado.setText("CERRADO");
+                    ControlCaja.delCaja();
+                    btnCerrar.setEnabled(false);
+                    btnGuardar.setEnabled(false);
+                    txtEntregado.setEnabled(false);
+                    try {
+                        Caja caj = GestionarCaja.busCaja(lbNCaja.getText().trim());
+                        if (caj.getIndicador().equals("S")) {
+                            lbEstado.setText("ABIERTO");
+                        } else {
+                            lbEstado.setText("CERRADO");
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
                     }
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-                //int respu = JOptionPane.showConfirmDialog(this, "¿Desea imprimir el Comprobante del Arqueo del día?", "Cierre de caja", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                //if (respu == JOptionPane.YES_OPTION) {
                     imprimirCierre();
-                //}
-            } catch (Exception e) {
-                Mensajes.error(e.getMessage());
+                } catch (Exception e) {
+                    Mensajes.error(e.getMessage());
+                }
             }
-        }   
         }
     }//GEN-LAST:event_btnCerrarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -1062,7 +1010,7 @@ public final class dlgCajaDia extends javax.swing.JDialog {
     private void txtEntregadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEntregadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEntregadoActionPerformed
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1080,7 +1028,7 @@ public final class dlgCajaDia extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(dlgCajaDia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the dialog */

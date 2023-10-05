@@ -1,6 +1,6 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Mensajes;
 import Componentes.Redondeo;
 import Componentes.Software;
@@ -15,30 +15,24 @@ import java.sql.*;
 import java.text.DecimalFormat;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 
 public class dlgGestArticulos extends javax.swing.JDialog {
 
-    public static ResultSet rs;
-    public static MariaDbStatement sentencia;
-    public static MariaDbConnection con;
-    public static int id;
+    static DataSourceService dss = new DataSourceService();
 
     public dlgGestArticulos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        prepararBD();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png")));
         Invisible();
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Crear o modificar artículo");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Crear o modificar artículo");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Crear o modificar artículo");
         }
     }
 
@@ -95,14 +89,14 @@ public class dlgGestArticulos extends javax.swing.JDialog {
 
     private void pintarEstado() {
         if (rActivo.isSelected()) {
-            rActivo.setFont(new java.awt.Font("Tahoma", 1, 11));
+            rActivo.setFont(new java.awt.Font("Roboto", 1, 11));
             rActivo.setForeground(new java.awt.Color(0, 0, 51));
-            rInactivo.setFont(new java.awt.Font("Tahoma", 0, 11));
+            rInactivo.setFont(new java.awt.Font("Roboto", 0, 11));
             rInactivo.setForeground(new java.awt.Color(0, 0, 0));
         } else {
-            rActivo.setFont(new java.awt.Font("Tahoma", 0, 11));
+            rActivo.setFont(new java.awt.Font("Roboto", 0, 11));
             rActivo.setForeground(new java.awt.Color(0, 0, 0));
-            rInactivo.setFont(new java.awt.Font("Tahoma", 1, 11));
+            rInactivo.setFont(new java.awt.Font("Roboto", 1, 11));
             rInactivo.setForeground(new java.awt.Color(0, 0, 51));
         }
     }
@@ -137,7 +131,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
 
     private void Cancelar() {
         limpiarCampos();
-        btnNuevo.setEnabled(true);
+        btnModificar.setEnabled(true);
         itemNuevo.setEnabled(true);
         btnModificar.setEnabled(false);
         itemModificar.setEnabled(false);
@@ -188,6 +182,25 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         buttonGroup3 = new javax.swing.ButtonGroup();
+        jPanel12 = new javax.swing.JPanel();
+        btnSalir1 = new RSMaterialComponent.RSButtonIconUno();
+        PanelContenedor3 = new rojeru_san.rspanel.RSPanelImage();
+        btnCancelar = new RSMaterialComponent.RSButtonIconUno();
+        Separador3 = new javax.swing.JSeparator();
+        LabelTitulo3 = new javax.swing.JLabel();
+        PanelContenedor2 = new rojeru_san.rspanel.RSPanelImage();
+        btnGuardar = new RSMaterialComponent.RSButtonIconUno();
+        Separador2 = new javax.swing.JSeparator();
+        LabelTitulo2 = new javax.swing.JLabel();
+        PanelContenedor1 = new rojeru_san.rspanel.RSPanelImage();
+        btnNuevo = new RSMaterialComponent.RSButtonIconUno();
+        Separador1 = new javax.swing.JSeparator();
+        LabelTitulo1 = new javax.swing.JLabel();
+        PanelContenedor = new rojeru_san.rspanel.RSPanelImage();
+        btnModificar = new RSMaterialComponent.RSButtonIconUno();
+        Separador = new javax.swing.JSeparator();
+        LabelTitulo = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         txtCodProducto = new javax.swing.JTextField();
         txtCodBarra = new javax.swing.JTextField();
@@ -264,21 +277,15 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         txtCantM = new javax.swing.JTextField();
         txtPrecioVentaML = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jPanel4 = new javax.swing.JPanel();
-        btnNuevo = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
         txtCodLab = new javax.swing.JTextField();
-        txtCodPro = new javax.swing.JTextField();
-        txtCodFam = new javax.swing.JTextField();
-        jPanel10 = new javax.swing.JPanel();
-        rActivo = new javax.swing.JRadioButton();
-        rInactivo = new javax.swing.JRadioButton();
         txtCostoL = new javax.swing.JTextField();
         txtPrecioPublicoL = new javax.swing.JTextField();
+        txtCodPro = new javax.swing.JTextField();
+        txtCodFam = new javax.swing.JTextField();
         txtPrecioVentaL = new javax.swing.JTextField();
+        rSPanelImage1 = new rojeru_san.rspanel.RSPanelImage();
+        rActivo = new RSMaterialComponent.RSRadioButtonMaterial();
+        rInactivo = new RSMaterialComponent.RSRadioButtonMaterial();
         barMenu = new javax.swing.JMenuBar();
         menuOpciones = new javax.swing.JMenu();
         itemNuevo = new javax.swing.JMenuItem();
@@ -297,6 +304,128 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 formWindowLostFocus(evt);
             }
         });
+
+        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnSalir1.setBackground(new java.awt.Color(255, 255, 255));
+        btnSalir1.setBackgroundHover(new java.awt.Color(205, 0, 0));
+        btnSalir1.setForegroundText(new java.awt.Color(17, 35, 46));
+        btnSalir1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir1.setRippleColor(java.awt.Color.white);
+        btnSalir1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnSalir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalir1ActionPerformed(evt);
+            }
+        });
+        jPanel12.add(btnSalir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 10, 25, 25));
+
+        PanelContenedor3.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PanelContenedor3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnCancelar.setBackground(new java.awt.Color(205, 0, 0));
+        btnCancelar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnCancelar.setForegroundHover(new java.awt.Color(205, 0, 0));
+        btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        btnCancelar.setRippleColor(java.awt.Color.white);
+        btnCancelar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        PanelContenedor3.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
+
+        Separador3.setForeground(new java.awt.Color(204, 204, 204));
+        PanelContenedor3.add(Separador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 65, 76, 3));
+
+        LabelTitulo3.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo3.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo3.setText("CANCELAR");
+        PanelContenedor3.add(LabelTitulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 70, -1, -1));
+
+        jPanel12.add(PanelContenedor3, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 100, 98));
+
+        PanelContenedor2.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PanelContenedor2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnGuardar.setBackground(new java.awt.Color(0, 102, 255));
+        btnGuardar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnGuardar.setForegroundHover(new java.awt.Color(0, 102, 255));
+        btnGuardar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
+        btnGuardar.setRippleColor(java.awt.Color.white);
+        btnGuardar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        PanelContenedor2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
+
+        Separador2.setForeground(new java.awt.Color(204, 204, 204));
+        PanelContenedor2.add(Separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 65, 76, 3));
+
+        LabelTitulo2.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo2.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo2.setText("GUARDAR");
+        PanelContenedor2.add(LabelTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(26, 70, -1, -1));
+
+        jPanel12.add(PanelContenedor2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 100, 98));
+
+        PanelContenedor1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PanelContenedor1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnNuevo.setBackground(new java.awt.Color(0, 102, 0));
+        btnNuevo.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnNuevo.setForegroundHover(new java.awt.Color(0, 102, 0));
+        btnNuevo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnNuevo.setRippleColor(java.awt.Color.white);
+        btnNuevo.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
+        PanelContenedor1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
+
+        Separador1.setForeground(new java.awt.Color(204, 204, 204));
+        PanelContenedor1.add(Separador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 65, 76, 3));
+
+        LabelTitulo1.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo1.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo1.setText("NUEVO");
+        PanelContenedor1.add(LabelTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 70, -1, -1));
+
+        jPanel12.add(PanelContenedor1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 98));
+
+        PanelContenedor.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PanelContenedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnModificar.setBackground(new java.awt.Color(255, 102, 0));
+        btnModificar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnModificar.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
+        btnModificar.setRippleColor(java.awt.Color.white);
+        btnModificar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        PanelContenedor.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
+
+        Separador.setForeground(new java.awt.Color(204, 204, 204));
+        PanelContenedor.add(Separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 65, 76, 3));
+
+        LabelTitulo.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo.setText("MODIFICAR");
+        PanelContenedor.add(LabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 70, -1, -1));
+
+        jPanel12.add(PanelContenedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 100, 98));
+
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo_2.5.png"))); // NOI18N
+        jPanel12.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, -10, 690, 120));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Información del Artículo"));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -578,6 +707,8 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         jPanel7.add(lbIVA, new org.netbeans.lib.awtextra.AbsoluteConstraints(206, 97, 103, -1));
 
         jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 340, 120));
+
+        jPanel12.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 842, 231));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Margen de Utilidad, IVA y Stock"));
 
@@ -1197,106 +1328,10 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 .addGap(8, 8, 8))
         );
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
+        jPanel12.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, -1, -1));
+        jPanel2.getAccessibleContext().setAccessibleName("");
 
-        btnNuevo.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/document30.png"))); // NOI18N
-        btnNuevo.setText("Nuevo-F1");
-        btnNuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnNuevo.setMaximumSize(new java.awt.Dimension(85, 57));
-        btnNuevo.setMinimumSize(new java.awt.Dimension(85, 57));
-        btnNuevo.setPreferredSize(new java.awt.Dimension(90, 60));
-        btnNuevo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnNuevo);
-
-        btnModificar.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit30.png"))); // NOI18N
-        btnModificar.setText("Modif-F5");
-        btnModificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnModificar.setMaximumSize(new java.awt.Dimension(63, 57));
-        btnModificar.setMinimumSize(new java.awt.Dimension(63, 57));
-        btnModificar.setPreferredSize(new java.awt.Dimension(90, 60));
-        btnModificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnModificar);
-
-        btnGuardar.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save30.png"))); // NOI18N
-        btnGuardar.setText("Guardar-F6");
-        btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnGuardar.setMaximumSize(new java.awt.Dimension(71, 57));
-        btnGuardar.setMinimumSize(new java.awt.Dimension(71, 57));
-        btnGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnGuardar);
-
-        btnCancelar.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel30.png"))); // NOI18N
-        btnCancelar.setText("Cancel-Esc");
-        btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCancelar.setMaximumSize(new java.awt.Dimension(75, 57));
-        btnCancelar.setMinimumSize(new java.awt.Dimension(75, 57));
-        btnCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnCancelar);
-
-        btnSalir.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back30.png"))); // NOI18N
-        btnSalir.setText("Salir-Alt+F4");
-        btnSalir.setToolTipText("Salir");
-        btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
-            }
-        });
-        jPanel4.add(btnSalir);
-
-        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        buttonGroup3.add(rActivo);
-        rActivo.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        rActivo.setSelected(true);
-        rActivo.setText("ACTIVO");
-        rActivo.setOpaque(false);
-        rActivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rActivoActionPerformed(evt);
-            }
-        });
-        jPanel10.add(rActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
-
-        buttonGroup3.add(rInactivo);
-        rInactivo.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        rInactivo.setText("INACTIVO");
-        rInactivo.setOpaque(false);
-        rInactivo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rInactivoActionPerformed(evt);
-            }
-        });
-        jPanel10.add(rInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 80, 20));
+        jPanel12.add(txtCodLab, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 50, 44, -1));
 
         txtCostoL.setEditable(false);
         txtCostoL.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
@@ -1307,16 +1342,75 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 txtCostoLActionPerformed(evt);
             }
         });
+        jPanel12.add(txtCostoL, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 80, 43, -1));
 
         txtPrecioPublicoL.setEditable(false);
         txtPrecioPublicoL.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         txtPrecioPublicoL.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtPrecioPublicoL.setText("0");
+        jPanel12.add(txtPrecioPublicoL, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 80, 43, -1));
+        jPanel12.add(txtCodPro, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 50, 44, -1));
+        jPanel12.add(txtCodFam, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 50, 44, -1));
 
         txtPrecioVentaL.setEditable(false);
         txtPrecioVentaL.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
         txtPrecioVentaL.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtPrecioVentaL.setText("0");
+        jPanel12.add(txtPrecioVentaL, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 80, 43, -1));
+
+        rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+
+        buttonGroup3.add(rActivo);
+        rActivo.setForeground(new java.awt.Color(0, 0, 0));
+        rActivo.setIcon(null);
+        rActivo.setText("Producto Activo");
+        rActivo.setColorCheck(new java.awt.Color(0, 102, 0));
+        rActivo.setColorUnCheck(new java.awt.Color(0, 0, 0));
+        rActivo.setFocusPainted(false);
+        rActivo.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        rActivo.setIconTextGap(5);
+        rActivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rActivoActionPerformed(evt);
+            }
+        });
+
+        buttonGroup3.add(rInactivo);
+        rInactivo.setForeground(new java.awt.Color(0, 0, 0));
+        rInactivo.setText("Producto Inactivo");
+        rInactivo.setColorCheck(new java.awt.Color(0, 102, 0));
+        rInactivo.setColorUnCheck(new java.awt.Color(0, 0, 0));
+        rInactivo.setFocusPainted(false);
+        rInactivo.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        rInactivo.setIconTextGap(5);
+        rInactivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rInactivoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout rSPanelImage1Layout = new javax.swing.GroupLayout(rSPanelImage1);
+        rSPanelImage1.setLayout(rSPanelImage1Layout);
+        rSPanelImage1Layout.setHorizontalGroup(
+            rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelImage1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rInactivo, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                    .addComponent(rActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
+        );
+        rSPanelImage1Layout.setVerticalGroup(
+            rSPanelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rSPanelImage1Layout.createSequentialGroup()
+                .addGap(9, 9, 9)
+                .addComponent(rActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(rInactivo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9))
+        );
+
+        jPanel12.add(rSPanelImage1, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 40, -1, 70));
 
         barMenu.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
 
@@ -1393,62 +1487,16 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodLab, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCostoL, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtCodPro, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCodFam, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtPrecioPublicoL, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtPrecioVentaL, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(57, 57, 57)
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 842, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(0, 0, 0)
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 1045, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtCodLab, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCodPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCodFam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txtCostoL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPrecioPublicoL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPrecioVentaL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(8, 8, 8))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        jPanel2.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1460,26 +1508,27 @@ public class dlgGestArticulos extends javax.swing.JDialog {
             lbGan.setText("");
             lbIVA.setText("");
         } else {
-            String item = String.valueOf(cbFamilia.getSelectedItem());
-            try {
-                rs = sentencia.executeQuery("Select fam_codigo from familia where fam_nombre='" + item + "' and fam_indicador='S'");
+            int id = 0;
+            String sqlItem = "Select fam_codigo from familia where fam_nombre='" + String.valueOf(cbFamilia.getSelectedItem()) + "' and fam_indicador='S'";
+            try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sqlItem)) {
                 rs.first();
                 id = rs.getInt("fam_codigo");
+                rs.close();
+                st.close();
+                cn.close();
             } catch (SQLException ex) {
-                Mensajes.error("ID familia:" + ex.getMessage());
+                Mensajes.error("Error obteniendo ID familia:" + ex.getMessage());
             }
-            try {
-                String sql = "select fam_ganancia, fam_iva from familia where fam_codigo=" + id + " and fam_indicador='S'";
-                Statement st = con.createStatement();
-                try ( ResultSet rss = st.executeQuery(sql)) {
-                    rss.first();
-                    lbGan.setText(String.valueOf("Ganancia Sugerida: " + rss.getInt(1)));
-                    lbIVA.setText(String.valueOf("I.V.A Sugerido: " + rss.getString(2)));
-                    //txtIVA.setText(rss.getString(2));
-                } catch (Exception e) {
-                }
-            } catch (SQLException ee) {
-                System.out.println(ee.getMessage());
+            String sql = "select fam_ganancia, fam_iva from familia where fam_codigo=" + id + " and fam_indicador='S'";
+            try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rss = st.executeQuery(sql)) {
+                rss.first();
+                lbGan.setText(String.valueOf("Ganancia Sugerida: " + rss.getInt(1)));
+                lbIVA.setText(String.valueOf("I.V.A Sugerido: " + rss.getString(2)));
+                rss.close();
+                st.close();
+                cn.close();
+            } catch (Exception e) {
+                Mensajes.error("Error obteniendo info ganancia:" + e.getMessage());
             }
         }
     }//GEN-LAST:event_cbFamiliaActionPerformed
@@ -1488,99 +1537,6 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         // TODO add your handling code here:
 
     }//GEN-LAST:event_cbLaboratorioActionPerformed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-        if (cbLaboratorio.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione un Laboratorio");
-            cbLaboratorio.requestFocus();
-        } else if (cbProveedor.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione un Proveedor");
-            cbProveedor.requestFocus();
-        } else if (cbFamilia.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione una Familia");
-            cbFamilia.requestFocus();
-        } else if (Integer.parseInt(txtGanancia.getText()) < 0) {
-            Mensajes.error("Ganancia fuera de rango");
-            txtGanancia.requestFocus();
-        } else if (Integer.parseInt(txtDesc.getText()) < 0) {
-            Mensajes.error("Descuento fuera de rango");
-            txtDesc.requestFocus();
-        } else if (Integer.parseInt(txtPrecioPublicoL.getText()) <= Integer.parseInt(txtPrecioVentaL.getText())) {
-            Mensajes.error("El Precio Publico es menor o igual al Precio Venta");
-            txtPrecioPublico.requestFocus();
-        } else if (validarCampos.estaVacio(txtDescripcion) && validarCampos.estaVacio(txtCostoL) && validarCampos.estaVacio(txtPrecioPublicoL) && validarCampos.estaVacio(txtPrecioVentaL)
-                && validarCampos.estaVacio(txtStock) && validarCampos.estaVacio(txtStockMin) && validarCampos.estaVacio(txtIVA)) {
-            try {
-                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION) {
-                    controlArticulo.actArticulo();
-                    Cancelar();
-                } else {
-                    txtCodBarra.requestFocus();
-                }
-            } catch (Exception ee) {
-                System.out.println(ee.getMessage());
-            }
-        } else {
-            Mensajes.informacion("Debe llenar obligatoriamente los campos señalados");
-        }
-    }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here
-        CargarCombos();
-        limpiarCampos();
-        cbFamiliaActionPerformed(null);
-        Habilitacion();
-        pintarEstado();
-        pintarVenta();
-        pintarTipo();
-        String cod = GestionarArticulos.getCodigo();
-        txtCodProducto.setText(cod);
-        txtCodBarra.requestFocus();
-
-    }//GEN-LAST:event_btnNuevoActionPerformed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        if (cbLaboratorio.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione un Laboratorio");
-            cbLaboratorio.requestFocus();
-        } else if (cbProveedor.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione un Proveedor");
-            cbProveedor.requestFocus();
-        } else if (cbFamilia.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione una Familia");
-            cbFamilia.requestFocus();
-        } else if (Integer.parseInt(txtGanancia.getText()) < 0) {
-            Mensajes.error("Ganancia fuera de rango");
-            txtGanancia.requestFocus();
-        } else if (Integer.parseInt(txtDesc.getText()) < 0) {
-            Mensajes.error("Descuento fuera de rango");
-            txtDesc.requestFocus();
-        } else if (Integer.parseInt(txtPrecioPublicoL.getText()) <= Integer.parseInt(txtPrecioVentaL.getText())) {
-            Mensajes.error("El Precio Publico es menor o igual al Precio Venta");
-            txtPrecioPublico.requestFocus();
-        } else if (validarCampos.estaVacio(txtDescripcion) && validarCampos.estaVacio(txtCostoL) && validarCampos.estaVacio(txtPrecioPublicoL) && validarCampos.estaVacio(txtPrecioVentaL)
-                && validarCampos.estaVacio(txtStock) && validarCampos.estaVacio(txtStockMin) && validarCampos.estaVacio(txtIVA)) {
-            try {
-                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION) {
-                    String cod = GestionarArticulos.getCodigo();
-                    txtCodProducto.setText(cod);
-                    controlArticulo.addArticulo();
-                    Cancelar();
-                } else {
-                    txtCodBarra.requestFocus();
-                }
-            } catch (Exception ee) {
-                System.out.println(ee.getMessage());
-            }
-        } else {
-            Mensajes.informacion("Verifique que todos los campos exigidos esten completados");
-        }
-    }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void itemNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoActionPerformed
         // TODO add your handling code here:
@@ -1606,17 +1562,6 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         // TODO add your handling code here:
         pintarVenta();
     }//GEN-LAST:event_rLibreActionPerformed
-
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
-        if (rpta == 0) {
-            Volver();
-            this.dispose();
-        } else {
-            txtCodBarra.requestFocus();
-        }
-    }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFamiliaActionPerformed
         // TODO add your handling code here:
@@ -1836,53 +1781,6 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUltCompraActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        int rpta = Mensajes.confirmar("¿Seguro que desea Cancelar?");
-        if (rpta == 0) {
-            limpiarCampos();
-            btnNuevo.setEnabled(true);
-            itemNuevo.setEnabled(true);
-            btnModificar.setEnabled(false);
-            itemModificar.setEnabled(false);
-            btnGuardar.setEnabled(false);
-            itemGuardar.setEnabled(false);
-            btnCancelar.setEnabled(false);
-            itemCancelar.setEnabled(false);
-            btnLaboratorio.setEnabled(false);
-            btnProveedor.setEnabled(false);
-            btnFamilia.setEnabled(false);
-            txtCodBarra.setEnabled(false);
-            txtDescripcion.setEnabled(false);
-            txtPrincipio.setEnabled(false);
-            txtAccion.setEnabled(false);
-            rLibre.setEnabled(false);
-            rControlado.setEnabled(false);
-            rNacional.setEnabled(false);
-            rImportado.setEnabled(false);
-            rActivo.setEnabled(false);
-            rInactivo.setEnabled(false);
-            cbLaboratorio.setEnabled(false);
-            cbFamilia.setEnabled(false);
-            cbProveedor.setEnabled(false);
-            txtCosto.setEnabled(false);
-            txtPrecioPublico.setEnabled(false);
-            txtGanancia.setEnabled(false);
-            txtDesc.setEnabled(false);
-            txtPrecioVenta.setEnabled(false);
-            txtStock.setEnabled(false);
-            txtStockMin.setEnabled(false);
-            dfecha.setEnabled(false);
-            pintarEstado();
-            pintarVenta();
-            pintarTipo();
-            Volver();
-            this.dispose();
-        } else {
-            txtCodBarra.requestFocus();
-        }
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
     private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
@@ -1987,16 +1885,6 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtStockMinKeyTyped
 
-    private void rActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rActivoActionPerformed
-        // TODO add your handling code here:
-        pintarEstado();
-    }//GEN-LAST:event_rActivoActionPerformed
-
-    private void rInactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rInactivoActionPerformed
-        // TODO add your handling code here:
-        pintarEstado();
-    }//GEN-LAST:event_rInactivoActionPerformed
-
     private void rControladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rControladoActionPerformed
         // TODO add your handling code here:
         pintarVenta();
@@ -2024,7 +1912,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
 
     private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
         // TODO add your handling code here:
-        btnSalirActionPerformed(null);
+        btnSalir1ActionPerformed(null);
     }//GEN-LAST:event_itemSalirActionPerformed
 
     private void txtCodBarraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodBarraActionPerformed
@@ -2303,6 +2191,168 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtCodBarraKeyTyped
 
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        if (cbLaboratorio.getSelectedIndex() == 0) {
+            Mensajes.informacion("Seleccione un Laboratorio");
+            cbLaboratorio.requestFocus();
+        } else if (cbProveedor.getSelectedIndex() == 0) {
+            Mensajes.informacion("Seleccione un Proveedor");
+            cbProveedor.requestFocus();
+        } else if (cbFamilia.getSelectedIndex() == 0) {
+            Mensajes.informacion("Seleccione una Familia");
+            cbFamilia.requestFocus();
+        } else if (Integer.parseInt(txtGanancia.getText()) < 0) {
+            Mensajes.error("Ganancia fuera de rango");
+            txtGanancia.requestFocus();
+        } else if (Integer.parseInt(txtDesc.getText()) < 0) {
+            Mensajes.error("Descuento fuera de rango");
+            txtDesc.requestFocus();
+        } else if (Integer.parseInt(txtPrecioPublicoL.getText()) <= Integer.parseInt(txtPrecioVentaL.getText())) {
+            Mensajes.error("El Precio Publico es menor o igual al Precio Venta");
+            txtPrecioPublico.requestFocus();
+        } else if (validarCampos.estaVacio(txtDescripcion) && validarCampos.estaVacio(txtCostoL) && validarCampos.estaVacio(txtPrecioPublicoL) && validarCampos.estaVacio(txtPrecioVentaL)
+                && validarCampos.estaVacio(txtStock) && validarCampos.estaVacio(txtStockMin) && validarCampos.estaVacio(txtIVA)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
+                    String cod = GestionarArticulos.getCodigo();
+                    txtCodProducto.setText(cod);
+                    controlArticulo.addArticulo();
+                    Cancelar();
+                } else {
+                    txtCodBarra.requestFocus();
+                }
+            } catch (Exception ee) {
+                System.out.println(ee.getMessage());
+            }
+        } else {
+            Mensajes.informacion("Verifique que todos los campos exigidos esten completados");
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        CargarCombos();
+        limpiarCampos();
+        cbFamiliaActionPerformed(null);
+        Habilitacion();
+        pintarEstado();
+        pintarVenta();
+        pintarTipo();
+        String cod = GestionarArticulos.getCodigo();
+        txtCodProducto.setText(cod);
+        txtCodBarra.requestFocus();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        if (cbLaboratorio.getSelectedIndex() == 0) {
+            Mensajes.informacion("Seleccione un Laboratorio");
+            cbLaboratorio.requestFocus();
+        } else if (cbProveedor.getSelectedIndex() == 0) {
+            Mensajes.informacion("Seleccione un Proveedor");
+            cbProveedor.requestFocus();
+        } else if (cbFamilia.getSelectedIndex() == 0) {
+            Mensajes.informacion("Seleccione una Familia");
+            cbFamilia.requestFocus();
+        } else if (Integer.parseInt(txtGanancia.getText()) < 0) {
+            Mensajes.error("Ganancia fuera de rango");
+            txtGanancia.requestFocus();
+        } else if (Integer.parseInt(txtDesc.getText()) < 0) {
+            Mensajes.error("Descuento fuera de rango");
+            txtDesc.requestFocus();
+        } else if (Integer.parseInt(txtPrecioPublicoL.getText()) <= Integer.parseInt(txtPrecioVentaL.getText())) {
+            Mensajes.error("El Precio Publico es menor o igual al Precio Venta");
+            txtPrecioPublico.requestFocus();
+        } else if (validarCampos.estaVacio(txtDescripcion) && validarCampos.estaVacio(txtCostoL) && validarCampos.estaVacio(txtPrecioPublicoL) && validarCampos.estaVacio(txtPrecioVentaL)
+                && validarCampos.estaVacio(txtStock) && validarCampos.estaVacio(txtStockMin) && validarCampos.estaVacio(txtIVA)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
+                    String cod = GestionarArticulos.getCodigo();
+                    txtCodProducto.setText(cod);
+                    controlArticulo.addArticulo();
+                    Cancelar();
+                } else {
+                    txtCodBarra.requestFocus();
+                }
+            } catch (Exception ee) {
+                System.out.println(ee.getMessage());
+            }
+        } else {
+            Mensajes.informacion("Verifique que todos los campos exigidos esten completados");
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        int rpta = Mensajes.confirmar("¿Seguro que desea Cancelar?");
+        if (rpta == 0) {
+            limpiarCampos();
+            btnModificar.setEnabled(true);
+            itemNuevo.setEnabled(true);
+            btnModificar.setEnabled(false);
+            itemModificar.setEnabled(false);
+            btnGuardar.setEnabled(false);
+            itemGuardar.setEnabled(false);
+            btnCancelar.setEnabled(false);
+            itemCancelar.setEnabled(false);
+            btnLaboratorio.setEnabled(false);
+            btnProveedor.setEnabled(false);
+            btnFamilia.setEnabled(false);
+            txtCodBarra.setEnabled(false);
+            txtDescripcion.setEnabled(false);
+            txtPrincipio.setEnabled(false);
+            txtAccion.setEnabled(false);
+            rLibre.setEnabled(false);
+            rControlado.setEnabled(false);
+            rNacional.setEnabled(false);
+            rImportado.setEnabled(false);
+            rActivo.setEnabled(false);
+            rInactivo.setEnabled(false);
+            cbLaboratorio.setEnabled(false);
+            cbFamilia.setEnabled(false);
+            cbProveedor.setEnabled(false);
+            txtCosto.setEnabled(false);
+            txtPrecioPublico.setEnabled(false);
+            txtGanancia.setEnabled(false);
+            txtDesc.setEnabled(false);
+            txtPrecioVenta.setEnabled(false);
+            txtStock.setEnabled(false);
+            txtStockMin.setEnabled(false);
+            dfecha.setEnabled(false);
+            pintarEstado();
+            pintarVenta();
+            pintarTipo();
+            Volver();
+            this.dispose();
+        } else {
+            txtCodBarra.requestFocus();
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
+        // TODO add your handling code here:
+        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
+        if (rpta == 0) {
+            Volver();
+            this.dispose();
+        } else {
+            txtCodBarra.requestFocus();
+        }
+    }//GEN-LAST:event_btnSalir1ActionPerformed
+
+    private void rInactivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rInactivoActionPerformed
+        // TODO add your handling code here:
+        pintarEstado();
+    }//GEN-LAST:event_rInactivoActionPerformed
+
+    private void rActivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rActivoActionPerformed
+        // TODO add your handling code here:
+        pintarEstado();
+    }//GEN-LAST:event_rActivoActionPerformed
+
     public void CalcularPrecioVentaxGan() {
         //try {
         if (!txtGanancia.getText().trim().isEmpty()) {
@@ -2432,74 +2482,69 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         dlgArticulos.tbProductos.clearSelection();
     }
 
-    public static void prepararBD() {
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos");
-            } else {
-                sentencia = (MariaDbStatement) con.createStatement();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public void modcbLaboratorio() {
         DefaultComboBoxModel ml = new DefaultComboBoxModel();
-        String CodLaboratorio = txtCodLab.getText().trim();
-        try {
-            rs = sentencia.executeQuery("SELECT * FROM laboratorio WHERE lab_indicador='S'");
+        String sqlLabs = "SELECT * FROM laboratorio WHERE lab_indicador='S'";
+        String sqlLabEsp = "SELECT * FROM laboratorio WHERE lab_codigo=" + txtCodLab.getText().trim();
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sqlLabs); ResultSet rss = st.executeQuery(sqlLabEsp)) {
             ml.addElement("**OPCIONES**");
             while (rs.next()) {
                 ml.addElement(rs.getString("lab_nombre"));
-
             }
-            ResultSet rss = sentencia.executeQuery("SELECT * FROM laboratorio WHERE lab_codigo=" + CodLaboratorio);
             rss.first();
             Object descripcion = (Object) rss.getString("lab_nombre");
             dlgGestArticulos.cbLaboratorio.setModel(ml);
             dlgGestArticulos.cbLaboratorio.setSelectedItem(descripcion);
+            rs.close();
+            rss.close();
+            st.close();
+            cn.close();
         } catch (SQLException ew) {
-            //Mensajes.error("TIENES UN ERROR AL CARGAR LOS LABORATORIOS: "+ew.getMessage().toUpperCase());
+            System.out.println("Error combomod laboratorio: " + ew.getMessage());
         }
     }
 
     public void modcbProveedor() {
         DefaultComboBoxModel pr = new DefaultComboBoxModel();
-        String CodProveedor = txtCodPro.getText().trim();
-        try {
-            rs = sentencia.executeQuery("SELECT * FROM proveedor WHERE pro_indicador='S'");
+        String sqlProvs = "SELECT * FROM proveedor WHERE pro_indicador='S'";
+        String sqlProvEsp = "SELECT * FROM proveedor WHERE pro_codigo=" + txtCodPro.getText().trim();
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sqlProvs); ResultSet rss = st.executeQuery(sqlProvEsp)) {
             pr.addElement("**OPCIONES**");
             while (rs.next()) {
                 pr.addElement(rs.getString("pro_razonsocial"));
             }
-            ResultSet rss = sentencia.executeQuery("SELECT * FROM proveedor WHERE pro_codigo=" + CodProveedor);
             rss.first();
             Object descripcion = (Object) rss.getString("pro_razonsocial");
             dlgGestArticulos.cbProveedor.setModel(pr);
             dlgGestArticulos.cbProveedor.setSelectedItem(descripcion);
+            rs.close();
+            rss.close();
+            st.close();
+            cn.close();
         } catch (SQLException ew) {
-            //Mensajes.error("TIENES UN ERROR AL CARGAR LOS PROVEEDORES: "+ew.getMessage().toUpperCase());
+            System.out.println("Error combomod proveedor: " + ew.getMessage());
         }
     }
 
     public void modcbFamilia() {
         DefaultComboBoxModel fm = new DefaultComboBoxModel();
-        String CodFamilia = txtCodFam.getText().trim();
-        try {
-            rs = sentencia.executeQuery("SELECT * FROM familia WHERE fam_indicador='S'");
+        String sqlFams = "SELECT * FROM familia WHERE fam_indicador='S'";
+        String sqlFamEsp = "SELECT * FROM familia WHERE fam_codigo=" + txtCodFam.getText().trim();
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sqlFams); ResultSet rss = st.executeQuery(sqlFamEsp)) {
             fm.addElement("**OPCIONES**");
             while (rs.next()) {
                 fm.addElement(rs.getString("fam_nombre"));
             }
-            ResultSet rss = sentencia.executeQuery("SELECT * FROM familia WHERE fam_codigo=" + CodFamilia);
             rss.first();
             Object descripcion = (Object) rss.getString("fam_nombre");
             dlgGestArticulos.cbFamilia.setModel(fm);
             dlgGestArticulos.cbFamilia.setSelectedItem(descripcion);
+            rs.close();
+            rss.close();
+            st.close();
+            cn.close();
         } catch (SQLException ew) {
-            //Mensajes.error("TIENES UN ERROR AL CARGAR LAS FAMILIAS: "+ew.getMessage().toUpperCase());
+            System.out.println("Error combomod familia: " + ew.getMessage());
         }
     }
 
@@ -2543,15 +2588,27 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LabelTitulo;
+    private javax.swing.JLabel LabelTitulo1;
+    private javax.swing.JLabel LabelTitulo2;
+    private javax.swing.JLabel LabelTitulo3;
+    private rojeru_san.rspanel.RSPanelImage PanelContenedor;
+    private rojeru_san.rspanel.RSPanelImage PanelContenedor1;
+    private rojeru_san.rspanel.RSPanelImage PanelContenedor2;
+    private rojeru_san.rspanel.RSPanelImage PanelContenedor3;
+    private javax.swing.JSeparator Separador;
+    private javax.swing.JSeparator Separador1;
+    private javax.swing.JSeparator Separador2;
+    private javax.swing.JSeparator Separador3;
     private javax.swing.JMenuBar barMenu;
-    public static javax.swing.JButton btnCancelar;
+    public static RSMaterialComponent.RSButtonIconUno btnCancelar;
     public static javax.swing.JButton btnFamilia;
-    public static javax.swing.JButton btnGuardar;
+    public static RSMaterialComponent.RSButtonIconUno btnGuardar;
     public static javax.swing.JButton btnLaboratorio;
-    public static javax.swing.JButton btnModificar;
-    public static javax.swing.JButton btnNuevo;
+    public static RSMaterialComponent.RSButtonIconUno btnModificar;
+    public static RSMaterialComponent.RSButtonIconUno btnNuevo;
     public static javax.swing.JButton btnProveedor;
-    private javax.swing.JButton btnSalir;
+    private RSMaterialComponent.RSButtonIconUno btnSalir1;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
@@ -2586,6 +2643,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;
@@ -2598,11 +2656,10 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -2615,12 +2672,13 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     private javax.swing.JLabel lbGan;
     private javax.swing.JLabel lbIVA;
     private javax.swing.JMenu menuOpciones;
-    public static javax.swing.JRadioButton rActivo;
+    public static RSMaterialComponent.RSRadioButtonMaterial rActivo;
     public static javax.swing.JRadioButton rControlado;
     public static javax.swing.JRadioButton rImportado;
-    public static javax.swing.JRadioButton rInactivo;
+    public static RSMaterialComponent.RSRadioButtonMaterial rInactivo;
     public static javax.swing.JRadioButton rLibre;
     public static javax.swing.JRadioButton rNacional;
+    private rojeru_san.rspanel.RSPanelImage rSPanelImage1;
     public static javax.swing.JTextArea txtAccion;
     public static javax.swing.JTextField txtCantM;
     public static javax.swing.JTextField txtCodBarra;

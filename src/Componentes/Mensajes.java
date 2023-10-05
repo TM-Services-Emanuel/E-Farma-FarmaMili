@@ -1,7 +1,6 @@
 package Componentes;
 
 import Datos.GestionarArticulos;
-import IU.dlgCompras;
 import IU.dlgVentas;
 import Modelo.Articulo;
 import java.awt.HeadlessException;
@@ -12,14 +11,6 @@ public class Mensajes {
     public static void informacion(String mensaje)//Mensaje de informacion
     {
         JOptionPane.showMessageDialog(null, mensaje,"Información",JOptionPane.INFORMATION_MESSAGE);
-//        //Necesario
-//        UIManager UI=new UIManager(); 
-//        //Borde
-//        UI.put("OptionPane.background", Color.blue); 
-//        //Fondo
-//        UI.put("Panel.background", Color.red); 
-//        //Lanzar el Joptionpane
-//        JOptionPane.showMessageDialog(null,mensaje,"Titulo del Cuadro",JOptionPane.INFORMATION_MESSAGE); 
     }
     
     public static void error(String mensaje)//Mensaje de Error
@@ -34,15 +25,7 @@ public class Mensajes {
     }
     public static void Sistema(String mensaje)//Mensaje de informacion
     {
-        JOptionPane.showMessageDialog(null, mensaje,"Sistema E-FARM",JOptionPane.INFORMATION_MESSAGE);
-//        //Necesario
-       // UIManager UI=new UIManager(); 
-//        //Borde
-        //UIManager.put("OptionPane.background", Color.blue); 
-//        //Fondo
-       // UIManager.put("Panel.background", Color.red); 
-//        //Lanzar el Joptionpane
-        //JOptionPane.showMessageDialog(null,mensaje,"Sistema P-VENTA",JOptionPane.INFORMATION_MESSAGE); 
+        JOptionPane.showMessageDialog(null, mensaje,"Sistema FAST-FARMA",JOptionPane.INFORMATION_MESSAGE);
     }
     
     public static int ingresarNumerosV( int ca)//JoptionPane que solo acepte numeros
@@ -143,10 +126,7 @@ public class Mensajes {
             try {
                 numero = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo precio"));
                 bandera = true;
-            } catch (HeadlessException e) {
-                informacion("Solo se permiten números");
-                bandera = false;
-            } catch (NumberFormatException e) {
+            } catch (HeadlessException | NumberFormatException e) {
                 informacion("Solo se permiten números");
                 bandera = false;
             }

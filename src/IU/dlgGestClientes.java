@@ -1,6 +1,6 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Mensajes;
 import Componentes.cargarComboBox;
 import Componentes.validarCampos;
@@ -10,18 +10,13 @@ import Datos.GestionarCliente;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 
 public final class dlgGestClientes extends javax.swing.JDialog {
-    
-    public static MariaDbConnection con;
-    public static MariaDbStatement st;
-    public static ResultSet rs;
+
+    static DataSourceService dss = new DataSourceService();
 
     public dlgGestClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -37,72 +32,59 @@ public final class dlgGestClientes extends javax.swing.JDialog {
         c5.setVisible(false);
         btnNuevo.doClick();
     }
-    
-    public static void prepararBD() {
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos Movil");
-            } else {
-                st = (MariaDbStatement) con.createStatement();
+
+    public static void BuscarRUC() {
+        String ruc = dlgClientes.txtBuscar.getText().trim();
+        if (!ruc.isEmpty()) {
+            try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM clientesbd WHERE cedula Like '" + ruc + "%'")) {
+                rs.last();
+                dlgGestClientes.txtRazonS.setText(rs.getString("nombre"));
+                dlgGestClientes.txtRuc.setText(rs.getString("cedula"));
+                dlgGestClientes.txtDireccion.setText("SIN ESPECIFICAR");
+                dlgGestClientes.txtTelefono.setText("0");
+                dlgGestClientes.txtCelular.setText("0");
+                dlgGestClientes.txtContacto.setText("SIN ESPECIFICAR");
+                dlgGestClientes.cbCiudad.setSelectedIndex(1);
+                rs.close();
+                st.close();
+                cn.close();
+            } catch (SQLException ex) {
+                Mensajes.informacion("OBSERVACIÓN:\nLamentablemete no se ha encontrado coincidencia en el registro externo de clientes.");
+                dlgGestClientes.txtRuc.setText(ruc);
+                dlgGestClientes.txtDireccion.setText("SIN ESPECIFICAR");
+                dlgGestClientes.txtTelefono.setText("0");
+                dlgGestClientes.txtCelular.setText("0");
+                dlgGestClientes.txtContacto.setText("SIN ESPECIFICAR");
+                dlgGestClientes.cbCiudad.setSelectedIndex(1);
             }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
         }
     }
-    
-    public static void BuscarRUC(){
-         prepararBD();
-         String ruc=dlgClientes.txtBuscar.getText().trim();
-         if(!ruc.isEmpty()){
-             try {
-            rs = st.executeQuery("SELECT * FROM clientesbd WHERE cedula Like '"+ruc+"%'");
-            rs.last();
-            dlgGestClientes.txtRazonS.setText(rs.getString("nombre"));
-            dlgGestClientes.txtRuc.setText(rs.getString("cedula"));
-            dlgGestClientes.txtDireccion.setText("SIN ESPECIFICAR");
-            dlgGestClientes.txtTelefono.setText("0");
-            dlgGestClientes.txtCelular.setText("0");
-            dlgGestClientes.txtContacto.setText("SIN ESPECIFICAR");
-            dlgGestClientes.cbCiudad.setSelectedIndex(1);
-            rs.close();
-        } catch (SQLException ex) {
-            Mensajes.informacion("OBSERVACIÓN:\nLamentablemete no se ha encontrado coincidencia en el registro externo de clientes.");
-            dlgGestClientes.txtRuc.setText(ruc);
-            dlgGestClientes.txtDireccion.setText("SIN ESPECIFICAR");
-            dlgGestClientes.txtTelefono.setText("0");
-            dlgGestClientes.txtCelular.setText("0");
-            dlgGestClientes.txtContacto.setText("SIN ESPECIFICAR");
-            dlgGestClientes.cbCiudad.setSelectedIndex(1);
+
+    public static void BuscarRUC2() {
+        String ruc = txtRuc.getText().trim();
+        if (!ruc.isEmpty()) {
+            try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM clientesbd WHERE cedula Like '" + ruc + "%'")) {
+                rs.last();
+                dlgGestClientes.txtRazonS.setText(rs.getString("nombre"));
+                dlgGestClientes.txtRuc.setText(rs.getString("cedula"));
+                dlgGestClientes.txtDireccion.setText("SIN ESPECIFICAR");
+                dlgGestClientes.txtTelefono.setText("0");
+                dlgGestClientes.txtCelular.setText("0");
+                dlgGestClientes.txtContacto.setText("SIN ESPECIFICAR");
+                dlgGestClientes.cbCiudad.setSelectedIndex(1);
+                rs.close();
+                st.close();
+                cn.close();
+            } catch (SQLException ex) {
+                Mensajes.informacion("OBSERVACIÓN:\nLamentablemete no se ha encontrado coincidencia en el registro externo de clientes.");
+                dlgGestClientes.txtRuc.setText(ruc);
+                dlgGestClientes.txtDireccion.setText("SIN ESPECIFICAR");
+                dlgGestClientes.txtTelefono.setText("0");
+                dlgGestClientes.txtCelular.setText("0");
+                dlgGestClientes.txtContacto.setText("SIN ESPECIFICAR");
+                dlgGestClientes.cbCiudad.setSelectedIndex(1);
+            }
         }
-         }
-    }
-    
-    public static void BuscarRUC2(){
-         prepararBD();
-         String ruc=txtRuc.getText().trim();
-         if(!ruc.isEmpty()){
-             try {
-            rs = st.executeQuery("SELECT * FROM clientesbd WHERE cedula Like '"+ruc+"%'");
-            rs.last();
-            dlgGestClientes.txtRazonS.setText(rs.getString("nombre"));
-            dlgGestClientes.txtRuc.setText(rs.getString("cedula"));
-            dlgGestClientes.txtDireccion.setText("SIN ESPECIFICAR");
-            dlgGestClientes.txtTelefono.setText("0");
-            dlgGestClientes.txtCelular.setText("0");
-            dlgGestClientes.txtContacto.setText("SIN ESPECIFICAR");
-            dlgGestClientes.cbCiudad.setSelectedIndex(1);
-            rs.close();
-        } catch (SQLException ex) {
-            Mensajes.informacion("OBSERVACIÓN:\nLamentablemete no se ha encontrado coincidencia en el registro externo de clientes.");
-            dlgGestClientes.txtRuc.setText(ruc);
-            dlgGestClientes.txtDireccion.setText("SIN ESPECIFICAR");
-            dlgGestClientes.txtTelefono.setText("0");
-            dlgGestClientes.txtCelular.setText("0");
-            dlgGestClientes.txtContacto.setText("SIN ESPECIFICAR");
-            dlgGestClientes.cbCiudad.setSelectedIndex(1);
-        }
-         }
     }
 
     @SuppressWarnings("unchecked")
@@ -898,22 +880,21 @@ public final class dlgGestClientes extends javax.swing.JDialog {
 
     private void txaSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txaSKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
-        int limite=199;
-        if (txaS.getText().length()== limite)
-        {
+        int limite = 199;
+        if (txaS.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txaSKeyTyped
 
     private void pnFacturacionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pnFacturacionKeyPressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_pnFacturacionKeyPressed
 
     private void pnFacturacionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnFacturacionMouseClicked
@@ -970,52 +951,53 @@ public final class dlgGestClientes extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-       lbm.setText("");
+        lbm.setText("");
         c1.setVisible(false);
         c2.setVisible(false);
         c3.setVisible(false);
         c4.setVisible(false);
         c5.setVisible(false);
         if (validarCampos.estaVacio(txtRazonS) && validarCampos.estaVacio(txtRuc) && validarCampos.estaVacio(txtDireccion) && validarCampos.estaVacio(txtCelular)) {
-            try{
-                int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION){
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
                     controlCliente.actCliente();
                     actualizartablaClientes();
                     this.dispose();
                 }
-            }catch(Exception ee){}
+            } catch (Exception ee) {
+            }
         } else {
             lbm.setText("Campo Obligatorio");
-            if(txtRazonS.getText().equals("")){
+            if (txtRazonS.getText().equals("")) {
                 txtRazonS.requestFocus();
                 c1.setVisible(true);
                 c2.setVisible(false);
                 c3.setVisible(false);
                 c4.setVisible(false);
                 c5.setVisible(false);
-            }else if(txtRuc.getText().equals("")){
+            } else if (txtRuc.getText().equals("")) {
                 txtRuc.requestFocus();
                 c1.setVisible(false);
                 c2.setVisible(true);
                 c3.setVisible(false);
                 c4.setVisible(false);
                 c5.setVisible(false);
-            }else if (txtDireccion.getText().trim()==null){
+            } else if (txtDireccion.getText().trim() == null) {
                 txtDireccion.requestFocus();
                 c1.setVisible(false);
                 c2.setVisible(false);
                 c3.setVisible(true);
                 c4.setVisible(false);
                 c5.setVisible(false);
-            }else if(txtCelular.getText().trim()==null){
+            } else if (txtCelular.getText().trim() == null) {
                 txtCelular.requestFocus();
                 c1.setVisible(false);
                 c2.setVisible(false);
                 c3.setVisible(false);
                 c4.setVisible(true);
                 c5.setVisible(false);
-            }else if(txtLimite.getText().trim()==null){
+            } else if (txtLimite.getText().trim() == null) {
                 contenedor.setSelectedIndex(1);
                 txtLimite.requestFocus();
                 c1.setVisible(false);
@@ -1029,59 +1011,60 @@ public final class dlgGestClientes extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-      lbm.setText("");
+        lbm.setText("");
         c1.setVisible(false);
         c2.setVisible(false);
         c3.setVisible(false);
         c4.setVisible(false);
         c5.setVisible(false);
-        if(cbCiudad.getSelectedIndex()==0){
+        if (cbCiudad.getSelectedIndex() == 0) {
             lbm.setText("Seleccion Obligatoria");
             cbCiudad.requestFocus();
-        }else if (validarCampos.estaVacio(txtRazonS) && validarCampos.estaVacio(txtRuc) && validarCampos.estaVacio(txtDireccion) && validarCampos.estaVacio(txtCelular) && validarCampos.estaVacio(txtLimite)) {
-            try{
-                int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION){
+        } else if (validarCampos.estaVacio(txtRazonS) && validarCampos.estaVacio(txtRuc) && validarCampos.estaVacio(txtDireccion) && validarCampos.estaVacio(txtCelular) && validarCampos.estaVacio(txtLimite)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
                     String cod = GestionarCliente.getCodigo();
                     lblCodC.setText(cod);
                     controlCliente.addCliente();
                     actualizartablaClientes();
                     btnCancelarActionPerformed(null);
                 }
-                
-            }catch(HeadlessException ee){}
-            
+
+            } catch (HeadlessException ee) {
+            }
+
         } else {
             lbm.setText("Campo Obligatorio");
-            if(txtRazonS.getText().equals("")){
+            if (txtRazonS.getText().equals("")) {
                 txtRazonS.requestFocus();
                 c1.setVisible(true);
                 c2.setVisible(false);
                 c3.setVisible(false);
                 c4.setVisible(false);
                 c5.setVisible(false);
-            }else if(txtRuc.getText().equals("")){
+            } else if (txtRuc.getText().equals("")) {
                 txtRuc.requestFocus();
                 c1.setVisible(false);
                 c2.setVisible(true);
                 c3.setVisible(false);
                 c4.setVisible(false);
                 c5.setVisible(false);
-            }else if (txtDireccion.getText().equals("")){
+            } else if (txtDireccion.getText().equals("")) {
                 txtDireccion.requestFocus();
                 c1.setVisible(false);
                 c2.setVisible(false);
                 c3.setVisible(true);
                 c4.setVisible(false);
                 c5.setVisible(false);
-            }else if(txtCelular.getText().equals("")){
+            } else if (txtCelular.getText().equals("")) {
                 txtCelular.requestFocus();
                 c1.setVisible(false);
                 c2.setVisible(false);
                 c3.setVisible(false);
                 c4.setVisible(true);
                 c5.setVisible(false);
-            }else if(txtLimite.getText().equals("")){
+            } else if (txtLimite.getText().equals("")) {
                 txtLimite.requestFocus();
                 contenedor.setSelectedComponent(pnFacturacion);
                 c1.setVisible(false);
@@ -1095,7 +1078,7 @@ public final class dlgGestClientes extends javax.swing.JDialog {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
-   int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
+        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
         if (rpta == 0) {
             actualizartablaClientes();
             this.dispose();
@@ -1142,18 +1125,18 @@ public final class dlgGestClientes extends javax.swing.JDialog {
 
     private void cbCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCiudadActionPerformed
         // TODO add your handling code here:
-        if(cbCiudad.getSelectedIndex()>0){
-                String id = cargarComboBox.getCodidgo(cbCiudad);
-                lbCiudad.setText(id);
-        }else{
-                lbCiudad.setText("");
+        if (cbCiudad.getSelectedIndex() > 0) {
+            String id = cargarComboBox.getCodidgo(cbCiudad);
+            lbCiudad.setText(id);
+        } else {
+            lbCiudad.setText("");
         }
-        
+
     }//GEN-LAST:event_cbCiudadActionPerformed
 
     private void cbCiudadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbCiudadKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtRazonS.requestFocus();
         }
     }//GEN-LAST:event_cbCiudadKeyPressed
@@ -1171,10 +1154,10 @@ public final class dlgGestClientes extends javax.swing.JDialog {
 
     private void txtRazonSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRazonSKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
     }//GEN-LAST:event_txtRazonSKeyTyped
@@ -1186,17 +1169,16 @@ public final class dlgGestClientes extends javax.swing.JDialog {
 
     private void txtRucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        int limite=11;
-        if(Character.isLetter(c)) {
+        char c = evt.getKeyChar();
+        int limite = 11;
+        if (Character.isLetter(c)) {
             getToolkit().beep();
 
             evt.consume();
 
             System.out.println("Ingresa Solo Numeros");
         }
-        if (txtRuc.getText().length()== limite)
-        {
+        if (txtRuc.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtRucKeyTyped
@@ -1213,10 +1195,10 @@ public final class dlgGestClientes extends javax.swing.JDialog {
 
     private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
     }//GEN-LAST:event_txtDireccionKeyTyped
@@ -1228,17 +1210,16 @@ public final class dlgGestClientes extends javax.swing.JDialog {
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        int limite=15;
-        if(Character.isLetter(c)) {
+        char c = evt.getKeyChar();
+        int limite = 15;
+        if (Character.isLetter(c)) {
             getToolkit().beep();
 
             evt.consume();
 
             System.out.println("Ingresa Solo Numeros");
         }
-        if (txtTelefono.getText().length()== limite)
-        {
+        if (txtTelefono.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
@@ -1250,17 +1231,16 @@ public final class dlgGestClientes extends javax.swing.JDialog {
 
     private void txtCelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        int limite=15;
-        if(Character.isLetter(c)) {
+        char c = evt.getKeyChar();
+        int limite = 15;
+        if (Character.isLetter(c)) {
             getToolkit().beep();
 
             evt.consume();
 
             System.out.println("Ingresa Solo Numeros");
         }
-        if (txtCelular.getText().length()== limite)
-        {
+        if (txtCelular.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtCelularKeyTyped
@@ -1279,20 +1259,20 @@ public final class dlgGestClientes extends javax.swing.JDialog {
 
     private void txtContactoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtContactoKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
     }//GEN-LAST:event_txtContactoKeyTyped
 
     private void chbCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbCreditoActionPerformed
         // TODO add your handling code here:
-        if(chbCredito.isSelected()){
+        if (chbCredito.isSelected()) {
             txtLimite.setEnabled(true);
             txtLimite.requestFocus();
-        }else{
+        } else {
             txtLimite.setEnabled(false);
         }
     }//GEN-LAST:event_chbCreditoActionPerformed
@@ -1308,40 +1288,39 @@ public final class dlgGestClientes extends javax.swing.JDialog {
     private void txtLimiteKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLimiteKeyPressed
         // TODO add your handling code here:
         validarCampos.soloDecimales(txtLimite);
-        int limite=8;
-        if (txtLimite.getText().length()== limite)
-        {
+        int limite = 8;
+        if (txtLimite.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtLimiteKeyPressed
 
     private void txtLimiteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtLimiteKeyReleased
         // TODO add your handling code here:
-        try{
-            if(Integer.parseInt(txtLimite.getText()) < 0){
-            txtLimite.setText("0");
+        try {
+            if (Integer.parseInt(txtLimite.getText()) < 0) {
+                txtLimite.setText("0");
+            }
+        } catch (NumberFormatException e) {
         }
-        }catch(NumberFormatException e){}
-        
+
         DecimalFormat df = new DecimalFormat("#,###");
- 
+
         if (txtLimite.getText().trim().length() >= 1) {
- 
-            txtLimite.setText( df.format(Integer.valueOf(txtLimite.getText().trim().replace(".", "").replace(",", ""))) );
+
+            txtLimite.setText(df.format(Integer.valueOf(txtLimite.getText().trim().replace(".", "").replace(",", ""))));
         }
     }//GEN-LAST:event_txtLimiteKeyReleased
 
     private void btnEntrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrar1ActionPerformed
         // TODO add your handling code here:
-        if(txtRuc.getText().trim().isEmpty()){
+        if (txtRuc.getText().trim().isEmpty()) {
             txtRuc.requestFocus();
-        }else{
+        } else {
             BuscarRUC2();
         }
     }//GEN-LAST:event_btnEntrar1ActionPerformed
 
-    void limpiarCampos()
-    {
+    void limpiarCampos() {
         lblCodC.setText("");
         lbCiudad.setText("");
         txtRazonS.setText("");
@@ -1354,12 +1333,14 @@ public final class dlgGestClientes extends javax.swing.JDialog {
         txaS.setText("");
         txtLimite.setText("0");
     }
-    void actualizartablaClientes(){
-         CabecerasTablas cabe = new CabecerasTablas();
-         cabe.cliente(dlgClientes.tablaClientes);
-         CabecerasTablas.limpiarTablas(dlgClientes.tablaClientes);
-         controlCliente.listClientes(dlgClientes.tablaClientes, "clientes.cli_codigo");
-     }
+
+    void actualizartablaClientes() {
+        CabecerasTablas cabe = new CabecerasTablas();
+        cabe.cliente(dlgClientes.tablaClientes);
+        CabecerasTablas.limpiarTablas(dlgClientes.tablaClientes);
+        controlCliente.listClientes(dlgClientes.tablaClientes, "clientes.cli_codigo");
+    }
+
     void cargarIcono() {
         try {
             java.awt.Image icon = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png"));
@@ -1368,7 +1349,7 @@ public final class dlgGestClientes extends javax.swing.JDialog {
             Mensajes.error("No se pudo cargo icono");
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -1398,20 +1379,19 @@ public final class dlgGestClientes extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         java.awt.EventQueue.invokeLater(() -> {
             dlgGestClientes dialog = new dlgGestClientes(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                
+
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     System.exit(0);

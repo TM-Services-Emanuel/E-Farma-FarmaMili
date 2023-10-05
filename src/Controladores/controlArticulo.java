@@ -1,6 +1,6 @@
 package Controladores;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
@@ -15,41 +15,21 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 import java.sql.*;
 
 public class controlArticulo {
 
-    static String UsuarioL = "";
-    public static ResultSet rs;
-    public static MariaDbStatement sentencia;
-    public static MariaDbConnection  con;
     static int codLab;
     static int codProv;
     static int codFam;
-    
-    
-    public static void prepararBD(){
-    {
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos");
-            } else {
-                sentencia = (MariaDbStatement) con.createStatement();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-}
+
+    static DataSourceService dss = new DataSourceService();
 
     public static void aModifcar() {
         try {
             int x = dlgArticulos.tbProductos.getSelectedRow();
             String cod = dlgArticulos.tbProductos.getValueAt(x, 0).toString();
-            System.out.println("articulo a mod: "+cod);
+            System.out.println("articulo a mod: " + cod);
             Articulo ar = GestionarArticulos.busArticulo(cod);
             dlgGestArticulos.txtCodProducto.setText(String.valueOf(ar.getCodArticulo()));
             dlgGestArticulos.txtCodBarra.setText((ar.getCodBarra()));
@@ -100,15 +80,15 @@ public class controlArticulo {
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
             }
-            try{
-                if(ar.getVM().equals("S")){
+            try {
+                if (ar.getVM().equals("S")) {
                     dlgGestArticulos.ckHabilitar.setSelected(true);
                     dlgGestArticulos.txtCantM.setText(String.valueOf(ar.getCM()));
                     dlgGestArticulos.txtCantM.setEnabled(true);
                     dlgGestArticulos.txtPrecioVentaML.setText(String.valueOf(ar.getPM()));
                     dlgGestArticulos.txtPrecioVentaM.setText(df.format(Integer.valueOf(dlgGestArticulos.txtPrecioVentaML.getText().trim().replace(".", "").replace(",", ""))));
                     dlgGestArticulos.txtPrecioVentaM.setEnabled(true);
-                }else{
+                } else {
                     dlgGestArticulos.ckHabilitar.setSelected(false);
                     dlgGestArticulos.txtCantM.setText(String.valueOf(ar.getCM()));
                     dlgGestArticulos.txtCantM.setEnabled(false);
@@ -116,8 +96,9 @@ public class controlArticulo {
                     dlgGestArticulos.txtPrecioVentaM.setText(df.format(Integer.valueOf(dlgGestArticulos.txtPrecioVentaML.getText().trim().replace(".", "").replace(",", ""))));
                     dlgGestArticulos.txtPrecioVentaM.setEnabled(false);
                 }
-            }catch(NumberFormatException e){
-            System.out.println("Error al obtener datos Mayorista"+e.getMessage());}
+            } catch (NumberFormatException e) {
+                System.out.println("Error al obtener datos Mayorista" + e.getMessage());
+            }
         } catch (NumberFormatException ee) {
             System.out.println(ee.getMessage());
         }
@@ -160,52 +141,43 @@ public class controlArticulo {
         } else {
             tipo = "I";
         }
-        try {
-            prepararBD();
-            String lab;
-            lab = dlgGestArticulos.cbLaboratorio.getSelectedItem().toString();
-            try {
-                rs = sentencia.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='"+lab+"'");
-                rs.last();
-                codLab = rs.getInt("lab_codigo");
-                rs.close();
-            } catch (SQLException ex) {
-                Mensajes.error("Error al querer obtener valor del laboratorio: "+ex.getMessage());
-            }
-        } catch (Exception pr) {}
-        try {
-            prepararBD();
-            String prov;
-            prov = dlgGestArticulos.cbProveedor.getSelectedItem().toString();
-            try {
-                rs = sentencia.executeQuery("SELECT * FROM proveedor WHERE pro_razonsocial='"+prov+"'");
-                rs.last();
-                codProv = rs.getInt("pro_codigo");
-                rs.close();
-            } catch (SQLException ex) {
-                Mensajes.error("Error al querer obtener valor del proveedor: "+ex.getMessage());
-            }
-        } catch (Exception pr) {}
-        try {
-            prepararBD();
-            String fam;
-            fam = dlgGestArticulos.cbFamilia.getSelectedItem().toString();
-            try {
-                rs = sentencia.executeQuery("SELECT * FROM familia WHERE fam_nombre='"+fam+"'");
-                rs.last();
-                codFam = rs.getInt("fam_codigo");
-                rs.close();
-            } catch (SQLException ex) {
-                Mensajes.error("Error al querer obtener valor de la familia: "+ex.getMessage());
-            }
-        } catch (Exception pr) {}
-        int Pcosto = Integer.valueOf(dlgGestArticulos.txtCostoL.getText().trim());
-        int Ppublico = Integer.valueOf(dlgGestArticulos.txtPrecioPublicoL.getText().trim());
+        String sqlLab = "SELECT * FROM laboratorio WHERE lab_nombre='" + dlgGestArticulos.cbLaboratorio.getSelectedItem().toString() + "'";
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sqlLab)) {
+            rs.last();
+            codLab = rs.getInt("lab_codigo");
+            rs.close();
+            st.close();
+            cn.close();
+        } catch (SQLException ex) {
+            Mensajes.error("Error al querer obtener valor del laboratorio: " + ex.getMessage());
+        }
+        String sqlProv = "SELECT * FROM proveedor WHERE pro_razonsocial='" + dlgGestArticulos.cbProveedor.getSelectedItem().toString() + "'";
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sqlProv)) {
+            rs.last();
+            codProv = rs.getInt("pro_codigo");
+            rs.close();
+            st.close();
+            cn.close();
+        } catch (SQLException ex) {
+            Mensajes.error("Error al querer obtener valor del proveedor: " + ex.getMessage());
+        }
+        String sqlFam = "SELECT * FROM familia WHERE fam_nombre='" + dlgGestArticulos.cbFamilia.getSelectedItem().toString() + "'";
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sqlFam)) {
+            rs.last();
+            codFam = rs.getInt("fam_codigo");
+            rs.close();
+            st.close();
+            cn.close();
+        } catch (SQLException ex) {
+            Mensajes.error("Error al querer obtener valor de la familia: " + ex.getMessage());
+        }
+        int Pcosto = Integer.parseInt(dlgGestArticulos.txtCostoL.getText().trim());
+        int Ppublico = Integer.parseInt(dlgGestArticulos.txtPrecioPublicoL.getText().trim());
         int Gan = Integer.parseInt(dlgGestArticulos.txtGanancia.getText());
         int des = Integer.parseInt(dlgGestArticulos.txtDesc.getText());
-        int Pventa = Integer.valueOf(dlgGestArticulos.txtPrecioVentaL.getText());
+        int Pventa = Integer.parseInt(dlgGestArticulos.txtPrecioVentaL.getText());
         int ivaG = Integer.parseInt(dlgGestArticulos.txtIVA.getText());
-        double ivaC = Double.valueOf(dlgGestArticulos.txtIVACosto.getText());
+        double ivaC = Double.parseDouble(dlgGestArticulos.txtIVACosto.getText());
         String fechas;
         if (dlgGestArticulos.dfecha.getDate() == null) {
             fechas = "0000-00-00";
@@ -213,8 +185,8 @@ public class controlArticulo {
             Date fecha = dlgGestArticulos.dfecha.getDate();
             fechas = Fecha.formatoFechaD(fecha);
         }
-        int stock = Integer.valueOf(dlgGestArticulos.txtStock.getText().trim());
-        int stockMin = Integer.valueOf(dlgGestArticulos.txtStockMin.getText().trim());
+        int stock = Integer.parseInt(dlgGestArticulos.txtStock.getText().trim());
+        int stockMin = Integer.parseInt(dlgGestArticulos.txtStockMin.getText().trim());
         String prodActivo;
         if (dlgGestArticulos.rActivo.isSelected()) {
             prodActivo = "SI";
@@ -224,19 +196,18 @@ public class controlArticulo {
         String VM;
         int CM;
         int PM;
-        if(dlgGestArticulos.ckHabilitar.isSelected()){
-            VM="S";
-            CM=Integer.parseInt(dlgGestArticulos.txtCantM.getText().trim());
-            PM=Integer.parseInt(dlgGestArticulos.txtPrecioVentaML.getText().trim());
-        }else{
-            VM="N";
-            CM=Integer.parseInt(dlgGestArticulos.txtCantM.getText().trim());
-            PM=Integer.parseInt(dlgGestArticulos.txtPrecioVentaML.getText().trim());
+        if (dlgGestArticulos.ckHabilitar.isSelected()) {
+            VM = "S";
+            CM = Integer.parseInt(dlgGestArticulos.txtCantM.getText().trim());
+            PM = Integer.parseInt(dlgGestArticulos.txtPrecioVentaML.getText().trim());
+        } else {
+            VM = "N";
+            CM = Integer.parseInt(dlgGestArticulos.txtCantM.getText().trim());
+            PM = Integer.parseInt(dlgGestArticulos.txtPrecioVentaML.getText().trim());
         }
-        UsuarioL = Login.getUsuarioLogueado();
-        String usuario = UsuarioL;
+        String usuario = Login.getUsuarioLogueado();
         art = new Articulo(codA, codFam, codLab, codProv, codBar, nomb, princ, accion, Pcosto, ivaC, ivaG, stock, stockMin, fechas,
-                Gan, des, Ppublico, Pventa, venta, tipo, prodActivo, VM, CM, PM ,usuario);
+                Gan, des, Ppublico, Pventa, venta, tipo, prodActivo, VM, CM, PM, usuario);
         return art;
     }
 
@@ -265,7 +236,7 @@ public class controlArticulo {
     }
 
     public static Articulo busArticulo(String cod) {
-        Articulo art = null;
+        Articulo art;
         art = GestionarArticulos.busArticulo(cod);
         return art;
     }
@@ -274,7 +245,7 @@ public class controlArticulo {
         int x = dlgArticulos.tbProductos.getSelectedRow();
         String msg;
         String cod = dlgArticulos.tbProductos.getValueAt(x, 0).toString();
-        String usuario = UsuarioL = Login.getUsuarioLogueado();
+        String usuario = Login.getUsuarioLogueado();
         msg = GestionarArticulos.delArticulo(cod, usuario);
         if (msg == null) {
             Mensajes.informacion("Artículo Eliminado");
@@ -283,9 +254,9 @@ public class controlArticulo {
         }
         return msg;
     }
-    
+
     public static void listArticulo(JTable tabla, String cod) {
-        List lista = null;
+        List lista;
         lista = GestionarArticulos.listArticulo(cod);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
@@ -293,6 +264,7 @@ public class controlArticulo {
             tb.addRow(fila);
         }
     }
+
     public static void listArticuloActivo(JTable tabla, String cod) {
         List lista;
         lista = GestionarArticulos.listArticuloActivo(cod);
@@ -302,7 +274,7 @@ public class controlArticulo {
             tb.addRow(fila);
         }
     }
-    
+
     public static void filtrarGral(JTable tabla, String cod) {
         String C = cod;
         List lista1;
@@ -317,7 +289,7 @@ public class controlArticulo {
     }
 
     public static void filtrarDescripcion(JTable tabla, String cod) {
-        List lista = null;
+        List lista;
         lista = GestionarArticulos.filtrarDescripcion(cod);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
@@ -325,8 +297,9 @@ public class controlArticulo {
             tb.addRow(fila);
         }
     }
+
     public static void filtrarDescripcionActivo(JTable tabla, String cod) {
-        List lista = null;
+        List lista;
         lista = GestionarArticulos.filtrarDescripcionActivo(cod);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
@@ -337,48 +310,32 @@ public class controlArticulo {
         }
     }
 
-/*    public static void filrarPrincipio(JTable tabla, String pr) {
-        List lista = null;
-        lista = GestionarArticulos.filtrarPrincipio(pr);
-        for (int i = 1; i < lista.size(); i++) {
-            DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
-            Object[] fila = (Object[]) lista.get(i);
-            //fila[0].toString();
-            //fila[1].toString();
-            tb.addRow(fila);
-        }
-    }*/
     public static void filrarPrincipioActivo(JTable tabla, String pr) {
-        List lista = null;
+        List lista;
         lista = GestionarArticulos.filtrarPrincipioActivo(pr);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
             Object[] fila = (Object[]) lista.get(i);
-            //fila[0].toString();
-            //fila[1].toString();
             tb.addRow(fila);
         }
     }
 
     public static void filtrarCodBarra(JTable tabla, String rb) {
-        List lista = null;
+        List lista;
         lista = GestionarArticulos.filtrarCodBarra(rb);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
             Object[] fila = (Object[]) lista.get(i);
-            //fila[0].toString();
-            //fila[1].toString();
             tb.addRow(fila);
         }
     }
+
     public static void filtrarCodBarraActivo(JTable tabla, String rb) {
-        List lista = null;
+        List lista;
         lista = GestionarArticulos.filtrarCodBarraActivo(rb);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
             Object[] fila = (Object[]) lista.get(i);
-            //fila[0].toString();
-            //fila[1].toString();
             tb.addRow(fila);
         }
     }

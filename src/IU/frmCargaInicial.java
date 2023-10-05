@@ -1,22 +1,18 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Mensajes;
 import Componentes.Software;
 import java.awt.Toolkit;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 
 public final class frmCargaInicial extends javax.swing.JFrame {
 
-    public static ResultSet rs;
-    public static MariaDbStatement st;
-    public static MariaDbConnection con;
+    static DataSourceService dss = new DataSourceService();
 
     public frmCargaInicial() {
         my_style();
@@ -26,25 +22,10 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         Titulo();
         jProgressBar1.setVisible(false);
     }
-    
-    public static void prepararBD() {
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos");
-            } else {
-                st = (MariaDbStatement) con.createStatement();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     public static void Titulo() {
-        prepararBD();
-        try {
-            String sql = "SELECT * FROM software WHERE indicador='S'";
-            rs = st.executeQuery(sql);
+        String sql = "SELECT * FROM software WHERE indicador='S'";
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
             rs.first();
             Software.setSoftware(rs.getString("nombre"));
             Software.setDescripcion(rs.getString("descripcion"));
@@ -53,6 +34,9 @@ public final class frmCargaInicial extends javax.swing.JFrame {
             Software.setProfesion(rs.getString("profesion"));
             Software.setTelefoo(rs.getString("tel_desarrollador"));
             Software.setCorreo(rs.getString("correo"));
+            rs.close();
+            st.close();
+            cn.close();
         } catch (SQLException ee) {
             Software.setSoftware("null");
             Software.setDescripcion("null");

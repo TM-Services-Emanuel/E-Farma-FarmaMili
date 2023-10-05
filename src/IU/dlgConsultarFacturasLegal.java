@@ -1,46 +1,34 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.ReporteF;
 import Componentes.Mensajes;
 import Componentes.Numero_a_Letra;
 import Componentes.Operacion;
-import Componentes.PrinterService;
 import Componentes.RenderDecimal;
 import Componentes.RenderDecimal1;
 import Componentes.Software;
 import Controladores.CabecerasTablas;
 import Controladores.controlFactura;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
 
     CabecerasTablas cabe = new CabecerasTablas();
-    public static MariaDbConnection con;
-    public static MariaDbStatement st;
-    public static ResultSet rss;
-
-    public static String UsuarioL = "";
     public ReporteF jasper;
-    static String emp;
-    static String dir;
-    static String cel;
-    private static String ImpresoraPred;
     Numero_a_Letra L;
-    
+    static DataSourceService dss = new DataSourceService();
 
-    public dlgConsultarFacturasLegal(java.awt.Frame parent, boolean modal) {
+    public dlgConsultarFacturasLegal(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         titulo();
-        prepararBD();
         txtCodCliente.setVisible(false);
         jasper = new ReporteF();
         txtFechaF.setText(Fecha.formatoFecha(dcFecha.getText()));
@@ -67,19 +55,6 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
         dlgConsultarFacturasLegal.tbDetalleFactura.getColumnModel().getColumn(5).setCellRenderer(new RenderDecimal());
     }
 
-    public static void prepararBD() {
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos");
-            } else {
-                st = (MariaDbStatement) con.createStatement();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public static void limpiarCampos() {
         txtCodCliente.setText("");
         txtRuc.setText("");
@@ -90,207 +65,6 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
         txtEstado.setText("");
     }
 
-    /*public static void imprimirTicket(String fecha, String hora, String fac, String caja, String condicion, String total) {
-
-        try {
-          /*  try {
-                String sql = "select em_razonsocial, em_direccion, em_celular from empresa where em_indicador='S'";
-                st = (MariaDbStatement) con.createStatement();
-                rss = st.executeQuery(sql);
-                try{
-                    rss.first();
-                    emp=rss.getString(1);
-                    dir=rss.getString(2);
-                    cel=rss.getString(3);
-                } catch (SQLException e) {
-                }
-            } catch (SQLException ee) {
-                System.out.println(ee.getMessage());
-            }
-            PrinterMatrix printer = new PrinterMatrix();
-            Extenso e = new Extenso();
-
-            e.setNumber(0);
-            //Definir el tamanho del papel para la impresion de dinamico y 32 columnas
-            int filas = tblDetalle.getRowCount();
-            int tamaño = filas+15;
-            printer.setOutSize(tamaño, 80);
-            switch (emp.length()) {
-                case 1 -> printer.printTextWrap(0, 1, 20, 40, emp); //NOMBRE EMPRESA
-                case 2 -> printer.printTextWrap(0, 1, 19, 40, emp); //NOMBRE EMPRESA
-                case 3 -> printer.printTextWrap(0, 1, 19, 40, emp); //NOMBRE EMPRESA
-                case 4 -> printer.printTextWrap(0, 1, 18, 40, emp); //NOMBRE EMPRESA
-                case 5 -> printer.printTextWrap(0, 1, 18, 40, emp); //NOMBRE EMPRESA
-                case 6 -> printer.printTextWrap(0, 1, 17, 40, emp); //NOMBRE EMPRESA
-                case 7 -> printer.printTextWrap(0, 1, 17, 40, emp); //NOMBRE EMPRESA
-                case 8 -> printer.printTextWrap(0, 1, 16, 40, emp); //NOMBRE EMPRESA
-                case 9 -> printer.printTextWrap(0, 1, 16, 40, emp); //NOMBRE EMPRESA
-                case 10 -> printer.printTextWrap(0, 1, 15, 40, emp); //NOMBRE EMPRESA
-                case 11 -> printer.printTextWrap(0, 1, 15, 40, emp); //NOMBRE EMPRESA
-                case 12 -> printer.printTextWrap(0, 1, 14, 40, emp); //NOMBRE EMPRESA
-                case 13 -> printer.printTextWrap(0, 1, 14, 40, emp); //NOMBRE EMPRESA
-                case 14 -> printer.printTextWrap(0, 1, 13, 40, emp); //NOMBRE EMPRESA
-                case 15 -> printer.printTextWrap(0, 1, 13, 40, emp); //NOMBRE EMPRESA
-                case 16 -> printer.printTextWrap(0, 1, 12, 40, emp); //NOMBRE EMPRESA
-                case 17 -> printer.printTextWrap(0, 1, 12, 40, emp); //NOMBRE EMPRESA
-                case 18 -> printer.printTextWrap(0, 1, 11, 40, emp); //NOMBRE EMPRESA
-                case 19 -> printer.printTextWrap(0, 1, 11, 40, emp); //NOMBRE EMPRESA
-                case 20 -> printer.printTextWrap(0, 1, 10, 40, emp); //NOMBRE EMPRESA
-                case 21 -> printer.printTextWrap(0, 1, 10, 40, emp); //NOMBRE EMPRESA
-                case 22 -> printer.printTextWrap(0, 1, 9, 40, emp); //NOMBRE EMPRESA
-                case 23 -> printer.printTextWrap(0, 1, 9, 40, emp); //NOMBRE EMPRESA
-                case 24 -> printer.printTextWrap(0, 1, 8, 40, emp); //NOMBRE EMPRESA
-                case 25 -> printer.printTextWrap(0, 1, 8, 40, emp); //NOMBRE EMPRESA
-                case 26 -> printer.printTextWrap(0, 1, 7, 40, emp); //NOMBRE EMPRESA
-                case 27 -> printer.printTextWrap(0, 1, 7, 40, emp); //NOMBRE EMPRESA
-                case 28 -> printer.printTextWrap(0, 1, 6, 40, emp); //NOMBRE EMPRESA
-                case 29 -> printer.printTextWrap(0, 1, 6, 40, emp); //NOMBRE EMPRESA
-                case 30 -> printer.printTextWrap(0, 1, 5, 40, emp); //NOMBRE EMPRESA
-                case 31 -> printer.printTextWrap(0, 1, 5, 40, emp); //NOMBRE EMPRESA
-                case 32 -> printer.printTextWrap(0, 1, 4, 40, emp); //NOMBRE EMPRESA
-                case 33 -> printer.printTextWrap(0, 1, 4, 40, emp); //NOMBRE EMPRESA
-                case 34 -> printer.printTextWrap(0, 1, 3, 40, emp); //NOMBRE EMPRESA
-                case 35 -> printer.printTextWrap(0, 1, 3, 40, emp); //NOMBRE EMPRESA
-                case 36 -> printer.printTextWrap(0, 1, 2, 40, emp); //NOMBRE EMPRESA
-                case 37 -> printer.printTextWrap(0, 1, 2, 40, emp); //NOMBRE EMPRESA
-                case 38 -> printer.printTextWrap(0, 1, 1, 40, emp); //NOMBRE EMPRESA
-                case 39 -> printer.printTextWrap(0, 1, 1, 40, emp); //NOMBRE EMPRESA
-            }
-            printer.printTextWrap(0, 1, 15, 40, "TICKET DE VENTA"); //NOMBRE EMPRESA
-            printer.printTextWrap(0, 1, 41, 80, "_______________________________________"); //PROPIETARIO
-            //printer.printTextWrap(1, 1, 3, 37, "Jose M. A. Godoy c/ Las Residentas"); //DIRECCION
-            switch (dir.length()) {
-                case 1 -> printer.printTextWrap(1, 1, 20, 40, dir); //NOMBRE EMPRESA
-                case 2 -> printer.printTextWrap(1, 1, 19, 40, dir); //NOMBRE EMPRESA
-                case 3 -> printer.printTextWrap(1, 1, 19, 40, dir); //NOMBRE EMPRESA
-                case 4 -> printer.printTextWrap(1, 1, 18, 40, dir); //NOMBRE EMPRESA
-                case 5 -> printer.printTextWrap(1, 1, 18, 40, dir); //NOMBRE EMPRESA
-                case 6 -> printer.printTextWrap(1, 1, 17, 40, dir); //NOMBRE EMPRESA
-                case 7 -> printer.printTextWrap(1, 1, 17, 40, dir); //NOMBRE EMPRESA
-                case 8 -> printer.printTextWrap(1, 1, 16, 40, dir); //NOMBRE EMPRESA
-                case 9 -> printer.printTextWrap(1, 1, 16, 40, dir); //NOMBRE EMPRESA
-                case 10 -> printer.printTextWrap(1, 1, 15, 40, dir); //NOMBRE EMPRESA
-                case 11 -> printer.printTextWrap(1, 1, 15, 40, dir); //NOMBRE EMPRESA
-                case 12 -> printer.printTextWrap(1, 1, 14, 40, dir); //NOMBRE EMPRESA
-                case 13 -> printer.printTextWrap(1, 1, 14, 40, dir); //NOMBRE EMPRESA
-                case 14 -> printer.printTextWrap(1, 1, 13, 40, dir); //NOMBRE EMPRESA
-                case 15 -> printer.printTextWrap(1, 1, 13, 40, dir); //NOMBRE EMPRESA
-                case 16 -> printer.printTextWrap(1, 1, 12, 40, dir); //NOMBRE EMPRESA
-                case 17 -> printer.printTextWrap(1, 1, 12, 40, dir); //NOMBRE EMPRESA
-                case 18 -> printer.printTextWrap(1, 1, 11, 40, dir); //NOMBRE EMPRESA
-                case 19 -> printer.printTextWrap(1, 1, 11, 40, dir); //NOMBRE EMPRESA
-                case 20 -> printer.printTextWrap(1, 1, 10, 40, dir); //NOMBRE EMPRESA
-                case 21 -> printer.printTextWrap(1, 1, 10, 40, dir); //NOMBRE EMPRESA
-                case 22 -> printer.printTextWrap(1, 1, 9, 40, dir); //NOMBRE EMPRESA
-                case 23 -> printer.printTextWrap(1, 1, 9, 40, dir); //NOMBRE EMPRESA
-                case 24 -> printer.printTextWrap(1, 1, 8, 40, dir); //NOMBRE EMPRESA
-                case 25 -> printer.printTextWrap(1, 1, 8, 40, dir); //NOMBRE EMPRESA
-                case 26 -> printer.printTextWrap(1, 1, 7, 40, dir); //NOMBRE EMPRESA
-                case 27 -> printer.printTextWrap(1, 1, 7, 40, dir); //NOMBRE EMPRESA
-                case 28 -> printer.printTextWrap(1, 1, 6, 40, dir); //NOMBRE EMPRESA
-                case 29 -> printer.printTextWrap(1, 1, 6, 40, dir); //NOMBRE EMPRESA
-                case 30 -> printer.printTextWrap(1, 1, 5, 40, dir); //NOMBRE EMPRESA
-                case 31 -> printer.printTextWrap(1, 1, 5, 40, dir); //NOMBRE EMPRESA
-                case 32 -> printer.printTextWrap(1, 1, 4, 40, dir); //NOMBRE EMPRESA
-                case 33 -> printer.printTextWrap(1, 1, 4, 40, dir); //NOMBRE EMPRESA
-                case 34 -> printer.printTextWrap(1, 1, 3, 40, dir); //NOMBRE EMPRESA
-                case 35 -> printer.printTextWrap(1, 1, 3, 40, dir); //NOMBRE EMPRESA
-                case 36 -> printer.printTextWrap(1, 1, 2, 40, dir); //NOMBRE EMPRESA
-                case 37 -> printer.printTextWrap(1, 1, 2, 40, dir); //NOMBRE EMPRESA
-                case 38 -> printer.printTextWrap(1, 1, 1, 40, dir); //NOMBRE EMPRESA
-                case 39 -> printer.printTextWrap(1, 1, 1, 40, dir); //NOMBRE EMPRESA
-            }
-            //printer.printTextWrap(1, 1, 3, 37, dir); //DIRECCION
-            //printer.printTextWrap(1, 1, 43, 73, "Cel:(0981) 700 414"); //DIRECCION
-            printer.printTextWrap(1, 1, 43, 73, "Cel:"+cel); //DIRECCION
-            printer.printTextWrap(2, 1, 1, 40, "______________RE-IMPRESION______________");
-            printer.printTextWrap(2, 1, 41, 67, "FECHA: " + fecha + " " + hora); //FECHA Y HORA
-            printer.printTextWrap(2, 1, 71, 78, condicion); //CONDICION DE VENTA
-            printer.printTextWrap(3, 1, 1, 24, "TICKET N: " +fac); //FACTURA O PEDIDO
-            printer.printTextWrap(3, 1, 26, 37, "CAJA N: " + caja); //CAJA
-            printer.printTextWrap(3, 1, 41, 80, "VENDEDOR: " + txtVendedor.getText()); //VENDEDOR
-            printer.printTextWrap(4, 1, 1, 40, "CLIENTE: " + txtRazonSocial.getText());//RUC Y RS
-            printer.printTextWrap(4, 1, 41, 80, "R.U.C.: " + txtRuc.getText());//RUC Y RS
-            printer.printTextWrap(5, 1, 1, 40, "________________________________________");
-            printer.printTextWrap(5, 1, 41, 79, "CANT   P.PUBL  %DESC  P.UNIT    TOTAL");
-            for (int i = 0; i < filas; i++) {
-                int p = 6 + i; //Fila
-                DecimalFormat formateador = new DecimalFormat("#,###");
-                String DES = printer.alinharADireita(10, tblDetalle.getValueAt(i, 3).toString());
-                String Cant = tblDetalle.getValueAt(i, 0).toString();
-                //int pp = Integer.parseInt(tblDetalle.getValueAt(i, 17).toString())/Integer.parseInt(tblDetalle.getValueAt(i, 3).toString());
-                String Ppublic = String.valueOf(pp); "*";
-                String Desc = tblDetalle.getValueAt(i, 16).toString();"*";
-                String Punit = tblDetalle.getValueAt(i, 4).toString();
-                String Mont = tblDetalle.getValueAt(i, 5).toString();
-                printer.printTextWrap(p, 1, 1, 40, DES);
-                printer.printTextWrap(p, 1, 41, 45, formateador.format(Integer.parseInt(Cant.replace(".", "").replace(",", ""))));
-                printer.printTextWrap(p, 1, 48, 54, Ppublic);
-                //printer.printTextWrap(p, 1, 48, 54, formateador.format(Integer.parseInt(Ppublic.replace(".", "").replace(",", ""))));
-                printer.printTextWrap(p, 1, 56, 61, Desc);
-                //printer.printTextWrap(p, 1, 56, 61, formateador.format(Integer.parseInt(Desc.replace(".", "").replace(",", ""))));
-                printer.printTextWrap(p, 1, 63, 69, formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))));
-                printer.printTextWrap(p, 1, 72, 79, formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", ""))));
-            }
-            printer.printTextWrap(filas+6, 1, 1, 40, "---------------------------------------");
-
-            DecimalFormat formateador = new DecimalFormat("#,###");
-            String tot = printer.alinharADireita(10, formateador.format(Integer.parseInt(total.replace(".", "").replace(",", ""))));
-            printer.printTextWrap(filas + 6, 1, 41, 55, "TOTAL A PAGAR:");
-            printer.printTextWrap(filas + 6, 1, 66, 79, (tot));
-            printer.printTextWrap(filas + 7, 1, 1, 40, "---------------------------------------");
-            String efe = printer.alinharADireita(10, "0");
-            printer.printTextWrap(filas + 7, 1, 41, 52, "EFECTIVO : ");
-            printer.printTextWrap(filas + 7, 1, 55, 80, efe);
-
-            String cam = printer.alinharADireita(10, "0");
-            printer.printTextWrap(filas + 8, 1, 1, 12, "VUELTO   : ");
-            printer.printTextWrap(filas + 8, 1, 15, 40, cam);
-
-            printer.printTextWrap(filas + 8, 1, 41, 80, "=======================================");
-            printer.printTextWrap(filas + 9, 1, 6, 34, "GRACIAS POR SU PREFERENCIA!!");
-            printer.printTextWrap(filas + 9, 1, 52, 66, "SISTEMA E-FARM");
-            printer.printTextWrap(filas + 10, 1, 1, 40, "=======================================");
-
-            ///CREAR ARCHIVO EN CARPETA DEL PROYECTO PARA PEDIDOS
-            //printer.toFile("C:\\tmp\\impresion.txt");
-            printer.toFile("re-impresion.txt");
-            FileInputStream inputStream = null;
-
-            try {
-                inputStream = new FileInputStream("re-impresion.txt");
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error al guardar");
-            }
-            if (inputStream == null) {
-                return;
-            }
-
-            DocFlavor docFormat = DocFlavor.INPUT_STREAM.AUTOSENSE;
-            Doc document = new SimpleDoc(inputStream, docFormat, null);
-            PrintRequestAttributeSet attributeSet = new HashPrintRequestAttributeSet();
-            PrintService defaultPrintService = PrintServiceLookup.lookupDefaultPrintService();
-
-            if (defaultPrintService != null) {
-                DocPrintJob printJob = defaultPrintService.createPrintJob();
-                try {
-                    printJob.print(document, attributeSet);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            } else {
-                System.err.println("No existen impresoras instaladas");
-            }
-
-            inputStream.close();
-            //imprimirFin(subTotal, total, dineroR, devolucion); //ESTE METODO NO SE UTILIZARA
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error al imprimir " + e);
-        }
-    }
-     */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -762,10 +536,9 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    public void llamarReporteFactura(int cod, String Letra) {
+    public void llamarReporteFactura(int cod, String Letra) throws SQLException {
         ReporteF gr;
         gr = new ReporteF();
-        //int codF = Integer.parseInt(txtCodFactura.getText());
         gr.FacturaLegal("\\Reports\\ventas\\facturaLegal.jasper", "cod", cod,"Letra",Letra);
         gr.cerrar();
     }
@@ -780,7 +553,7 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
                     break;
                 }
             }
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
             System.out.println("Consulta cancelada" + e.getMessage());
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
@@ -839,13 +612,12 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
                         llamarReporteFactura(Integer.parseInt(cod), Letra);
                         //jasper.FacturaLegal("\\Reports\\ventas\\facturaLegal.jasper", "cod", Integer.parseInt(cod),"Letra",Letra);
                         try {
-                                UsuarioL = Login.getUsuarioLogueado();
                                 StringBuilder sql = new StringBuilder("INSERT INTO reimpresiones (re_fac_codigo, re_descripcion, re_tipo, fecha, usu) VALUES (");
                                 sql.append(cod).append(", ");
                                 sql.append("'RE-IMPRESION DE FACTURA LEGAL','");
                                 sql.append(condicion).append("',");
                                 sql.append("now(),'");
-                                sql.append(UsuarioL).append("')");
+                                sql.append(Login.getUsuarioLogueado()).append("')");
                                 String msg = Operacion.exeOperacion(sql.toString());
                                 if (msg == null) {
                                     System.out.println("la re-impresion ha sido registrada");
@@ -981,15 +753,19 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
         //</editor-fold>
 
         java.awt.EventQueue.invokeLater(() -> {
-            dlgConsultarFacturasLegal dialog = new dlgConsultarFacturasLegal(new javax.swing.JFrame(), true);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
-                }
-            });
-            dialog.setVisible(true);
+            try {
+                dlgConsultarFacturasLegal dialog = new dlgConsultarFacturasLegal(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(dlgConsultarFacturasLegal.class.getName()).log(Level.SEVERE, null, ex);
+            }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

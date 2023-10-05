@@ -5,24 +5,24 @@
 package Componentes;
 
 import java.awt.Toolkit;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
-import org.mariadb.jdbc.MariaDbConnection;
-
 /**
  *
  * @author Cris-Men
  */
 public class ReporteF {
+    static DataSourceService dss = new DataSourceService();
     
-    MariaDbConnection con/* = (MariaDbConnection) new ConexionBD().getConexion()*/;
+    Connection con;
     
-    public ReporteF(){
-        con = (MariaDbConnection) new ConexionBD().getConexion();
+    public ReporteF() throws SQLException{
+        con = dss.getDataSource().getConnection();
         if (con == null) {
             System.out.println("No hay Conexion con la Base de Datos");
         }
@@ -458,7 +458,7 @@ public class ReporteF {
         Mensajes.error("Error:"+j.getMessage());
         }
     }
-    public void BoletaCredito(String ubicacion,String Nombrepar,Integer Valor_p1){
+    public void BoletaCredito(String ubicacion,String Nombrepar, Integer Valor_p1){
         try{
             String master=System.getProperty("user.dir")+ubicacion;
             System.out.println("master "+master);

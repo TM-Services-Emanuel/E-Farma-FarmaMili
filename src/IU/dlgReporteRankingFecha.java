@@ -1,24 +1,18 @@
 package IU;
 
-import Componentes.ConexionBD;
 import Componentes.Fecha;
 import Componentes.Mensajes;
 import Componentes.ReporteF;
 import java.awt.Toolkit;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class dlgReporteRankingFecha extends javax.swing.JDialog {
 
     public ReporteF jasper;
-    public static ResultSet rs;
-    public static MariaDbStatement sentencia;
-    public static MariaDbConnection con;
-    static String Fdesde;
-    static String Fhasta;
 
-    public dlgReporteRankingFecha(java.awt.Frame parent, boolean modal) {
+    public dlgReporteRankingFecha(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         jasper = new ReporteF();
@@ -37,21 +31,6 @@ public class dlgReporteRankingFecha extends javax.swing.JDialog {
         txtFHastaR.setVisible(false);
         lbFechaActualR.setVisible(false);
     }
-
-    /*public static void prepararBD() {
-        {
-            try {
-                con = (MariaDbConnection) new ConexionBD().getConexion();
-                if (con == null) {
-                    System.out.println("No hay Conexion con la Base de Datos");
-                } else {
-                    sentencia = (MariaDbStatement) con.createStatement();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }*/
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -344,6 +323,7 @@ public class dlgReporteRankingFecha extends javax.swing.JDialog {
                 Mensajes.error("Error en los parametros fijados.\nFavor verifique las fechas Desde y Hasta.");
             }else{
                 jasper.reporteDosParametroHorizontal("\\Reports\\ventas\\RankingVentasF.jasper", "desde", Date.valueOf(txtFDesdeR.getText().trim()), "hasta", Date.valueOf(txtFHastaR.getText().trim()));
+                jasper.cerrar();
             }
         }
     }//GEN-LAST:event_btnGenerarActionPerformed
@@ -419,8 +399,8 @@ public class dlgReporteRankingFecha extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 dlgReporteRankingFecha dialog = new dlgReporteRankingFecha(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -429,6 +409,8 @@ public class dlgReporteRankingFecha extends javax.swing.JDialog {
                     }
                 });
                 dialog.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(dlgReporteRankingFecha.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }

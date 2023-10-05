@@ -1,6 +1,6 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Mensajes;
 import Componentes.Software;
 import Controladores.CabecerasTablas;
@@ -9,36 +9,32 @@ import Datos.GestionarEmpresa;
 import Componentes.validarCampos;
 import static IU.frmPrincipal.lbEmpresa;
 import static IU.frmPrincipal.lbSucursal;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.awt.HeadlessException;
+import java.sql.*;
 import javax.swing.JOptionPane;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 
 public final class dlgEmpresa extends javax.swing.JDialog {
 
     CabecerasTablas cabe = new CabecerasTablas();
-    private String visual=null;
-    public MariaDbStatement sentencia;
-    public MariaDbConnection  con;
-    private ResultSet rs;
+    private String visual = null;
+    static DataSourceService dss = new DataSourceService();
+
     public dlgEmpresa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        prepararBD();
         cabe.empresa(tbEmpresa);
         controlEmpresa.lisEmpresa(tbEmpresa);
         tbEmpresa.getTableHeader().setReorderingAllowed(false);
         Visual();
         lbvisual.setVisible(false);
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Gestionar empresa");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Gestionar empresa");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Gestionar empresa");
         }
     }
 
@@ -577,9 +573,9 @@ public final class dlgEmpresa extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:a
-        try{
-            int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION){
+        try {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resp == JOptionPane.YES_OPTION) {
                 btnEliminar.setEnabled(false);
                 itemEliminar.setEnabled(false);
                 btnModificar.setEnabled(false);
@@ -599,16 +595,17 @@ public final class dlgEmpresa extends javax.swing.JDialog {
                 controlEmpresa.lisEmpresa(tbEmpresa);
                 btnCancelarActionPerformed(null);
             }
-        }catch(Exception ee){}
-        
+        } catch (HeadlessException ee) {
+        }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        if (validarCampos.estaVacio(txtNombre)&& validarCampos.estaVacio(txtRuc)) {
-            try{
-                int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION){
+        if (validarCampos.estaVacio(txtNombre) && validarCampos.estaVacio(txtRuc)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
                     controlEmpresa.actEmpresa();
                     btnNuevo.setEnabled(true);
                     itemNuevo.setEnabled(true);
@@ -629,25 +626,26 @@ public final class dlgEmpresa extends javax.swing.JDialog {
                     CabecerasTablas.limpiarTablas(tbEmpresa);
                     controlEmpresa.lisEmpresa(tbEmpresa);
                 }
-            }catch(Exception ee){}
-            
-        }else {
+            } catch (HeadlessException ee) {
+            }
+
+        } else {
             Mensajes.informacion("Debe llenar obligatoriamente los campos con *");
-            if(txtNombre.getText().equals("")){
+            if (txtNombre.getText().equals("")) {
                 txtNombre.requestFocus();
-            }else if (txtRuc.getText().equals("")){
+            } else if (txtRuc.getText().equals("")) {
                 txtRuc.requestFocus();
             }
         }
-        
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if (validarCampos.estaVacio(txtNombre)&& validarCampos.estaVacio(txtRuc)) {
-            try{
-                int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION){
+        if (validarCampos.estaVacio(txtNombre) && validarCampos.estaVacio(txtRuc)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
                     String cod = GestionarEmpresa.getCodigo();
                     txtCod.setText(cod);
                     controlEmpresa.addEmpresa();
@@ -666,16 +664,17 @@ public final class dlgEmpresa extends javax.swing.JDialog {
                     CabecerasTablas.limpiarTablas(tbEmpresa);
                     controlEmpresa.lisEmpresa(tbEmpresa);
                 }
-            }catch(Exception ee){}
-        }else {
+            } catch (HeadlessException ee) {
+            }
+        } else {
             Mensajes.informacion("Debe llenar obligatoriamente los campos con resaltados");
-            if(txtNombre.getText().equals("")){
+            if (txtNombre.getText().equals("")) {
                 txtNombre.requestFocus();
-            }else if (txtRuc.getText().equals("")){
+            } else if (txtRuc.getText().equals("")) {
                 txtRuc.requestFocus();
             }
         }
-        
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -686,7 +685,7 @@ public final class dlgEmpresa extends javax.swing.JDialog {
             informacionGral();
             this.dispose();
         }
-        
+
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void tbEmpresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEmpresaMouseClicked
@@ -716,7 +715,7 @@ public final class dlgEmpresa extends javax.swing.JDialog {
         String direccion = tbEmpresa.getValueAt(fila, 3).toString();
         String telefono = tbEmpresa.getValueAt(fila, 4).toString();
         String celular = tbEmpresa.getValueAt(fila, 5).toString();
-        visual= tbEmpresa.getValueAt(fila, 6).toString();
+        visual = tbEmpresa.getValueAt(fila, 6).toString();
 
         txtCod.setText(cod);
         txtNombre.setText(nom);
@@ -724,9 +723,9 @@ public final class dlgEmpresa extends javax.swing.JDialog {
         txtDireccion.setText(direccion);
         txtTelefono.setText(telefono);
         txtCelular.setText(celular);
-        if(visual.equals("SI")){
+        if (visual.equals("SI")) {
             rbSi.setSelected(true);
-        }else{
+        } else {
             rbNo.setSelected(true);
         }
         Visual();
@@ -787,86 +786,81 @@ public final class dlgEmpresa extends javax.swing.JDialog {
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        int limite=39;
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        int limite = 39;
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
-        if (txtNombre.getText().length()== limite)
-        {
+        if (txtNombre.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
 
     private void txtRucKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        int limite=10;
-        if(Character.isLetter(c)) { 
-              getToolkit().beep(); 
-               
-              evt.consume(); 
-               
-              System.out.println("Ingresa Solo Numeros");
+        char c = evt.getKeyChar();
+        int limite = 10;
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+
+            evt.consume();
+
+            System.out.println("Ingresa Solo Numeros");
         }
-        if (txtRuc.getText().length()== limite)
-        {
+        if (txtRuc.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtRucKeyTyped
 
     private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
-        int limite=39;
-        if (txtDireccion.getText().length()== limite)
-        {
+        int limite = 39;
+        if (txtDireccion.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtDireccionKeyTyped
 
     private void txtRucKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucKeyPressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txtRucKeyPressed
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        int limite=12;
-        if(Character.isLetter(c)) { 
-              getToolkit().beep(); 
-               
-              evt.consume(); 
-               
-              System.out.println("Ingresa Solo Numeros");
+        char c = evt.getKeyChar();
+        int limite = 12;
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+
+            evt.consume();
+
+            System.out.println("Ingresa Solo Numeros");
         }
-        if (txtTelefono.getText().length()== limite)
-        {
+        if (txtTelefono.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     private void txtCelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        int limite=12;
-        if(Character.isLetter(c)) { 
-              getToolkit().beep(); 
-               
-              evt.consume(); 
-               
-              System.out.println("Ingresa Solo Numeros");
+        char c = evt.getKeyChar();
+        int limite = 12;
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+
+            evt.consume();
+
+            System.out.println("Ingresa Solo Numeros");
         }
-        if (txtCelular.getText().length()== limite)
-        {
+        if (txtCelular.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtCelularKeyTyped
@@ -889,8 +883,7 @@ public final class dlgEmpresa extends javax.swing.JDialog {
         // TODO add your handling code here:
         btnSalir.doClick();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-    void limpiarCampos()
-    {
+    void limpiarCampos() {
         txtCod.setText("");
         txtNombre.setText("");
         txtRuc.setText("");
@@ -899,50 +892,35 @@ public final class dlgEmpresa extends javax.swing.JDialog {
         txtCelular.setText("");
         //lbvisual.setText("");
     }
-    void Visual(){
-        if(rbSi.isSelected()){
-          lbvisual.setText("SI");
-        }else{
-          lbvisual.setText("NO");
+
+    void Visual() {
+        if (rbSi.isSelected()) {
+            lbvisual.setText("SI");
+        } else {
+            lbvisual.setText("NO");
         }
     }
 
-    public void prepararBD(){
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos");
-            } else {
-                sentencia = (MariaDbStatement) con.createStatement();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-}
-    public void informacionGral(){
-        try {
-            rs = sentencia.executeQuery("select * from v_sucursal where em_visualizar='SI' and em_indicador='S'");
+    public void informacionGral() {
+        String sql = "select * from v_sucursal where em_visualizar='SI' and em_indicador='S'";
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
             rs.first();
-            try{
-                if(rs.getRow()!=0){
-                            //txtCod.setText(rs.getString(1));
-                            lbSucursal.setText(rs.getString(2));
-                            lbEmpresa.setText(rs.getString(3));
-                }else{
-                    System.out.println("No se puede cargar Información Gral.");
-                    frmPrincipal.lbEmpresa.setText("NOMBRE FARMACIA");
-                    frmPrincipal.lbSucursal.setText("NOMBRE SUCURSAL");
-                }
-            }catch(SQLException ee){
-            System.out.println(ee.getMessage());
+            if (rs.getRow() != 0) {
+                lbSucursal.setText(rs.getString(2));
+                lbEmpresa.setText(rs.getString(3));
+            } else {
+                System.out.println("No se puede cargar Información Gral.");
+                frmPrincipal.lbEmpresa.setText("NOMBRE FARMACIA");
+                frmPrincipal.lbSucursal.setText("NOMBRE SUCURSAL");
             }
             rs.close();
-            
+            st.close();
+            cn.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -968,7 +946,7 @@ public final class dlgEmpresa extends javax.swing.JDialog {
         }
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
 
@@ -978,7 +956,7 @@ public final class dlgEmpresa extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(() -> {
             dlgEmpresa dialog = new dlgEmpresa(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                
+
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     System.exit(0);

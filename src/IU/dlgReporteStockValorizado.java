@@ -1,24 +1,20 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Mensajes;
 import Componentes.ReporteF;
 import Componentes.cargarComboBox;
 import java.awt.Toolkit;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class dlgReporteStockValorizado extends javax.swing.JDialog {
 
     public ReporteF jasper;
-    public static ResultSet rs;
-    public static MariaDbStatement sentencia;
-    public static MariaDbConnection con;
-    static int codLab;
-    static int codFam;
+    static DataSourceService dss = new DataSourceService();
 
-    public dlgReporteStockValorizado(java.awt.Frame parent, boolean modal) {
+    public dlgReporteStockValorizado(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
         jasper = new ReporteF();
@@ -28,21 +24,6 @@ public class dlgReporteStockValorizado extends javax.swing.JDialog {
 
     private void CargarCombos() {
         cargarComboBox.cargar(cbLaboratorio, "SELECT * FROM laboratorio WHERE lab_indicador='S'");
-    }
-
-    public static void prepararBD() {
-        {
-            try {
-                con = (MariaDbConnection) new ConexionBD().getConexion();
-                if (con == null) {
-                    System.out.println("No hay Conexion con la Base de Datos");
-                } else {
-                    sentencia = (MariaDbStatement) con.createStatement();
-                }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -219,25 +200,21 @@ public class dlgReporteStockValorizado extends javax.swing.JDialog {
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         // TODO add your handling code here:
+        int codLab;
         if (rbReporteG.isSelected()) {
             jasper.StockValorizado("\\Reports\\articulos\\stockvalorizado.jasper");
         } else if (rbReporteL.isSelected()) {
             if (cbLaboratorio.getSelectedIndex() != 0) {
-                try {
-                    prepararBD();
-                    String lab;
-                    lab = cbLaboratorio.getSelectedItem().toString();
-                    try {
-                        rs = sentencia.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + lab + "'");
-                        rs.last();
-                        codLab = rs.getInt("lab_codigo");
-                        rs.close();
-                    } catch (SQLException ex) {
-                        Mensajes.error("Error al querer obtener ID del laboratorio");
-                    }
+                try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + cbLaboratorio.getSelectedItem().toString() + "'")) {
+                    rs.last();
+                    codLab = rs.getInt("lab_codigo");
+                    rs.close();
+                    st.close();
+                    cn.close();
                     jasper.StockValorizadoL("\\Reports\\articulos\\stockvalorizadoL.jasper", "codLab", codLab);
+                    jasper.cerrar();
                 } catch (Exception pr) {
-                    Mensajes.informacion("No existe Reporte para este Laboratorio");
+                    Mensajes.error("Error al querer obtener ID del laboratorio");
                 }
             } else {
                 Mensajes.error("Seleccione un Laboratorio");
@@ -287,8 +264,8 @@ public class dlgReporteStockValorizado extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+        java.awt.EventQueue.invokeLater(() -> {
+            try {
                 dlgReporteStockValorizado dialog = new dlgReporteStockValorizado(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
@@ -297,6 +274,8 @@ public class dlgReporteStockValorizado extends javax.swing.JDialog {
                     }
                 });
                 dialog.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(dlgReporteStockValorizado.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
     }

@@ -1,6 +1,6 @@
 package IU;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Mensajes;
 import Componentes.Software;
 import Componentes.cargarComboBox;
@@ -11,35 +11,30 @@ import Datos.GestionalSucursal;
 import static IU.frmPrincipal.lbEmpresa;
 import static IU.frmPrincipal.lbSucursal;
 import java.awt.HeadlessException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import javax.swing.JOptionPane;
-import org.mariadb.jdbc.MariaDbConnection;
-import org.mariadb.jdbc.MariaDbStatement;
 
 public class dlgSucursal extends javax.swing.JDialog {
 
     CabecerasTablas cabe = new CabecerasTablas();
-    public MariaDbStatement sentencia;
-    public MariaDbConnection  con;
-    private ResultSet rs;
+    static DataSourceService dss = new DataSourceService();
+
     public dlgSucursal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        prepararBD();
         cargarComboBox.cargarList(listEmpresa, "SELECT * FROM empresa WHERE em_visualizar='SI' and em_indicador='S'");
         cabe.sucursal(tbSucursal);
         controlSucursal.listSucursal(tbSucursal);
         tbSucursal.getTableHeader().setReorderingAllowed(false);
         lbCod.setVisible(false);
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Gestionar sucursal");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Gestionar sucursal");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Gestionar sucursal");
         }
     }
 
@@ -369,38 +364,21 @@ public class dlgSucursal extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void prepararBD(){
-    {
-        try {
-            con = (MariaDbConnection) new ConexionBD().getConexion();
-            if (con == null) {
-                System.out.println("No hay Conexion con la Base de Datos");
-            } else {
-                sentencia = (MariaDbStatement) con.createStatement();
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
-}
-    public void informacionGral(){
-        try {
-            rs = sentencia.executeQuery("select * from v_sucursal where suc_indicador='S'");
+    public void informacionGral() {
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("select * from v_sucursal where suc_indicador='S'")) {
             rs.first();
-            try{
-                if(rs.getRow()!=0){
-                            //txtCod.setText(rs.getString(1));
-                            lbSucursal.setText(rs.getString(2));
-                            lbEmpresa.setText(rs.getString(3));
-                }else{
+            try {
+                if (rs.getRow() != 0) {
+                    lbSucursal.setText(rs.getString(2));
+                    lbEmpresa.setText(rs.getString(3));
+                } else {
                     System.out.println("No se puede cargar Información Gral.");
                 }
-            }catch(SQLException ee){
-            System.out.println(ee.getMessage());
+            } catch (SQLException ee) {
+                System.out.println(ee.getMessage());
             }
             rs.close();
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -434,9 +412,9 @@ public class dlgSucursal extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        try{
-            int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION){
+        try {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resp == JOptionPane.YES_OPTION) {
                 btnEliminar.setEnabled(false);
                 itemEliminar.setEnabled(false);
                 btnModificar.setEnabled(false);
@@ -449,34 +427,35 @@ public class dlgSucursal extends javax.swing.JDialog {
                 limpiarCampos();
                 CabecerasTablas.limpiarTablas(tbSucursal);
                 controlSucursal.listSucursal(tbSucursal);
-                btnCancelarActionPerformed(null);  
-                }
-        }catch(Exception ee){}          
-        
+                btnCancelarActionPerformed(null);
+            }
+        } catch (Exception ee) {
+        }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         try {
-            int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION){
+            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resp == JOptionPane.YES_OPTION) {
                 controlSucursal.actSucursal();
                 btnCancelarActionPerformed(null);
                 CabecerasTablas.limpiarTablas(tbSucursal);
                 controlSucursal.listSucursal(tbSucursal);
             }
-        }catch(HeadlessException ee){
-        System.out.println(ee.getMessage());
-                }
-        
+        } catch (HeadlessException ee) {
+            System.out.println(ee.getMessage());
+        }
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if (validarCampos.estaVacio(txtSucursal) &&validarCampos.estaVacio(lbCod)) {
-            try{
-                int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION){
+        if (validarCampos.estaVacio(txtSucursal) && validarCampos.estaVacio(lbCod)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
                     String cod = GestionalSucursal.getCodigo();
                     txtCod.setText(cod);
                     controlSucursal.addSucursal();
@@ -491,13 +470,13 @@ public class dlgSucursal extends javax.swing.JDialog {
                     controlSucursal.listSucursal(tbSucursal);
                     listEmpresa.clearSelection();
                 }
-            }catch(Exception ee){}
-        }
-        else {
+            } catch (Exception ee) {
+            }
+        } else {
             Mensajes.informacion("Debe llenar obligatoriamente el campo Sucural y asociar la Empresa");
             txtSucursal.requestFocus();
         }
-        
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tbSucursalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSucursalMouseClicked
@@ -518,27 +497,25 @@ public class dlgSucursal extends javax.swing.JDialog {
         String cod = tbSucursal.getValueAt(fila, 0).toString();
         String nom = tbSucursal.getValueAt(fila, 1).toString();
         String emp = tbSucursal.getValueAt(fila, 2).toString();
-        try {
-            rs = sentencia.executeQuery("select * from v_sucursal where em_razonsocial='"+emp+"'");
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("select * from v_sucursal where em_razonsocial='" + emp + "'")) {
             rs.first();
-            try{
-                if(rs.getRow()!=0){
-                            //txtCod.setText(rs.getString(1));
-                            lbCod.setText(rs.getString(6));
-                }else{
+            try {
+                if (rs.getRow() != 0) {
+                    lbCod.setText(rs.getString(6));
+                } else {
                     System.out.println("no se puede cargar codigo empresa");
                 }
-            }catch(Exception ee){
-            System.out.println(ee.getMessage());
+            } catch (SQLException ee) {
+                System.out.println(ee.getMessage());
             }
             rs.close();
-            
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
         txtCod.setText(cod);
         txtSucursal.setText(nom);
-        txtSucursal.requestFocus();                
+        txtSucursal.requestFocus();
         lbEmpresaN.setText(emp);
     }//GEN-LAST:event_tbSucursalMouseClicked
 
@@ -588,15 +565,15 @@ public class dlgSucursal extends javax.swing.JDialog {
 
     private void txtSucursalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSucursalKeyPressed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txtSucursalKeyPressed
 
     private void txtSucursalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSucursalKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
     }//GEN-LAST:event_txtSucursalKeyTyped
@@ -611,20 +588,21 @@ public class dlgSucursal extends javax.swing.JDialog {
 
     private void listEmpresaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listEmpresaMousePressed
         // TODO add your handling code here:
-        try{
+        try {
             String id = cargarComboBox.getCodidgoL(listEmpresa);
-            String des= cargarComboBox.getDescList(listEmpresa);
+            String des = cargarComboBox.getDescList(listEmpresa);
             lbCod.setText(String.valueOf(id));
             lbEmpresaN.setText(String.valueOf(des));
-           }catch(Exception ee){}
-        
+        } catch (Exception ee) {
+        }
+
     }//GEN-LAST:event_listEmpresaMousePressed
 
     private void txtSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSucursalActionPerformed
         // TODO add your handling code here:
-        if(btnGuardar.isEnabled()){
+        if (btnGuardar.isEnabled()) {
             btnGuardar.doClick();
-        }else{
+        } else {
             btnModificar.doClick();
         }
     }//GEN-LAST:event_txtSucursalActionPerformed
@@ -634,14 +612,13 @@ public class dlgSucursal extends javax.swing.JDialog {
         btnSalir.doClick();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    void limpiarCampos()
-    {
+    void limpiarCampos() {
         txtCod.setText("");
         txtSucursal.setText("");
         lbCod.setText("");
         lbEmpresaN.setText("");
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -661,9 +638,8 @@ public class dlgSucursal extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(dlgMotivo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        //</editor-fold>
 
+        //</editor-fold>
         java.awt.EventQueue.invokeLater(() -> {
             dlgSucursal dialog = new dlgSucursal(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {

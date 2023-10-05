@@ -1,6 +1,6 @@
 package Datos;
 
-import Componentes.ConexionBD;
+import Componentes.DataSourceService;
 import Componentes.Mensajes;
 import Componentes.Operacion;
 import Componentes.SeleccionarImagen;
@@ -10,15 +10,15 @@ import Modelo.Vendedor;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 public class GestionarVendedor {
+
+    static DataSourceService dss = new DataSourceService();
 
     public static String getCodigo() {
         String cod = generarCodigos.getCodigo("SELECT MAX(ven_codigo) FROM vendedor");
@@ -46,28 +46,13 @@ public class GestionarVendedor {
         sql.append("','S','");
         sql.append(usuario);
         sql.append("')");
-//        String sql = "INSERT INTO vendedor VALUES ("
-//                + getCodigo() + ",'"
-//                + v.getNombreV() + "','" 
-//                + v.getDireccion() + "','" 
-//                + v.getTelefono() + "','" 
-//                + v.getCelular() + "',"
-//                + v.getSueldo() + "," 
-//                + v.getCodProv() + "," 
-//                + v.getCodZona() + ","
-//                + v.getComision() + ",'" 
-//                + v.getEmail() + "','" 
-//                + v.getObs() + "','S')";
         msg = Operacion.exeOperacion(sql.toString());
         return msg;
     }
 
     public static void addImagen(String cod) {
-        try {
-
-            String sql = "INSERT INTO imagenVendedor (img_vendedor, img_imagen) VALUES (?, ?)";
-
-            PreparedStatement ps = new ConexionBD().getConexion().prepareStatement(sql);
+        String sql = "INSERT INTO imagenVendedor (img_vendedor, img_imagen) VALUES (?, ?)";
+        try (Connection cn = dss.getDataSource().getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(1, Integer.parseInt(cod));
             ps.setBinaryStream(2, SeleccionarImagen.fis, SeleccionarImagen.longitudBytes);
             ps.execute();
@@ -79,9 +64,8 @@ public class GestionarVendedor {
     }
 
     public static void actImagen(String cod) {
-        try {
-            String sql = "UPDATE imagenVendedor SET img_imagen=? WHERE img_vendedor=?";
-            PreparedStatement ps = new ConexionBD().getConexion().prepareStatement(sql);
+        String sql = "UPDATE imagenVendedor SET img_imagen=? WHERE img_vendedor=?";
+        try (Connection cn = dss.getDataSource().getConnection(); PreparedStatement ps = cn.prepareStatement(sql)) {
             ps.setInt(2, Integer.parseInt(cod));
             ps.setBinaryStream(1, SeleccionarImagen.fis, SeleccionarImagen.longitudBytes);
             ps.executeUpdate();
@@ -95,24 +79,16 @@ public class GestionarVendedor {
     public static void busImagen(String cod, JLabel lblImagen) {
         String sql = new StringBuffer("SELECT img_imagen FROM imagenVendedor WHERE img_vendedor = ")
                 .append(cod).toString();
-//        String sql="SELECT img_imagen FROM \"imagenArticulo\" WHERE img_articulo = "+cod;
         ImageIcon foto;
         InputStream is;
-        try {
-            ResultSet rs;
-            PreparedStatement sentencia = new ConexionBD().getConexion().prepareStatement(sql);
-            rs = sentencia.executeQuery();
+        try (Connection cn = dss.getDataSource().getConnection(); PreparedStatement sentencia = cn.prepareStatement(sql); ResultSet rs = sentencia.executeQuery()) {
             while (rs.next()) {
                 is = rs.getBinaryStream(1);
-
                 BufferedImage bi = ImageIO.read(is);
                 foto = new ImageIcon(bi);
-
                 Image img = foto.getImage();
                 Image newimg = img.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), java.awt.Image.SCALE_SMOOTH);
-
                 ImageIcon newicon = new ImageIcon(newimg);
-
                 lblImagen.setIcon(newicon);
             }
         } catch (Exception ex) {
@@ -141,18 +117,6 @@ public class GestionarVendedor {
         sql.append("' WHERE ven_codigo = ");
         sql.append(v.getCodVe());
         msg = Operacion.exeOperacion(sql.toString());
-//        String sql = "UPDATE vendedor SET ven_nombre='" + v.getNombreV()
-//                + "',ven_direccion='" + v.getDireccion()
-//                + "',ven_telefono='" + v.getTelefono()
-//                + "',ven_celular='" + v.getCelular()
-//                + "',ven_sueldo=" + v.getSueldo()
-//                + ",ven_provincia=" + v.getCodProv()
-//                + ",ven_zona=" + v.getCodZona()
-//                + ",ven_comision=" + v.getComision()
-//                + ",ven_email = '" + v.getEmail()
-//                + "',ven_observacion='" + v.getObs()
-//                + "' WHERE ven_codigo = " + v.getCodVe() + "";
-//        msg = Operacion.exeOperacion(sql);
         return msg;
     }
 
@@ -161,7 +125,6 @@ public class GestionarVendedor {
         StringBuilder sql = new StringBuilder("SELECT * FROM vendedor WHERE ven_codigo=");
         sql.append(cod);
         sql.append("");
-//        String sql = "SELECT * FROM vendedor WHERE ven_codigo = " + cod + "";
         Object[] filaObt = Operacion.getFila(sql.toString());
         if (filaObt != null) {
             v = new Vendedor();
@@ -173,17 +136,17 @@ public class GestionarVendedor {
             v.setSueldo(Integer.parseInt(filaObt[5].toString()));
             v.setComision(Double.parseDouble(filaObt[6].toString()));
             v.setObs(filaObt[7].toString());
-            } else {
+        } else {
             System.out.println("No encontrado");
         }
         return v;
     }
+
     public static Vendedor busVendedor2(String cod) {
         Vendedor v = null;
         StringBuilder sql = new StringBuilder("SELECT * FROM vendedor WHERE ven_codigo =");
         sql.append(cod);
         sql.append("");
-//        String sql = "SELECT * FROM vendedor WHERE ven_codigo = " + cod + "";
         Object[] filaObt = Operacion.getFila(sql.toString());
         if (filaObt != null) {
             v = new Vendedor();
@@ -196,17 +159,17 @@ public class GestionarVendedor {
         }
         return v;
     }
+
     public static Vendedor busVendedorFactura(String cod) {
         Vendedor v = null;
         StringBuilder sql = new StringBuilder("SELECT * FROM v_usuario WHERE CodVend =");
         sql.append(cod);
         sql.append(" And CodPerfil=2");
-//        String sql = "SELECT * FROM vendedor WHERE ven_codigo = " + cod + "";
         Object[] filaObt = Operacion.getFila(sql.toString());
         if (filaObt != null) {
             v = new Vendedor();
             v.setNombreV(filaObt[2].toString());
-            
+
         } else {
             System.out.println("No encontrado");
             Mensajes.error("CODIGO EQUIVOCADO O NO POSEE PERFIL PARA VENTA");
@@ -224,7 +187,6 @@ public class GestionarVendedor {
         sql.append("' WHERE ven_codigo =");
         sql.append(cod);
         sql.append("");
-//        String sql = "UPDATE vendedor SET ven_indicador='N' WHERE ven_codigo = " + cod + "";
         msg = Operacion.exeOperacion(sql.toString());
         return msg;
     }
@@ -233,7 +195,6 @@ public class GestionarVendedor {
         StringBuilder sql = new StringBuilder("SELECT * FROM vendedor WHERE ven_indicador='S' ORDER BY ");
         sql.append(cad);
         sql.append("");
-//        String sql = "SELECT * FROM vendedor WHERE ven_indicador='S' ORDER BY " + cad + "";
         return Operacion.getTabla(sql.toString());
     }
 
@@ -241,7 +202,6 @@ public class GestionarVendedor {
         StringBuilder sql = new StringBuilder("SELECT * FROM vendedor WHERE ven_indicador='S' AND ven_nombre LIKE '%");
         sql.append(cad);
         sql.append("%'");
-//        String sql = "SELECT * FROM vendedor WHERE ven_indicador='S' AND ven_nombre ILIKE '" + cad + "%'";
         return Operacion.getTabla(sql.toString());
     }
 
@@ -249,7 +209,6 @@ public class GestionarVendedor {
         StringBuilder sql = new StringBuilder("SELECT * FROM vendedor WHERE ven_indicador='S' AND ven_direccion LIKE '");
         sql.append(cad);
         sql.append("%'");
-//        String sql = "SELECT * FROM vendedor WHERE ven_indicador='S' AND ven_direccion ILIKE '" + cad + "%'";
         return Operacion.getTabla(sql.toString());
     }
 
@@ -257,7 +216,6 @@ public class GestionarVendedor {
         StringBuilder sql = new StringBuilder("SELECT * FROM vendedor WHERE ven_indicador='S' AND ven_telefono LIKE '");
         sql.append(cad);
         sql.append("%'");
-//        String sql = "SELECT * FROM vendedor WHERE ven_indicador='S' AND ven_telefono ILIKE '" + cad + "%'";
         return Operacion.getTabla(sql.toString());
     }
 }
