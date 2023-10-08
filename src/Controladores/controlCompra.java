@@ -142,7 +142,7 @@ public class controlCompra {
 
     public static double CalcCostoIVA() {
         try {
-            double iva = art.getIVA();
+            double iva = art.getIva();
             double div = 0;
             switch ((int) iva) {
                 case 5 ->
@@ -190,7 +190,7 @@ public class controlCompra {
     public static int CalcGanancia() {
         try {
             int pv, pc, G;
-            pv = (art.getPrecioVenta());
+            pv = (art.getPventa());
             if (pv == 0) {
                 ganancia = 0;
             } else {
@@ -222,8 +222,8 @@ public class controlCompra {
 
     public static int CalcDescuento() {
         try {
-            int pv = art.getPrecioVenta();
-            int pp = art.getPrecioPublico();
+            int pv = art.getPventa();
+            int pp = art.getPpublico();
             if (pp == 0) {
                 descuento = 0;
             } else {
@@ -257,10 +257,10 @@ public class controlCompra {
             int codA = art.getCodArticulo();
             String codB = art.getCodBarra();
             String desc = art.getDescripcion();
-            int cant = Integer.valueOf(dlgCompras.txtCant.getText());
-            costo = Integer.valueOf(dlgCompras.txtCostoL.getText());
+            int cant = Integer.parseInt(dlgCompras.txtCant.getText());
+            costo = Integer.parseInt(dlgCompras.txtCostoL.getText());
             int mont = (cant * costo);
-            int iva = art.getIVA();
+            int iva = art.getIva();
             double PCIVA = CalcCostoIVA();
             int Gan = CalcGanancia();
             int Des = CalcDescuento();
@@ -540,11 +540,11 @@ public class controlCompra {
             int cant = Integer.parseInt(dlgCompras.tbDetalle.getValueAt(fila, 4).toString());
             int pre = Integer.parseInt(dlgCompras.tbDetalle.getValueAt(fila, 6).toString());
             String precio = String.valueOf(Mensajes.ingresarPrecioC(pre));
-            costo = Integer.valueOf(precio);
+            costo = Integer.parseInt(precio);
             int iva = Integer.parseInt(dlgCompras.tbDetalle.getValueAt(fila, 7).toString());
             String PCIVA = String.valueOf(CalcCostoIVAC(iva));
-            int pv = art.getPrecioVenta();
-            int pp = art.getPrecioPublico();
+            int pv = art.getPventa();
+            int pp = art.getPpublico();
             String Gan = String.valueOf(CalcGananciaC(pv));
             String Des = String.valueOf(CalcDescuentoC(pv, pp));
             String monto = String.valueOf(cant * Integer.parseInt(precio));

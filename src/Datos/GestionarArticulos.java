@@ -18,14 +18,14 @@ public class GestionarArticulos {
     public static String addArticulo(Articulo art) {
         String msg;
         StringBuilder sql = new StringBuilder("INSERT INTO articulo VALUES (");
-        sql.append(art.getCodArticulo()).append(", ").append(art.getCodFamilia()).append(", ").append(art.getCodLaboratorio()).append(", ").append(art.getCodProveedor());
+        sql.append(art.getCodArticulo()).append(", ").append(art.getCodFam()).append(", ").append(art.getCodLab()).append(", ").append(art.getCodProv());
         sql.append(", '").append(art.getCodBarra()).append("', '").append(art.getDescripcion()).append("', '").append(art.getPrincipio()).append("','");
-        sql.append(art.getAccion()).append("', ").append(art.getCosto()).append(", ").append(art.getCostoIva()).append(", ").append(art.getIVA()).append(", ");
+        sql.append(art.getAccion()).append("', ").append(art.getCosto()).append(", ").append(art.getCostoiva()).append(", ").append(art.getIva()).append(", ");
         sql.append(art.getStock()).append(", ").append(art.getStockMin()).append(", '").append(art.getVencimiento()).append("', ");
-        sql.append(art.getGanancia()).append(", ").append(art.getDescuento()).append(", ").append(art.getPrecioPublico()).append(", ");
-        sql.append(art.getPrecioVenta()).append(", '").append(art.getVenta()).append("', '").append(art.getTipo()).append("', '");
+        sql.append(art.getGanancia()).append(", ").append(art.getDescuento()).append(", ").append(art.getPpublico()).append(", ");
+        sql.append(art.getPventa()).append(", '").append(art.getVenta()).append("', '").append(art.getTipo()).append("', '");
         sql.append(art.getProdActivo()).append("', 'S', '").append(art.getVM()).append("', ").append(art.getCM()).append(", ").append(art.getPM());
-        sql.append(", '").append(art.getUsuario()).append("')");
+        sql.append(", '").append(art.getUsu()).append("')");
         msg = Operacion.exeOperacion(sql.toString());
         /*msg = Operacion.exeOperacion("INSERT INTO articulo VALUES (" + art.getCodArticulo() + ",'" + art.getDescripcion() + "',"
          + art.getCodMarca() + "," + art.getCodProveedor() + "," + art.getEfectivo() + "," + art.getMontoCalculado() + ","
@@ -37,15 +37,15 @@ public class GestionarArticulos {
 
     public static String actArticulo(Articulo art) {
         String msg;
-        StringBuilder sql = new StringBuilder("UPDATE articulo SET familia_fam_codigo=").append(art.getCodFamilia()).append(", laboratorio_lab_codigo=");
-        sql.append(art.getCodLaboratorio()).append(", proveedor_pro_codigo=").append(art.getCodProveedor()).append(", art_codbarra='");
+        StringBuilder sql = new StringBuilder("UPDATE articulo SET familia_fam_codigo=").append(art.getCodFam()).append(", laboratorio_lab_codigo=");
+        sql.append(art.getCodLab()).append(", proveedor_pro_codigo=").append(art.getCodProv()).append(", art_codbarra='");
         sql.append(art.getCodBarra()).append("', art_descripcion='").append(art.getDescripcion()).append("', art_principio='").append(art.getPrincipio()).append("', art_accion='");
-        sql.append(art.getAccion()).append("', art_costo=").append(art.getCosto()).append(", art_costoiva=").append(art.getCostoIva()).append(", art_iva=");
-        sql.append(art.getIVA()).append(", art_stock=").append(art.getStock()).append(", art_stockminimo=").append(art.getStockMin()).append(", art_vencimiento='");
+        sql.append(art.getAccion()).append("', art_costo=").append(art.getCosto()).append(", art_costoiva=").append(art.getCostoiva()).append(", art_iva=");
+        sql.append(art.getIva()).append(", art_stock=").append(art.getStock()).append(", art_stockminimo=").append(art.getStockMin()).append(", art_vencimiento='");
         sql.append(art.getVencimiento()).append("', art_ganancia=").append(art.getGanancia()).append(", art_descuento=").append(art.getDescuento()).append(", art_preciopublico=");
-        sql.append(art.getPrecioPublico()).append(", art_precioventa=").append(art.getPrecioVenta()).append(", art_tipoventa='").append(art.getVenta()).append("', art_tipodesc='");
+        sql.append(art.getPpublico()).append(", art_precioventa=").append(art.getPventa()).append(", art_tipoventa='").append(art.getVenta()).append("', art_tipodesc='");
         sql.append(art.getTipo()).append("', art_activo='").append(art.getProdActivo()).append("', art_ventaM='").append(art.getVM());
-        sql.append("', art_cantM=").append(art.getCM()).append(", art_precioventaM=").append(art.getPM()).append(", usu='").append(art.getUsuario()).append("' ");
+        sql.append("', art_cantM=").append(art.getCM()).append(", art_precioventaM=").append(art.getPM()).append(", usu='").append(art.getUsu()).append("' ");
         sql.append("WHERE art_codigo=").append(art.getCodArticulo()).append("");
         msg = Operacion.exeOperacion(sql.toString());
         /*msg = Operacion.exeOperacion("UPDATE articulo SET art_descripcion='" + art.getDescripcion() +
@@ -132,23 +132,23 @@ public class GestionarArticulos {
         if (filaObt != null) {
             ar = new Articulo();
             ar.setCodArticulo(Integer.parseInt(filaObt[0].toString()));
-            ar.setCodFamilia(Integer.parseInt(filaObt[1].toString()));
-            ar.setCodLaboratorio(Integer.parseInt(filaObt[2].toString()));
-            ar.setCodProveedor(Integer.parseInt(filaObt[3].toString()));
+            ar.setCodFam(Integer.parseInt(filaObt[1].toString()));
+            ar.setCodLab(Integer.parseInt(filaObt[2].toString()));
+            ar.setCodProv(Integer.parseInt(filaObt[3].toString()));
             ar.setCodBarra((filaObt[4].toString()));
             ar.setDescripcion(filaObt[5].toString());
             ar.setPrincipio(filaObt[6].toString());
             ar.setAccion(filaObt[7].toString());
             ar.setCosto(Integer.parseInt(filaObt[8].toString()));
-            ar.setCostoIva(Double.valueOf(filaObt[9].toString()));
-            ar.setIVA(Integer.parseInt(filaObt[10].toString()));
+            ar.setCostoiva(Double.parseDouble(filaObt[9].toString()));
+            ar.setIva(Integer.parseInt(filaObt[10].toString()));
             ar.setStock(Integer.parseInt(filaObt[11].toString()));
             ar.setStockMin(Integer.parseInt(filaObt[12].toString()));
             ar.setVencimiento(filaObt[13].toString());
-            ar.setGanancia(Integer.parseInt(filaObt[14].toString()));
-            ar.setDescuento(Integer.parseInt(filaObt[15].toString()));
-            ar.setPrecioPublico(Integer.parseInt(filaObt[16].toString()));
-            ar.setPrecioVenta(Integer.parseInt(filaObt[17].toString()));
+            ar.setGanancia(Double.parseDouble(filaObt[14].toString()));
+            ar.setDescuento(Double.parseDouble(filaObt[15].toString()));
+            ar.setPpublico(Integer.parseInt(filaObt[16].toString()));
+            ar.setPventa(Integer.parseInt(filaObt[17].toString()));
             ar.setVenta(filaObt[18].toString());
             ar.setTipo(filaObt[19].toString());
             ar.setProdActivo(filaObt[20].toString());

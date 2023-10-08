@@ -21,10 +21,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
     public frmPrincipal() throws SQLException {
         ControlLogeo.Empresa();
         initComponents();
+        this.setExtendedState(frmPrincipal.MAXIMIZED_BOTH);
         informacionGral();
         ControlLogeo.Timbrado_Ticket();
         jasper = new ReporteF();
-        this.setExtendedState(frmPrincipal.MAXIMIZED_BOTH);
+        
         titulo();
         Iniciar();
         cargarIcono();
@@ -62,29 +63,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         this.setSize(ancho, alto);
         setLocationRelativeTo(null);
     }
-
-    /*public void informacionGral() {
-        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("select * from v_sucursal where em_visualizar='SI' and em_indicador='S'")) {
-            rs.first();
-            try {
-                if (rs.getRow() != 0) {
-                    lbSucursal.setText(rs.getString(2));
-                    lbEmpresa.setText(rs.getString(3));
-                } else {
-                    System.out.println("No se puede cargar Información Gral.");
-                    frmPrincipal.lbEmpresa.setText("NOMBRE FARMACIA");
-                    frmPrincipal.lbSucursal.setText("NOMBRE SUCURSAL");
-                }
-            } catch (SQLException ee) {
-                System.out.println(ee.getMessage());
-            }
-            rs.close();
-            st.close();
-            cn.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }*/
+    
     public static void informacionGral() {
         try {
             if (Empresa.getHabilitado().equals("SI")) {
@@ -263,6 +242,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jSeparator23 = new javax.swing.JPopupMenu.Separator();
         mnGNCVenta = new javax.swing.JMenuItem();
         mnGPE = new javax.swing.JMenuItem();
+        mnTransferencias = new javax.swing.JMenu();
+        itemGestionarTR = new javax.swing.JMenuItem();
+        itemGestionarTR1 = new javax.swing.JMenuItem();
         divisor5 = new javax.swing.JMenu();
         mnReportes = new javax.swing.JMenu();
         rpVentas = new javax.swing.JMenu();
@@ -1638,6 +1620,29 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         mbBarraMenu.add(mnVentas);
 
+        mnTransferencias.setText("Transferencias");
+        mnTransferencias.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+
+        itemGestionarTR.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        itemGestionarTR.setText("REGISTRAR TRANSFERENCIAS");
+        itemGestionarTR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemGestionarTRActionPerformed(evt);
+            }
+        });
+        mnTransferencias.add(itemGestionarTR);
+
+        itemGestionarTR1.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        itemGestionarTR1.setText("GESTIONAR TODAS LAS TRANSFERENCIAS REALIZADAS");
+        itemGestionarTR1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemGestionarTR1ActionPerformed(evt);
+            }
+        });
+        mnTransferencias.add(itemGestionarTR1);
+
+        mbBarraMenu.add(mnTransferencias);
+
         divisor5.setText("|");
         divisor5.setEnabled(false);
         divisor5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -2614,6 +2619,31 @@ public final class frmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         mnGCActionPerformed(null);
     }//GEN-LAST:event_btnGCActionPerformed
+
+    private void itemGestionarTRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGestionarTRActionPerformed
+        // TODO add your handling code here:
+        String fe = generarCodigos.getFecha("SELECT ca_fechainicio FROM caja where ca_indicador='S' ORDER BY ca_id DESC LIMIT 1");
+        if (!fe.equals(Fecha.fechaCorrecta())) {
+            Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara poder comenzar a registrar los repartos sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
+        } else {
+            abrirTransferencias();
+        }
+        //Mensajes.Sistema("Esta función se encuentra bloqueada en estos momentos por motivos de desarrollo.\nPara más información comuniquese con el proveedor del sistema.");
+    }//GEN-LAST:event_itemGestionarTRActionPerformed
+
+    private void itemGestionarTR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGestionarTR1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemGestionarTR1ActionPerformed
+    void abrirTransferencias() {
+        try {
+            dlgTransferencia trans = new dlgTransferencia(this, true);
+            trans.setLocationRelativeTo(null);
+            trans.setVisible(true);
+        } catch (SQLException e) {
+            Mensajes.informacion("Servidor no esta activo");
+        }
+    }
+    
     void abrirProveedor() {
         try {
             dlgProveedores proveedor = new dlgProveedores(this, true);
@@ -2699,6 +2729,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemExportar;
     private javax.swing.JMenuItem itemFamilia;
     public static javax.swing.JMenuItem itemFondo;
+    private javax.swing.JMenuItem itemGestionarTR;
+    private javax.swing.JMenuItem itemGestionarTR1;
     private javax.swing.JMenuItem itemImportar;
     private javax.swing.JMenuItem itemLaboratorio;
     private javax.swing.JMenuItem itemSucursal;
@@ -2832,6 +2864,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     public static javax.swing.JMenu mnReportes;
     public static javax.swing.JMenu mnSeguridad;
     public static javax.swing.JMenu mnSistema;
+    public static javax.swing.JMenu mnTransferencias;
     public static javax.swing.JMenu mnVentas;
     private org.edisoncor.gui.panel.PanelImage panelImage1;
     private rojeru_san.rspanel.RSPanelImage rSPanelImage1;

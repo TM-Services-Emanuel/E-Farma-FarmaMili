@@ -2877,7 +2877,7 @@ public final class dlgVentas extends javax.swing.JDialog {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        controlFactura.addTabla(tbDetalle);
+        controlFactura.addTabla(txtCodArticulo.getText(), tbDetalle);
         cant();
         txtCodArticulo.setText("");
         txtArt.setText("");
@@ -3656,9 +3656,9 @@ public final class dlgVentas extends javax.swing.JDialog {
     private void btnBuscarArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarArticuloActionPerformed
         // TODO add your handling code here:
         try {
-            dlgBuscarArticuloVenta baf = new dlgBuscarArticuloVenta(null, true);
-            //baf.setLocationRelativeTo(null);
-            baf.setLocation(228, 270);
+            dlgBuscadorArticuloVenta baf = new dlgBuscadorArticuloVenta(null, true);
+            baf.setLocationRelativeTo(null);
+            //baf.setLocation(228, 270);
             baf.setVisible(true);
         } catch (Exception e) {
             Mensajes.informacion("No hay conexión con el servidor");

@@ -107,7 +107,7 @@ public class controlNotaCredito {
             int codArt = art.getCodArticulo();
             String desc = art.getDescripcion();
             int cant = Integer.parseInt(dlgNotasCredito.txtCant.getText());
-            double pre = art.getPrecioVenta();
+            double pre = art.getPventa();
             double monto = Redondeo.redondearD(pre * cant);
 
             detalle_notaCredito dn = new detalle_notaCredito(codArt, cant, pre, monto);

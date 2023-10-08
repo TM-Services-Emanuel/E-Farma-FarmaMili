@@ -6,7 +6,7 @@ import java.text.DecimalFormatSymbols;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class RenderDecimal extends DefaultTableCellRenderer {
+public class RenderDecimalPublico extends DefaultTableCellRenderer {
     private static DecimalFormatSymbols simbolos;
     public static DecimalFormat formato;
         
@@ -17,9 +17,7 @@ public class RenderDecimal extends DefaultTableCellRenderer {
         simbolos.setGroupingSeparator(',');
         formato = new DecimalFormat("#,###", simbolos);
         value = formato.format(Integer.parseInt(String.valueOf(value)));
-        //this.setBackground(new java.awt.Color(27,57,84));[255,102,0]
-        this.setBackground(new java.awt.Color(255,102,0));
-        this.setForeground(new java.awt.Color(0,0,0));
+        this.setForeground(new java.awt.Color(0,102,255));
         
         return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     }

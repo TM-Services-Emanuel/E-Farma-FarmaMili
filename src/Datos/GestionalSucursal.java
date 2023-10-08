@@ -5,7 +5,7 @@ import Componentes.generarCodigos;
 import Modelo.Sucursal;
 import java.util.List;
 
-public class GestionalSucursal {    
+public class GestionalSucursal {
 
     public static String getCodigo() {
         String cod = generarCodigos.getCodigo("SELECT MAX(suc_codigo) FROM sucursal");
@@ -22,23 +22,23 @@ public class GestionalSucursal {
         sql.append(s.getSucursal());
         sql.append("','S','");
         sql.append(s.getUsuario());
+        sql.append("','");
+        sql.append(s.getMi());
+        sql.append("','");
+        sql.append(s.getIp());
         sql.append("')");
         msg = Operacion.exeOperacion(sql.toString());
-//        msg = Operacion.exeOperacion("INSERT INTO transporte VALUES ("+t.getCodTransporte()+",'"+t.getTransporte()+"','S')");
         return msg;
     }
 
     public static String actSucursal(Sucursal s) {
         String msg;
         StringBuilder sql = new StringBuilder("UPDATE sucursal SET suc_nombre='");
-        sql.append(s.getSucursal());
-        sql.append("', usu='");
-        sql.append(s.getUsuario());
-        sql.append("' WHERE suc_codigo=");
+        sql.append(s.getSucursal()).append("', mi_suc='").append(s.getMi()).append("', ip='").append(s.getIp());
+        sql.append("', usu='").append(s.getUsuario()).append("'");
+        sql.append(" WHERE suc_codigo=");
         sql.append(s.getCodSucursal());
-        sql.append("");
         msg = Operacion.exeOperacion(sql.toString());
-//        msg = Operacion.exeOperacion("UPDATE transporte SET tra_nombre='"+t.getTransporte()+"' WHERE tra_codigo="+t.getCodTransporte()+"");
         return msg;
     }
 

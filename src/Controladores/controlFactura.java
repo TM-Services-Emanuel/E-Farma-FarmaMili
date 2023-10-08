@@ -3,6 +3,7 @@ package Controladores;
 import Componentes.DataSourceService;
 import Componentes.Login;
 import Componentes.Mensajes;
+import Componentes.Redondeo;
 import Datos.*;
 import IU.*;
 import Modelo.*;
@@ -15,25 +16,28 @@ import javax.swing.table.DefaultTableModel;
 public class controlFactura {
 
     static Cliente cl;
-    static Articulo art;
+    //static Articulo art;
     static DetalleFactura dfa;
+    static DetalleTransferencia dft;
     static ArregloFactura array = new ArregloFactura();
+    static ArregloTransferencia arrayTransf = new ArregloTransferencia();
     static DataSourceService dss = new DataSourceService();
 
     public static void selecArticulo() {
-        int x = dlgBuscarArticuloVenta.tbDetalle.getSelectedRow();
-        String cod = dlgBuscarArticuloVenta.tbDetalle.getValueAt(x, 0).toString();
+        Articulo art;
+        int x = dlgBuscadorArticuloVenta.tbDetalle.getSelectedRow();
+        String cod = dlgBuscadorArticuloVenta.tbDetalle.getValueAt(x, 0).toString();
         art = GestionarArticulos.busArticulo(cod);
         dlgVentas.txtCodArticulo.setText(String.valueOf(art.getCodArticulo()));
         dlgVentas.txtArt.setText(art.getDescripcion());
         dlgVentas.txtCant.setText("1");
 
         DecimalFormat df = new DecimalFormat("#,###");
-        String PP = String.valueOf(art.getPrecioPublico());
+        String PP = String.valueOf(art.getPpublico());
         String DES = String.valueOf(art.getDescuento());
         dlgVentas.lbPublic.setText("Precio Público: Gs." + (df.format(Integer.parseInt(PP.trim().replace(".", "").replace(",", "")))) + " | Descuento de: " + DES + "%");
 
-        String PV = String.valueOf(art.getPrecioVenta());
+        String PV = String.valueOf(art.getPventa());
         String PVM = String.valueOf(art.getPM());
         int MC = art.getCM();
         String May;
@@ -44,6 +48,17 @@ public class controlFactura {
             May = "SI";
             dlgVentas.lbPVenta.setText("Precio Unitario: Gs." + (df.format(Integer.parseInt(PV.trim().replace(".", "").replace(",", "")))) + " | A partir de " + MC + ": Gs." + (df.format(Integer.parseInt(PVM.trim().replace(".", "").replace(",", "")))));
         }
+    }
+
+    public static void selecArticulo_para_Transferir() {
+        int x = dlgBuscadorArticuloTransferencia.tbDetalle.getSelectedRow();
+        String cod = dlgBuscadorArticuloTransferencia.tbDetalle.getValueAt(x, 0).toString();
+        Articulo art = GestionarArticulos.busArticulo(cod);
+        dlgTransferencia.txtCodArticulo.setText(String.valueOf(art.getCodArticulo()));
+        dlgTransferencia.txtArt.setText(art.getDescripcion());
+        dlgTransferencia.txtCant.setText("1");
+        DecimalFormat df = new DecimalFormat("#,###");
+        dlgTransferencia.txtCosto.setText(df.format(art.getCosto()));
     }
 
     public static void selectCliente() {
@@ -139,12 +154,32 @@ public class controlFactura {
         return (total);
     }
 
+    public static int getExcetasTransferencia() {
+        int total = 0;
+        DefaultTableModel tb = (DefaultTableModel) dlgTransferencia.tbDetalle.getModel();
+        int fila = tb.getRowCount();
+        for (int i = 0; i < fila; i++) {
+            total += Integer.valueOf(String.valueOf(dlgTransferencia.tbDetalle.getModel().getValueAt(i, 5)).replace(".", "").replace(",", ""));
+        }
+        return (total);
+    }
+
     public static int get5() {
         int total = 0;
         DefaultTableModel tb = (DefaultTableModel) dlgVentas.tbDetalle.getModel();
         int fila = tb.getRowCount();
         for (int i = 0; i < fila; i++) {
             total += Integer.valueOf(String.valueOf(dlgVentas.tbDetalle.getModel().getValueAt(i, 8)).replace(".", "").replace(",", ""));
+        }
+        return (total / 21);
+    }
+
+    public static int get5Transferencia() {
+        int total = 0;
+        DefaultTableModel tb = (DefaultTableModel) dlgTransferencia.tbDetalle.getModel();
+        int fila = tb.getRowCount();
+        for (int i = 0; i < fila; i++) {
+            total += Integer.valueOf(String.valueOf(dlgTransferencia.tbDetalle.getModel().getValueAt(i, 6)).replace(".", "").replace(",", ""));
         }
         return (total / 21);
     }
@@ -159,6 +194,16 @@ public class controlFactura {
         return (total / 11);
     }
 
+    public static int get10Transferencia() {
+        int total = 0;
+        DefaultTableModel tb = (DefaultTableModel) dlgTransferencia.tbDetalle.getModel();
+        int fila = tb.getRowCount();
+        for (int i = 0; i < fila; i++) {
+            total += Integer.valueOf(String.valueOf(dlgTransferencia.tbDetalle.getModel().getValueAt(i, 7)).replace(".", "").replace(",", ""));
+        }
+        return (total / 11);
+    }
+
     public static int getTotal()//Calcula el total de la venta
     {
         int total = 0;
@@ -166,6 +211,17 @@ public class controlFactura {
         int fila = tb.getRowCount();
         for (int i = 0; i < fila; i++) {
             total += Integer.parseInt(String.valueOf(dlgVentas.tbDetalle.getModel().getValueAt(i, 10)).replace(".", "").replace(",", ""));
+        }
+        return (total);
+    }
+
+    public static int getTotalTransferencia()//Calcula el total de la venta
+    {
+        int total = 0;
+        DefaultTableModel tb = (DefaultTableModel) dlgTransferencia.tbDetalle.getModel();
+        int fila = tb.getRowCount();
+        for (int i = 0; i < fila; i++) {
+            total += Integer.parseInt(String.valueOf(dlgTransferencia.tbDetalle.getModel().getValueAt(i, 8)).replace(".", "").replace(",", ""));
         }
         return (total);
     }
@@ -247,14 +303,16 @@ public class controlFactura {
         tb.addRow(fila);
     }
 
-    public static void addTabla(JTable tabla) {
+    public static void addTabla(String cod, JTable tabla) {
         try {
+            Articulo art;
+            art = GestionarArticulos.busArticulo(cod);
             int codA = art.getCodArticulo();
             String codB = art.getCodBarra();
             String desc = art.getDescripcion();
             int cant = Integer.parseInt(dlgVentas.txtCant.getText());
             int cantM = art.getCM();
-            int precioMin = art.getPrecioVenta();
+            int precioMin = art.getPventa();
             int precioMay = art.getPM();
             String VM = art.getVM();
             int mont;
@@ -273,27 +331,27 @@ public class controlFactura {
             }
             int descuento;
             int neto;
-            int porcDesc = art.getDescuento();
-            if (art.getPrecioPublico() == 0) {
+            double porcDesc = art.getDescuento();
+            if (art.getPpublico()== 0) {
                 descuento = 0;
             } else {
                 if (VM.equals("S")) {
                     if ((cant) < cantM) {
-                        descuento = (art.getPrecioPublico() - precioMin) * (cant);
+                        descuento = (art.getPpublico() - precioMin) * (cant);
                     } else {
-                        descuento = (art.getPrecioPublico() - precioMay) * (cant);
+                        descuento = (art.getPpublico() - precioMay) * (cant);
                     }
                 } else {
-                    descuento = (art.getPrecioPublico() - precioMin) * (cant);
+                    descuento = (art.getPpublico() - precioMin) * (cant);
                 }
             }
-            if (art.getPrecioPublico() == 0) {
+            if (art.getPpublico() == 0) {
                 neto = 0;
             } else {
-                neto = (art.getPrecioPublico() * cant);
+                neto = (art.getPpublico() * cant);
             }
-            int iva = art.getIVA();
-            int ppub = art.getPrecioPublico();
+            int iva = art.getIva();
+            int ppub = art.getPpublico();
             DetalleFactura dfac = new DetalleFactura(codA);
             if (array.busca(dfac.getCodArticulo()) != -1) {
                 Mensajes.error("Articulo ya fue agregado");
@@ -319,6 +377,85 @@ public class controlFactura {
                 dlgVentas.txtDescuento.setText(df.format(Integer.valueOf(descuent.trim().replace(".", "").replace(",", ""))));
                 dlgVentas.txtNetoL.setText(net);
                 dlgVentas.txtNeto.setText(df.format(Integer.valueOf(net.replace(".", "").replace(",", ""))));
+            }
+        } catch (NumberFormatException e) {
+            Mensajes.error("ERROR AL AGREGAR ARTICULO: " + e.getMessage().toUpperCase());
+        }
+    }
+
+    public static void insertarTransferencia(String codP, String codBar, String descipP, String cantP, String precP, String totalP, int iva, double Gan, double Desc, int order, double costiv, JTable tabla) {
+        String fila[] = new String[13];
+        DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
+        fila[0] = codP;
+        fila[1] = codBar;
+        fila[2] = descipP;
+        fila[3] = cantP;
+        fila[4] = precP;
+        switch (iva) {
+            case 10 -> {
+                fila[5] = "0";
+                fila[6] = "0";
+                fila[7] = totalP;
+            }
+            case 5 -> {
+                fila[5] = "0";
+                fila[6] = totalP;
+                fila[7] = "0";
+            }
+            default -> {
+                fila[5] = totalP;
+                fila[6] = "0";
+                fila[7] = "0";
+            }
+        }
+        fila[8] = totalP;
+        fila[9] = String.valueOf(Gan);
+        fila[10] = String.valueOf(Desc);
+        fila[11] = String.valueOf(order);
+        fila[12] = String.valueOf(costiv);
+        tb.addRow(fila);
+    }
+
+    public static void addTablaTransferencia(String cod, JTable tabla) {
+        try {
+            Articulo art;
+            art = GestionarArticulos.busArticulo(cod);
+            int codA = art.getCodArticulo();
+            String codB = art.getCodBarra();
+            String desc = art.getDescripcion();
+            int cant = Integer.parseInt(dlgTransferencia.txtCant.getText());
+            int costo = Integer.parseInt(dlgTransferencia.txtCosto.getText().replace(".", "").replace(",", ""));
+            long mont = (long) (cant * costo);
+            int iv = art.getIva();
+            double costoiva = 0;
+            switch (iv) {
+                case 0 ->
+                    costoiva = 0;
+                case 5 ->
+                    costoiva = (double) (costo / 21);
+                case 10 ->
+                    costoiva = (double) (costo / 11);
+                default -> {
+                }
+            }
+            double Ganancia = CalcGananciaT(Double.valueOf(art.getPventa()), Double.valueOf(costo));
+            double Descuento = CalcDescuentoT(Double.valueOf(art.getPventa()), Double.valueOf(art.getPpublico()));
+            int Orden = tabla.getRowCount() + 1;
+            DetalleTransferencia dftc = new DetalleTransferencia(codA);
+            if (arrayTransf.busca(dftc.getCodArticulo()) != -1) {
+                Mensajes.error("Articulo ya fue agregado");
+            } else {
+                arrayTransf.agregar(dftc);
+                insertarTransferencia(String.valueOf(codA), codB, desc, String.valueOf(cant), String.valueOf(costo), String.valueOf(mont), iv, Ganancia, Descuento, Orden, costoiva, tabla);
+                String total = String.valueOf(getTotalTransferencia());
+                String exentas = String.valueOf(getExcetasTransferencia());
+                String iva5 = String.valueOf(get5Transferencia());
+                String iva10 = String.valueOf(get10Transferencia());
+                DecimalFormat df = new DecimalFormat("#,###");
+                dlgTransferencia.txtExenta.setText(df.format(Integer.valueOf(exentas.trim().replace(".", "").replace(",", ""))));
+                dlgTransferencia.txt5.setText(df.format(Integer.valueOf(iva5.replace(".", "").replace(",", ""))));
+                dlgTransferencia.txt10.setText(df.format(Integer.valueOf(iva10.replace(".", "").replace(",", ""))));
+                dlgTransferencia.txtTotal.setText(df.format(Integer.valueOf(total.replace(".", "").replace(",", ""))));
             }
         } catch (NumberFormatException e) {
             Mensajes.error("ERROR AL AGREGAR ARTICULO: " + e.getMessage().toUpperCase());
@@ -356,6 +493,41 @@ public class controlFactura {
         }
     }
 
+    public static void consLineaTransferencia() {
+        int fila = dlgTransferencia.tbDetalle.getSelectedRow();
+        int cod = Integer.parseInt(dlgTransferencia.tbDetalle.getValueAt(fila, 0).toString());
+        int p = arrayTransf.busca(cod);
+        if (p == -1) {
+            Mensajes.informacion("Articulo no existe");
+        } else {
+            dft = arrayTransf.getFila(p);
+        }
+    }
+
+    public static void delRenglonTransferencia(JTable tabla) {
+        consLineaTransferencia();
+        int fila = dlgTransferencia.tbDetalle.getSelectedRow();
+        int cod = Integer.parseInt(dlgTransferencia.tbDetalle.getValueAt(fila, 0).toString());
+        int p = arrayTransf.busca(cod);
+        if (p != -1) {
+            int res = Mensajes.confirmar("Desea quitar esta linea");
+            if (res == 0) {
+                arrayTransf.eliminar(p);
+                DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
+                tb.removeRow(fila);
+                String total = String.valueOf(getTotalTransferencia());
+                String exentas = String.valueOf(getExcetasTransferencia());
+                String iva5 = String.valueOf(get5Transferencia());
+                String iva10 = String.valueOf(get10Transferencia());
+                DecimalFormat df = new DecimalFormat("#,###");
+                dlgTransferencia.txtExenta.setText(df.format(Integer.valueOf(exentas.trim().replace(".", "").replace(",", ""))));
+                dlgTransferencia.txt5.setText(df.format(Integer.valueOf(iva5.replace(".", "").replace(",", ""))));
+                dlgTransferencia.txt10.setText(df.format(Integer.valueOf(iva10.replace(".", "").replace(",", ""))));
+                dlgTransferencia.txtTotal.setText(df.format(Integer.valueOf(total.replace(".", "").replace(",", ""))));
+            }
+        }
+    }
+
     public static int calCulos() {
         int total = Integer.parseInt(dlgVentas.txtTotalL.getText());
         int abono = Integer.parseInt(dlgVentas.txtAbonoL.getText());
@@ -383,14 +555,14 @@ public class controlFactura {
             int mont;
             if (VM.equals("S")) {
                 if (Integer.parseInt(cant) < cantM) {
-                    prec = arti.getPrecioVenta();
+                    prec = arti.getPventa();
                     mont = (Integer.parseInt(cant) * prec);
                 } else {
                     prec = arti.getPM();
                     mont = (Integer.parseInt(cant) * prec);
                 }
             } else {
-                prec = arti.getPrecioVenta();
+                prec = arti.getPventa();
                 mont = (Integer.parseInt(cant) * prec);
             }
 
@@ -399,26 +571,26 @@ public class controlFactura {
 
             int descuento;
             int neto;
-            if (arti.getPrecioPublico() == 0) {
+            if (arti.getPpublico()== 0) {
                 descuento = 0;
             } else {
                 if (VM.equals("S")) {
                     if (Integer.parseInt(cant) < cantM) {
-                        descuento = (arti.getPrecioPublico() - arti.getPrecioVenta()) * Integer.parseInt(cant);
+                        descuento = (arti.getPpublico() - arti.getPventa()) * Integer.parseInt(cant);
                     } else {
-                        descuento = (arti.getPrecioPublico() - arti.getPM()) * Integer.parseInt(cant);
+                        descuento = (arti.getPpublico() - arti.getPM()) * Integer.parseInt(cant);
                     }
                 } else {
-                    descuento = (arti.getPrecioPublico() - arti.getPrecioVenta()) * Integer.parseInt(cant);
+                    descuento = (arti.getPpublico() - arti.getPventa()) * Integer.parseInt(cant);
                 }
             }
-            if (arti.getPrecioPublico() == 0) {
+            if (arti.getPpublico() == 0) {
                 neto = 0;
             } else {
-                neto = (arti.getPrecioPublico() * Integer.parseInt(cant));
+                neto = (arti.getPpublico() * Integer.parseInt(cant));
             }
 
-            int iva = arti.getIVA();
+            int iva = arti.getIva();
             switch (iva) {
                 case 10 -> {
                     dlgVentas.tbDetalle.setValueAt(String.valueOf(mont), fila, 9);
@@ -459,6 +631,10 @@ public class controlFactura {
 
     public static void canCelar() {
         array.vaciar();
+    }
+
+    public static void canCelarTransf() {
+        arrayTransf.vaciar();
     }
 
     public static String anularFactura()//Metodo para anular facturas
@@ -843,6 +1019,36 @@ public class controlFactura {
             Object[] fila = (Object[]) lista.get(i);
             tb.addRow(fila);
         }
+    }
+
+    public static double CalcGananciaT(double pv, double costo) {
+        double ganancia = 0;
+        try {
+            if (pv == 0) {
+                ganancia = 0;
+            } else {
+                double i = (double) (costo / pv);
+                ganancia = Redondeo.redondearD((1 - i) * 100);
+            }
+        } catch (NumberFormatException e) {
+            Mensajes.error("Error al calcular Ganancia en transferencia: " + e.getMessage());
+        }
+        return ganancia;
+    }
+
+    public static double CalcDescuentoT(double pv, double pp) {
+        double descuento = 0;
+        try {
+            if (pp == 0) {
+                descuento = 0;
+            } else {
+                double dif = (double) (pv / pp);
+                descuento = Redondeo.redondearD((1 - dif) * 100);
+            }
+        } catch (Exception e) {
+            Mensajes.error("Error al calcular Descuento: " + e.getMessage());
+        }
+        return descuento;
     }
 
 }

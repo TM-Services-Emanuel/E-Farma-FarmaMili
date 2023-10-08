@@ -93,6 +93,39 @@ public class ReporteF {
             Mensajes.error("Error:"+j.getMessage());
         }
     }
+    
+    public void Transferencia(String ubicacion, String Nombrepar, int Valor_p1){
+        try{
+            String master=System.getProperty("user.dir")+ubicacion;
+            System.out.println("master "+master);
+            if (master==null) {
+                Mensajes.error("NO encuentro el archivo del reporte maestro");
+            }
+            JasperReport masterReport=null;
+            try{
+                masterReport=(JasperReport) JRLoader.loadObjectFromFile(master);
+            }catch(JRException e){
+                //System.out.println("Error cargando el reporte maestro: "+e.getMessage());
+                Mensajes.error("Error cargando el reporte maestro: "+e.getMessage());
+                //System.exit(3);
+            }
+            //Map parametro= new HashMap<>();
+            HashMap<String, Object> parametro = new HashMap<>();
+            parametro.put(Nombrepar, Valor_p1);
+            JasperPrint jasperPrint=JasperFillManager.fillReport(masterReport, parametro,con);
+            JasperViewer jviewer=new JasperViewer(jasperPrint,false);
+            jviewer.setTitle("Documento de Transferencia");
+            jviewer.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png")));
+            jviewer.setSize(880, 670);
+            jviewer.setResizable(false);
+            jviewer.setZoomRatio((float) 0.7);
+            jviewer.setLocationRelativeTo(null);
+            jviewer.setVisible(true);
+        }catch(JRException j){
+            Mensajes.error("Error:"+j.getMessage());
+        }
+    } 
+    
     public void StockValorizado(String ubicacion){
         try{
             String master=System.getProperty("user.dir")+ubicacion;

@@ -4,6 +4,7 @@ import Componentes.ReporteF;
 import Componentes.Mensajes;
 import Controladores.CabecerasTablas;
 import Controladores.controlNotaCredito;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class dlgConsNotaCredito extends javax.swing.JDialog {
@@ -389,12 +390,12 @@ public class dlgConsNotaCredito extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void llamarReporteNotaCredito() {
+    public void llamarReporteNotaCredito() throws SQLException {
             ReporteF gr;
             gr = new ReporteF();
             int codF = Integer.parseInt(txtCodNotaCred.getText());
             //gr.MostrarReporteConParametro(System.getProperty("user.dir")+"/Reportes/NotasCredito/notacredito.jasper", "Notas de Credito", codF,"NCreditos/NCred-"+codF+".pdf");
-            //gr.cerrar();
+            gr.cerrar();
     }
     
     /**

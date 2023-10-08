@@ -56,6 +56,22 @@ public class Empresa {
     private static String RUC = "";
     
     /**
+     * @return the IdSucursal
+     */
+    public static int getIdSucursal() {
+        return IdSucursal;
+    }
+
+    /**
+     * @param aIdSucursal the IdSucursal to set
+     */
+    public static void setIdSucursal(int aIdSucursal) {
+        IdSucursal = aIdSucursal;
+    }
+
+    private static int IdSucursal;
+    
+    /**
      * @return the Sucursal
      */
     public static String getSucursal() {

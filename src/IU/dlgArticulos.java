@@ -1,7 +1,11 @@
 package IU;
 
 import Componentes.Mensajes;
-import Componentes.RenderDecimal;
+import Componentes.RenderDecimal1conPuntos;
+import Componentes.RenderDecimalCosto;
+import Componentes.RenderDecimalPublico;
+import Componentes.RenderDecimalVenta;
+import Componentes.RenderDecimalsinColor;
 import Componentes.ReporteF;
 import Componentes.Software;
 import Componentes.clsExportarExcel;
@@ -43,9 +47,11 @@ public class dlgArticulos extends javax.swing.JDialog {
     }
 
     public static void Renders() {
-        dlgArticulos.tbProductos.getColumnModel().getColumn(10).setCellRenderer(new RenderDecimal());
-        dlgArticulos.tbProductos.getColumnModel().getColumn(13).setCellRenderer(new RenderDecimal());
-        dlgArticulos.tbProductos.getColumnModel().getColumn(15).setCellRenderer(new RenderDecimal());
+        dlgArticulos.tbProductos.getColumnModel().getColumn(10).setCellRenderer(new RenderDecimalCosto());
+        dlgArticulos.tbProductos.getColumnModel().getColumn(13).setCellRenderer(new RenderDecimalPublico());
+        dlgArticulos.tbProductos.getColumnModel().getColumn(15).setCellRenderer(new RenderDecimalVenta());
+        dlgArticulos.tbProductos.getColumnModel().getColumn(14).setCellRenderer(new RenderDecimal1conPuntos());
+        dlgArticulos.tbProductos.getColumnModel().getColumn(17).setCellRenderer(new RenderDecimal1conPuntos());
     }
 
     @SuppressWarnings("unchecked")
@@ -277,7 +283,7 @@ public class dlgArticulos extends javax.swing.JDialog {
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
-        tbProductos.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        tbProductos.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         tbProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -290,7 +296,7 @@ public class dlgArticulos extends javax.swing.JDialog {
             }
         ));
         tbProductos.setGridColor(new java.awt.Color(204, 204, 204));
-        tbProductos.setRowHeight(20);
+        tbProductos.setRowHeight(22);
         tbProductos.setShowGrid(true);
         tbProductos.setShowVerticalLines(false);
         tbProductos.getTableHeader().setResizingAllowed(false);
@@ -455,36 +461,29 @@ public class dlgArticulos extends javax.swing.JDialog {
         gestArticulos.Nuevo();
         gestArticulos.setVisible(true);
 
-    }    void modArticulo() {
-        int x = tbProductos.getSelectedRow();
-        if (x <= 0) {
-            Mensajes.Sistema("El formulario ABM no puede ser procesado.\nSeleccione en la tabla el producto que desea modificar.");
-        } else {
-            try {
-                dlgGestArticulos a = new dlgGestArticulos(null, true);
-                a.setLocationRelativeTo(null);
-                controlArticulo.aModifcar();
-                dlgGestArticulos.btnNuevo.setEnabled(false);
-                dlgGestArticulos.itemNuevo.setEnabled(false);
-                dlgGestArticulos.btnModificar.setEnabled(true);
-                dlgGestArticulos.itemModificar.setEnabled(true);
-                dlgGestArticulos.btnGuardar.setEnabled(false);
-                dlgGestArticulos.itemGuardar.setEnabled(false);
-                dlgGestArticulos.btnCancelar.setEnabled(true);
-                dlgGestArticulos.itemCancelar.setEnabled(true);
-                dlgGestArticulos.txtCodBarra.requestFocus();
-                //dlgGestAriculos1.txtStock.setEnabled(false);
-                a.modcbLaboratorio();
-                a.modcbProveedor();
-                a.modcbFamilia();
-                dlgGestArticulos.CalculoIVAC();
-                a.setVisible(true);
-            } catch (Exception e) {
-                //Mensajes.error("Seleccione una fila de la tabla");     
-            }
-            tbProductos.clearSelection();
-        }
+    }
 
+    void modArticulo() {
+        try {
+            dlgGestArticulos a = new dlgGestArticulos(null, true);
+            a.setLocationRelativeTo(null);
+            controlArticulo.aModifcar();
+            dlgGestArticulos.btnNuevo.setEnabled(false);
+            dlgGestArticulos.btnModificar.setEnabled(true);
+            dlgGestArticulos.btnGuardar.setEnabled(false);
+            dlgGestArticulos.btnCancelar.setEnabled(true);
+            dlgGestArticulos.btnSalir.setEnabled(false);
+            dlgGestArticulos.txtCodBarra.requestFocus();
+            dlgGestArticulos.txtStock.setEnabled(false);
+            a.modcbLaboratorio();
+            a.modcbProveedor();
+            a.modcbFamilia();
+            dlgGestArticulos.CalculoIVAC();
+            a.setVisible(true);
+        } catch (Exception e) {
+            //Mensajes.error("Seleccione una fila de la tabla");     
+        }
+        tbProductos.clearSelection();
     }
 
     void delArticulo() {
@@ -506,30 +505,7 @@ public class dlgArticulos extends javax.swing.JDialog {
     private void tbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            try {
-                dlgGestArticulos a = new dlgGestArticulos(null, true);
-                a.setLocationRelativeTo(null);
-                controlArticulo.aModifcar();
-                //a.setTitle("Gestionar Productos");
-                dlgGestArticulos.btnModificar.setEnabled(false);
-                dlgGestArticulos.itemNuevo.setEnabled(false);
-                dlgGestArticulos.btnModificar.setEnabled(true);
-                dlgGestArticulos.itemModificar.setEnabled(true);
-                dlgGestArticulos.btnGuardar.setEnabled(false);
-                dlgGestArticulos.itemGuardar.setEnabled(false);
-                dlgGestArticulos.btnCancelar.setEnabled(true);
-                dlgGestArticulos.itemCancelar.setEnabled(true);
-                dlgGestArticulos.txtCodBarra.requestFocus();
-                //dlgGestAriculos1.txtStock.setEnabled(false);
-                a.modcbLaboratorio();
-                a.modcbProveedor();
-                a.modcbFamilia();
-                dlgGestArticulos.CalculoIVAC();
-                a.setVisible(true);
-            } catch (Exception e) {
-                Mensajes.error("No se pudo cagar informacion del Producto");
-
-            }
+            modArticulo();
         }
     }//GEN-LAST:event_tbProductosMouseClicked
 
@@ -578,28 +554,7 @@ public class dlgArticulos extends javax.swing.JDialog {
     private void tbProductosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbProductosKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                dlgGestArticulos a = new dlgGestArticulos(null, true);
-                a.setLocationRelativeTo(null);
-                controlArticulo.aModifcar();
-                dlgGestArticulos.btnModificar.setEnabled(false);
-                dlgGestArticulos.itemNuevo.setEnabled(false);
-                dlgGestArticulos.btnModificar.setEnabled(true);
-                dlgGestArticulos.itemModificar.setEnabled(true);
-                dlgGestArticulos.btnGuardar.setEnabled(false);
-                dlgGestArticulos.itemGuardar.setEnabled(false);
-                dlgGestArticulos.btnCancelar.setEnabled(true);
-                dlgGestArticulos.itemCancelar.setEnabled(true);
-                dlgGestArticulos.txtCodBarra.requestFocus();
-                //dlgGestAriculos1.txtStock.setEnabled(false);
-                a.modcbLaboratorio();
-                a.modcbProveedor();
-                a.modcbFamilia();
-                dlgGestArticulos.CalculoIVAC();
-                a.setVisible(true);
-            } catch (Exception e) {
-                //Mensajes.error("No se pudo cagar informacion del Producto" + e.getMessage());
-            }
+            modArticulo();
         } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             txtBuscar.requestFocus();
             txtBuscar.selectAll();
@@ -643,7 +598,13 @@ public class dlgArticulos extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        modArticulo();
+        int x = tbProductos.getSelectedRow();
+        if (x < 0) {
+            Mensajes.Sistema("El formulario ABM no puede ser procesado.\nSeleccione en la tabla el producto que desea modificar.");
+        } else {
+            modArticulo();
+        }
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -724,14 +685,13 @@ public class dlgArticulos extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(dlgArticulos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        //</editor-fold>
 
+        //</editor-fold>
         java.awt.EventQueue.invokeLater(() -> {
             try {
                 dlgArticulos dialog = new dlgArticulos(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    
+
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);

@@ -34,43 +34,46 @@ public class controlArticulo {
             dlgGestArticulos.txtCodProducto.setText(String.valueOf(ar.getCodArticulo()));
             dlgGestArticulos.txtCodBarra.setText((ar.getCodBarra()));
             //dlgGestAriculos1.cbLaboratorio.setSelectedIndex(ar.getCodLaboratorio());
-            dlgGestArticulos.txtCodLab.setText(String.valueOf(ar.getCodLaboratorio()));
+            dlgGestArticulos.txtCodLab.setText(String.valueOf(ar.getCodLab()));
             //dlgGestAriculos1.cbFamilia.setSelectedIndex(ar.getCodFamilia());
-            dlgGestArticulos.txtCodFam.setText(String.valueOf(ar.getCodFamilia()));
+            dlgGestArticulos.txtCodFam.setText(String.valueOf(ar.getCodFam()));
             //dlgGestAriculos1.cbProveedor.setSelectedIndex(ar.getCodProveedor());
-            dlgGestArticulos.txtCodPro.setText(String.valueOf(ar.getCodProveedor()));
+            dlgGestArticulos.txtCodPro.setText(String.valueOf(ar.getCodProv()));
             dlgGestArticulos.txtDescripcion.setText(ar.getDescripcion());
             dlgGestArticulos.txtPrincipio.setText(ar.getPrincipio());
             dlgGestArticulos.txtAccion.setText(ar.getAccion());
             if (ar.getVenta().equals("LIBRE")) {
                 dlgGestArticulos.rLibre.setSelected(true);
+                dlgGestArticulos.rLibre.doClick();
             } else {
                 dlgGestArticulos.rControlado.setSelected(true);
+                dlgGestArticulos.rControlado.doClick();
             }
             if (ar.getTipo().equals("N")) {
                 dlgGestArticulos.rNacional.setSelected(true);
+                dlgGestArticulos.rNacional.doClick();
             } else {
                 dlgGestArticulos.rImportado.setSelected(true);
+                dlgGestArticulos.rImportado.doClick();
             }
             if (ar.getProdActivo().equals("SI")) {
                 dlgGestArticulos.rActivo.setSelected(true);
+                dlgGestArticulos.rActivo.doClick();
             } else {
                 dlgGestArticulos.rInactivo.setSelected(true);
+                dlgGestArticulos.rInactivo.doClick();
             }
             DecimalFormat df = new DecimalFormat("#,###");
-            dlgGestArticulos.txtCostoL.setText(String.valueOf(ar.getCosto()));
-            dlgGestArticulos.txtCosto.setText(df.format(Integer.valueOf(dlgGestArticulos.txtCostoL.getText().trim().replace(".", "").replace(",", ""))));
-            dlgGestArticulos.txtPrecioPublicoL.setText(String.valueOf(ar.getPrecioPublico()));
-            dlgGestArticulos.txtPrecioPublico.setText(df.format(Integer.valueOf(dlgGestArticulos.txtPrecioPublicoL.getText().trim().replace(".", "").replace(",", ""))));
+            dlgGestArticulos.txtCosto.setText(df.format(ar.getCosto()));
+            dlgGestArticulos.txtPrecioPublico.setText(df.format(ar.getPpublico()));
             dlgGestArticulos.txtGanancia.setText(String.valueOf(ar.getGanancia()));
             dlgGestArticulos.txtDesc.setText(String.valueOf(ar.getDescuento()));
-            dlgGestArticulos.txtPrecioVentaL.setText(String.valueOf(ar.getPrecioVenta()));
-            dlgGestArticulos.txtPrecioVenta.setText(df.format(Integer.valueOf(dlgGestArticulos.txtPrecioVentaL.getText().trim().replace(".", "").replace(",", ""))));
-            dlgGestArticulos.txtIVA.setText(String.valueOf(ar.getIVA()));
-            dlgGestArticulos.txtIVACosto.setText(String.valueOf(ar.getCostoIva()));
+            dlgGestArticulos.txtPrecioVenta.setText(df.format(ar.getPventa()));
+            dlgGestArticulos.txtIVA.setText(String.valueOf(ar.getIva()));
+            dlgGestArticulos.txtIVACosto.setText(String.valueOf(ar.getCostoiva()));
             dlgGestArticulos.txtStock.setText(String.valueOf(ar.getStock()));
             dlgGestArticulos.txtStockMin.setText(String.valueOf(ar.getStockMin()));
-            try {
+            /*try {
                 if (ar.getVencimiento().equals("0000-00-00")) {
                     dlgGestArticulos.dfecha.cleanup();
                 } else {
@@ -79,7 +82,7 @@ public class controlArticulo {
                 }
             } catch (ParseException e) {
                 System.out.println(e.getMessage());
-            }
+            }*/
             try {
                 if (ar.getVM().equals("S")) {
                     dlgGestArticulos.ckHabilitar.setSelected(true);
@@ -106,7 +109,7 @@ public class controlArticulo {
     }
 
     public static Articulo capturarCampos() {
-        Articulo art = null;
+        Articulo art;
 
         int codA = Integer.parseInt(dlgGestArticulos.txtCodProducto.getText());
         String codBar;
@@ -171,20 +174,14 @@ public class controlArticulo {
         } catch (SQLException ex) {
             Mensajes.error("Error al querer obtener valor de la familia: " + ex.getMessage());
         }
-        int Pcosto = Integer.parseInt(dlgGestArticulos.txtCostoL.getText().trim());
-        int Ppublico = Integer.parseInt(dlgGestArticulos.txtPrecioPublicoL.getText().trim());
-        int Gan = Integer.parseInt(dlgGestArticulos.txtGanancia.getText());
-        int des = Integer.parseInt(dlgGestArticulos.txtDesc.getText());
-        int Pventa = Integer.parseInt(dlgGestArticulos.txtPrecioVentaL.getText());
+        int Pcosto = Integer.parseInt(dlgGestArticulos.txtCosto.getText().replace(".", "").replace(",", ""));
+        int Ppublico = Integer.parseInt(dlgGestArticulos.txtPrecioPublico.getText().replace(".", "").replace(",", ""));
+        double Gan = Double.parseDouble(dlgGestArticulos.txtGanancia.getText());
+        double des = Double.parseDouble(dlgGestArticulos.txtDesc.getText());
+        int Pventa = Integer.parseInt(dlgGestArticulos.txtPrecioVenta.getText().replace(".", "").replace(",", ""));
         int ivaG = Integer.parseInt(dlgGestArticulos.txtIVA.getText());
         double ivaC = Double.parseDouble(dlgGestArticulos.txtIVACosto.getText());
-        String fechas;
-        if (dlgGestArticulos.dfecha.getDate() == null) {
-            fechas = "0000-00-00";
-        } else {
-            Date fecha = dlgGestArticulos.dfecha.getDate();
-            fechas = Fecha.formatoFechaD(fecha);
-        }
+        String fechas = "0000-00-00";
         int stock = Integer.parseInt(dlgGestArticulos.txtStock.getText().trim());
         int stockMin = Integer.parseInt(dlgGestArticulos.txtStockMin.getText().trim());
         String prodActivo;

@@ -76,6 +76,8 @@ public class cargaPrincipal extends javax.swing.JFrame {
         Separador = new javax.swing.JSeparator();
         LabelTitulo = new javax.swing.JLabel();
         rSButtonIconOne1 = new RSMaterialComponent.RSButtonIconOne();
+        btnSalir = new RSMaterialComponent.RSButtonIconUno();
+        rSComboBox1 = new RSMaterialComponent.RSComboBox();
         rSMenuBar1 = new rojerusan.RSMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -340,6 +342,7 @@ public class cargaPrincipal extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         PnlNuevo.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlNuevo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn.setBackground(new java.awt.Color(0, 102, 0));
         btn.setBackgroundHover(new java.awt.Color(255, 255, 255));
@@ -352,44 +355,21 @@ public class cargaPrincipal extends javax.swing.JFrame {
                 btnActionPerformed(evt);
             }
         });
+        PnlNuevo.add(btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
         Separador1.setForeground(new java.awt.Color(204, 204, 204));
+        PnlNuevo.add(Separador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
 
         LabelTitulo1.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         LabelTitulo1.setForeground(new java.awt.Color(17, 35, 46));
         LabelTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelTitulo1.setText("NUEVO");
+        PnlNuevo.add(LabelTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
 
-        javax.swing.GroupLayout PnlNuevoLayout = new javax.swing.GroupLayout(PnlNuevo);
-        PnlNuevo.setLayout(PnlNuevoLayout);
-        PnlNuevoLayout.setHorizontalGroup(
-            PnlNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlNuevoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PnlNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Separador1)
-                    .addComponent(LabelTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(PnlNuevoLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(btn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-        PnlNuevoLayout.setVerticalGroup(
-            PnlNuevoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlNuevoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(Separador1, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(LabelTitulo1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(PnlNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 3, 100, -1));
+        jPanel1.add(PnlNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 3, 100, 100));
 
         PnlModificar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlModificar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btN2.setBackground(new java.awt.Color(255, 102, 0));
         btN2.setBackgroundHover(new java.awt.Color(255, 255, 255));
@@ -402,46 +382,23 @@ public class cargaPrincipal extends javax.swing.JFrame {
                 btN2ActionPerformed(evt);
             }
         });
+        PnlModificar.add(btN2, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
         Separador2.setForeground(new java.awt.Color(204, 204, 204));
+        PnlModificar.add(Separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
 
         LabelTitulo2.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         LabelTitulo2.setForeground(new java.awt.Color(17, 35, 46));
         LabelTitulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelTitulo2.setText("MODIFICAR");
+        PnlModificar.add(LabelTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
 
-        javax.swing.GroupLayout PnlModificarLayout = new javax.swing.GroupLayout(PnlModificar);
-        PnlModificar.setLayout(PnlModificarLayout);
-        PnlModificarLayout.setHorizontalGroup(
-            PnlModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlModificarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PnlModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Separador2)
-                    .addComponent(LabelTitulo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlModificarLayout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
-                .addComponent(btN2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
-        );
-        PnlModificarLayout.setVerticalGroup(
-            PnlModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlModificarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btN2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(Separador2, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(LabelTitulo2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(PnlModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 3, 100, -1));
+        jPanel1.add(PnlModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 3, 100, 100));
 
         PnlGuardar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlGuardar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btn3.setBackground(new java.awt.Color(0, 102, 0));
+        btn3.setBackground(new java.awt.Color(0, 102, 255));
         btn3.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btn3.setForegroundHover(new java.awt.Color(0, 102, 0));
         btn3.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
@@ -452,44 +409,21 @@ public class cargaPrincipal extends javax.swing.JFrame {
                 btn3ActionPerformed(evt);
             }
         });
+        PnlGuardar.add(btn3, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
         Separador3.setForeground(new java.awt.Color(204, 204, 204));
+        PnlGuardar.add(Separador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
 
         LabelTitulo3.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         LabelTitulo3.setForeground(new java.awt.Color(17, 35, 46));
         LabelTitulo3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelTitulo3.setText("REGISTRAR");
+        PnlGuardar.add(LabelTitulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
 
-        javax.swing.GroupLayout PnlGuardarLayout = new javax.swing.GroupLayout(PnlGuardar);
-        PnlGuardar.setLayout(PnlGuardarLayout);
-        PnlGuardarLayout.setHorizontalGroup(
-            PnlGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlGuardarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PnlGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Separador3)
-                    .addComponent(LabelTitulo3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(PnlGuardarLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
-        );
-        PnlGuardarLayout.setVerticalGroup(
-            PnlGuardarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlGuardarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(Separador3, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(LabelTitulo3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(PnlGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, -1));
+        jPanel1.add(PnlGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, 100));
 
         PnlCancelar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlCancelar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn4.setBackground(new java.awt.Color(153, 0, 51));
         btn4.setBackgroundHover(new java.awt.Color(255, 255, 255));
@@ -502,44 +436,21 @@ public class cargaPrincipal extends javax.swing.JFrame {
                 btn4ActionPerformed(evt);
             }
         });
+        PnlCancelar.add(btn4, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
         Separador4.setForeground(new java.awt.Color(204, 204, 204));
+        PnlCancelar.add(Separador4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
 
         LabelTitulo4.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         LabelTitulo4.setForeground(new java.awt.Color(17, 35, 46));
         LabelTitulo4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelTitulo4.setText("CANCELAR");
+        PnlCancelar.add(LabelTitulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
 
-        javax.swing.GroupLayout PnlCancelarLayout = new javax.swing.GroupLayout(PnlCancelar);
-        PnlCancelar.setLayout(PnlCancelarLayout);
-        PnlCancelarLayout.setHorizontalGroup(
-            PnlCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlCancelarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PnlCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Separador4)
-                    .addComponent(LabelTitulo4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlCancelarLayout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
-                .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
-        );
-        PnlCancelarLayout.setVerticalGroup(
-            PnlCancelarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlCancelarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(Separador4, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(LabelTitulo4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(PnlCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(296, 3, 100, -1));
+        jPanel1.add(PnlCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(296, 3, 100, 100));
 
         PnlEliminar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlEliminar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btn5.setBackground(new java.awt.Color(255, 0, 0));
         btn5.setBackgroundHover(new java.awt.Color(255, 255, 255));
@@ -552,47 +463,42 @@ public class cargaPrincipal extends javax.swing.JFrame {
                 btn5ActionPerformed(evt);
             }
         });
+        PnlEliminar.add(btn5, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
         Separador.setForeground(new java.awt.Color(204, 204, 204));
+        PnlEliminar.add(Separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
 
         LabelTitulo.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         LabelTitulo.setForeground(new java.awt.Color(17, 35, 46));
         LabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         LabelTitulo.setText("ELIMINAR");
+        PnlEliminar.add(LabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
 
-        javax.swing.GroupLayout PnlEliminarLayout = new javax.swing.GroupLayout(PnlEliminar);
-        PnlEliminar.setLayout(PnlEliminarLayout);
-        PnlEliminarLayout.setHorizontalGroup(
-            PnlEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlEliminarLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
-            .addGroup(PnlEliminarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(PnlEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LabelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(Separador))
-                .addContainerGap())
-        );
-        PnlEliminarLayout.setVerticalGroup(
-            PnlEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PnlEliminarLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(Separador, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(LabelTitulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(PnlEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(393, 3, 100, -1));
+        jPanel1.add(PnlEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(393, 3, 100, 100));
 
         rSButtonIconOne1.setBackground(new java.awt.Color(17, 35, 46));
         rSButtonIconOne1.setBackgroundHover(new java.awt.Color(255, 0, 0));
         rSButtonIconOne1.setBorderPainted(false);
         rSButtonIconOne1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+
+        btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
+        btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir.setRippleColor(java.awt.Color.white);
+        btnSalir.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        rSComboBox1.setForeground(new java.awt.Color(0, 0, 0));
+        rSComboBox1.setColorArrow(new java.awt.Color(17, 35, 46));
+        rSComboBox1.setColorBorde(new java.awt.Color(204, 204, 204));
+        rSComboBox1.setColorDisabledIndexText(new java.awt.Color(255, 255, 255));
+        rSComboBox1.setColorFondo(new java.awt.Color(255, 255, 255));
+        rSComboBox1.setConBorde(true);
+        rSComboBox1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
 
         rSMenuBar1.setAlto(25);
 
@@ -618,15 +524,19 @@ public class cargaPrincipal extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(250, 250, 250)
+                                    .addComponent(rSComboBoxMaterial1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(46, 46, 46)
+                                    .addComponent(rSButtonIconOne1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(rSDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(250, 250, 250)
-                                .addComponent(rSComboBoxMaterial1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(46, 46, 46)
-                                .addComponent(rSButtonIconOne1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rSDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(290, 290, 290)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(278, 278, 278))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -661,13 +571,16 @@ public class cargaPrincipal extends javax.swing.JFrame {
                                 .addComponent(rSButtonGradientIcon_new1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(rSFormatFieldShade1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(rSCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(rSButtonRoundEffectIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(rSButtonRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(rSButtonSelectedIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(rSButtonShade1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(rSComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(102, 102, 102)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(rSCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(rSButtonRoundEffectIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(rSButtonRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(rSButtonSelectedIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(rSButtonShade1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rSButtonRippleShade1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -707,7 +620,9 @@ public class cargaPrincipal extends javax.swing.JFrame {
                                     .addComponent(rSButtonIconDos1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(rSButtonIconShadow1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rSButtonIconUno1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(rSButtonIconUno1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -726,7 +641,7 @@ public class cargaPrincipal extends javax.swing.JFrame {
                                     .addComponent(rSButtonRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(rSButtonRippleShade1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 144, Short.MAX_VALUE))
+                                .addGap(0, 140, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(215, 215, 215)
                                 .addComponent(rSCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -739,8 +654,12 @@ public class cargaPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(51, 51, 51)
+                                .addComponent(rSComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(rSLabelBorderRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(rSTextMaterial1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -797,6 +716,11 @@ public class cargaPrincipal extends javax.swing.JFrame {
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn7ActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -864,6 +788,7 @@ public class cargaPrincipal extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonIconUno btn5;
     private RSMaterialComponent.RSButtonIconUno btn6;
     private RSMaterialComponent.RSButtonIconUno btn7;
+    private RSMaterialComponent.RSButtonIconUno btnSalir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuItem jMenuItem1;
@@ -886,6 +811,7 @@ public class cargaPrincipal extends javax.swing.JFrame {
     private rojeru_san.rsbutton.RSButtonSelectedIcon rSButtonSelectedIcon1;
     private RSComponentShade.RSButtonShade rSButtonShade1;
     private rojerusan.RSCheckBox rSCheckBox1;
+    private RSMaterialComponent.RSComboBox rSComboBox1;
     private RSMaterialComponent.RSComboBoxMaterial rSComboBoxMaterial1;
     private rojeru_san.rsdate.RSDateChooser rSDateChooser1;
     private RSComponentShade.RSFormatFieldShade rSFormatFieldShade1;

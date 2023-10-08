@@ -84,7 +84,7 @@ public class controlPresupuesto {
             int codArt = art.getCodArticulo();
             String desc = art.getDescripcion();
             int cant = Integer.parseInt(dlgPresupuestos.txtCant.getText());
-            double pre = art.getPrecioVenta();
+            double pre = art.getPventa();
             double monto = Redondeo.redondearD(pre*cant);
             
             detalle_presupuesto dps = new detalle_presupuesto(codArt, cant, pre, monto);

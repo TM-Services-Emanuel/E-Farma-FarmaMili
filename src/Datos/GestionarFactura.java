@@ -17,6 +17,11 @@ public class GestionarFactura {
         String cod = generarCodigos.getCodigo("SELECT MAX(fac_codigo) from factura_l");
         return cod;
     }
+    
+    public static String getTransferencia() {
+        String cod = generarCodigos.getCodigo("SELECT MAX(idtransferencia) from transferencia");
+        return cod;
+    }
 
     public static String addFactura(Factura f) {
         String msg;

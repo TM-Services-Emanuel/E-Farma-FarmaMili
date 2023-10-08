@@ -109,19 +109,19 @@ public final class frmCargaInicial extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fast-farma.png"))); // NOI18N
         rSPanelGradiente1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 9, 271, 80));
 
-        lblCarga.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        lblCarga.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
         lblCarga.setForeground(new java.awt.Color(255, 255, 255));
         lblCarga.setText("Carga");
         lblCarga.setFocusable(false);
         lblCarga.setInheritsPopupMenu(false);
         lblCarga.setPreferredSize(new java.awt.Dimension(25, 14));
-        rSPanelGradiente1.add(lblCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 386, 380, 20));
+        rSPanelGradiente1.add(lblCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 385, 380, 20));
 
         barProgress.setForeground(new java.awt.Color(255, 255, 255));
         barProgress.setFocusable(false);
         barProgress.setTimeProgress(2500);
         barProgress.setWidthProgress(3);
-        rSPanelGradiente1.add(barProgress, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 375, 30, 30));
+        rSPanelGradiente1.add(barProgress, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 385, 20, 20));
 
         jProgressBar1.setBackground(new java.awt.Color(17, 35, 46));
         jProgressBar1.setForeground(new java.awt.Color(17, 35, 46));

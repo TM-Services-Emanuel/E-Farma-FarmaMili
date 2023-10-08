@@ -237,7 +237,7 @@ public class ControlLogeo {
     
     public static void Empresa(){
         try {
-            String sql = "select * from v_sucursal where suc_indicador='S'";
+            String sql = "select * from v_sucursal where suc_indicador='S' AND mi_suc='S'";
             try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql);) {
                 rs.last();
                 if (rs.getRow() != 0) {
@@ -247,6 +247,8 @@ public class ControlLogeo {
                     System.out.println("RAZON SOCIAL: " + Empresa.getRazonSocial());
                     Empresa.setRUC(rs.getString(5));
                     System.out.println("RUC: " + Empresa.getRUC());
+                    Empresa.setIdSucursal(rs.getInt(1));
+                    System.out.println("ID SUCURSAL: " + Empresa.getIdSucursal());
                     Empresa.setSucursal(rs.getString(2));
                     System.out.println("SUCURSAL: " + Empresa.getSucursal());
                     Empresa.setCelular(rs.getString(8)+" "+rs.getString(9));
