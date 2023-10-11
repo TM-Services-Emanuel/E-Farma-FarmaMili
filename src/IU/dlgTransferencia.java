@@ -6,7 +6,6 @@ import Componentes.Empresa;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
-import Componentes.Numero_a_Letra;
 import Componentes.RenderDecimal;
 import Componentes.ReporteF;
 import Componentes.Software;
@@ -136,7 +135,6 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         btnRestar.setVisible(false);
         lbCred.setVisible(false);
         txtCodArticulo.setVisible(false);
-        btnModCantidad.setVisible(false);
         txtFechaReal.setVisible(false);
     }
 
@@ -716,7 +714,6 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         txtFechaReal = new javax.swing.JTextField();
-        btnModCantidad = new javax.swing.JButton();
         btnRestar = new javax.swing.JButton();
         lbCred = new javax.swing.JLabel();
         btnAdd = new javax.swing.JButton();
@@ -754,8 +751,8 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         };
         txtCodArticulo = new javax.swing.JTextField();
 
-        itemCantidad.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        itemCantidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Modify.png"))); // NOI18N
+        itemCantidad.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        itemCantidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/baseline_edit_black_20.png"))); // NOI18N
         itemCantidad.setText("Modificar Cantidad");
         itemCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1008,19 +1005,6 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel6.add(txtFechaReal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 70, -1));
 
-        btnModCantidad.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 9)); // NOI18N
-        btnModCantidad.setForeground(new java.awt.Color(204, 0, 0));
-        btnModCantidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit15.png"))); // NOI18N
-        btnModCantidad.setText("EDIT. CANT");
-        btnModCantidad.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnModCantidad.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnModCantidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModCantidadActionPerformed(evt);
-            }
-        });
-        jPanel6.add(btnModCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, 38, 21));
-
         btnRestar.setText("R");
         btnRestar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1056,7 +1040,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
                 btnSalirKeyPressed(evt);
             }
         });
-        jPanel6.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(988, 2, 20, 20));
+        jPanel6.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(987, 2, 20, 20));
 
         jPanel20.setOpaque(false);
         jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1427,16 +1411,6 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalActionPerformed
 
-    private void btnModCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModCantidadActionPerformed
-        // TODO add your handling code here:
-        if (tbDetalle.getSelectedRowCount() != 0) {
-            try {
-                controlFactura.actCantidad();
-            } catch (Exception e) {
-            }
-        }
-    }//GEN-LAST:event_btnModCantidadActionPerformed
-
     private void jScrollPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jScrollPane1MousePressed
@@ -1457,7 +1431,13 @@ public final class dlgTransferencia extends javax.swing.JDialog {
 
     private void itemCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCantidadActionPerformed
         // TODO add your handling code here:
-        btnModCantidadActionPerformed(null);
+        if (dlgTransferencia.tbDetalle.getSelectedRowCount() != 0) {
+            try {
+                controlFactura.actCantidadTransferencia(tbDetalle);
+            } catch (Exception e) {
+                System.out.println("Error btnModCantidad: " + e.getMessage());
+            }
+        }
     }//GEN-LAST:event_itemCantidadActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -1526,7 +1506,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
                                 tbDetalle.getValueAt(j, 12).toString()//IVACOSTO -- 10
                             };
                             sql = "insert into detalle_transferencia values(" + txtCod.getText() + "," + filas[0] + "," + filas[1].replace(".", "").replace(",", "") + "," + filas[2].replace(".", "").replace(",", "") + "," + filas[3].replace(".", "").replace(",", "") + "," + filas[4].replace(".", "").replace(",", "") + "," + filas[5].replace(".", "").replace(",", "") + "," + filas[6].replace(".", "").replace(",", "") + "," + filas[9] + ")";
-                            String sql2 = "UPDATE articulo SET art_stock=art_stock+" + filas[1] +", art_costo="+filas[2]+ ", art_costoiva=" + filas[10] + ", art_ganancia=" + filas[7] + ", art_descuento=" + filas[8] + " WHERE  art_codigo=" + filas[0];
+                            String sql2 = "UPDATE articulo SET art_stock=art_stock+" + filas[1] + ", art_costo=" + filas[2] + ", art_costoiva=" + filas[10] + ", art_ganancia=" + filas[7] + ", art_descuento=" + filas[8] + " WHERE  art_codigo=" + filas[0];
                             String sql3 = "UPDATE articulo SET art_stock=art_stock-" + filas[1] + " WHERE  art_codigo=" + filas[0];
                             st.executeUpdate(sql);
                             if (txtTipo.getText().equals("E")) {
@@ -1875,7 +1855,6 @@ public final class dlgTransferencia extends javax.swing.JDialog {
     private rojeru_san.rsbutton.RSButtonGradiente btnBuscarArticulo;
     public static RSMaterialComponent.RSButtonIconUno btnCancelar;
     public static RSMaterialComponent.RSButtonIconUno btnGuardar;
-    private javax.swing.JButton btnModCantidad;
     public static RSMaterialComponent.RSButtonIconUno btnNuevo;
     private javax.swing.JButton btnRestar;
     private RSMaterialComponent.RSButtonIconUno btnSalir;
@@ -1921,7 +1900,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
     public static javax.swing.JTextField txtHora;
     private javax.swing.JTextField txtIdDestino;
     private javax.swing.JTextField txtIdOrigen;
-    private javax.swing.JTextField txtTipo;
+    public static javax.swing.JTextField txtTipo;
     public static javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 

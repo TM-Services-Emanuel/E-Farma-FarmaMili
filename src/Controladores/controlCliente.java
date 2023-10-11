@@ -137,7 +137,7 @@ public class controlCliente {
     
     public static void listClientes(JTable tabla, String cod)
     {
-        List lista = null;
+        List lista;
         lista = GestionarCliente.listClientes(cod);
         for(int i=1;i<lista.size();i++)
         {

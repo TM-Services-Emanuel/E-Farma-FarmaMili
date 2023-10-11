@@ -25,7 +25,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         informacionGral();
         ControlLogeo.Timbrado_Ticket();
         jasper = new ReporteF();
-        
         titulo();
         Iniciar();
         cargarIcono();
@@ -278,7 +277,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         setResizable(false);
 
         panelImage1.setBackground(new java.awt.Color(102, 102, 102));
-        panelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/pharmacist.jpg"))); // NOI18N
+        panelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/MEDICAMENTOS FARMACIA.jpg"))); // NOI18N
         panelImage1.setPreferredSize(new java.awt.Dimension(690, 418));
 
         jPanel1.setBackground(new java.awt.Color(210, 229, 235));
@@ -297,58 +296,63 @@ public final class frmPrincipal extends javax.swing.JFrame {
         encabezado_1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         encabezado_1.setText("INFORMACIÓN DE LA EMPRESA");
         encabezado_1.setOpaque(true);
-        CONTENEDOR_EMPRESA.add(encabezado_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(89, 26, 210, 20));
+        CONTENEDOR_EMPRESA.add(encabezado_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(89, 30, 210, 20));
 
         jSeparator13.setForeground(new java.awt.Color(204, 204, 204));
         CONTENEDOR_EMPRESA.add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 59, 340, 4));
 
-        iconoEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/Logo_FM - copia.png"))); // NOI18N
-        CONTENEDOR_EMPRESA.add(iconoEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 70, -1, 90));
+        iconoEmpresa.setBackground(new java.awt.Color(255, 255, 255));
+        iconoEmpresa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        iconoEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/logo-mili.PNG"))); // NOI18N
+        iconoEmpresa.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        iconoEmpresa.setOpaque(true);
+        CONTENEDOR_EMPRESA.add(iconoEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 60, 300, 210));
 
         jSeparator11.setForeground(new java.awt.Color(204, 204, 204));
-        CONTENEDOR_EMPRESA.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 173, 340, -1));
+        CONTENEDOR_EMPRESA.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 273, 340, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(17, 35, 46));
         jLabel3.setText("RAZÓN SOCIAL:");
-        CONTENEDOR_EMPRESA.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 204, 105, -1));
+        CONTENEDOR_EMPRESA.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 304, 105, -1));
 
         jLabel16.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(17, 35, 46));
         jLabel16.setText("R.U.C.:");
-        CONTENEDOR_EMPRESA.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 226, 105, -1));
+        CONTENEDOR_EMPRESA.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 326, 105, -1));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(17, 35, 46));
         jLabel6.setText("SUCURSAL:");
-        CONTENEDOR_EMPRESA.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 248, 105, -1));
+        CONTENEDOR_EMPRESA.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 348, 105, -1));
 
         lbSucursal.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lbSucursal.setForeground(new java.awt.Color(0, 153, 204));
         lbSucursal.setText("NOMBRE SUCURSAL");
-        CONTENEDOR_EMPRESA.add(lbSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 248, 237, -1));
+        CONTENEDOR_EMPRESA.add(lbSucursal, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 348, 237, -1));
 
         lbRUC.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lbRUC.setForeground(new java.awt.Color(0, 153, 204));
         lbRUC.setText("RUC FARMACIA");
-        CONTENEDOR_EMPRESA.add(lbRUC, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 226, 237, -1));
+        CONTENEDOR_EMPRESA.add(lbRUC, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 326, 237, -1));
 
         lbEmpresa.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lbEmpresa.setForeground(new java.awt.Color(0, 153, 204));
         lbEmpresa.setText("NOMBRE FARMACIA");
-        CONTENEDOR_EMPRESA.add(lbEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 204, 237, -1));
+        CONTENEDOR_EMPRESA.add(lbEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 304, 237, -1));
 
         jLabel24.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(17, 35, 46));
         jLabel24.setText("NOMBRE FANTASÍA:");
-        CONTENEDOR_EMPRESA.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 182, 105, -1));
+        CONTENEDOR_EMPRESA.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 282, 105, -1));
 
         lbNombreFantasia.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lbNombreFantasia.setForeground(new java.awt.Color(0, 153, 204));
         lbNombreFantasia.setText("NOMBRE FANTASÍA");
-        CONTENEDOR_EMPRESA.add(lbNombreFantasia, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 182, 237, -1));
+        CONTENEDOR_EMPRESA.add(lbNombreFantasia, new org.netbeans.lib.awtextra.AbsoluteConstraints(132, 282, 237, -1));
 
         CONTENEDOR_ACCESO.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR1.png"))); // NOI18N
+        CONTENEDOR_ACCESO.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         encabezado_2.setBackground(new java.awt.Color(255, 255, 255));
         encabezado_2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -356,34 +360,43 @@ public final class frmPrincipal extends javax.swing.JFrame {
         encabezado_2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         encabezado_2.setText("ACCESO AL SISTEMA");
         encabezado_2.setOpaque(true);
+        CONTENEDOR_ACCESO.add(encabezado_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(118, 25, 150, 20));
 
         jSeparator17.setForeground(new java.awt.Color(204, 204, 204));
+        CONTENEDOR_ACCESO.add(jSeparator17, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 58, 333, 7));
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 11)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(17, 35, 46));
         jLabel2.setText("NOMBRE:");
+        CONTENEDOR_ACCESO.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 72, 110, -1));
 
         jLabel4.setFont(new java.awt.Font("Roboto Black", 0, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(17, 35, 46));
         jLabel4.setText("USUARIO:");
+        CONTENEDOR_ACCESO.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 93, 110, -1));
 
         jLabel7.setFont(new java.awt.Font("Roboto Black", 0, 11)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(17, 35, 46));
         jLabel7.setText("PERFIL:");
+        CONTENEDOR_ACCESO.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 114, 110, -1));
 
         lbPerfil.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lbPerfil.setForeground(new java.awt.Color(0, 153, 204));
         lbPerfil.setText("PERFIL");
+        CONTENEDOR_ACCESO.add(lbPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 114, 230, -1));
 
         lbUsuario.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lbUsuario.setForeground(new java.awt.Color(0, 153, 204));
         lbUsuario.setText("USUARIO");
+        CONTENEDOR_ACCESO.add(lbUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 93, 230, -1));
 
         lblUsuario.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         lblUsuario.setForeground(new java.awt.Color(0, 153, 204));
         lblUsuario.setText("FUNCIONARIO");
+        CONTENEDOR_ACCESO.add(lblUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(138, 72, 230, -1));
 
         jSeparator27.setForeground(new java.awt.Color(204, 204, 204));
+        CONTENEDOR_ACCESO.add(jSeparator27, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 141, 333, 7));
 
         btnSalir.setBackground(new java.awt.Color(255, 0, 0));
         btnSalir.setToolTipText("Cerrar el Sistema");
@@ -396,6 +409,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
+        CONTENEDOR_ACCESO.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 148, -1, -1));
 
         btnCerrarSesion.setBackground(new java.awt.Color(17, 35, 46));
         btnCerrarSesion.setToolTipText("Cerrar Sesión");
@@ -408,67 +422,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 btnCerrarSesionActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout CONTENEDOR_ACCESOLayout = new javax.swing.GroupLayout(CONTENEDOR_ACCESO);
-        CONTENEDOR_ACCESO.setLayout(CONTENEDOR_ACCESOLayout);
-        CONTENEDOR_ACCESOLayout.setHorizontalGroup(
-            CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CONTENEDOR_ACCESOLayout.createSequentialGroup()
-                .addGroup(CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CONTENEDOR_ACCESOLayout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addComponent(encabezado_2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(CONTENEDOR_ACCESOLayout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(CONTENEDOR_ACCESOLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(lblUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(CONTENEDOR_ACCESOLayout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(lbUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(CONTENEDOR_ACCESOLayout.createSequentialGroup()
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(lbPerfil, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(CONTENEDOR_ACCESOLayout.createSequentialGroup()
-                                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(6, 6, 6)
-                                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jSeparator27, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-        CONTENEDOR_ACCESOLayout.setVerticalGroup(
-            CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CONTENEDOR_ACCESOLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(encabezado_2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator17, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(lblUsuario))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(lbUsuario))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(lbPerfil))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator27, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addGroup(CONTENEDOR_ACCESOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
+        CONTENEDOR_ACCESO.add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 148, -1, -1));
 
         javax.swing.GroupLayout CONTENEDORLayout = new javax.swing.GroupLayout(CONTENEDOR);
         CONTENEDOR.setLayout(CONTENEDORLayout);
@@ -476,17 +430,17 @@ public final class frmPrincipal extends javax.swing.JFrame {
             CONTENEDORLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CONTENEDORLayout.createSequentialGroup()
                 .addGroup(CONTENEDORLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(CONTENEDOR_EMPRESA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CONTENEDOR_EMPRESA, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
                     .addComponent(CONTENEDOR_ACCESO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 5, Short.MAX_VALUE))
         );
         CONTENEDORLayout.setVerticalGroup(
             CONTENEDORLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CONTENEDORLayout.createSequentialGroup()
-                .addComponent(CONTENEDOR_EMPRESA, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CONTENEDOR_EMPRESA, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CONTENEDOR_ACCESO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(312, Short.MAX_VALUE))
+                .addComponent(CONTENEDOR_ACCESO, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setOpaque(false);
@@ -748,7 +702,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                     .addGroup(panelImage1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(1323, Short.MAX_VALUE))))
+                        .addContainerGap(1332, Short.MAX_VALUE))))
         );
         panelImage1Layout.setVerticalGroup(
             panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -760,7 +714,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -822,6 +776,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         itemFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/setting15.png"))); // NOI18N
         itemFondo.setText("CAMBIAR FONDO DE PANTALLA DEL SISTEMA");
         itemFondo.setBorder(null);
+        itemFondo.setEnabled(false);
         itemFondo.setOpaque(true);
         itemFondo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2633,6 +2588,13 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void itemGestionarTR1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGestionarTR1ActionPerformed
         // TODO add your handling code here:
+        try {
+            dlgConsultarTransferencias rsc = new dlgConsultarTransferencias(this, false);
+            rsc.setLocationRelativeTo(null);
+            rsc.setVisible(true);
+        } catch (SQLException e) {
+            Mensajes.informacion("No hay conexión con el servidor");
+        }
     }//GEN-LAST:event_itemGestionarTR1ActionPerformed
     void abrirTransferencias() {
         try {
@@ -2647,7 +2609,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
     void abrirProveedor() {
         try {
             dlgProveedores proveedor = new dlgProveedores(this, true);
-            proveedor.setSize(1200, 540);
             proveedor.setLocationRelativeTo(null);
             proveedor.setVisible(true);
         } catch (Exception e) {

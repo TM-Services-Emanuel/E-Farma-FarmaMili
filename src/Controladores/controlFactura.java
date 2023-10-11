@@ -1,11 +1,23 @@
 package Controladores;
 
 import Componentes.DataSourceService;
+import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
 import Componentes.Redondeo;
 import Datos.*;
-import IU.*;
+import IU.dlgBuscadorArticuloTransferencia;
+import IU.dlgBuscadorArticuloVenta;
+import IU.dlgBuscarCliente;
+import IU.dlgBuscarCliente1;
+import IU.dlgBuscarCliente2;
+import IU.dlgConsultarCreditos;
+import IU.dlgConsultarCreditosFacturas;
+import IU.dlgConsultarFacturas;
+import IU.dlgConsultarFacturasLegal;
+import IU.dlgConsultarTransferencias;
+import IU.dlgTransferencia;
+import IU.dlgVentas;
 import Modelo.*;
 import java.sql.*;
 import java.text.DecimalFormat;
@@ -73,13 +85,15 @@ public class controlFactura {
             dlgVentas.rCredito.setEnabled(true);
             dlgVentas.txthabilitado.setText("SI");
             int lineaCredito = cl.getLimCuenta();
-            sumarCuentas(cod, lineaCredito);
+            int deudaTicket = sumarCuentasTicket(cod);
+            int deudaFactura = sumarCuentasFactura(cod);
+            DecimalFormat df = new DecimalFormat("#,###");
+            dlgVentas.txtdisponible.setText(df.format(lineaCredito - (deudaTicket + deudaFactura)));
         } else {
             dlgVentas.rContado.setSelected(true);
             dlgVentas.rCredito.setEnabled(false);
             dlgVentas.txthabilitado.setText("NO");
             dlgVentas.txtdisponible.setText("0");
-            dlgVentas.txtdisponibleL.setText("0");
         }
 
     }
@@ -110,38 +124,48 @@ public class controlFactura {
             dlgVentas.rCredito.setEnabled(true);
             dlgVentas.txthabilitado.setText("SI");
             int lineaCredito = cl.getLimCuenta();
-            sumarCuentas(cod, lineaCredito);
+            int deudaTicket = sumarCuentasTicket(cod);
+            int deudaFactura = sumarCuentasFactura(cod);
+            DecimalFormat df = new DecimalFormat("#,###");
+            dlgVentas.txtdisponible.setText(df.format(lineaCredito - (deudaTicket + deudaFactura)));
         } else {
             dlgVentas.rCredito.setEnabled(false);
             dlgVentas.txthabilitado.setText("NO");
             dlgVentas.txtdisponible.setText("0");
-            dlgVentas.txtdisponibleL.setText("0");
         }
 
     }
 
-    public static void sumarCuentas(String cod, int limite) {
-        String sql = "SELECT SUM(fac_totalfinal) FROM factura WHERE clientes_cli_codigo=" + cod + " AND estado='PENDIENTE' AND fac_indicador='S'";
+    public static int sumarCuentasTicket(String cod) {
+        int deuda = 0;
+        String sql = "SELECT IFNULL ((SELECT SUM(fac_totalfinal) FROM factura WHERE clientes_cli_codigo=" + cod + " AND estado='PENDIENTE' AND fac_indicador='S'),0) AS cuenta";
         try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
             rs.first();
-            int deuda;
-            if (rs.getString(1) == null) {
-                deuda = 0;
-                DecimalFormat df = new DecimalFormat("#,###");
-                dlgVentas.txtdisponibleL.setText(String.valueOf(limite - deuda));
-                dlgVentas.txtdisponible.setText(df.format(Integer.valueOf(String.valueOf(limite - deuda).trim().replace(".", "").replace(",", ""))));
-            } else {
-                deuda = Integer.parseInt(rs.getString(1));
-                DecimalFormat df = new DecimalFormat("#,###");
-                dlgVentas.txtdisponibleL.setText(String.valueOf(limite - deuda));
-                dlgVentas.txtdisponible.setText(df.format(Integer.valueOf(String.valueOf(limite - deuda).trim().replace(".", "").replace(",", ""))));
-            }
+            deuda = rs.getInt(1);
             rs.close();
             st.close();
             cn.close();
         } catch (SQLException e) {
             Mensajes.error("Error calculando disponibilidad de crédito del clinte: " + e.getMessage());
         }
+
+        return deuda;
+    }
+
+    public static int sumarCuentasFactura(String cod) {
+        int deuda = 0;
+        String sql = "SELECT IFNULL ((SELECT SUM(fac_totalfinal) FROM factura_l WHERE clientes_cli_codigo=" + cod + " AND estado='PENDIENTE' AND fac_indicador='S'),0) AS cuenta";
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+            rs.first();
+            deuda = rs.getInt(1);
+            rs.close();
+            st.close();
+            cn.close();
+        } catch (SQLException e) {
+            Mensajes.error("Error calculando disponibilidad de crédito del clinte: " + e.getMessage());
+        }
+
+        return deuda;
     }
 
     public static int getExcetas() {
@@ -332,7 +356,7 @@ public class controlFactura {
             int descuento;
             int neto;
             double porcDesc = art.getDescuento();
-            if (art.getPpublico()== 0) {
+            if (art.getPpublico() == 0) {
                 descuento = 0;
             } else {
                 if (VM.equals("S")) {
@@ -365,17 +389,11 @@ public class controlFactura {
                 String descuent = String.valueOf(getDescuento());
                 String net = String.valueOf(getNeto());
                 DecimalFormat df = new DecimalFormat("#,###");
-                dlgVentas.txtExentaL.setText(exentas);
                 dlgVentas.txtExenta.setText(df.format(Integer.valueOf(exentas.trim().replace(".", "").replace(",", ""))));
-                dlgVentas.txt5L.setText(iva5);
                 dlgVentas.txt5.setText(df.format(Integer.valueOf(iva5.replace(".", "").replace(",", ""))));
-                dlgVentas.txt10L.setText(iva10);
                 dlgVentas.txt10.setText(df.format(Integer.valueOf(iva10.replace(".", "").replace(",", ""))));
-                dlgVentas.txtTotalL.setText(total);
                 dlgVentas.txtTotal.setText(df.format(Integer.valueOf(total.replace(".", "").replace(",", ""))));
-                dlgVentas.txtDescuentoL.setText(descuent);
                 dlgVentas.txtDescuento.setText(df.format(Integer.valueOf(descuent.trim().replace(".", "").replace(",", ""))));
-                dlgVentas.txtNetoL.setText(net);
                 dlgVentas.txtNeto.setText(df.format(Integer.valueOf(net.replace(".", "").replace(",", ""))));
             }
         } catch (NumberFormatException e) {
@@ -426,6 +444,7 @@ public class controlFactura {
             int cant = Integer.parseInt(dlgTransferencia.txtCant.getText());
             int costo = Integer.parseInt(dlgTransferencia.txtCosto.getText().replace(".", "").replace(",", ""));
             long mont = (long) (cant * costo);
+
             int iv = art.getIva();
             double costoiva = 0;
             switch (iv) {
@@ -487,7 +506,6 @@ public class controlFactura {
                 tb.removeRow(fila);
                 String total = String.valueOf((getTotal()));
                 DecimalFormat df = new DecimalFormat("#,###");
-                dlgVentas.txtTotalL.setText(String.valueOf(total));
                 dlgVentas.txtTotal.setText(df.format(Integer.valueOf(total.trim().replace(".", "").replace(",", ""))));
             }
         }
@@ -529,14 +547,14 @@ public class controlFactura {
     }
 
     public static int calCulos() {
-        int total = Integer.parseInt(dlgVentas.txtTotalL.getText());
+        int total = Integer.parseInt(dlgVentas.txtTotal.getText().replace(".", "").replace(",", ""));
         int abono = Integer.parseInt(dlgVentas.txtAbonoL.getText());
         int vuelto = abono - total;
         return (vuelto);
     }
 
     public static int calCulosT() {
-        int total = Integer.parseInt(dlgVentas.txtTotalL.getText());
+        int total = Integer.parseInt(dlgVentas.txtTotal.getText().replace(".", "").replace(",", ""));
         int abono = Integer.parseInt(dlgVentas.txtAbonoTL.getText());
         int vuelto = abono - total;
         return (vuelto);
@@ -571,7 +589,7 @@ public class controlFactura {
 
             int descuento;
             int neto;
-            if (arti.getPpublico()== 0) {
+            if (arti.getPpublico() == 0) {
                 descuento = 0;
             } else {
                 if (VM.equals("S")) {
@@ -612,18 +630,54 @@ public class controlFactura {
             String descuent = String.valueOf(getDescuento());
             String net = String.valueOf(getNeto());
             DecimalFormat df = new DecimalFormat("#,###");
-            dlgVentas.txtExentaL.setText(exentas);
             dlgVentas.txtExenta.setText(df.format(Integer.valueOf(exentas.trim().replace(".", "").replace(",", ""))));
-            dlgVentas.txt5L.setText(iva5);
             dlgVentas.txt5.setText(df.format(Integer.valueOf(iva5.replace(".", "").replace(",", ""))));
-            dlgVentas.txt10L.setText(iva10);
             dlgVentas.txt10.setText(df.format(Integer.valueOf(iva10.replace(".", "").replace(",", ""))));
-            dlgVentas.txtTotalL.setText(total);
             dlgVentas.txtTotal.setText(df.format(Integer.valueOf(total.replace(".", "").replace(",", ""))));
-            dlgVentas.txtDescuentoL.setText(descuent);
             dlgVentas.txtDescuento.setText(df.format(Integer.valueOf(descuent.trim().replace(".", "").replace(",", ""))));
-            dlgVentas.txtNetoL.setText(net);
             dlgVentas.txtNeto.setText(df.format(Integer.valueOf(net.replace(".", "").replace(",", ""))));
+        } catch (NumberFormatException e) {
+            Mensajes.informacion("Seleccione una fila de la tabla");
+        }
+    }
+
+    public static void actCantidadTransferencia(JTable table) {
+        try {
+            int fila = table.getSelectedRow();
+            String cod = table.getValueAt(fila, 0).toString();
+            Articulo arti = GestionarArticulos.busArticulo(cod);
+            int ca = Integer.parseInt(table.getValueAt(fila, 3).toString().replace(".", "").replace(",", ""));
+            int costo = Integer.parseInt(table.getValueAt(fila, 4).toString().replace(".", "").replace(",", ""));
+            String cant = String.valueOf(Mensajes.ingresarNumerosT(ca, dlgTransferencia.txtTipo.getText()));
+            long mont = (long) (Integer.parseInt(cant) * costo);
+            System.out.println("Mont: " + mont);
+            table.setValueAt(cant, fila, 3);
+
+            int iva = arti.getIva();
+            System.out.println("IVa: " + iva);
+            switch (iva) {
+                case 10 -> {
+                    table.setValueAt(String.valueOf(mont), fila, 7);
+                }
+                case 5 -> {
+                    table.setValueAt(String.valueOf(mont), fila, 6);
+                }
+                case 0 -> {
+                    table.setValueAt(String.valueOf(mont), fila, 5);
+                }
+                default -> {
+                }
+            }
+            table.setValueAt(String.valueOf(mont), fila, 8);
+            String total = String.valueOf(getTotalTransferencia());
+            String exentas = String.valueOf(getExcetasTransferencia());
+            String iva5 = String.valueOf(get5Transferencia());
+            String iva10 = String.valueOf(get10Transferencia());
+            DecimalFormat df = new DecimalFormat("#,###");
+            dlgTransferencia.txtExenta.setText(df.format(Integer.valueOf(exentas.trim().replace(".", "").replace(",", ""))));
+            dlgTransferencia.txt5.setText(df.format(Integer.valueOf(iva5.replace(".", "").replace(",", ""))));
+            dlgTransferencia.txt10.setText(df.format(Integer.valueOf(iva10.replace(".", "").replace(",", ""))));
+            dlgTransferencia.txtTotal.setText(df.format(Integer.valueOf(total.replace(".", "").replace(",", ""))));
         } catch (NumberFormatException e) {
             Mensajes.informacion("Seleccione una fila de la tabla");
         }
@@ -663,6 +717,60 @@ public class controlFactura {
         if (msg == null) {
             Mensajes.informacion("Venta Anulada");
             controlFactura.actStockEliminarFacturaL();
+        } else {
+            Mensajes.error(msg);
+        }
+        return msg;
+    }
+
+    public static String anularTransferencia() {
+        String msg;
+        int x = dlgConsultarTransferencias.tbTransferencias.getSelectedRow();
+        String cod = dlgConsultarTransferencias.tbTransferencias.getValueAt(x, 0).toString();
+        String tipo = dlgConsultarTransferencias.tbTransferencias.getValueAt(x, 4).toString();
+        String usuario = Login.getUsuarioLogueado();
+        msg = GestionarFactura.actTransferencia(cod, usuario);
+        if (msg == null) {
+            Mensajes.Sistema("Transferencia anulada satisfactoriamente.");
+            if (tipo.equals("TIPO ENTRADA")) {
+                controlFactura.actStockEliminarTransferenciaE();
+            } else if (tipo.equals("TIPO SALIDA")) {
+                controlFactura.actStockEliminarTransferenciaS();
+            }
+        } else {
+            Mensajes.error(msg);
+        }
+        return msg;
+    }
+
+    public static String actStockEliminarTransferenciaE() {
+        String msg = null;
+        int f = dlgConsultarTransferencias.tbDetalleTransferencias.getRowCount();
+        for (int i = 0; i < f; i++) {
+            int coda = Integer.parseInt(dlgConsultarTransferencias.tbDetalleTransferencias.getValueAt(i, 1).toString());
+            int stk = Integer.parseInt(dlgConsultarTransferencias.tbDetalleTransferencias.getValueAt(i, 0).toString());
+            Articulo a = new Articulo(coda, stk);
+            msg = GestionarArticulos.actStockMENOS(a);
+        }
+        if (msg == null) {
+            Mensajes.informacion("Stock Actualizado");
+        } else {
+            Mensajes.error(msg);
+        }
+        return msg;
+    }
+
+    public static String actStockEliminarTransferenciaS() {
+        String msg = null;
+        int f = dlgConsultarTransferencias.tbDetalleTransferencias.getRowCount();
+        for (int i = 0; i < f; i++) {
+            int coda = Integer.parseInt(dlgConsultarTransferencias.tbDetalleTransferencias.getValueAt(i, 1).toString());
+            int stk = Integer.parseInt(dlgConsultarTransferencias.tbDetalleTransferencias.getValueAt(i, 0).toString());
+            Articulo a = new Articulo(coda, stk);
+            msg = GestionarArticulos.actStockMAS(a);
+        }
+        if (msg == null) {
+            Mensajes.informacion("Stock Actualizado");
         } else {
             Mensajes.error(msg);
         }
@@ -750,6 +858,26 @@ public class controlFactura {
                 fila[11] = "ANULADO";
             }
             tb.addRow(fila);
+        }
+    }
+
+    public static void listTransferencias(JTable tabla, String fecha) {
+        List lista;
+        lista = GestionarFactura.listTransferencias(fecha);
+        for (int i = 1; i < lista.size(); i++) {
+            DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
+            String filas[] = new String[9];
+            Object[] fila = (Object[]) lista.get(i);
+            filas[0] = fila[0].toString();
+            filas[1] = fila[0].toString() + "-" + fila[1].toString();
+            filas[2] = fila[2].toString();
+            filas[3] = Fecha.formatoFechaMuestra(fila[3].toString()) + " " + Fecha.formatoHora_sin_seg(fila[4].toString());
+            filas[4] = fila[5].toString();
+            filas[5] = fila[6].toString();
+            filas[6] = fila[7].toString();
+            filas[7] = fila[8].toString();
+            filas[8] = fila[9].toString();
+            tb.addRow(filas);
         }
     }
 
@@ -972,6 +1100,18 @@ public class controlFactura {
         dlgConsultarFacturasLegal.txtEstado.setText(dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 11).toString());
         List lista;
         lista = GestionarFactura.listDetallesL(cod);
+        for (int i = 1; i < lista.size(); i++) {
+            DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
+            Object[] fila = (Object[]) lista.get(i);
+            tb.addRow(fila);
+        }
+    }
+
+    public static void listDetalleTransferencias(JTable tabla) {
+        int x = dlgConsultarTransferencias.tbTransferencias.getSelectedRow();
+        String cod = dlgConsultarTransferencias.tbTransferencias.getValueAt(x, 0).toString();
+        List lista;
+        lista = GestionarFactura.listDetallesTransferencias(cod);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
             Object[] fila = (Object[]) lista.get(i);

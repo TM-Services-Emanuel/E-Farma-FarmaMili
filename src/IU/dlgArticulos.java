@@ -478,7 +478,6 @@ public class dlgArticulos extends javax.swing.JDialog {
             a.modcbLaboratorio();
             a.modcbProveedor();
             a.modcbFamilia();
-            dlgGestArticulos.CalculoIVAC();
             a.setVisible(true);
         } catch (Exception e) {
             //Mensajes.error("Seleccione una fila de la tabla");     

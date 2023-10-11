@@ -69,7 +69,22 @@ public class controlArticulo {
             dlgGestArticulos.txtGanancia.setText(String.valueOf(ar.getGanancia()));
             dlgGestArticulos.txtDesc.setText(String.valueOf(ar.getDescuento()));
             dlgGestArticulos.txtPrecioVenta.setText(df.format(ar.getPventa()));
-            dlgGestArticulos.txtIVA.setText(String.valueOf(ar.getIva()));
+            switch (ar.getIva()) {
+                case 0 -> {
+                    dlgGestArticulos.cbImpuesto.setSelectedIndex(1);
+                    dlgGestArticulos.CalculoIVAC(0);
+                }
+                case 5 -> {
+                    dlgGestArticulos.cbImpuesto.setSelectedIndex(2);
+                    dlgGestArticulos.CalculoIVAC(5);
+                }
+                case 10 -> {
+                    dlgGestArticulos.cbImpuesto.setSelectedIndex(3);
+                    dlgGestArticulos.CalculoIVAC(10);
+                }
+                default -> {
+                }
+            }
             dlgGestArticulos.txtIVACosto.setText(String.valueOf(ar.getCostoiva()));
             dlgGestArticulos.txtStock.setText(String.valueOf(ar.getStock()));
             dlgGestArticulos.txtStockMin.setText(String.valueOf(ar.getStockMin()));
@@ -122,13 +137,13 @@ public class controlArticulo {
         String nomb = dlgGestArticulos.txtDescripcion.getText().toUpperCase();
         String princ;
         if (dlgGestArticulos.txtPrincipio.getText().trim().toUpperCase().isEmpty()) {
-            princ = " ";
+            princ = "";
         } else {
             princ = dlgGestArticulos.txtPrincipio.getText().toUpperCase();
         }
         String accion;
         if (dlgGestArticulos.txtAccion.getText().trim().toUpperCase().isEmpty()) {
-            accion = " ";
+            accion = "";
         } else {
             accion = dlgGestArticulos.txtAccion.getText().toUpperCase();
         }
@@ -179,7 +194,17 @@ public class controlArticulo {
         double Gan = Double.parseDouble(dlgGestArticulos.txtGanancia.getText());
         double des = Double.parseDouble(dlgGestArticulos.txtDesc.getText());
         int Pventa = Integer.parseInt(dlgGestArticulos.txtPrecioVenta.getText().replace(".", "").replace(",", ""));
-        int ivaG = Integer.parseInt(dlgGestArticulos.txtIVA.getText());
+        int ivaG = 0;
+        switch (dlgGestArticulos.cbImpuesto.getSelectedIndex()) {
+            case 1 ->
+                ivaG = 0;
+            case 2 ->
+                ivaG = 5;
+            case 3 ->
+                ivaG = 10;
+            default -> {
+            }
+        }
         double ivaC = Double.parseDouble(dlgGestArticulos.txtIVACosto.getText());
         String fechas = "0000-00-00";
         int stock = Integer.parseInt(dlgGestArticulos.txtStock.getText().trim());

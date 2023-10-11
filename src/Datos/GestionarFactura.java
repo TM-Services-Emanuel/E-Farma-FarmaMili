@@ -52,7 +52,7 @@ public class GestionarFactura {
     public static String actFactura(String cod, String usuario) {
         String msg;
         StringBuilder sql = new StringBuilder("UPDATE factura SET fac_indicador='N', usu='"+usuario+"' WHERE fac_codigo=");
-        sql.append(cod).append("");
+        sql.append(cod);
         msg = Operacion.exeOperacion(sql.toString());
 //        msg = Operacion.exeOperacion("UPDATE factura SET fac_indicador='N' WHERE fac_codigo=" + cod + "");
         return msg;
@@ -61,9 +61,17 @@ public class GestionarFactura {
     public static String actFacturaL(String cod, String usuario) {
         String msg;
         StringBuilder sql = new StringBuilder("UPDATE factura_l SET fac_indicador='N', usu='"+usuario+"' WHERE fac_codigo=");
-        sql.append(cod).append("");
+        sql.append(cod);
         msg = Operacion.exeOperacion(sql.toString());
 //        msg = Operacion.exeOperacion("UPDATE factura SET fac_indicador='N' WHERE fac_codigo=" + cod + "");
+        return msg;
+    }
+    
+    public static String actTransferencia(String cod, String usuario) {
+        String msg;
+        StringBuilder sql = new StringBuilder("UPDATE transferencia SET indicador='N', usu='"+usuario+"' WHERE idtransferencia=");
+        sql.append(cod);
+        msg = Operacion.exeOperacion(sql.toString());
         return msg;
     }
     
@@ -166,6 +174,13 @@ public class GestionarFactura {
         sql.append(" WHERE factura_l.fac_fecha>='").append(fecha);
         sql.append(" ' AND factura_l.fac_fecha<='").append(fecha);
         sql.append(" ' ORDER BY factura_l.fac_codigo ASC");
+        return Operacion.getTabla(sql.toString());
+    }
+    
+    public static List listTransferencias(String fecha) {
+        StringBuilder sql = new StringBuilder("SELECT cod, id_sucursal,caj, fecha, hora, tipo, origen, destino, total, indi FROM v_transferencia_individual");
+        sql.append(" WHERE fecha>='").append(fecha);
+        sql.append(" ' AND fecha<='").append(fecha).append(" '");
         return Operacion.getTabla(sql.toString());
     }
     
@@ -427,6 +442,12 @@ public class GestionarFactura {
         sql.append(" JOIN articulo ON detalle_factura_l.articulo_art_codigo = articulo.art_codigo");
         sql.append(" JOIN factura_l ON detalle_factura_l.factura_l_fac_codigo = factura_l.fac_codigo");
         sql.append(" WHERE factura_l.fac_codigo =").append(cod);
+        return Operacion.getTabla(sql.toString());
+    }
+    
+    public static List listDetallesTransferencias(String cod) {
+        StringBuilder sql = new StringBuilder("SELECT cant, codart, codbarra, ncomercial, prec, subtotal FROM v_transferencias");
+        sql.append(" WHERE cod=").append(cod);
         return Operacion.getTabla(sql.toString());
     }
 

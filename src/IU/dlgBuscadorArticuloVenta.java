@@ -1,11 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 package IU;
 
-import Componentes.RenderDecimal;
-import Componentes.RenderDecimal2;
+import Componentes.RenderDecimalPublico;
+import Componentes.RenderDecimalVenta;
 import Componentes.Software;
 import Controladores.CabecerasTablas;
 import Controladores.controlArticulo;
@@ -50,8 +46,8 @@ public class dlgBuscadorArticuloVenta extends javax.swing.JDialog {
     }
     
     public static void Renders() {
-        dlgBuscadorArticuloVenta.tbDetalle.getColumnModel().getColumn(15).setCellRenderer(new RenderDecimal());
-        dlgBuscadorArticuloVenta.tbDetalle.getColumnModel().getColumn(13).setCellRenderer(new RenderDecimal2());
+        dlgBuscadorArticuloVenta.tbDetalle.getColumnModel().getColumn(15).setCellRenderer(new RenderDecimalVenta());
+        dlgBuscadorArticuloVenta.tbDetalle.getColumnModel().getColumn(13).setCellRenderer(new RenderDecimalPublico());
     }
     /**
      * This method is called from within the constructor to initialize the form.

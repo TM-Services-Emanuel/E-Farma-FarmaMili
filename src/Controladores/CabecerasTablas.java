@@ -33,7 +33,9 @@ public class CabecerasTablas {
     //String factura[] = {"Cant.", "Cod.", "Descripción", "Precio", "Total", "sActual"};
     String presupuestos[] = {"Cant.", "Cod.", "Descripción", "Precio", "Total"};
     String conFactura[] = {"OPERACIÓN", "RAZÓN SOCIAL", "FECHA", "HORA", "COD CLI", "MOV.CAJA", "FACTURA N°", "CONDICION", "PAGO", "TOTAL", "CODVENDE", "ESTADO"};
-    String detalleFactura[] = {"CANT", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "PRECIO", "TOTAL"};
+    String conTransferencia[] = {"ID","OPERACIÓN", "MOV.CAJA", "FECHA HORA", "TIPO", "ORIGEN", "DESTINO", "TOTAL", "ESTADO"};
+    String detalleFactura[] = {"CANT", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "PRECIO", "SUB-TOTAL"};
+    String detalleTransferencia[] = {"CANT", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "PRECIO", "SUB-TOTAL"};
     String consPresupuesto[] = {"N°", "Fecha", "Razon Social", "Cód. Clie", "Desc", "Total"};
     String detallePresupuestoF[] = {"Cant.", "Código", "Descripción", "Precio", "Total"};
     String busEmpleado[] = {"Cód", "Empleado", "Observación"};
@@ -415,6 +417,32 @@ public class CabecerasTablas {
         colum.setMinWidth(0);
         colum.setPreferredWidth(0);
     }
+    
+    public void consTransferencias(JTable tabla) {
+        modelo = new DefaultTableModel(datos, conTransferencia);
+        tabla.setModel(modelo);
+        colum = tabla.getColumnModel().getColumn(0);
+        colum.setPreferredWidth(80);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(1);
+        colum.setPreferredWidth(70);
+        colum = tabla.getColumnModel().getColumn(2);
+        colum.setPreferredWidth(70);
+        colum = tabla.getColumnModel().getColumn(3);
+        colum.setPreferredWidth(90);
+        colum = tabla.getColumnModel().getColumn(4);
+        colum.setPreferredWidth(100);
+        colum = tabla.getColumnModel().getColumn(5);
+        colum.setPreferredWidth(150);
+        colum = tabla.getColumnModel().getColumn(6);
+        colum.setPreferredWidth(150);
+        colum = tabla.getColumnModel().getColumn(7);
+        colum.setPreferredWidth(70);
+        colum = tabla.getColumnModel().getColumn(8);
+        colum.setPreferredWidth(170);
+    }
 
     public void consFacturasCreditos(JTable tabla) {
         modelo = new DefaultTableModel(datos, conFactura);
@@ -498,6 +526,26 @@ public class CabecerasTablas {
         colum = tabla.getColumnModel().getColumn(5);
         colum.setPreferredWidth(70);
     }
+    
+    public void detalleTransferencia(JTable tabla) {
+        modelo = new DefaultTableModel(datos, detalleTransferencia);
+        tabla.setModel(modelo);
+        colum = tabla.getColumnModel().getColumn(0);
+        colum.setPreferredWidth(70);
+        colum = tabla.getColumnModel().getColumn(1);
+        colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(2);
+        colum.setPreferredWidth(120);
+        colum = tabla.getColumnModel().getColumn(3);
+        colum.setPreferredWidth(480);
+        colum = tabla.getColumnModel().getColumn(4);
+        colum.setPreferredWidth(70);
+        colum = tabla.getColumnModel().getColumn(5);
+        colum.setPreferredWidth(70);
+    }
 
     public void detalleFacturaA(JTable tabla) {
         modelo = new DefaultTableModel(datos, detalleFactura);
@@ -553,6 +601,9 @@ public class CabecerasTablas {
         tabla.setModel(modelo);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(1);
         colum.setPreferredWidth(200);
         colum = tabla.getColumnModel().getColumn(2);
@@ -585,6 +636,16 @@ public class CabecerasTablas {
         colum = tabla.getColumnModel().getColumn(8);
         colum.setPreferredWidth(90);
         colum = tabla.getColumnModel().getColumn(9);
+        colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(10);
+        colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(11);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
         colum.setMinWidth(0);
@@ -731,10 +792,19 @@ public class CabecerasTablas {
         colum.setPreferredWidth(60);
         colum = tabla.getColumnModel().getColumn(10);
         colum.setPreferredWidth(60);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(11);
         colum.setPreferredWidth(60);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(12);
         colum.setPreferredWidth(60);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
     }
 
     public void compras(JTable tabla) {

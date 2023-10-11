@@ -19,6 +19,19 @@ public class Fecha {
         }
         return fechas;
     }
+    
+    public static String formatoHora_sin_seg(String hora){
+        String hora_s_s = null;
+        try {
+            SimpleDateFormat fe = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat myFecha = new SimpleDateFormat("HH:mm");
+
+            hora_s_s = myFecha.format(fe.parse(hora));
+        } catch (ParseException e) {
+            System.out.println("No se pudo convertir");
+        }
+        return hora_s_s;
+    }
 
     public static String formatoFecha(String fecha) {
         String fechas = null;

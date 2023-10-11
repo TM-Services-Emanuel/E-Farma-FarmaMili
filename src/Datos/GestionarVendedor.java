@@ -169,13 +169,42 @@ public class GestionarVendedor {
         if (filaObt != null) {
             v = new Vendedor();
             v.setNombreV(filaObt[2].toString());
-
+            dlgVentas.btnConfirmarFactura.setEnabled(true);
+            dlgVentas.txtAbonoF.setEditable(true);
+            dlgVentas.txtAbonoF.requestFocus();
+            dlgVentas.txtAbonoF.selectAll();
         } else {
             System.out.println("No encontrado");
             Mensajes.error("CODIGO EQUIVOCADO O NO POSEE PERFIL PARA VENTA");
             dlgVentas.btnConfirmarFactura.setEnabled(false);
+            dlgVentas.txtAbonoF.setEditable(false);
             dlgVentas.txtCodVendedorF.requestFocus();
             dlgVentas.txtCodVendedorF.selectAll();
+        }
+        return v;
+    }
+
+    public static Vendedor busVendedorTicket(String cod) {
+        Vendedor v = null;
+        StringBuilder sql = new StringBuilder("SELECT * FROM v_usuario WHERE CodVend =");
+        sql.append(cod);
+        sql.append(" And CodPerfil=2");
+        Object[] filaObt = Operacion.getFila(sql.toString());
+        if (filaObt != null) {
+            v = new Vendedor();
+            v.setNombreV(filaObt[2].toString());
+            dlgVentas.btnConfirmarTicket.setEnabled(true);
+            dlgVentas.txtAbonoT.setEditable(true);
+            dlgVentas.txtAbonoT.requestFocus();
+            dlgVentas.txtAbonoT.selectAll();
+
+        } else {
+            System.out.println("No encontrado");
+            Mensajes.error("CODIGO EQUIVOCADO O NO POSEE PERFIL PARA VENTA");
+            dlgVentas.btnConfirmarTicket.setEnabled(false);
+            dlgVentas.txtAbonoT.setEditable(false);
+            dlgVentas.txtCodVendedorT.requestFocus();
+            dlgVentas.txtCodVendedorT.selectAll();
         }
         return v;
     }

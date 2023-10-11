@@ -81,7 +81,6 @@ public class GestionarArticulos {
         sql.append(" WHERE art_codigo=");
         sql.append(art.getCodArticulo());
         msg = Operacion.exeOperacion(sql.toString());
-        //msg = Operacion.exeOperacion("UPDATE articulo SET art_stock=" + art.getStock() + " WHERE art_codigo=" + art.getCodArticulo() + "");
         return msg;
     }
     public static String actStockMAS(Articulo art) {
@@ -91,7 +90,6 @@ public class GestionarArticulos {
         sql.append(" WHERE art_codigo=");
         sql.append(art.getCodArticulo());
         msg = Operacion.exeOperacion(sql.toString());
-        //msg = Operacion.exeOperacion("UPDATE articulo SET art_stock=" + art.getStock() + " WHERE art_codigo=" + art.getCodArticulo() + "");
         return msg;
     }
     

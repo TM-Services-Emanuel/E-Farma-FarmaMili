@@ -21,20 +21,13 @@ import javax.swing.table.DefaultTableModel;
 
 public class controlCompra {
 
-    static Proveedor prov;
-    static Articulo art;
     static DetalleCompra dc;
     public static ArregloCompras array = new ArregloCompras();
-    public static int costo;
-    public static double costoiva;
-    public static int ganancia;
-    public static int descuento;
-    static String UsuarioL = "";
 
     public static void selectProveedor() {
         int x = dlgBuscarProveedor.tbDetalle.getSelectedRow();
         String cod = dlgBuscarProveedor.tbDetalle.getValueAt(x, 0).toString();
-        prov = GestionarProveedor.busProveedor(cod);
+        Proveedor prov = GestionarProveedor.busProveedor(cod);
         dlgCompras.txtCodProv.setText(String.valueOf(prov.getCodP()));
         dlgCompras.txtRazonS.setText(prov.getRazoS());
         dlgCompras.txtRuc.setText(prov.getRuc());
@@ -43,15 +36,14 @@ public class controlCompra {
     public static void selectArticulo() {
         int x = dlgBuscarArticuloCompra.tbDetalle.getSelectedRow();
         String cod = dlgBuscarArticuloCompra.tbDetalle.getValueAt(x, 0).toString();
-        art = GestionarArticulos.busArticulo(cod);
+        Articulo art = GestionarArticulos.busArticulo(cod);
         dlgCompras.txtCodA.setText(String.valueOf(art.getCodArticulo()));
         dlgCompras.txtArt.setText(art.getDescripcion());
         dlgCompras.txtCant.setText("1");
         dlgCompras.txtCant.selectAll();
-        String PC = String.valueOf(art.getCosto());
+        int PC = art.getCosto();
         DecimalFormat df = new DecimalFormat("#,###");
-        dlgCompras.txtCosto.setText((df.format(Integer.parseInt(PC.trim().replace(".", "").replace(",", "")))));
-        dlgCompras.txtCostoL.setText(PC);
+        dlgCompras.txtCosto.setText((df.format(PC)));
     }
 
     public static void insertar(String cod, String codB, String desc, String cant, String prec, String total, int iva, String PCosto, String Gan, String Des, JTable tabla) {
@@ -130,20 +122,21 @@ public class controlCompra {
         return (total / 11);
     }
 
-    public static int getTotal() {
-        int total = 0;
+    public static long getTotal() {
+        long total = 0;
         DefaultTableModel tb = (DefaultTableModel) dlgCompras.tbDetalle.getModel();
         int fila = tb.getRowCount();
         for (int i = 0; i < fila; i++) {
-            total += Integer.valueOf(String.valueOf(dlgCompras.tbDetalle.getModel().getValueAt(i, 15)));
+            total += (long) Integer.valueOf(String.valueOf(dlgCompras.tbDetalle.getModel().getValueAt(i, 15)));
         }
         return (total);
     }
 
-    public static double CalcCostoIVA() {
+    public static double CalcCostoIVA(double iva, int costo) {
+        double costoiva = 0;
         try {
-            double iva = art.getIva();
             double div = 0;
+
             switch ((int) iva) {
                 case 5 ->
                     div = 21;
@@ -164,72 +157,29 @@ public class controlCompra {
         return costoiva;
     }
 
-    public static double CalcCostoIVAC(double iva) {
+    public static double CalcGanancia(double pv, double costo) {
+        double ganancia = 0;
         try {
-            double div = 0;
-            switch ((int) iva) {
-                case 5 ->
-                    div = 21;
-                case 10 ->
-                    div = 11;
-                default -> {
-                }
-            }
-            if (iva != 0) {
-                costoiva = Redondeo.redondearD((costo) / div);
-            } else {
-                costoiva = 0.0;
-            }
-
-        } catch (Exception e) {
-            Mensajes.error("Error al calcular costo iva: " + e.getMessage());
-        }
-        return costoiva;
-    }
-
-    public static int CalcGanancia() {
-        try {
-            int pv, pc, G;
-            pv = (art.getPventa());
             if (pv == 0) {
                 ganancia = 0;
             } else {
-                pc = (costo);
-                G = (pv - pc) / (pc / 100);
-                ganancia = (G);
+                double i = (double) (costo / pv);
+                ganancia = Redondeo.redondearD((1 - i) * 100);
             }
-        } catch (Exception e) {
-            Mensajes.error("Error al calcular Ganancia: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            Mensajes.error("Error al calcular Ganancia en transferencia: " + e.getMessage());
         }
         return ganancia;
     }
 
-    public static int CalcGananciaC(int pv) {
+    public static double CalcDescuento(double pv, double pp) {
+        double descuento = 0;
         try {
-            int pc, G;
-            if (pv == 0) {
-                ganancia = 0;
-            } else {
-                pc = (costo);
-                G = (pv - pc) / (pc / 100);
-                ganancia = (G);
-            }
-        } catch (Exception e) {
-            Mensajes.error("Error al calcular Ganancia: " + e.getMessage());
-        }
-        return ganancia;
-    }
-
-    public static int CalcDescuento() {
-        try {
-            int pv = art.getPventa();
-            int pp = art.getPpublico();
             if (pp == 0) {
                 descuento = 0;
             } else {
-                int dif = pp - pv;
-                int desc = (dif * 100) / pp;
-                descuento = (desc);
+                double dif = (double) (pv / pp);
+                descuento = Redondeo.redondearD((1 - dif) * 100);
             }
         } catch (Exception e) {
             Mensajes.error("Error al calcular Descuento: " + e.getMessage());
@@ -237,33 +187,29 @@ public class controlCompra {
         return descuento;
     }
 
-    public static int CalcDescuentoC(int pv, int pp) {
+    public static void addTabla(JTable tabla, String cod) {
         try {
-            if (pp == 0) {
-                descuento = 0;
-            } else {
-                int dif = pp - pv;
-                int desc = (dif * 100) / pp;
-                descuento = (desc);
-            }
-        } catch (Exception e) {
-            Mensajes.error("Error al calcular Descuento: " + e.getMessage());
-        }
-        return descuento;
-    }
-
-    public static void addTabla(JTable tabla) {
-        try {
+            Articulo art = GestionarArticulos.busArticulo(cod);
             int codA = art.getCodArticulo();
             String codB = art.getCodBarra();
             String desc = art.getDescripcion();
             int cant = Integer.parseInt(dlgCompras.txtCant.getText());
-            costo = Integer.parseInt(dlgCompras.txtCostoL.getText());
-            int mont = (cant * costo);
-            int iva = art.getIva();
-            double PCIVA = CalcCostoIVA();
-            int Gan = CalcGanancia();
-            int Des = CalcDescuento();
+            int costo = Integer.parseInt(dlgCompras.txtCosto.getText().replace(".", "").replace(",", ""));
+            long mont = (long) (cant * costo);
+            int iv = art.getIva();
+            double costoiva = 0;
+            switch (iv) {
+                case 0 ->
+                    costoiva = 0;
+                case 5 ->
+                    costoiva = (double) (costo / 21);
+                case 10 ->
+                    costoiva = (double) (costo / 11);
+                default -> {
+                }
+            }
+            double Gan = CalcGanancia(Double.valueOf(art.getPventa()), Double.valueOf(costo));
+            double Des = CalcDescuento(Double.valueOf(art.getPventa()), Double.valueOf(art.getPpublico()));
             if (Gan <= 0) {
                 Mensajes.error("Ganancia no válido.\nValor negativo o igual a 0");
             } else {
@@ -272,20 +218,16 @@ public class controlCompra {
                     Mensajes.informacion("EL ARTICULO YA FUE AGREGADO");
                 } else {
                     array.agregar(dco);
-                    insertar(String.valueOf(codA), codB, desc, String.valueOf(cant), String.valueOf(costo), String.valueOf(mont), iva, String.valueOf(PCIVA), String.valueOf(Gan), String.valueOf(Des), tabla);
-                    String total = String.valueOf(getTotal());
+                    insertar(String.valueOf(codA), codB, desc, String.valueOf(cant), String.valueOf(costo), String.valueOf(mont), iv, String.valueOf(costoiva), String.valueOf(Gan), String.valueOf(Des), tabla);
+                    long total = getTotal();
                     String exentas = String.valueOf(getExcetas());
                     String iva5 = String.valueOf(get5());
                     String iva10 = String.valueOf(get10());
                     DecimalFormat df = new DecimalFormat("#,###");
-                    dlgCompras.txtExentaL.setText(exentas);
                     dlgCompras.txtExenta.setText(df.format(Integer.parseInt(exentas.trim().replace(".", "").replace(",", ""))));
-                    dlgCompras.txt5L.setText(iva5);
                     dlgCompras.txt5.setText(df.format(Integer.parseInt(iva5.replace(".", "").replace(",", ""))));
-                    dlgCompras.txt10L.setText(iva10);
                     dlgCompras.txt10.setText(df.format(Integer.parseInt(iva10.replace(".", "").replace(",", ""))));
-                    dlgCompras.txtTotalL.setText(total);
-                    dlgCompras.txtTotal.setText(df.format(Integer.parseInt(total.replace(".", "").replace(",", ""))));
+                    dlgCompras.txtTotal.setText(df.format(total));
                 }
             }
         } catch (Exception e) {
@@ -319,10 +261,9 @@ public class controlCompra {
                 array.eliminar(p);
                 DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
                 tb.removeRow(fila);
-                String total = String.valueOf((getTotal()));
+                long total = getTotal();
                 DecimalFormat df = new DecimalFormat("#,###");
-                dlgCompras.txtTotalL.setText(total);
-                dlgCompras.txtTotal.setText(df.format(Integer.valueOf(total.trim().replace(".", "").replace(",", ""))));
+                dlgCompras.txtTotal.setText(df.format(total));
             }
         }
     }
@@ -459,7 +400,7 @@ public class controlCompra {
         String msg;
         int x = dlgConsultarCompras.tbCompra.getSelectedRow();
         String cod = dlgConsultarCompras.tbCompra.getValueAt(x, 0).toString();
-        String usuario = UsuarioL = Login.getUsuarioLogueado();
+        String usuario = Login.getUsuarioLogueado();
         msg = GestionarCompra.delCompra(cod, usuario);
         if (msg == null) {
             Mensajes.informacion("Compra Anulada");
@@ -493,7 +434,7 @@ public class controlCompra {
             int ca = Integer.parseInt(dlgCompras.tbDetalle.getValueAt(fila, 4).toString());
             int pre = Integer.parseInt(dlgCompras.tbDetalle.getValueAt(fila, 6).toString());
             String cant = String.valueOf(Mensajes.ingresarNumerosC(ca));
-            String monto = String.valueOf(pre * Integer.parseInt(cant));
+            long monto = (long) (pre * Integer.parseInt(cant));
             int iva = Integer.parseInt(dlgCompras.tbDetalle.getValueAt(fila, 7).toString());
             dlgCompras.tbDetalle.setValueAt(cant, fila, 3);
             dlgCompras.tbDetalle.setValueAt(cant, fila, 4);
@@ -514,77 +455,69 @@ public class controlCompra {
             }
             dlgCompras.tbDetalle.setValueAt(monto, fila, 14);
             dlgCompras.tbDetalle.setValueAt(monto, fila, 15);
-            String total = String.valueOf(getTotal());
+            long total = getTotal();
             String exentas = String.valueOf(getExcetas());
             String iva5 = String.valueOf(get5());
             String iva10 = String.valueOf(get10());
             DecimalFormat df = new DecimalFormat("#,###");
-            dlgCompras.txtExentaL.setText(exentas);
             dlgCompras.txtExenta.setText(df.format(Integer.parseInt(exentas.trim().replace(".", "").replace(",", ""))));
-            dlgCompras.txt5L.setText(iva5);
             dlgCompras.txt5.setText(df.format(Integer.parseInt(iva5.replace(".", "").replace(",", ""))));
-            dlgCompras.txt10L.setText(iva10);
             dlgCompras.txt10.setText(df.format(Integer.parseInt(iva10.replace(".", "").replace(",", ""))));
-            dlgCompras.txtTotalL.setText(total);
-            dlgCompras.txtTotal.setText(df.format(Integer.parseInt(total.replace(".", "").replace(",", ""))));
-        } catch (Exception e) {
+            dlgCompras.txtTotal.setText(df.format(total));
+        } catch (NumberFormatException e) {
             Mensajes.error("Seleccione una fila de la tabla");
         }
     }
 
     public static void actPrecio(JTable tabla) {
         try {
+           
             int fila = dlgCompras.tbDetalle.getSelectedRow();
             String cod = (dlgCompras.tbDetalle.getValueAt(fila, 0).toString());
-            art = GestionarArticulos.busArticulo(cod);
+            Articulo art = GestionarArticulos.busArticulo(cod);
             int cant = Integer.parseInt(dlgCompras.tbDetalle.getValueAt(fila, 4).toString());
             int pre = Integer.parseInt(dlgCompras.tbDetalle.getValueAt(fila, 6).toString());
-            String precio = String.valueOf(Mensajes.ingresarPrecioC(pre));
-            costo = Integer.parseInt(precio);
+            int costo = Mensajes.ingresarPrecioC(pre);
             int iva = Integer.parseInt(dlgCompras.tbDetalle.getValueAt(fila, 7).toString());
-            String PCIVA = String.valueOf(CalcCostoIVAC(iva));
+            double costoiva = CalcCostoIVA(iva, costo);
             int pv = art.getPventa();
             int pp = art.getPpublico();
-            String Gan = String.valueOf(CalcGananciaC(pv));
-            String Des = String.valueOf(CalcDescuentoC(pv, pp));
-            String monto = String.valueOf(cant * Integer.parseInt(precio));
+            double Gan = CalcGanancia(pv, costo);
+            double Des = CalcDescuento(pv, pp);
+            long monto = (long)(cant * costo);
 
-            dlgCompras.tbDetalle.setValueAt(precio, fila, 5);
-            dlgCompras.tbDetalle.setValueAt(precio, fila, 6);
+            dlgCompras.tbDetalle.setValueAt(String.valueOf(costo), fila, 5);
+            dlgCompras.tbDetalle.setValueAt(String.valueOf(costo), fila, 6);
 
             switch (iva) {
                 case 10 -> {
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 12);
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 13);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 12);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 13);
                 }
                 case 5 -> {
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 10);
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 11);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 10);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 11);
                 }
                 default -> {
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 8);
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 9);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 8);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 9);
                 }
             }
-            dlgCompras.tbDetalle.setValueAt(monto, fila, 14);
-            dlgCompras.tbDetalle.setValueAt(monto, fila, 15);
-            dlgCompras.tbDetalle.setValueAt(PCIVA, fila, 16);
-            dlgCompras.tbDetalle.setValueAt(Gan, fila, 17);
-            dlgCompras.tbDetalle.setValueAt(Des, fila, 18);
-            String total = String.valueOf(getTotal());
+            dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 14);
+            dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 15);
+            dlgCompras.tbDetalle.setValueAt(String.valueOf(costoiva), fila, 16);
+            dlgCompras.tbDetalle.setValueAt(String.valueOf(Gan), fila, 17);
+            dlgCompras.tbDetalle.setValueAt(String.valueOf(Des), fila, 18);
+            long total = getTotal();
             String exentas = String.valueOf(getExcetas());
             String iva5 = String.valueOf(get5());
             String iva10 = String.valueOf(get10());
             DecimalFormat df = new DecimalFormat("#,###");
-            dlgCompras.txtExentaL.setText(exentas);
             dlgCompras.txtExenta.setText(df.format(Integer.parseInt(exentas.trim().replace(".", "").replace(",", ""))));
-            dlgCompras.txt5L.setText(iva5);
             dlgCompras.txt5.setText(df.format(Integer.parseInt(iva5.replace(".", "").replace(",", ""))));
-            dlgCompras.txt10L.setText(iva10);
             dlgCompras.txt10.setText(df.format(Integer.parseInt(iva10.replace(".", "").replace(",", ""))));
-            dlgCompras.txtTotalL.setText(total);
-            dlgCompras.txtTotal.setText(df.format(Integer.parseInt(total.replace(".", "").replace(",", ""))));
-        } catch (Exception e) {
+            dlgCompras.txtTotal.setText(df.format(total));
+        } catch (NumberFormatException e) {
             Mensajes.error("Seleccione una fila de la tabla");
         }
     }

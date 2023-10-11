@@ -10,6 +10,7 @@ import Controladores.CabecerasTablas;
 import Controladores.controlArticulo;
 import Datos.GestionarArticulos;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.sql.*;
@@ -250,8 +251,8 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         jPanel9 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        txtIVA = new javax.swing.JTextField();
         txtIVACosto = new javax.swing.JTextField();
+        cbImpuesto = new RSMaterialComponent.RSComboBox();
         jPanel11 = new javax.swing.JPanel();
         txtPrecioVentaM = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
@@ -291,7 +292,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 btnSalirActionPerformed(evt);
             }
         });
-        jPanel12.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(852, 3, 25, 25));
+        jPanel12.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(857, 3, 20, 20));
 
         PanelContenedor3.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
         PanelContenedor3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -401,7 +402,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         jPanel12.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, -10, 690, 120));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "Información del Artículo", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Roboto", 1, 11))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "Información del Artículo", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Roboto", 1, 11), new java.awt.Color(17, 35, 46))); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtCodProducto.setEditable(false);
@@ -482,7 +483,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         jPanel1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 304, 46));
 
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
-        jLabel9.setText("ACCIÓN TERAPEUTICA");
+        jLabel9.setText("ACCIÓN TERAPEÚTICA");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 180, -1, 23));
 
         jScrollPane3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -731,7 +732,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         jPanel12.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 110, 870, 231));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "Margen de Utilidad, IVA y Stock", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Roboto", 1, 11))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "Margen de Utilidad - IVA - Stock", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Roboto", 1, 11), new java.awt.Color(17, 35, 46))); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -978,68 +979,45 @@ public class dlgGestArticulos extends javax.swing.JDialog {
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel11.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jLabel11.setText("I.V.A. Grabada");
+        jPanel9.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 13, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jLabel12.setText("Costo I.V.A.");
-
-        txtIVA.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
-        txtIVA.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtIVA.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        txtIVA.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                txtIVAMouseClicked(evt);
-            }
-        });
-        txtIVA.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIVAActionPerformed(evt);
-            }
-        });
-        txtIVA.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtIVAKeyPressed(evt);
-            }
-        });
+        jPanel9.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 42, -1, -1));
 
         txtIVACosto.setEditable(false);
         txtIVACosto.setBackground(new java.awt.Color(255, 255, 255));
         txtIVACosto.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtIVACosto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtIVACosto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel9.add(txtIVACosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 38, 98, 23));
 
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtIVACosto, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(35, Short.MAX_VALUE))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIVA, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIVACosto, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addGap(8, 8, 8))
-        );
+        cbImpuesto.setForeground(new java.awt.Color(0, 0, 0));
+        cbImpuesto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "SELECCION", "EXENTA", "5%", "10%" }));
+        cbImpuesto.setColorArrow(new java.awt.Color(17, 35, 46));
+        cbImpuesto.setColorBorde(new java.awt.Color(204, 204, 204));
+        cbImpuesto.setColorDisabledIndexText(new java.awt.Color(255, 255, 255));
+        cbImpuesto.setColorFondo(new java.awt.Color(255, 255, 255));
+        cbImpuesto.setColorSeleccion(new java.awt.Color(0, 153, 204));
+        cbImpuesto.setConBorde(true);
+        cbImpuesto.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        cbImpuesto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbImpuestoActionPerformed(evt);
+            }
+        });
+        cbImpuesto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cbImpuestoKeyPressed(evt);
+            }
+        });
+        jPanel9.add(cbImpuesto, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 8, 98, 23));
 
-        jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(621, 27, 238, -1));
+        jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(621, 27, 238, 70));
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
         jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204))));
@@ -1166,7 +1144,9 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -1196,17 +1176,22 @@ public class dlgGestArticulos extends javax.swing.JDialog {
 
     private void txtPrecioVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioVentaActionPerformed
         // TODO add your handling code here:
-        CalcularDescuento();
-        CalcularGanancia();
-        ckHabilitar.requestFocus();
+        if (!txtPrecioVenta.getText().trim().isEmpty() || Integer.parseInt(txtPrecioVenta.getText()) != 0) {
+            CalcularDescuento();
+            CalcularGanancia();
+            ckHabilitar.requestFocus();
+        }
+
     }//GEN-LAST:event_txtPrecioVentaActionPerformed
 
     private void txtPrecioPublicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioPublicoActionPerformed
         // TODO add your handling code here:
-        if (!txtPrecioPublico.getText().trim().isEmpty()) {
+        if (!txtPrecioPublico.getText().trim().isEmpty() || Integer.parseInt(txtPrecioPublico.getText()) != 0) {
             CalcularDescuento();
             txtPrecioVenta.requestFocus();
             txtPrecioVenta.selectAll();
+        } else {
+            txtDesc.setText("0");
         }
 
     }//GEN-LAST:event_txtPrecioPublicoActionPerformed
@@ -1245,10 +1230,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 DecimalFormat df = new DecimalFormat("#,###");
                 txtCosto.setText(df.format(Integer.valueOf(txtCosto.getText().trim().replace(".", "").replace(",", ""))));
             }
-        } catch (Exception e) {
+            cbImpuestoActionPerformed(null);
+        } catch (NumberFormatException e) {
             System.out.println("c: " + e.getMessage());
         }
-        CalculoIVAC();
+
     }//GEN-LAST:event_txtCostoKeyReleased
 
     private void txtDescKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescKeyReleased
@@ -1280,30 +1266,6 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtPrecioVentaKeyReleased
 
-    private void txtIVAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIVAActionPerformed
-        // TODO add your handling code here:
-        if (txtIVA.getText().trim().isEmpty()) {
-            txtIVA.setText("5");
-        } else {
-            int iva = Integer.parseInt(txtIVA.getText());
-            switch (iva) {
-                case 5 ->
-                    CalculoIVAC();
-                case 10 ->
-                    CalculoIVAC();
-                case 0 ->
-                    txtIVACosto.setText("0.0");
-                default -> {
-                    Mensajes.error("IVA NO VALIDO");
-                    txtIVA.setText("5");
-                    txtIVA.requestFocus();
-                    txtIVA.selectAll();
-                }
-            }
-        }
-
-    }//GEN-LAST:event_txtIVAActionPerformed
-
     private void txtPrecioPublicoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioPublicoKeyTyped
         // TODO add your handling code here:
 
@@ -1331,11 +1293,12 @@ public class dlgGestArticulos extends javax.swing.JDialog {
 
     private void txtCostoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCostoActionPerformed
         // TODO add your handling code here:  
-        if (!txtCosto.getText().trim().isEmpty()) {
-            //CalcularPrecioVentaxGan();
+        if (!txtCosto.getText().trim().isEmpty() || Integer.parseInt(txtCosto.getText()) != 0) {
             CalcularGanancia();
             txtPrecioPublico.requestFocus();
             txtPrecioPublico.selectAll();
+        } else {
+            txtGanancia.setText("0");
         }
 
     }//GEN-LAST:event_txtCostoActionPerformed
@@ -1504,27 +1467,6 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtAccionKeyPressed
 
-    private void txtIVAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIVAKeyPressed
-        // TODO add your handling code here:
-        if (!txtIVA.getText().trim().isEmpty()) {
-            validarCampos.soloNumeros(txtIVA);
-        }
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!txtStock.isEnabled()) {
-                txtStockMin.requestFocus();
-                txtStockMin.selectAll();
-            } else {
-                txtStock.requestFocus();
-                txtStock.selectAll();
-            }
-        }
-    }//GEN-LAST:event_txtIVAKeyPressed
-
-    private void txtIVAMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtIVAMouseClicked
-        // TODO add your handling code here:
-        txtIVA.selectAll();
-    }//GEN-LAST:event_txtIVAMouseClicked
-
     private void txtDescKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescKeyPressed
         // TODO add your handling code here:
         if (!txtDesc.getText().trim().isEmpty()) {
@@ -1631,7 +1573,8 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     private void txtPrecioVentaMKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaMKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txtIVA.requestFocus();
+            cbImpuesto.setPopupVisible(true);
+            cbImpuesto.requestFocus();
         }
     }//GEN-LAST:event_txtPrecioVentaMKeyPressed
 
@@ -1708,38 +1651,65 @@ public class dlgGestArticulos extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        if (cbLaboratorio.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione un Laboratorio");
+        if (txtDescripcion.getText().isEmpty()) {
+            Mensajes.Sistema("El Nombre comercial se encuentra vacío.\nPor favor, complete esta información para proceder con el registro.");
+            txtDescripcion.requestFocus();
+        } else if (cbLaboratorio.getSelectedIndex() == 0) {
+            Mensajes.Sistema("No se ha especificado el laboratorio.\nPor favor, seleccione la opción correspondiente para proceder con el registro.");
+            cbLaboratorio.setPopupVisible(true);
             cbLaboratorio.requestFocus();
         } else if (cbProveedor.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione un Proveedor");
+            Mensajes.Sistema("No se ha especificado el Proveedor.\nPor favor, seleccione la opción correspondiente para proceder con el registro.");
+            cbProveedor.setPopupVisible(true);
             cbProveedor.requestFocus();
         } else if (cbFamilia.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione una Familia");
+            Mensajes.Sistema("No se ha especificado la Familia.\nPor favor, seleccione la opción correspondiente para proceder con el registro.");
+            cbFamilia.setPopupVisible(true);
             cbFamilia.requestFocus();
-        } else if (Double.parseDouble(txtGanancia.getText()) < 0) {
-            Mensajes.error("Ganancia fuera de rango");
-            txtGanancia.requestFocus();
-        } else if (Double.parseDouble(txtDesc.getText()) < 0) {
-            Mensajes.error("Descuento fuera de rango");
-            txtDesc.requestFocus();
-        } else if (Integer.parseInt(txtPrecioPublico.getText().replace(".", "").replace(",", "")) <= Integer.parseInt(txtPrecioVenta.getText().replace(".", "").replace(",", ""))) {
-            Mensajes.error("El Precio Publico es menor o igual al Precio Venta");
+        } else if (Double.parseDouble(txtGanancia.getText()) <= (double) 0) {
+            Mensajes.Sistema("Ganancia vacía o fuera de rango.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioVenta.requestFocus();
+            txtPrecioVenta.selectAll();
+        } else if (Double.parseDouble(txtDesc.getText()) <= (double) 0) {
+            Mensajes.Sistema("Descuento vacío o fuera de rango.\nPor favor, verifique los números ingresados para proceder con el registro");
             txtPrecioPublico.requestFocus();
-        } else if (validarCampos.estaVacio(txtDescripcion) && validarCampos.estaVacio(txtCosto) && validarCampos.estaVacio(txtPrecioPublico) && validarCampos.estaVacio(txtPrecioVenta)
-                && validarCampos.estaVacio(txtStock) && validarCampos.estaVacio(txtStockMin) && validarCampos.estaVacio(txtIVA)) {
+            txtPrecioPublico.selectAll();
+        } else if (Integer.parseInt(txtPrecioPublico.getText().replace(".", "").replace(",", "")) <= Integer.parseInt(txtCosto.getText().replace(".", "").replace(",", ""))) {
+            Mensajes.Sistema("El Precio Publico es MENOR o IGUAL al Precio Costo.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioPublico.requestFocus();
+            txtPrecioPublico.selectAll();
+        } else if (Integer.parseInt(txtPrecioVenta.getText().replace(".", "").replace(",", "")) <= Integer.parseInt(txtCosto.getText().replace(".", "").replace(",", ""))) {
+            Mensajes.Sistema("El Precio Venta es MENOR o IGUAL al Precio Costo.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioVenta.requestFocus();
+            txtPrecioVenta.selectAll();
+        } else if (Integer.parseInt(txtPrecioPublico.getText().replace(".", "").replace(",", "")) <= Integer.parseInt(txtPrecioVenta.getText().replace(".", "").replace(",", ""))) {
+            Mensajes.Sistema("El Precio Publico es MENOR o IGUAL al Precio Venta.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioPublico.requestFocus();
+            txtPrecioPublico.selectAll();
+        } else if (ckHabilitar.isSelected() && txtCantM.getText().isEmpty()) {
+            Mensajes.Sistema("No se ha especificado la cantidad con la cual se habilitara el Precio Mayorista.\nPor favor, complete esta información para proceder con el registro.");
+            txtCantM.requestFocus();
+            txtCantM.selectAll();
+        } else if (ckHabilitar.isSelected() && Integer.parseInt(txtPrecioVentaM.getText().replace(".", "").replace(",", "")) > Integer.parseInt(txtPrecioVenta.getText().replace(".", "").replace(",", ""))) {
+            Mensajes.Sistema("El Precio Mayorista es Mayor al Precio Venta.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioVentaM.requestFocus();
+            txtPrecioVentaM.selectAll();
+        } else if (cbImpuesto.getSelectedIndex() == 0) {
+            Mensajes.Sistema("No se ha especificado el Impuesto a aplicar.\nPor favor, seleccione la opción correspondiente para proceder con el registro.");
+            cbImpuesto.setPopupVisible(true);
+            cbImpuesto.requestFocus();
+        } else {
             try {
                 int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar este registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (resp == JOptionPane.YES_OPTION) {
                     controlArticulo.actArticulo();
                     Cancelar();
                 }
-            } catch (Exception ee) {
+            } catch (HeadlessException ee) {
                 System.out.println(ee.getMessage());
             }
-        } else {
-            Mensajes.informacion("Verifique que todos los campos exigidos esten completados");
         }
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -1755,30 +1725,79 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         txtCodProducto.setText(cod);
         txtCodBarra.requestFocus();
         btnSalir.setEnabled(false);
+        txtCosto.setText("0");
+        txtPrecioPublico.setText("0");
+        txtDesc.setText("0");
+        txtPrecioVenta.setText("0");
+        txtGanancia.setText("0");
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if (cbLaboratorio.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione un Laboratorio");
+        if (txtDescripcion.getText().isEmpty()) {
+            Mensajes.Sistema("El Nombre comercial se encuentra vacío.\nPor favor, complete esta información para proceder con el registro.");
+            txtDescripcion.requestFocus();
+        } else if (cbLaboratorio.getSelectedIndex() == 0) {
+            Mensajes.Sistema("No se ha especificado el laboratorio.\nPor favor, seleccione la opción correspondiente para proceder con el registro.");
+            cbLaboratorio.setPopupVisible(true);
             cbLaboratorio.requestFocus();
         } else if (cbProveedor.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione un Proveedor");
+            Mensajes.Sistema("No se ha especificado el Proveedor.\nPor favor, seleccione la opción correspondiente para proceder con el registro.");
+            cbProveedor.setPopupVisible(true);
             cbProveedor.requestFocus();
         } else if (cbFamilia.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione una Familia");
+            Mensajes.Sistema("No se ha especificado la Familia.\nPor favor, seleccione la opción correspondiente para proceder con el registro.");
+            cbFamilia.setPopupVisible(true);
             cbFamilia.requestFocus();
-        } else if (Integer.parseInt(txtGanancia.getText()) < 0) {
-            Mensajes.error("Ganancia fuera de rango");
-            txtGanancia.requestFocus();
-        } else if (Integer.parseInt(txtDesc.getText()) < 0) {
-            Mensajes.error("Descuento fuera de rango");
-            txtDesc.requestFocus();
-        } else if (Integer.parseInt(txtPrecioPublico.getText().replace(".", "").replace(",", "")) <= Integer.parseInt(txtPrecioVenta.getText().replace(".", "").replace(",", ""))) {
-            Mensajes.error("El Precio Publico es menor o igual al Precio Venta");
+        } else if (Double.parseDouble(txtGanancia.getText()) <= (double) 0) {
+            Mensajes.Sistema("Ganancia vacía o fuera de rango.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioVenta.requestFocus();
+            txtPrecioVenta.selectAll();
+        } else if (txtGanancia.getText().equals("-Infinity")) {
+            Mensajes.Sistema("Ganancia vacía o fuera de rango.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioVenta.requestFocus();
+            txtPrecioVenta.selectAll();
+        } else if (txtGanancia.getText().equals("NaN")) {
+            Mensajes.Sistema("Ganancia vacía o fuera de rango.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioVenta.requestFocus();
+            txtPrecioVenta.selectAll();
+        } else if (Double.parseDouble(txtDesc.getText()) <= (double) 0) {
+            Mensajes.Sistema("Descuento vacío o fuera de rango.\nPor favor, verifique los números ingresados para proceder con el registro");
             txtPrecioPublico.requestFocus();
-        } else if (validarCampos.estaVacio(txtDescripcion) && validarCampos.estaVacio(txtCosto) && validarCampos.estaVacio(txtPrecioPublico) && validarCampos.estaVacio(txtPrecioVenta)
-                && validarCampos.estaVacio(txtStock) && validarCampos.estaVacio(txtStockMin) && validarCampos.estaVacio(txtIVA)) {
+            txtPrecioPublico.selectAll();
+        }else if (txtDesc.getText().equals("-Infinity")) {
+            Mensajes.Sistema("Ganancia vacía o fuera de rango.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioVenta.requestFocus();
+            txtPrecioVenta.selectAll();
+        } else if (txtDesc.getText().equals("NaN")) {
+            Mensajes.Sistema("Ganancia vacía o fuera de rango.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioVenta.requestFocus();
+            txtPrecioVenta.selectAll();
+        } else if (Integer.parseInt(txtPrecioPublico.getText().replace(".", "").replace(",", "")) <= Integer.parseInt(txtCosto.getText().replace(".", "").replace(",", ""))) {
+            Mensajes.Sistema("El Precio Publico es MENOR o IGUAL al Precio Costo.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioPublico.requestFocus();
+            txtPrecioPublico.selectAll();
+        } else if (Integer.parseInt(txtPrecioVenta.getText().replace(".", "").replace(",", "")) <= Integer.parseInt(txtCosto.getText().replace(".", "").replace(",", ""))) {
+            Mensajes.Sistema("El Precio Venta es MENOR o IGUAL al Precio Costo.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioVenta.requestFocus();
+            txtPrecioVenta.selectAll();
+        } else if (Integer.parseInt(txtPrecioPublico.getText().replace(".", "").replace(",", "")) <= Integer.parseInt(txtPrecioVenta.getText().replace(".", "").replace(",", ""))) {
+            Mensajes.Sistema("El Precio Publico es MENOR o IGUAL al Precio Venta.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioPublico.requestFocus();
+            txtPrecioPublico.selectAll();
+        } else if (ckHabilitar.isSelected() && txtCantM.getText().isEmpty()) {
+            Mensajes.Sistema("No se ha especificado la cantidad con la cual se habilitara el Precio Mayorista.\nPor favor, complete esta información para proceder con el registro.");
+            txtCantM.requestFocus();
+            txtCantM.selectAll();
+        } else if (ckHabilitar.isSelected() && Integer.parseInt(txtPrecioVentaM.getText().replace(".", "").replace(",", "")) > Integer.parseInt(txtPrecioVenta.getText().replace(".", "").replace(",", ""))) {
+            Mensajes.Sistema("El Precio Mayorista es Mayor al Precio Venta.\nPor favor, verifique los números ingresados para proceder con el registro");
+            txtPrecioVentaM.requestFocus();
+            txtPrecioVentaM.selectAll();
+        } else if (cbImpuesto.getSelectedIndex() == 0) {
+            Mensajes.Sistema("No se ha especificado el Impuesto a aplicar.\nPor favor, seleccione la opción correspondiente para proceder con el registro.");
+            cbImpuesto.setPopupVisible(true);
+            cbImpuesto.requestFocus();
+        } else {
             try {
                 int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (resp == JOptionPane.YES_OPTION) {
@@ -1792,8 +1811,6 @@ public class dlgGestArticulos extends javax.swing.JDialog {
             } catch (Exception ee) {
                 System.out.println(ee.getMessage());
             }
-        } else {
-            Mensajes.informacion("Verifique que todos los campos exigidos esten completados");
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -1829,7 +1846,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
             txtPrecioVenta.setEnabled(false);
             txtStock.setEnabled(false);
             txtStockMin.setEnabled(false);
-             btnSalir.setEnabled(true);
+            btnSalir.setEnabled(true);
             pintarEstado();
             pintarVenta();
             pintarTipo();
@@ -1964,9 +1981,46 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     private void ckHabilitarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ckHabilitarKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txtIVA.requestFocus();
+            cbImpuesto.setPopupVisible(true);
+            cbImpuesto.requestFocus();
         }
     }//GEN-LAST:event_ckHabilitarKeyPressed
+
+    private void cbImpuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbImpuestoActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (cbImpuesto.getSelectedIndex() == 0) {
+                Mensajes.Sistema("No se ha especificado el Impuesto a aplicar.\nPor favor, seleccione la opción correspondiente para calcular el costo de iva.");
+                cbImpuesto.setPopupVisible(true);
+                cbImpuesto.requestFocus();
+            } else {
+                switch (cbImpuesto.getSelectedIndex()) {
+                    case 1 ->
+                        CalculoIVAC(0);
+                    case 2 ->
+                        CalculoIVAC(5);
+                    case 3 ->
+                        CalculoIVAC(10);
+                    default -> {
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cbImpuestoActionPerformed
+
+    private void cbImpuestoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbImpuestoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!txtStock.isEnabled()) {
+                txtStockMin.requestFocus();
+                txtStockMin.selectAll();
+            } else {
+                txtStock.requestFocus();
+                txtStock.selectAll();
+            }
+        }
+    }//GEN-LAST:event_cbImpuestoKeyPressed
 
     public int CalcularPrecioVentaxGan() {
         int band = 0;
@@ -2005,29 +2059,24 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     }
 
     public void CalcularDescuento() {
-        if (txtPrecioPublico.getText().replace(".", "").replace(",", "").equals("0")) {
-            txtDesc.setText("0");
-        } else {
-            try {
-                double pv = Double.parseDouble(txtPrecioVenta.getText().replace(".", "").replace(",", ""));
-                double pp = Double.parseDouble(txtPrecioPublico.getText().replace(".", "").replace(",", ""));
-                if (pp < pv) {
-                    Mensajes.informacion("PRECIO VENTA MAYOR A PRECIO PUBLICO");
-                } else {
-                    double dif = (double) (pv / pp);
-                    double desc = Redondeo.redondearD((1 - dif) * 100);
-                    txtDesc.setText(String.valueOf(desc));
-                }
-            } catch (NumberFormatException e) {
+        try {
+            double pv = Double.parseDouble(txtPrecioVenta.getText().replace(".", "").replace(",", ""));
+            double pp = Double.parseDouble(txtPrecioPublico.getText().replace(".", "").replace(",", ""));
+            if (pp < pv) {
+                Mensajes.informacion("PRECIO VENTA MAYOR A PRECIO PUBLICO");
+            } else {
+                double dif = (double) (pv / pp);
+                double desc = Redondeo.redondearD((1 - dif) * 100);
+                txtDesc.setText(String.valueOf(desc));
             }
+        } catch (NumberFormatException e) {
         }
     }
 
-    public static void CalculoIVAC() {
+    public static void CalculoIVAC(int iva) {
         try {
             int c = Integer.parseInt(txtCosto.getText().replace(".", "").replace(",", ""));
             double div = 0;
-            double iva = Integer.parseInt(txtIVA.getText().trim());
             double cosIVA;
             switch ((int) iva) {
                 case 5 ->
@@ -2078,7 +2127,6 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         txtPrecioVenta.setText("");
         txtStock.setText("0");
         txtStockMin.setText("0");
-        txtIVA.setText("");
         txtIVACosto.setText("");
         txtCodLab.setText("");
         txtCodFam.setText("");
@@ -2232,6 +2280,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.ButtonGroup buttonGroup3;
     public static RSMaterialComponent.RSComboBox cbFamilia;
+    public static RSMaterialComponent.RSComboBox cbImpuesto;
     public static RSMaterialComponent.RSComboBox cbLaboratorio;
     public static RSMaterialComponent.RSComboBox cbProveedor;
     public static rojerusan.RSCheckBox ckHabilitar;
@@ -2291,7 +2340,6 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     public static javax.swing.JTextField txtDesc;
     public static javax.swing.JTextField txtDescripcion;
     public static javax.swing.JTextField txtGanancia;
-    public static javax.swing.JTextField txtIVA;
     public static javax.swing.JTextField txtIVACosto;
     public static javax.swing.JTextField txtPrecioPublico;
     public static javax.swing.JTextField txtPrecioVenta;
