@@ -373,13 +373,9 @@ public class controlCompra {
         String fac = dlgConsultarCompras.tbCompra.getValueAt(x, 7).toString();
         String fecha = dlgConsultarCompras.tbCompra.getValueAt(x, 2).toString() + " " + dlgConsultarCompras.tbCompra.getValueAt(x, 3).toString();
         String pro = dlgConsultarCompras.tbCompra.getValueAt(x, 4).toString() + " - " + dlgConsultarCompras.tbCompra.getValueAt(x, 5).toString();
-        String codPro = dlgConsultarCompras.tbCompra.getValueAt(x, 8).toString();
-        DecimalFormat df = new DecimalFormat("#,###");
-        String total = dlgConsultarCompras.tbCompra.getValueAt(x, 9).toString();
         dlgConsultarCompras.txtCodCompra.setText(fac);
         dlgConsultarCompras.txtFechaCompra.setText(fecha);
         dlgConsultarCompras.txtProveedor.setText(pro);
-        dlgConsultarCompras.txtTotalCompra.setText("Gs. " + df.format(Integer.parseInt(total.trim().replace(".", "").replace(",", ""))));
         List lista;
         lista = GestionarCompra.listarDetalleCompras(cod);
         for (int i = 1; i < lista.size(); i++) {

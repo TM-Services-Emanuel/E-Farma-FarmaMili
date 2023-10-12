@@ -816,23 +816,25 @@ public class controlFactura {
         lista = GestionarFactura.listFacturas(fecha);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
+            String filas[] = new String[12];
             Object[] fila = (Object[]) lista.get(i);
-            fila[0].toString();
-            fila[1].toString();
-            fila[2].toString();
-            fila[3].toString();
-            fila[4].toString();
-            fila[6].toString();
-            fila[7].toString();
-            fila[8].toString();
-            fila[9].toString();
-            fila[10].toString();
+            filas[0] = fila[0].toString();
+            filas[1] = fila[1].toString();
+            filas[2] = Fecha.formatoFechaMuestra(fila[2].toString());
+            filas[3] = Fecha.formatoHora_sin_seg(fila[3].toString());
+            filas[4] = fila[4].toString();
+            filas[5] = fila[5].toString();
+            filas[6] = fila[6].toString();
+            filas[7] = fila[7].toString();
+            filas[8] = fila[8].toString();
+            filas[9] = fila[9].toString();
+            filas[10] = fila[10].toString();
             if (fila[11].toString().equals("S")) {
-                fila[11] = "ACTIVO";
+                filas[11] = "ACTIVO";
             } else {
-                fila[11] = "ANULADO";
+                filas[11] = "ANULADO";
             }
-            tb.addRow(fila);
+            tb.addRow(filas);
         }
     }
 
@@ -841,23 +843,25 @@ public class controlFactura {
         lista = GestionarFactura.listFacturasLegal(fecha);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
+            String filas[] = new String[12];
             Object[] fila = (Object[]) lista.get(i);
-            fila[0].toString();
-            fila[1].toString();
-            fila[2].toString();
-            fila[3].toString();
-            fila[4].toString();
-            fila[6].toString();
-            fila[7].toString();
-            fila[8].toString();
-            fila[9].toString();
-            fila[10].toString();
+            filas[0] = fila[0].toString();
+            filas[1] = fila[1].toString();
+            filas[2] = Fecha.formatoFechaMuestra(fila[2].toString());
+            filas[3] = Fecha.formatoHora_sin_seg(fila[3].toString());
+            filas[4] = fila[4].toString();
+            filas[5] = fila[5].toString();
+            filas[6] = fila[6].toString();
+            filas[7] = fila[7].toString();
+            filas[8] = fila[8].toString();
+            filas[9] = fila[9].toString();
+            filas[10] = fila[10].toString();
             if (fila[11].toString().equals("S")) {
-                fila[11] = "ACTIVO";
+                filas[11] = "ACTIVO";
             } else {
-                fila[11] = "ANULADO";
+                filas[11] = "ANULADO";
             }
-            tb.addRow(fila);
+            tb.addRow(filas);
         }
     }
 

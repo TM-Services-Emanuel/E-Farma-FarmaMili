@@ -16,7 +16,7 @@ static String UsuarioL="";
         String caHoraI= dlgCaja.lbHora.getText();
         String caUsuI= dlgCaja.lbUsuario.getText();
         String caUsuF=" ";
-        int caInicial = Integer.parseInt(dlgCaja.txtCaInicialL.getText());
+        int caInicial = Integer.parseInt(dlgCaja.txtCaInicial.getText().replace(".", "").replace(",", ""));
 
         Caja caja = new Caja(caFechaI, caHoraI, caInicial,0, 0, 0, caUsuI);
         msg = GestionarCaja.addCaja(caja);

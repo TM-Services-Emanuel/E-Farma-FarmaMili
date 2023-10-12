@@ -40,6 +40,26 @@ public class dlgSucursal extends javax.swing.JDialog {
         }
     }
 
+    private void Cancelar() {
+        CabecerasTablas.limpiarTablas(tbSucursal);
+        controlSucursal.listSucursal(tbSucursal);
+        btnNuevo.setEnabled(true);
+        btnModificar.setEnabled(false);
+        btnGuardar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnSalir.setEnabled(true);
+        txtSucursal.setEnabled(false);
+        txtIPSucursal.setEnabled(false);
+        cboEmpresa.setEnabled(false);
+        rMiSuc.setEnabled(false);
+        limpiarCampos();
+        tbSucursal.clearSelection();
+        tbSucursal.setEnabled(true);
+        btnNuevo.requestFocus();
+        ban = 0;
+    }
+
     public void modcbEmpresa(int id) {
         DefaultComboBoxModel ml = new DefaultComboBoxModel();
         String sqlEmps = "SELECT * FROM empresa WHERE em_visualizar='SI' and em_indicador='S'";
@@ -451,6 +471,7 @@ public class dlgSucursal extends javax.swing.JDialog {
         btnNuevo.setEnabled(false);
         btnGuardar.setEnabled(true);
         btnCancelar.setEnabled(true);
+        btnSalir.setEnabled(false);
         txtSucursal.setEnabled(true);
         txtIPSucursal.setEnabled(true);
         cboEmpresa.setEnabled(true);
@@ -477,8 +498,7 @@ public class dlgSucursal extends javax.swing.JDialog {
                 int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (resp == JOptionPane.YES_OPTION) {
                     controlSucursal.actSucursal();
-                    btnCancelarActionPerformed(null);
-
+                    Cancelar();
                 }
             } catch (HeadlessException ee) {
                 System.out.println(ee.getMessage());
@@ -506,7 +526,7 @@ public class dlgSucursal extends javax.swing.JDialog {
                     String cod = GestionalSucursal.getCodigo();
                     txtCod.setText(cod);
                     controlSucursal.addSucursal();
-                    btnCancelarActionPerformed(null);
+                    Cancelar();
                 }
             } catch (HeadlessException ee) {
                 System.out.println("Error en Guardar: " + ee.getMessage());
@@ -515,23 +535,11 @@ public class dlgSucursal extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        ban = 0;
-        CabecerasTablas.limpiarTablas(tbSucursal);
-        controlSucursal.listSucursal(tbSucursal);
-        btnNuevo.setEnabled(true);
-        btnModificar.setEnabled(false);
-        btnGuardar.setEnabled(false);
-        btnCancelar.setEnabled(false);
-        btnEliminar.setEnabled(false);
-        txtSucursal.setEnabled(false);
-        txtIPSucursal.setEnabled(false);
-        cboEmpresa.setEnabled(false);
-        rMiSuc.setEnabled(false);
-        limpiarCampos();
-        tbSucursal.clearSelection();
-        tbSucursal.setEnabled(true);
-        btnNuevo.requestFocus();
+        // TODO add your handling code here
+        int rpta = Mensajes.confirmar("¿Seguro que desea cancelar esta operación?");
+        if (rpta == 0) {
+            Cancelar();
+        }
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -539,16 +547,8 @@ public class dlgSucursal extends javax.swing.JDialog {
         try {
             int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (resp == JOptionPane.YES_OPTION) {
-                btnEliminar.setEnabled(false);
-                btnModificar.setEnabled(false);
-                btnCancelar.setEnabled(false);
-                txtSucursal.setEnabled(false);
-                cboEmpresa.setEnabled(false);
                 controlSucursal.delSucursal();
-                limpiarCampos();
-                CabecerasTablas.limpiarTablas(tbSucursal);
-                controlSucursal.listSucursal(tbSucursal);
-                btnCancelarActionPerformed(null);
+                Cancelar();
             }
         } catch (HeadlessException ee) {
         }
@@ -559,6 +559,7 @@ public class dlgSucursal extends javax.swing.JDialog {
         int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
         if (rpta == 0) {
             ControlLogeo.Empresa();
+            frmPrincipal.informacionGral();
             this.dispose();
         }
     }//GEN-LAST:event_btnSalirActionPerformed
@@ -620,6 +621,7 @@ public class dlgSucursal extends javax.swing.JDialog {
             txtIPSucursal.setEnabled(true);
             btnGuardar.setEnabled(false);
             btnCancelar.setEnabled(true);
+            btnSalir.setEnabled(false);
             cboEmpresa.setEnabled(true);
             rMiSuc.setEnabled(true);
 

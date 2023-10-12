@@ -8,10 +8,10 @@ public class controlPerfil {
         String perf = ControlLogeo.perfil();
         if (perf.equalsIgnoreCase("ALMACEN"))
         {
-            frmPrincipal.btnClientes.setVisible(false);
-            frmPrincipal.btnProveedores.setVisible(false);
-            frmPrincipal.btnCompras.setVisible(false);
-            frmPrincipal.btnVentas.setVisible(false);
+            frmPrincipal.panelClientes.setVisible(false);
+            frmPrincipal.panelProveedores.setVisible(false);
+            frmPrincipal.panelCompras.setVisible(false);
+            frmPrincipal.panelVentas.setVisible(false);
             frmPrincipal.mnCompras.setVisible(false);
             frmPrincipal.mnVentas.setVisible(false);
             frmPrincipal.mnMantenimiento.setVisible(false);
@@ -31,16 +31,16 @@ public class controlPerfil {
             frmPrincipal.mnComision.setVisible(false);
             frmPrincipal.mnConfiguracion.setVisible(false);
             frmPrincipal.smModUsuariosD.setVisible(false);
-            frmPrincipal.btnGV.setVisible(false);
-            frmPrincipal.btnGC.setVisible(false);
+            frmPrincipal.panelGestTicket.setVisible(false);
+            frmPrincipal.panelGestionarCompras.setVisible(false);
             frmPrincipal.divisor4.setVisible(false);
             frmPrincipal.divisor5.setVisible(false);
-            frmPrincipal.btnGFL.setVisible(false);
+            frmPrincipal.panelGestFacturas.setVisible(false);
         } else if (perf.equalsIgnoreCase("COMPRA"))
         {
-            frmPrincipal.btnArticulos.setVisible(false);
-            frmPrincipal.btnVentas.setVisible(false);
-            frmPrincipal.btnClientes.setVisible(false);
+            frmPrincipal.panelProductos.setVisible(false);
+            frmPrincipal.panelVentas.setVisible(false);
+            frmPrincipal.panelClientes.setVisible(false);
             frmPrincipal.mnArticulos.setVisible(false);
             frmPrincipal.mnVentas.setVisible(false);
             frmPrincipal.mnClientes.setVisible(false);
@@ -63,17 +63,20 @@ public class controlPerfil {
             frmPrincipal.mnComision.setVisible(false);
             frmPrincipal.mnConfiguracion.setVisible(false);
             frmPrincipal.smModUsuariosD.setVisible(false);
-            frmPrincipal.btnGV.setVisible(false);
+            frmPrincipal.panelGestTicket.setVisible(false);
             frmPrincipal.divisor4.setVisible(false);
             frmPrincipal.divisor5.setVisible(false);
-            frmPrincipal.btnGFL.setVisible(false);
+            frmPrincipal.panelGestFacturas.setVisible(false);
             frmPrincipal.Separator13.setVisible(false);
             frmPrincipal.Separator11.setVisible(false);
+            frmPrincipal.panelTransferencias.setVisible(false);
+            frmPrincipal.panelGestTransferencias.setVisible(false);
+            frmPrincipal.mnTransferencias.setVisible(false);
         } else if (perf.equalsIgnoreCase("VENTA"))
         {
-            frmPrincipal.btnArticulos.setVisible(false);
-            frmPrincipal.btnProveedores.setVisible(false);
-            frmPrincipal.btnCompras.setVisible(false);
+            frmPrincipal.panelProductos.setVisible(false);
+            frmPrincipal.panelProveedores.setVisible(false);
+            frmPrincipal.panelCompras.setVisible(false);
             frmPrincipal.mnInformacion.setVisible(false);
             frmPrincipal.mnEmpleados.setVisible(false);
             frmPrincipal.mnProveedores.setVisible(false);
@@ -95,11 +98,14 @@ public class controlPerfil {
             frmPrincipal.mnComision.setVisible(false);
             frmPrincipal.mnConfiguracion.setVisible(false);
             frmPrincipal.smModUsuariosD.setVisible(false);
-            frmPrincipal.btnGC.setVisible(false);
+            frmPrincipal.panelGestionarCompras.setVisible(false);
             frmPrincipal.mnGVE.setVisible(false);
             frmPrincipal.divisor5.setVisible(false);
             frmPrincipal.Separator13.setVisible(false);
             frmPrincipal.Separator11.setVisible(false);
+            frmPrincipal.panelTransferencias.setVisible(false);
+            frmPrincipal.panelGestTransferencias.setVisible(false);
+            frmPrincipal.mnTransferencias.setVisible(false);
             
         } else if (perf.equalsIgnoreCase("ADMINISTRADOR")) {
             frmPrincipal.btnArticulos.setVisible(true);

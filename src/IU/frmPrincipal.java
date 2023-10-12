@@ -116,38 +116,46 @@ public final class frmPrincipal extends javax.swing.JFrame {
         btnSalir = new RSMaterialComponent.RSButtonIconUno();
         btnCerrarSesion = new RSMaterialComponent.RSButtonIconUno();
         jPanel2 = new javax.swing.JPanel();
-        rSPanelImage3 = new rojeru_san.rspanel.RSPanelImage();
+        panelProductos = new rojeru_san.rspanel.RSPanelImage();
         btnArticulos = new RSMaterialComponent.RSButtonIconUno();
         jSeparator29 = new javax.swing.JSeparator();
         jLabel19 = new javax.swing.JLabel();
-        rSPanelImage1 = new rojeru_san.rspanel.RSPanelImage();
+        panelClientes = new rojeru_san.rspanel.RSPanelImage();
         btnClientes = new RSMaterialComponent.RSButtonIconUno();
         jSeparator10 = new javax.swing.JSeparator();
         jLabel11 = new javax.swing.JLabel();
-        rSPanelImage2 = new rojeru_san.rspanel.RSPanelImage();
+        panelProveedores = new rojeru_san.rspanel.RSPanelImage();
         btnProveedores = new RSMaterialComponent.RSButtonIconUno();
         jSeparator28 = new javax.swing.JSeparator();
         jLabel17 = new javax.swing.JLabel();
-        rSPanelImage4 = new rojeru_san.rspanel.RSPanelImage();
+        panelVentas = new rojeru_san.rspanel.RSPanelImage();
         btnVentas = new RSMaterialComponent.RSButtonIconUno();
         jSeparator30 = new javax.swing.JSeparator();
         jLabel18 = new javax.swing.JLabel();
-        rSPanelImage5 = new rojeru_san.rspanel.RSPanelImage();
+        panelCompras = new rojeru_san.rspanel.RSPanelImage();
         btnCompras = new RSMaterialComponent.RSButtonIconUno();
         jSeparator31 = new javax.swing.JSeparator();
         jLabel20 = new javax.swing.JLabel();
-        rSPanelImage6 = new rojeru_san.rspanel.RSPanelImage();
+        panelGestTicket = new rojeru_san.rspanel.RSPanelImage();
         btnGV = new RSMaterialComponent.RSButtonIconUno();
         jSeparator32 = new javax.swing.JSeparator();
         jLabel21 = new javax.swing.JLabel();
-        rSPanelImage7 = new rojeru_san.rspanel.RSPanelImage();
+        panelGestFacturas = new rojeru_san.rspanel.RSPanelImage();
         btnGFL = new RSMaterialComponent.RSButtonIconUno();
         jSeparator33 = new javax.swing.JSeparator();
         jLabel22 = new javax.swing.JLabel();
-        rSPanelImage8 = new rojeru_san.rspanel.RSPanelImage();
+        panelGestionarCompras = new rojeru_san.rspanel.RSPanelImage();
         btnGC = new RSMaterialComponent.RSButtonIconUno();
         jSeparator34 = new javax.swing.JSeparator();
         jLabel23 = new javax.swing.JLabel();
+        panelGestTransferencias = new rojeru_san.rspanel.RSPanelImage();
+        btnGV1 = new RSMaterialComponent.RSButtonIconUno();
+        jSeparator36 = new javax.swing.JSeparator();
+        jLabel26 = new javax.swing.JLabel();
+        panelTransferencias = new rojeru_san.rspanel.RSPanelImage();
+        btnVentas1 = new RSMaterialComponent.RSButtonIconUno();
+        jSeparator35 = new javax.swing.JSeparator();
+        jLabel25 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         jLabel5 = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
@@ -254,6 +262,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         rpCompras = new javax.swing.JMenu();
         rpDevoluciones = new javax.swing.JMenu();
         rpPresupuestos = new javax.swing.JMenu();
+        rpPresupuestos1 = new javax.swing.JMenu();
+        jMenuItem27 = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         rpArticulos = new javax.swing.JMenu();
         jMenuItem36 = new javax.swing.JMenuItem();
@@ -432,7 +442,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 .addGroup(CONTENEDORLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(CONTENEDOR_EMPRESA, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
                     .addComponent(CONTENEDOR_ACCESO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 5, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         CONTENEDORLayout.setVerticalGroup(
             CONTENEDORLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,8 +455,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
         jPanel2.setOpaque(false);
 
-        rSPanelImage3.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
-        rSPanelImage3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelProductos.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        panelProductos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnArticulos.setBackground(new java.awt.Color(0, 153, 204));
         btnArticulos.setBackgroundHover(new java.awt.Color(255, 255, 255));
@@ -458,19 +468,19 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 btnArticulosActionPerformed(evt);
             }
         });
-        rSPanelImage3.add(btnArticulos, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 20, 60, 60));
+        panelProductos.add(btnArticulos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 15, 60, 60));
 
         jSeparator29.setForeground(new java.awt.Color(204, 204, 204));
-        rSPanelImage3.add(jSeparator29, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 85, 110, -1));
+        panelProductos.add(jSeparator29, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 80, 110, -1));
 
         jLabel19.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(17, 35, 46));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Gestionar Productos");
-        rSPanelImage3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
+        panelProductos.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
 
-        rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
-        rSPanelImage1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelClientes.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        panelClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnClientes.setBackground(new java.awt.Color(255, 102, 102));
         btnClientes.setBackgroundHover(new java.awt.Color(255, 255, 255));
@@ -482,19 +492,19 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 btnClientesActionPerformed(evt);
             }
         });
-        rSPanelImage1.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 20, 60, 60));
+        panelClientes.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 15, 60, 60));
 
         jSeparator10.setForeground(new java.awt.Color(204, 204, 204));
-        rSPanelImage1.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 85, 110, -1));
+        panelClientes.add(jSeparator10, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 80, 110, -1));
 
         jLabel11.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(17, 35, 46));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Gestionar clientes");
-        rSPanelImage1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
+        panelClientes.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
 
-        rSPanelImage2.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
-        rSPanelImage2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelProveedores.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        panelProveedores.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnProveedores.setBackground(new java.awt.Color(51, 51, 255));
         btnProveedores.setBackgroundHover(new java.awt.Color(255, 255, 255));
@@ -506,19 +516,19 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 btnProveedoresActionPerformed(evt);
             }
         });
-        rSPanelImage2.add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 20, 60, 60));
+        panelProveedores.add(btnProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 15, 60, 60));
 
         jSeparator28.setForeground(new java.awt.Color(204, 204, 204));
-        rSPanelImage2.add(jSeparator28, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 85, 110, -1));
+        panelProveedores.add(jSeparator28, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 80, 110, -1));
 
         jLabel17.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(17, 35, 46));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("Gestionar Proveedores");
-        rSPanelImage2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 130, -1));
+        jLabel17.setText("Gest. Proveedores");
+        panelProveedores.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
 
-        rSPanelImage4.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
-        rSPanelImage4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelVentas.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        panelVentas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnVentas.setBackground(new java.awt.Color(0, 102, 0));
         btnVentas.setBackgroundHover(new java.awt.Color(255, 255, 255));
@@ -530,19 +540,19 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 btnVentasActionPerformed(evt);
             }
         });
-        rSPanelImage4.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 20, 60, 60));
+        panelVentas.add(btnVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 15, 60, 60));
 
         jSeparator30.setForeground(new java.awt.Color(204, 204, 204));
-        rSPanelImage4.add(jSeparator30, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 85, 110, -1));
+        panelVentas.add(jSeparator30, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 80, 110, -1));
 
         jLabel18.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(17, 35, 46));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("Realizar Ventas");
-        rSPanelImage4.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
+        panelVentas.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
 
-        rSPanelImage5.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
-        rSPanelImage5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelCompras.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        panelCompras.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCompras.setBackground(new java.awt.Color(255, 102, 255));
         btnCompras.setBackgroundHover(new java.awt.Color(255, 255, 255));
@@ -554,88 +564,136 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 btnComprasActionPerformed(evt);
             }
         });
-        rSPanelImage5.add(btnCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 20, 60, 60));
+        panelCompras.add(btnCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 15, 60, 60));
 
         jSeparator31.setForeground(new java.awt.Color(204, 204, 204));
-        rSPanelImage5.add(jSeparator31, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 85, 110, -1));
+        panelCompras.add(jSeparator31, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 80, 110, -1));
 
         jLabel20.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(17, 35, 46));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Registrar Compras");
-        rSPanelImage5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
+        panelCompras.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
 
-        rSPanelImage6.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
-        rSPanelImage6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelGestTicket.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        panelGestTicket.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnGV.setBackground(new java.awt.Color(0, 51, 51));
         btnGV.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnGV.setForegroundHover(new java.awt.Color(0, 51, 51));
-        btnGV.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LIST);
+        btnGV.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.VIEW_LIST);
         btnGV.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnGV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGVActionPerformed(evt);
             }
         });
-        rSPanelImage6.add(btnGV, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 20, 60, 60));
+        panelGestTicket.add(btnGV, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 15, 60, 60));
 
         jSeparator32.setForeground(new java.awt.Color(204, 204, 204));
-        rSPanelImage6.add(jSeparator32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 85, 110, -1));
+        panelGestTicket.add(jSeparator32, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 80, 110, -1));
 
         jLabel21.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(17, 35, 46));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Tickets Emitidos");
-        rSPanelImage6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
+        panelGestTicket.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
 
-        rSPanelImage7.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
-        rSPanelImage7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelGestFacturas.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        panelGestFacturas.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnGFL.setBackground(new java.awt.Color(0, 102, 102));
         btnGFL.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnGFL.setForegroundHover(new java.awt.Color(0, 102, 102));
-        btnGFL.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LIST);
+        btnGFL.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.VIEW_LIST);
         btnGFL.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnGFL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGFLActionPerformed(evt);
             }
         });
-        rSPanelImage7.add(btnGFL, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 20, 60, 60));
+        panelGestFacturas.add(btnGFL, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 15, 60, 60));
 
         jSeparator33.setForeground(new java.awt.Color(204, 204, 204));
-        rSPanelImage7.add(jSeparator33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 85, 110, -1));
+        panelGestFacturas.add(jSeparator33, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 80, 110, -1));
 
         jLabel22.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(17, 35, 46));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Facturas Emitidas");
-        rSPanelImage7.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
+        panelGestFacturas.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
 
-        rSPanelImage8.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
-        rSPanelImage8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelGestionarCompras.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        panelGestionarCompras.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnGC.setBackground(new java.awt.Color(153, 0, 153));
         btnGC.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnGC.setForegroundHover(new java.awt.Color(153, 0, 153));
-        btnGC.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LIST);
+        btnGC.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.VIEW_LIST);
         btnGC.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnGC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGCActionPerformed(evt);
             }
         });
-        rSPanelImage8.add(btnGC, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 20, 60, 60));
+        panelGestionarCompras.add(btnGC, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 15, 60, 60));
 
         jSeparator34.setForeground(new java.awt.Color(204, 204, 204));
-        rSPanelImage8.add(jSeparator34, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 85, 110, -1));
+        panelGestionarCompras.add(jSeparator34, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 80, 110, -1));
 
         jLabel23.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(17, 35, 46));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("Gestionar Compras");
-        rSPanelImage8.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
+        panelGestionarCompras.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
+
+        panelGestTransferencias.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        panelGestTransferencias.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnGV1.setBackground(new java.awt.Color(153, 102, 0));
+        btnGV1.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnGV1.setForegroundHover(new java.awt.Color(153, 102, 0));
+        btnGV1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.VIEW_LIST);
+        btnGV1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnGV1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGV1ActionPerformed(evt);
+            }
+        });
+        panelGestTransferencias.add(btnGV1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 15, 60, 60));
+
+        jSeparator36.setForeground(new java.awt.Color(204, 204, 204));
+        panelGestTransferencias.add(jSeparator36, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 80, 110, -1));
+
+        jLabel26.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(17, 35, 46));
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel26.setText("Gestionar Transf.");
+        panelGestTransferencias.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
+
+        panelTransferencias.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        panelTransferencias.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnVentas1.setBackground(new java.awt.Color(255, 102, 0));
+        btnVentas1.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnVentas1.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnVentas1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.BUSINESS);
+        btnVentas1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnVentas1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentas1ActionPerformed(evt);
+            }
+        });
+        panelTransferencias.add(btnVentas1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 15, 60, 60));
+
+        jSeparator35.setForeground(new java.awt.Color(204, 204, 204));
+        panelTransferencias.add(jSeparator35, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 80, 110, -1));
+
+        jLabel25.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(17, 35, 46));
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("Transferencias");
+        panelTransferencias.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -648,42 +706,56 @@ public final class frmPrincipal extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(rSPanelImage5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(panelCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, 0)
-                                .addComponent(rSPanelImage8, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(panelGestionarCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(rSPanelImage4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(rSPanelImage6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(rSPanelImage7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(panelVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, 0)
+                                        .addComponent(panelGestTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(panelTransferencias, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, 0)
+                                        .addComponent(panelGestTransferencias, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(panelGestFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rSPanelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rSPanelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rSPanelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rSPanelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(rSPanelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(rSPanelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(panelProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSPanelImage8, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSPanelImage5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelGestionarCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rSPanelImage7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSPanelImage6, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(rSPanelImage4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(72, 72, 72))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(panelGestFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(110, 110, 110))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelGestTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelGestTransferencias, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelTransferencias, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout panelImage1Layout = new javax.swing.GroupLayout(panelImage1);
@@ -691,18 +763,16 @@ public final class frmPrincipal extends javax.swing.JFrame {
         panelImage1Layout.setHorizontalGroup(
             panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelImage1Layout.createSequentialGroup()
-                .addComponent(CONTENEDOR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelImage1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panelImage1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(1332, Short.MAX_VALUE))))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(panelImage1Layout.createSequentialGroup()
+                .addComponent(CONTENEDOR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(303, Short.MAX_VALUE))
         );
         panelImage1Layout.setVerticalGroup(
             panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -713,8 +783,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
                     .addGroup(panelImage1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -1621,7 +1691,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jMenuItem26.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem26.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jMenuItem26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reports.png"))); // NOI18N
-        jMenuItem26.setText("RESUMEN DE CAJA");
+        jMenuItem26.setText("GENERAR RESUMEN DE CAJA");
         jMenuItem26.setBorder(null);
         jMenuItem26.setOpaque(true);
         jMenuItem26.addActionListener(new java.awt.event.ActionListener() {
@@ -1634,7 +1704,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jMenuItem66.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem66.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jMenuItem66.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reports.png"))); // NOI18N
-        jMenuItem66.setText("TOTAL DE VENTAS - REPORTE VALORIZADO");
+        jMenuItem66.setText("GENERAR REPORTE - TOTAL DE VENTAS - REPORTE VALORIZADO");
         jMenuItem66.setBorder(null);
         jMenuItem66.setOpaque(true);
         jMenuItem66.addActionListener(new java.awt.event.ActionListener() {
@@ -1647,7 +1717,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jMenuItem65.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem65.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jMenuItem65.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reports.png"))); // NOI18N
-        jMenuItem65.setText("RANKING DE VENTAS");
+        jMenuItem65.setText("GENERAR REPORTE - RANKING DE VENTAS");
         jMenuItem65.setBorder(null);
         jMenuItem65.setOpaque(true);
         jMenuItem65.addActionListener(new java.awt.event.ActionListener() {
@@ -1660,7 +1730,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jMenuItem67.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem67.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jMenuItem67.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reports.png"))); // NOI18N
-        jMenuItem67.setText("VENTAS POR LABORATORIO");
+        jMenuItem67.setText("GENERAR REPORTE - VENTAS POR LABORATORIO");
         jMenuItem67.setBorder(null);
         jMenuItem67.setOpaque(true);
         jMenuItem67.addActionListener(new java.awt.event.ActionListener() {
@@ -1695,6 +1765,28 @@ public final class frmPrincipal extends javax.swing.JFrame {
         rpPresupuestos.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         rpPresupuestos.setOpaque(true);
         mnReportes.add(rpPresupuestos);
+
+        rpPresupuestos1.setBackground(new java.awt.Color(255, 255, 255));
+        rpPresupuestos1.setBorder(null);
+        rpPresupuestos1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ic_menu_128_28650 - copia.png"))); // NOI18N
+        rpPresupuestos1.setText("TRANSFERENCIAS");
+        rpPresupuestos1.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        rpPresupuestos1.setOpaque(true);
+
+        jMenuItem27.setBackground(new java.awt.Color(255, 255, 255));
+        jMenuItem27.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        jMenuItem27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reports.png"))); // NOI18N
+        jMenuItem27.setText("GENERAR REPORTE DE TRANSFERENCIAS");
+        jMenuItem27.setBorder(null);
+        jMenuItem27.setOpaque(true);
+        jMenuItem27.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem27ActionPerformed(evt);
+            }
+        });
+        rpPresupuestos1.add(jMenuItem27);
+
+        mnReportes.add(rpPresupuestos1);
 
         jSeparator7.setForeground(new java.awt.Color(204, 204, 204));
         jSeparator7.setOpaque(true);
@@ -1868,13 +1960,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(panelImage1, javax.swing.GroupLayout.DEFAULT_SIZE, 2207, Short.MAX_VALUE)
+            .addComponent(panelImage1, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(panelImage1, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
+                .addComponent(panelImage1, javax.swing.GroupLayout.DEFAULT_SIZE, 694, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -2596,6 +2687,38 @@ public final class frmPrincipal extends javax.swing.JFrame {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_itemGestionarTR1ActionPerformed
+
+    private void jMenuItem27ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem27ActionPerformed
+        // TODO add your handling code here:
+        try {
+            dlgReporteTransferenciasFecha rsc = new dlgReporteTransferenciasFecha(this, true);
+            rsc.setLocationRelativeTo(null);
+            rsc.setVisible(true);
+        } catch (SQLException e) {
+            Mensajes.informacion("No hay conexión con el servidor");
+        }
+    }//GEN-LAST:event_jMenuItem27ActionPerformed
+
+    private void btnVentas1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentas1ActionPerformed
+        // TODO add your handling code here:
+        String fe = generarCodigos.getFecha("SELECT ca_fechainicio FROM caja where ca_indicador='S' ORDER BY ca_id DESC LIMIT 1");
+        if (!fe.equals(Fecha.fechaCorrecta())) {
+            Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara poder comenzar a registrar los repartos sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
+        } else {
+            abrirTransferencias();
+        }
+    }//GEN-LAST:event_btnVentas1ActionPerformed
+
+    private void btnGV1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGV1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            dlgConsultarTransferencias rsc = new dlgConsultarTransferencias(this, false);
+            rsc.setLocationRelativeTo(null);
+            rsc.setVisible(true);
+        } catch (SQLException e) {
+            Mensajes.informacion("No hay conexión con el servidor");
+        }
+    }//GEN-LAST:event_btnGV1ActionPerformed
     void abrirTransferencias() {
         try {
             dlgTransferencia trans = new dlgTransferencia(this, true);
@@ -2675,9 +2798,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
     public static RSMaterialComponent.RSButtonIconUno btnGC;
     public static RSMaterialComponent.RSButtonIconUno btnGFL;
     public static RSMaterialComponent.RSButtonIconUno btnGV;
+    public static RSMaterialComponent.RSButtonIconUno btnGV1;
     public static RSMaterialComponent.RSButtonIconUno btnProveedores;
     public static RSMaterialComponent.RSButtonIconUno btnSalir;
     public static RSMaterialComponent.RSButtonIconUno btnVentas;
+    public static RSMaterialComponent.RSButtonIconUno btnVentas1;
     public static javax.swing.JMenu divisor3;
     public static javax.swing.JMenu divisor4;
     public static javax.swing.JMenu divisor5;
@@ -2710,6 +2835,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -2723,6 +2850,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     public static javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem26;
+    private javax.swing.JMenuItem jMenuItem27;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem30;
     private javax.swing.JMenuItem jMenuItem35;
@@ -2775,6 +2903,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator32;
     private javax.swing.JSeparator jSeparator33;
     private javax.swing.JSeparator jSeparator34;
+    private javax.swing.JSeparator jSeparator35;
+    private javax.swing.JSeparator jSeparator36;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
@@ -2827,20 +2957,23 @@ public final class frmPrincipal extends javax.swing.JFrame {
     public static javax.swing.JMenu mnSistema;
     public static javax.swing.JMenu mnTransferencias;
     public static javax.swing.JMenu mnVentas;
+    public static rojeru_san.rspanel.RSPanelImage panelClientes;
+    public static rojeru_san.rspanel.RSPanelImage panelCompras;
+    public static rojeru_san.rspanel.RSPanelImage panelGestFacturas;
+    public static rojeru_san.rspanel.RSPanelImage panelGestTicket;
+    public static rojeru_san.rspanel.RSPanelImage panelGestTransferencias;
+    public static rojeru_san.rspanel.RSPanelImage panelGestionarCompras;
     private org.edisoncor.gui.panel.PanelImage panelImage1;
-    private rojeru_san.rspanel.RSPanelImage rSPanelImage1;
-    private rojeru_san.rspanel.RSPanelImage rSPanelImage2;
-    private rojeru_san.rspanel.RSPanelImage rSPanelImage3;
-    private rojeru_san.rspanel.RSPanelImage rSPanelImage4;
-    private rojeru_san.rspanel.RSPanelImage rSPanelImage5;
-    private rojeru_san.rspanel.RSPanelImage rSPanelImage6;
-    private rojeru_san.rspanel.RSPanelImage rSPanelImage7;
-    private rojeru_san.rspanel.RSPanelImage rSPanelImage8;
+    public static rojeru_san.rspanel.RSPanelImage panelProductos;
+    public static rojeru_san.rspanel.RSPanelImage panelProveedores;
+    public static rojeru_san.rspanel.RSPanelImage panelTransferencias;
+    public static rojeru_san.rspanel.RSPanelImage panelVentas;
     public static javax.swing.JMenu rpArticulos;
     public static javax.swing.JMenu rpClientes;
     public static javax.swing.JMenu rpCompras;
     public static javax.swing.JMenu rpDevoluciones;
     public static javax.swing.JMenu rpPresupuestos;
+    public static javax.swing.JMenu rpPresupuestos1;
     public static javax.swing.JMenu rpProveedores;
     public static javax.swing.JMenu rpVendedores;
     public static javax.swing.JMenu rpVentas;

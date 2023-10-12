@@ -19,6 +19,7 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
 
     CabecerasTablas cabe = new CabecerasTablas();
     static DataSourceService dss = new DataSourceService();
+    private int ban;
 
     public dlgPuntoEmisionMovil(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -47,19 +48,15 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
     }
 
     public void Cancelar() {
+        ban = 0;
         btnNuevo.setEnabled(true);
-        itemNuevo.setEnabled(true);
         btnModificar.setEnabled(false);
-        itemModificar.setEnabled(false);
         btnGuardar.setEnabled(false);
-        itemGuardar.setEnabled(false);
         btnCancelar.setEnabled(false);
-        itemCancelar.setEnabled(false);
         btnSalir.setEnabled(true);
-        itemSalir.setEnabled(true);
         btnEliminar.setEnabled(false);
-        itemEliminar.setEnabled(false);
-        tbPuntoEmision.setVisible(true);
+        tbPuntoEmision.clearSelection();
+        tbPuntoEmision.setEnabled(true);
         //
         cboTimbrado.setEnabled(false);
         txtEstablecimiento.setEnabled(false);
@@ -74,6 +71,8 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         btnBuscarImpresora.setEnabled(false);
         txtIP.setEnabled(false);
         limpiarCampos();
+        
+        
         btnNuevo.requestFocus();
     }
 
@@ -125,13 +124,28 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         grupActivo = new javax.swing.ButtonGroup();
         Blanco = new org.edisoncor.gui.panel.PanelImage();
         Oscuro = new org.edisoncor.gui.panel.PanelImage();
-        jPanel1 = new javax.swing.JPanel();
-        btnNuevo = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        PnlNuevo = new rojeru_san.rspanel.RSPanelImage();
+        btnNuevo = new RSMaterialComponent.RSButtonIconUno();
+        Separador1 = new javax.swing.JSeparator();
+        LabelTitulo1 = new javax.swing.JLabel();
+        PnlModificar = new rojeru_san.rspanel.RSPanelImage();
+        btnModificar = new RSMaterialComponent.RSButtonIconUno();
+        Separador2 = new javax.swing.JSeparator();
+        LabelTitulo2 = new javax.swing.JLabel();
+        PnlGuardar = new rojeru_san.rspanel.RSPanelImage();
+        btnGuardar = new RSMaterialComponent.RSButtonIconUno();
+        Separador3 = new javax.swing.JSeparator();
+        LabelTitulo3 = new javax.swing.JLabel();
+        PnlCancelar = new rojeru_san.rspanel.RSPanelImage();
+        btnCancelar = new RSMaterialComponent.RSButtonIconUno();
+        Separador4 = new javax.swing.JSeparator();
+        LabelTitulo4 = new javax.swing.JLabel();
+        PnlEliminar = new rojeru_san.rspanel.RSPanelImage();
+        btnEliminar = new RSMaterialComponent.RSButtonIconUno();
+        Separador = new javax.swing.JSeparator();
+        LabelTitulo = new javax.swing.JLabel();
+        btnSalir = new RSMaterialComponent.RSButtonIconUno();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtCod = new javax.swing.JTextField();
@@ -160,7 +174,7 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         lbFechaTimbrado = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txtImpresora = new javax.swing.JTextField();
-        btnBuscarImpresora = new javax.swing.JButton();
+        btnBuscarImpresora = new RSMaterialComponent.RSButtonIconUno();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbPuntoEmision = new javax.swing.JTable()
         {
@@ -169,140 +183,200 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 return false;
             }
         };
-        barMenu = new javax.swing.JMenuBar();
-        menuOpciones = new javax.swing.JMenu();
-        itemNuevo = new javax.swing.JMenuItem();
-        itemModificar = new javax.swing.JMenuItem();
-        itemGuardar = new javax.swing.JMenuItem();
-        itemCancelar = new javax.swing.JMenuItem();
-        itemEliminar = new javax.swing.JMenuItem();
-        itemSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
 
         Blanco.setBackground(new java.awt.Color(255, 255, 255));
+        Blanco.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
         Blanco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoBlanco.jpg"))); // NOI18N
         Blanco.setPreferredSize(new java.awt.Dimension(690, 418));
+        Blanco.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Oscuro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo.png"))); // NOI18N
         Oscuro.setPreferredSize(new java.awt.Dimension(690, 418));
+        Oscuro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.setLayout(new java.awt.GridLayout(1, 9));
+        jPanel4.setOpaque(false);
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnNuevo.setFont(new java.awt.Font("SansSerif", 0, 9)); // NOI18N
-        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/document30.png"))); // NOI18N
-        btnNuevo.setText("Nuevo-F1");
-        btnNuevo.setToolTipText("Nuevo - F3");
-        btnNuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnNuevo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        PnlNuevo.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlNuevo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnNuevo.setBackground(new java.awt.Color(0, 102, 0));
+        btnNuevo.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnNuevo.setForegroundHover(new java.awt.Color(0, 102, 0));
+        btnNuevo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnNuevo.setRippleColor(java.awt.Color.white);
+        btnNuevo.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
             }
         });
-        jPanel1.add(btnNuevo);
+        PnlNuevo.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
-        btnModificar.setFont(new java.awt.Font("SansSerif", 0, 9)); // NOI18N
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit30.png"))); // NOI18N
-        btnModificar.setText("Modif-F5");
-        btnModificar.setToolTipText("Modificar - F5");
+        Separador1.setForeground(new java.awt.Color(204, 204, 204));
+        PnlNuevo.add(Separador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo1.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo1.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo1.setText("NUEVO");
+        PnlNuevo.add(LabelTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel4.add(PnlNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 3, 100, 100));
+
+        PnlModificar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlModificar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnModificar.setBackground(new java.awt.Color(255, 102, 0));
+        btnModificar.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnModificar.setEnabled(false);
-        btnModificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnModificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnModificar.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
+        btnModificar.setRippleColor(java.awt.Color.white);
+        btnModificar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnModificar);
+        PnlModificar.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
-        btnGuardar.setFont(new java.awt.Font("SansSerif", 0, 9)); // NOI18N
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save30.png"))); // NOI18N
-        btnGuardar.setText("Guardar-F6");
-        btnGuardar.setToolTipText("Guardar - F6");
+        Separador2.setForeground(new java.awt.Color(204, 204, 204));
+        PnlModificar.add(Separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo2.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo2.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo2.setText("MODIFICAR");
+        PnlModificar.add(LabelTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel4.add(PnlModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 3, 100, 100));
+
+        PnlGuardar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlGuardar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnGuardar.setBackground(new java.awt.Color(0, 102, 255));
+        btnGuardar.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnGuardar.setEnabled(false);
-        btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnGuardar.setForegroundHover(new java.awt.Color(0, 102, 0));
+        btnGuardar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
+        btnGuardar.setRippleColor(java.awt.Color.white);
+        btnGuardar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar);
+        PnlGuardar.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
-        btnCancelar.setFont(new java.awt.Font("SansSerif", 0, 9)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel30.png"))); // NOI18N
-        btnCancelar.setText("Cancel-Esc");
-        btnCancelar.setToolTipText("Cancelar - Esc");
+        Separador3.setForeground(new java.awt.Color(204, 204, 204));
+        PnlGuardar.add(Separador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo3.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo3.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo3.setText("REGISTRAR");
+        PnlGuardar.add(LabelTitulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel4.add(PnlGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, 100));
+
+        PnlCancelar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlCancelar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnCancelar.setBackground(new java.awt.Color(153, 0, 51));
+        btnCancelar.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnCancelar.setEnabled(false);
-        btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnCancelar.setForegroundHover(new java.awt.Color(153, 0, 51));
+        btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        btnCancelar.setRippleColor(java.awt.Color.white);
+        btnCancelar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar);
+        PnlCancelar.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
-        btnEliminar.setFont(new java.awt.Font("SansSerif", 0, 9)); // NOI18N
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/garbage30.png"))); // NOI18N
-        btnEliminar.setText("Elim-Supr");
-        btnEliminar.setToolTipText("Eliminar - Supr");
+        Separador4.setForeground(new java.awt.Color(204, 204, 204));
+        PnlCancelar.add(Separador4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo4.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo4.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo4.setText("CANCELAR");
+        PnlCancelar.add(LabelTitulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel4.add(PnlCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(296, 3, 100, 100));
+
+        PnlEliminar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlEliminar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnEliminar.setBackground(new java.awt.Color(255, 0, 0));
+        btnEliminar.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnEliminar.setEnabled(false);
-        btnEliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnEliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnEliminar.setForegroundHover(new java.awt.Color(255, 0, 0));
+        btnEliminar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnEliminar.setRippleColor(java.awt.Color.white);
+        btnEliminar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEliminar);
+        PnlEliminar.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
-        btnSalir.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back30.png"))); // NOI18N
-        btnSalir.setText("Salir-Alt+F4");
-        btnSalir.setToolTipText("Salir");
-        btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        Separador.setForeground(new java.awt.Color(204, 204, 204));
+        PnlEliminar.add(Separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo.setText("ELIMINAR");
+        PnlEliminar.add(LabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel4.add(PnlEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(393, 3, 100, 100));
+
+        Oscuro.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 100));
+
+        btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
+        btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir.setRippleColor(java.awt.Color.white);
+        btnSalir.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSalir);
+        Oscuro.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(778, 3, 20, 20));
 
-        javax.swing.GroupLayout OscuroLayout = new javax.swing.GroupLayout(Oscuro);
-        Oscuro.setLayout(OscuroLayout);
-        OscuroLayout.setHorizontalGroup(
-            OscuroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(OscuroLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        OscuroLayout.setVerticalGroup(
-            OscuroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(OscuroLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        Blanco.add(Oscuro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 801, 105));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel2.setOpaque(false);
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel3.setText("ID");
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 12, 21, 23));
 
         txtCod.setEditable(false);
         txtCod.setBackground(new java.awt.Color(255, 255, 255));
-        txtCod.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        txtCod.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         txtCod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCod.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtCod.setOpaque(false);
+        jPanel2.add(txtCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 12, 39, 23));
 
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel2.setText("Timbrado");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 12, -1, 23));
 
-        cboTimbrado.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        cboTimbrado.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         cboTimbrado.setEnabled(false);
         cboTimbrado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -314,12 +388,17 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 cboTimbradoKeyPressed(evt);
             }
         });
+        jPanel2.add(cboTimbrado, new org.netbeans.lib.awtextra.AbsoluteConstraints(188, 12, 280, 23));
 
+        jLabel6.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel6.setText("Establecimiento");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 68, -1, 23));
 
-        txtEstablecimiento.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtEstablecimiento.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtEstablecimiento.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtEstablecimiento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtEstablecimiento.setEnabled(false);
+        txtEstablecimiento.setOpaque(false);
         txtEstablecimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEstablecimientoActionPerformed(evt);
@@ -330,12 +409,17 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 txtEstablecimientoKeyPressed(evt);
             }
         });
+        jPanel2.add(txtEstablecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(188, 68, 70, 23));
 
-        jLabel7.setText("P. Emisión");
+        jLabel7.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jLabel7.setText("Punto de expedición");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 68, 120, 23));
 
-        txtEmision.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtEmision.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtEmision.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtEmision.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtEmision.setEnabled(false);
+        txtEmision.setOpaque(false);
         txtEmision.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmisionActionPerformed(evt);
@@ -346,11 +430,16 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 txtEmisionKeyPressed(evt);
             }
         });
+        jPanel2.add(txtEmision, new org.netbeans.lib.awtextra.AbsoluteConstraints(398, 68, 70, 23));
 
+        jLabel8.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel8.setText("Dirección");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 95, -1, 23));
 
-        txtDireccion.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtDireccion.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        txtDireccion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtDireccion.setEnabled(false);
+        txtDireccion.setOpaque(false);
         txtDireccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDireccionActionPerformed(evt);
@@ -364,12 +453,17 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 txtDireccionKeyTyped(evt);
             }
         });
+        jPanel2.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(188, 95, 280, 23));
 
+        jLabel9.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel9.setText("Factura Inicio");
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 122, -1, 23));
 
-        txtFInicio.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtFInicio.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtFInicio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFInicio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtFInicio.setEnabled(false);
+        txtFInicio.setOpaque(false);
         txtFInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFInicioActionPerformed(evt);
@@ -380,12 +474,17 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 txtFInicioKeyPressed(evt);
             }
         });
+        jPanel2.add(txtFInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(188, 122, 80, 23));
 
+        jLabel10.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel10.setText("Factura Fin");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 122, -1, 23));
 
-        txtFFin.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtFFin.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtFFin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFFin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtFFin.setEnabled(false);
+        txtFFin.setOpaque(false);
         txtFFin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFFinActionPerformed(evt);
@@ -396,12 +495,17 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 txtFFinKeyPressed(evt);
             }
         });
+        jPanel2.add(txtFFin, new org.netbeans.lib.awtextra.AbsoluteConstraints(388, 122, 80, 23));
 
+        jLabel11.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel11.setText("Factura Actual");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 150, -1, 23));
 
-        txtFActual.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtFActual.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtFActual.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFActual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtFActual.setEnabled(false);
+        txtFActual.setOpaque(false);
         txtFActual.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFActualActionPerformed(evt);
@@ -412,10 +516,14 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 txtFActualKeyPressed(evt);
             }
         });
+        jPanel2.add(txtFActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(188, 150, 80, 23));
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel3.setOpaque(false);
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        cbTickeet.setBackground(new java.awt.Color(255, 102, 0));
+        cbTickeet.setFont(new java.awt.Font("Roboto Black", 1, 11)); // NOI18N
         cbTickeet.setSelected(true);
         cbTickeet.setText("PARA EMISIÓN DE TICKET");
         cbTickeet.setEnabled(false);
@@ -427,18 +535,22 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 cbTickeetActionPerformed(evt);
             }
         });
+        jPanel3.add(cbTickeet, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 5, 180, 20));
 
-        txtIP.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
+        txtIP.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtIP.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtIP.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtIP.setEnabled(false);
+        txtIP.setOpaque(false);
         txtIP.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtIPKeyPressed(evt);
             }
         });
+        jPanel3.add(txtIP, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 98, 23));
 
         grupActivo.add(rbActivo);
-        rbActivo.setText("P. Emisión Activo");
+        rbActivo.setText("P. Expedición Activo");
         rbActivo.setEnabled(false);
         rbActivo.setIconTextGap(6);
         rbActivo.setOpaque(false);
@@ -447,10 +559,11 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 rbActivoActionPerformed(evt);
             }
         });
+        jPanel3.add(rbActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 65, 150, 18));
 
         grupActivo.add(rbInactivo);
         rbInactivo.setSelected(true);
-        rbInactivo.setText("P. Emisión Inactivo");
+        rbInactivo.setText("P. Expedición Inactivo");
         rbInactivo.setEnabled(false);
         rbInactivo.setIconTextGap(6);
         rbInactivo.setOpaque(false);
@@ -459,195 +572,60 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 rbInactivoActionPerformed(evt);
             }
         });
+        jPanel3.add(rbInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 82, 150, 20));
+
+        jSeparator2.setForeground(new java.awt.Color(204, 204, 204));
+        jPanel3.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 60, 274, -1));
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("IP");
+        jLabel13.setText("Dirección IP");
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 30, 97, 23));
 
-        etiEstado.setBackground(new java.awt.Color(17, 35, 46));
-        etiEstado.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        etiEstado.setForeground(new java.awt.Color(255, 255, 255));
+        etiEstado.setBackground(new java.awt.Color(255, 255, 255));
+        etiEstado.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        etiEstado.setForeground(new java.awt.Color(0, 153, 255));
         etiEstado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         etiEstado.setOpaque(true);
+        jPanel3.add(etiEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 65, 120, 35));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator2)
-                    .addComponent(cbTickeet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(rbInactivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtIP, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(rbActivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(etiEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(cbTickeet)
-                .addGap(7, 7, 7)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(etiEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(rbActivo, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rbInactivo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 1, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 12, 290, 107));
 
-        lbFechaTimbrado.setBackground(new java.awt.Color(17, 35, 46));
+        lbFechaTimbrado.setBackground(new java.awt.Color(255, 102, 0));
+        lbFechaTimbrado.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         lbFechaTimbrado.setForeground(new java.awt.Color(255, 255, 255));
         lbFechaTimbrado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbFechaTimbrado.setOpaque(true);
+        jPanel2.add(lbFechaTimbrado, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 43, 454, 16));
 
+        jLabel1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel1.setText("Impresora Predeterminada");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 177, -1, 23));
 
         txtImpresora.setEditable(false);
-        txtImpresora.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        txtImpresora.setBackground(new java.awt.Color(255, 255, 255));
+        txtImpresora.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtImpresora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtImpresora.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtImpresora.setOpaque(false);
+        jPanel2.add(txtImpresora, new org.netbeans.lib.awtextra.AbsoluteConstraints(188, 177, 280, 23));
 
-        btnBuscarImpresora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Find.png"))); // NOI18N
-        btnBuscarImpresora.setText("Buscar Impresora");
-        btnBuscarImpresora.setEnabled(false);
+        btnBuscarImpresora.setBackground(new java.awt.Color(255, 102, 0));
+        btnBuscarImpresora.setBackgroundHover(new java.awt.Color(255, 102, 0));
+        btnBuscarImpresora.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        btnBuscarImpresora.setRippleColor(java.awt.Color.white);
+        btnBuscarImpresora.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnBuscarImpresora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarImpresoraActionPerformed(evt);
             }
         });
+        jPanel2.add(btnBuscarImpresora, new org.netbeans.lib.awtextra.AbsoluteConstraints(472, 177, 23, 23));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(13, 13, 13)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(4, 4, 4)
-                                .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(38, 38, 38)
-                                .addComponent(jLabel2)
-                                .addGap(21, 21, 21)
-                                .addComponent(cboTimbrado, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lbFechaTimbrado, javax.swing.GroupLayout.PREFERRED_SIZE, 399, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(93, 93, 93)
-                                .addComponent(txtEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel7)
-                                .addGap(26, 26, 26)
-                                .addComponent(txtEmision, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addGap(124, 124, 124)
-                                .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addGap(97, 97, 97)
-                                        .addComponent(txtFActual, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addGap(102, 102, 102)
-                                        .addComponent(txtFInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtFFin, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(53, 53, 53)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel1)
-                        .addGap(42, 42, 42)
-                        .addComponent(txtImpresora, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscarImpresora)))
-                .addGap(10, 10, 10))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(19, 19, 19)
-                        .addComponent(btnBuscarImpresora, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel3))
-                            .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addComponent(jLabel2))
-                            .addComponent(cboTimbrado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addComponent(lbFechaTimbrado, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEmision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel7))))
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel8))
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel11))
-                            .addComponent(txtFActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtImpresora, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        Blanco.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 117, 780, 210));
 
-        tbPuntoEmision.setFont(new java.awt.Font("Times New Roman", 0, 13)); // NOI18N
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+
+        tbPuntoEmision.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         tbPuntoEmision.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -659,448 +637,43 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tbPuntoEmision.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tbPuntoEmision.setGridColor(new java.awt.Color(204, 204, 204));
+        tbPuntoEmision.setRowHeight(20);
+        tbPuntoEmision.setShowGrid(true);
+        tbPuntoEmision.setShowVerticalLines(false);
         tbPuntoEmision.getTableHeader().setResizingAllowed(false);
         tbPuntoEmision.getTableHeader().setReorderingAllowed(false);
         tbPuntoEmision.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tbPuntoEmisionMouseClicked(evt);
             }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbPuntoEmisionMousePressed(evt);
+            }
         });
         jScrollPane1.setViewportView(tbPuntoEmision);
 
-        javax.swing.GroupLayout BlancoLayout = new javax.swing.GroupLayout(Blanco);
-        Blanco.setLayout(BlancoLayout);
-        BlancoLayout.setHorizontalGroup(
-            BlancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Oscuro, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
-            .addGroup(BlancoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(BlancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
-        );
-        BlancoLayout.setVerticalGroup(
-            BlancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(BlancoLayout.createSequentialGroup()
-                .addComponent(Oscuro, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        barMenu.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-
-        menuOpciones.setText("Opciones");
-        menuOpciones.setFocusable(false);
-        menuOpciones.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        menuOpciones.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-
-        itemNuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        itemNuevo.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        itemNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/document15.png"))); // NOI18N
-        itemNuevo.setText("Nuevo");
-        itemNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemNuevoActionPerformed(evt);
-            }
-        });
-        menuOpciones.add(itemNuevo);
-
-        itemModificar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-        itemModificar.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        itemModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit15.png"))); // NOI18N
-        itemModificar.setText("Guardar Modificación");
-        itemModificar.setEnabled(false);
-        itemModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemModificarActionPerformed(evt);
-            }
-        });
-        menuOpciones.add(itemModificar);
-
-        itemGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-        itemGuardar.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        itemGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save15.png"))); // NOI18N
-        itemGuardar.setText("Guardar Nuevo");
-        itemGuardar.setEnabled(false);
-        itemGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemGuardarActionPerformed(evt);
-            }
-        });
-        menuOpciones.add(itemGuardar);
-
-        itemCancelar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
-        itemCancelar.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        itemCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel15.png"))); // NOI18N
-        itemCancelar.setText("Cancelar");
-        itemCancelar.setEnabled(false);
-        itemCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemCancelarActionPerformed(evt);
-            }
-        });
-        menuOpciones.add(itemCancelar);
-
-        itemEliminar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
-        itemEliminar.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        itemEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/garbage15.png"))); // NOI18N
-        itemEliminar.setText("Eliminar");
-        itemEliminar.setEnabled(false);
-        itemEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEliminarActionPerformed(evt);
-            }
-        });
-        menuOpciones.add(itemEliminar);
-
-        itemSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        itemSalir.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        itemSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back15.png"))); // NOI18N
-        itemSalir.setText("Salir");
-        itemSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemSalirActionPerformed(evt);
-            }
-        });
-        menuOpciones.add(itemSalir);
-
-        barMenu.add(menuOpciones);
-
-        setJMenuBar(barMenu);
+        Blanco.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 330, 801, 219));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Blanco, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
+            .addComponent(Blanco, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Blanco, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(Blanco, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
-        if (rpta == 0) {
-            ControlLogeo.Timbrado_Ticket();
-            this.dispose();
-        }
-
-    }//GEN-LAST:event_btnSalirActionPerformed
-
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
-        String cod = GestionarPuntoEmisionMovil.getCodigo();
-        cargarComboBox.cargar(cboTimbrado, "SELECT * FROM timbrado WHERE estado='Activo'");
-        txtCod.setText(cod);
-        btnNuevo.setEnabled(false);
-        itemNuevo.setEnabled(false);
-        btnModificar.setEnabled(false);
-        itemModificar.setEnabled(false);
-        btnGuardar.setEnabled(true);
-        itemGuardar.setEnabled(true);
-        btnCancelar.setEnabled(true);
-        itemCancelar.setEnabled(true);
-        btnSalir.setEnabled(false);
-        itemSalir.setEnabled(false);
-        btnEliminar.setEnabled(false);
-        itemEliminar.setEnabled(false);
-        tbPuntoEmision.setVisible(false);
-        //
-        cboTimbrado.setEnabled(true);
-        txtEstablecimiento.setEnabled(true);
-        txtEmision.setEnabled(true);
-        txtDireccion.setEnabled(true);
-        txtFInicio.setEnabled(true);
-        txtFFin.setEnabled(true);
-        txtFActual.setEnabled(true);
-        cbTickeet.setEnabled(true);
-        rbActivo.setEnabled(true);
-        rbInactivo.setEnabled(true);
-        btnBuscarImpresora.setEnabled(true);
-        txtIP.setEnabled(true);
-        //
-        CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
-        controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
-        cboTimbrado.requestFocus();
-        cboTimbrado.setPopupVisible(true);
-    }//GEN-LAST:event_btnNuevoActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        try {
-            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea Eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION) {
-                controlPuntoEmisionMovil.delPuntoEmision();
-                CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
-                controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
-                Cancelar();
-            }
-        } catch (HeadlessException ee) {
-        }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-
-        if (txtEstablecimiento.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese el Establecimiento");
-            txtEstablecimiento.requestFocus();
-        } else if (txtEmision.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese el Punto de Emisión");
-            txtEmision.requestFocus();
-        } else if (txtDireccion.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese la Dirección");
-            txtDireccion.requestFocus();
-        } else if (txtFInicio.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese número para el inicio de las facturaciones");
-            txtFInicio.requestFocus();
-        } else if (txtFFin.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese número para la finalización de las facturaciones");
-            txtFFin.requestFocus();
-        } else if (txtFActual.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese número actual de la facturación");
-            txtFActual.requestFocus();
-        } else if (txtImpresora.getText().trim().isEmpty()) {
-            Mensajes.informacion("Seleccione la impresora predeterminada para este punto de emisión");
-            btnBuscarImpresora.requestFocus();
-        } else if (!cbTickeet.isSelected()) {
-            if (txtIP.getText().trim().isEmpty()) {
-                Mensajes.informacion("Ingrese la dirección IP de la terminar que utilizara este Punto de Emisión");
-                txtIP.requestFocus();
-            } else {
-                try {
-                    int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea Modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (resp == JOptionPane.YES_OPTION) {
-                        controlPuntoEmisionMovil.actPuntoEmision();
-                        CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
-                        controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
-                        Cancelar();
-                    }
-                } catch (HeadlessException ee) {
-                }
-            }
-        } else {
-            try {
-                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea Modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION) {
-                    controlPuntoEmisionMovil.actPuntoEmision();
-                    CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
-                    controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
-                    Cancelar();
-                }
-            } catch (HeadlessException ee) {
-            }
-        }
-    }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        if (cboTimbrado.getSelectedIndex() == 0) {
-            Mensajes.informacion("Seleccione un Timbrado");
-            cboTimbrado.requestFocus();
-            cboTimbrado.setPopupVisible(true);
-        } else if (txtEstablecimiento.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese el Establecimiento");
-            txtEstablecimiento.requestFocus();
-        } else if (txtEmision.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese el Punto de Emisión");
-            txtEmision.requestFocus();
-        } else if (txtDireccion.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese la Dirección");
-            txtDireccion.requestFocus();
-        } else if (txtFInicio.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese número para el inicio de las facturaciones");
-            txtFInicio.requestFocus();
-        } else if (txtFFin.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese número para la finalización de las facturaciones");
-            txtFFin.requestFocus();
-        } else if (txtFActual.getText().trim().isEmpty()) {
-            Mensajes.informacion("Ingrese número actual de la facturación");
-            txtFActual.requestFocus();
-        } else if (txtImpresora.getText().trim().isEmpty()) {
-            Mensajes.informacion("Seleccione la impresora predeterminada para este punto de emisión");
-            btnBuscarImpresora.requestFocus();
-        } else if (!cbTickeet.isSelected()) {
-            if (txtIP.getText().trim().isEmpty()) {
-                Mensajes.informacion("Ingrese la dirección IP de la terminar que utilizara este Punto de Emisión");
-                txtIP.requestFocus();
-            } else {
-                try {
-                    int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    if (resp == JOptionPane.YES_OPTION) {
-                        String cod = GestionarPuntoEmisionMovil.getCodigo();
-                        txtCod.setText(cod);
-                        controlPuntoEmisionMovil.addPuntoEmision();
-                        CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
-                        controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
-                        Cancelar();
-                    }
-                } catch (HeadlessException ee) {
-                }
-            }
-        } else {
-            try {
-                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION) {
-                    String cod = GestionarPuntoEmisionMovil.getCodigo();
-                    txtCod.setText(cod);
-                    controlPuntoEmisionMovil.addPuntoEmision();
-                    CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
-                    controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
-                    Cancelar();
-                }
-            } catch (HeadlessException ee) {
-            }
-        }
-
-
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
     private void tbPuntoEmisionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPuntoEmisionMouseClicked
         // TODO add your handling code here:
-        btnNuevo.setEnabled(false);
-        itemNuevo.setEnabled(false);
-        btnModificar.setEnabled(true);
-        itemModificar.setEnabled(true);
-        btnGuardar.setEnabled(false);
-        itemGuardar.setEnabled(false);
-        btnCancelar.setEnabled(true);
-        itemCancelar.setEnabled(true);
-        btnSalir.setEnabled(false);
-        itemSalir.setEnabled(false);
-        btnEliminar.setEnabled(true);
-        itemEliminar.setEnabled(true);
-        tbPuntoEmision.setVisible(true);
-        //
-        cboTimbrado.setEnabled(false);
-        txtEstablecimiento.setEnabled(true);
-        txtEmision.setEnabled(true);
-        txtDireccion.setEnabled(true);
-        txtFInicio.setEnabled(true);
-        txtFFin.setEnabled(true);
-        txtFActual.setEnabled(true);
-        cbTickeet.setEnabled(true);
-        rbActivo.setEnabled(true);
-        rbInactivo.setEnabled(true);
-        btnBuscarImpresora.setEnabled(true);
-        txtIP.setEnabled(true);
+        
 
-        int fila = tbPuntoEmision.getSelectedRow();
-        String cod = tbPuntoEmision.getValueAt(fila, 0).toString();
-        String itTimbrado = tbPuntoEmision.getValueAt(fila, 1).toString();
-        String establecimiento = tbPuntoEmision.getValueAt(fila, 3).toString();
-        String puntoEmision = tbPuntoEmision.getValueAt(fila, 4).toString();
-        String direccion = tbPuntoEmision.getValueAt(fila, 5).toString();
-        String fi = tbPuntoEmision.getValueAt(fila, 6).toString();
-        String ff = tbPuntoEmision.getValueAt(fila, 7).toString();
-        String fa = tbPuntoEmision.getValueAt(fila, 8).toString();
-        String tipo = tbPuntoEmision.getValueAt(fila, 9).toString();
-        String ip = tbPuntoEmision.getValueAt(fila, 10).toString();
-        String estado = tbPuntoEmision.getValueAt(fila, 11).toString();
-        String impPred = tbPuntoEmision.getValueAt(fila, 12).toString();
-
-        txtCod.setText(cod);
-        modcboTimbrado(itTimbrado);
-        txtEstablecimiento.setText(establecimiento);
-        txtEmision.setText(puntoEmision);
-        txtDireccion.setText(direccion);
-        txtFInicio.setText(fi);
-        txtFFin.setText(ff);
-        txtFActual.setText(fa);
-        if (tipo.equals("T")) {
-            cbTickeet.setSelected(true);
-            cbTickeetActionPerformed(null);
-        } else {
-            cbTickeet.setSelected(false);
-            txtIP.setEnabled(true);
-        }
-        txtIP.setText(ip);
-        if (estado.equals("Inactivo")) {
-            rbInactivo.setSelected(true);
-            rbInactivoActionPerformed(null);
-        } else {
-            rbActivo.setSelected(true);
-            rbActivoActionPerformed(null);
-        }
-        txtImpresora.setText(impPred);
-        txtEstablecimiento.requestFocus();
     }//GEN-LAST:event_tbPuntoEmisionMouseClicked
-
-    private void itemNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoActionPerformed
-        // TODO add your handling code here:
-        btnNuevoActionPerformed(null);
-    }//GEN-LAST:event_itemNuevoActionPerformed
-
-    private void itemModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemModificarActionPerformed
-        // TODO add your handling code here:
-        btnModificarActionPerformed(null);
-    }//GEN-LAST:event_itemModificarActionPerformed
-
-    private void itemGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarActionPerformed
-        // TODO add your handling code here:
-        btnGuardarActionPerformed(null);
-    }//GEN-LAST:event_itemGuardarActionPerformed
-
-    private void itemCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCancelarActionPerformed
-        // TODO add your handling code here:
-        btnCancelarActionPerformed(null);
-    }//GEN-LAST:event_itemCancelarActionPerformed
-
-    private void itemEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarActionPerformed
-        // TODO add your handling code here:
-        btnEliminarActionPerformed(null);
-    }//GEN-LAST:event_itemEliminarActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        int rpta = Mensajes.confirmar("¿Seguro que desea Cancelar?");
-        if (rpta == 0) {
-            btnNuevo.setEnabled(true);
-            itemNuevo.setEnabled(true);
-            btnModificar.setEnabled(false);
-            itemModificar.setEnabled(false);
-            btnGuardar.setEnabled(false);
-            itemGuardar.setEnabled(false);
-            btnCancelar.setEnabled(false);
-            itemCancelar.setEnabled(false);
-            btnSalir.setEnabled(true);
-            itemSalir.setEnabled(true);
-            btnEliminar.setEnabled(false);
-            itemEliminar.setEnabled(false);
-            tbPuntoEmision.setVisible(true);
-            //
-            cboTimbrado.setEnabled(false);
-            txtEstablecimiento.setEnabled(false);
-            txtEmision.setEnabled(false);
-            txtDireccion.setEnabled(false);
-            txtFInicio.setEnabled(false);
-            txtFFin.setEnabled(false);
-            txtFActual.setEnabled(false);
-            cbTickeet.setEnabled(false);
-            rbActivo.setEnabled(false);
-            rbInactivo.setEnabled(false);
-            btnBuscarImpresora.setEnabled(false);
-            txtIP.setEnabled(false);
-            limpiarCampos();
-            btnNuevo.requestFocus();
-        }
-
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
-        // TODO add your handling code here:
-        btnSalir.doClick();
-    }//GEN-LAST:event_itemSalirActionPerformed
 
     private void txtFInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFInicioActionPerformed
         // TODO add your handling code here:
@@ -1271,6 +844,183 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtDireccionKeyTyped
 
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        ban = 1;
+        String cod = GestionarPuntoEmisionMovil.getCodigo();
+        cargarComboBox.cargar(cboTimbrado, "SELECT * FROM timbrado WHERE estado='Activo'");
+        txtCod.setText(cod);
+        btnNuevo.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnSalir.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        tbPuntoEmision.setEnabled(false);
+        //
+        cboTimbrado.setEnabled(true);
+        txtEstablecimiento.setEnabled(true);
+        txtEmision.setEnabled(true);
+        txtDireccion.setEnabled(true);
+        txtFInicio.setEnabled(true);
+        txtFFin.setEnabled(true);
+        txtFActual.setEnabled(true);
+        cbTickeet.setEnabled(true);
+        rbActivo.setEnabled(true);
+        rbInactivo.setEnabled(true);
+        btnBuscarImpresora.setEnabled(true);
+        txtIP.setEnabled(true);
+        //
+        
+        cboTimbrado.requestFocus();
+        cboTimbrado.setPopupVisible(true);
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        if (txtEstablecimiento.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese el Establecimiento");
+            txtEstablecimiento.requestFocus();
+        } else if (txtEmision.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese el Punto de Emisión");
+            txtEmision.requestFocus();
+        } else if (txtDireccion.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese la Dirección");
+            txtDireccion.requestFocus();
+        } else if (txtFInicio.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese número para el inicio de las facturaciones");
+            txtFInicio.requestFocus();
+        } else if (txtFFin.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese número para la finalización de las facturaciones");
+            txtFFin.requestFocus();
+        } else if (txtFActual.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese número actual de la facturación");
+            txtFActual.requestFocus();
+        } else if (txtImpresora.getText().trim().isEmpty()) {
+            Mensajes.informacion("Seleccione la impresora predeterminada para este punto de emisión");
+            btnBuscarImpresora.requestFocus();
+        } else if (!cbTickeet.isSelected()) {
+            if (txtIP.getText().trim().isEmpty()) {
+                Mensajes.informacion("Ingrese la dirección IP de la terminar que utilizara este Punto de Emisión");
+                txtIP.requestFocus();
+            } else {
+                try {
+                    int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea Modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (resp == JOptionPane.YES_OPTION) {
+                        controlPuntoEmisionMovil.actPuntoEmision();
+                        CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
+                        controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
+                        Cancelar();
+                    }
+                } catch (HeadlessException ee) {
+                }
+            }
+        } else {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea Modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
+                    controlPuntoEmisionMovil.actPuntoEmision();
+                    CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
+                    controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
+                    Cancelar();
+                }
+            } catch (HeadlessException ee) {
+            }
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        if (cboTimbrado.getSelectedIndex() == 0) {
+            Mensajes.informacion("Seleccione un Timbrado");
+            cboTimbrado.requestFocus();
+            cboTimbrado.setPopupVisible(true);
+        } else if (txtEstablecimiento.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese el Establecimiento");
+            txtEstablecimiento.requestFocus();
+        } else if (txtEmision.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese el Punto de Emisión");
+            txtEmision.requestFocus();
+        } else if (txtDireccion.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese la Dirección");
+            txtDireccion.requestFocus();
+        } else if (txtFInicio.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese número para el inicio de las facturaciones");
+            txtFInicio.requestFocus();
+        } else if (txtFFin.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese número para la finalización de las facturaciones");
+            txtFFin.requestFocus();
+        } else if (txtFActual.getText().trim().isEmpty()) {
+            Mensajes.informacion("Ingrese número actual de la facturación");
+            txtFActual.requestFocus();
+        } else if (txtImpresora.getText().trim().isEmpty()) {
+            Mensajes.informacion("Seleccione la impresora predeterminada para este punto de emisión");
+            btnBuscarImpresora.requestFocus();
+        } else if (!cbTickeet.isSelected()) {
+            if (txtIP.getText().trim().isEmpty()) {
+                Mensajes.informacion("Ingrese la dirección IP de la terminar que utilizara este Punto de Emisión");
+                txtIP.requestFocus();
+            } else {
+                try {
+                    int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                    if (resp == JOptionPane.YES_OPTION) {
+                        String cod = GestionarPuntoEmisionMovil.getCodigo();
+                        txtCod.setText(cod);
+                        controlPuntoEmisionMovil.addPuntoEmision();
+                        CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
+                        controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
+                        Cancelar();
+                    }
+                } catch (HeadlessException ee) {
+                }
+            }
+        } else {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
+                    String cod = GestionarPuntoEmisionMovil.getCodigo();
+                    txtCod.setText(cod);
+                    controlPuntoEmisionMovil.addPuntoEmision();
+                    CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
+                    controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
+                    Cancelar();
+                }
+            } catch (HeadlessException ee) {
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        int rpta = Mensajes.confirmar("¿Seguro que desea cancelar esta operación?");
+        if (rpta == 0) {
+            Cancelar();
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        try {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea Eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resp == JOptionPane.YES_OPTION) {
+                controlPuntoEmisionMovil.delPuntoEmision();
+                CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
+                controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
+                Cancelar();
+            }
+        } catch (HeadlessException ee) {
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
+        if (rpta == 0) {
+            ControlLogeo.Timbrado_Ticket();
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnSalirActionPerformed
+
     private void btnBuscarImpresoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarImpresoraActionPerformed
         // TODO add your handling code here:
         try {
@@ -1281,6 +1031,72 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_btnBuscarImpresoraActionPerformed
+
+    private void tbPuntoEmisionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPuntoEmisionMousePressed
+        // TODO add your handling code here:
+        if (ban == 0) {
+            btnNuevo.setEnabled(false);
+            btnModificar.setEnabled(true);
+            btnGuardar.setEnabled(false);
+            btnCancelar.setEnabled(true);
+            btnSalir.setEnabled(false);
+            btnEliminar.setEnabled(true);
+            tbPuntoEmision.setVisible(true);
+            //
+            cboTimbrado.setEnabled(false);
+            txtEstablecimiento.setEnabled(true);
+            txtEmision.setEnabled(true);
+            txtDireccion.setEnabled(true);
+            txtFInicio.setEnabled(true);
+            txtFFin.setEnabled(true);
+            txtFActual.setEnabled(true);
+            cbTickeet.setEnabled(true);
+            rbActivo.setEnabled(true);
+            rbInactivo.setEnabled(true);
+            btnBuscarImpresora.setEnabled(true);
+            txtIP.setEnabled(true);
+
+            int fila = tbPuntoEmision.getSelectedRow();
+            String cod = tbPuntoEmision.getValueAt(fila, 0).toString();
+            String itTimbrado = tbPuntoEmision.getValueAt(fila, 1).toString();
+            String establecimiento = tbPuntoEmision.getValueAt(fila, 3).toString();
+            String puntoEmision = tbPuntoEmision.getValueAt(fila, 4).toString();
+            String direccion = tbPuntoEmision.getValueAt(fila, 5).toString();
+            String fi = tbPuntoEmision.getValueAt(fila, 6).toString();
+            String ff = tbPuntoEmision.getValueAt(fila, 7).toString();
+            String fa = tbPuntoEmision.getValueAt(fila, 8).toString();
+            String tipo = tbPuntoEmision.getValueAt(fila, 9).toString();
+            String ip = tbPuntoEmision.getValueAt(fila, 10).toString();
+            String estado = tbPuntoEmision.getValueAt(fila, 11).toString();
+            String impPred = tbPuntoEmision.getValueAt(fila, 12).toString();
+
+            txtCod.setText(cod);
+            modcboTimbrado(itTimbrado);
+            txtEstablecimiento.setText(establecimiento);
+            txtEmision.setText(puntoEmision);
+            txtDireccion.setText(direccion);
+            txtFInicio.setText(fi);
+            txtFFin.setText(ff);
+            txtFActual.setText(fa);
+            if (tipo.equals("T")) {
+                cbTickeet.setSelected(true);
+                cbTickeetActionPerformed(null);
+            } else {
+                cbTickeet.setSelected(false);
+                txtIP.setEnabled(true);
+            }
+            txtIP.setText(ip);
+            if (estado.equals("Inactivo")) {
+                rbInactivo.setSelected(true);
+                rbInactivoActionPerformed(null);
+            } else {
+                rbActivo.setSelected(true);
+                rbActivoActionPerformed(null);
+            }
+            txtImpresora.setText(impPred);
+            txtEstablecimiento.requestFocus();
+        }
+    }//GEN-LAST:event_tbPuntoEmisionMousePressed
 
     void limpiarCampos() {
         txtCod.setText("");
@@ -1297,6 +1113,8 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         rbInactivo.setSelected(true);
         tbPuntoEmision.clearSelection();
         txtImpresora.setText("");
+        CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
+        controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
 
     }
 
@@ -1365,25 +1183,33 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.panel.PanelImage Blanco;
+    private javax.swing.JLabel LabelTitulo;
+    private javax.swing.JLabel LabelTitulo1;
+    private javax.swing.JLabel LabelTitulo2;
+    private javax.swing.JLabel LabelTitulo3;
+    private javax.swing.JLabel LabelTitulo4;
     private org.edisoncor.gui.panel.PanelImage Oscuro;
-    private javax.swing.JMenuBar barMenu;
-    private javax.swing.JButton btnBuscarImpresora;
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnSalir;
+    private rojeru_san.rspanel.RSPanelImage PnlCancelar;
+    private rojeru_san.rspanel.RSPanelImage PnlEliminar;
+    private rojeru_san.rspanel.RSPanelImage PnlGuardar;
+    private rojeru_san.rspanel.RSPanelImage PnlModificar;
+    private rojeru_san.rspanel.RSPanelImage PnlNuevo;
+    private javax.swing.JSeparator Separador;
+    private javax.swing.JSeparator Separador1;
+    private javax.swing.JSeparator Separador2;
+    private javax.swing.JSeparator Separador3;
+    private javax.swing.JSeparator Separador4;
+    private RSMaterialComponent.RSButtonIconUno btnBuscarImpresora;
+    private RSMaterialComponent.RSButtonIconUno btnCancelar;
+    private RSMaterialComponent.RSButtonIconUno btnEliminar;
+    private RSMaterialComponent.RSButtonIconUno btnGuardar;
+    private RSMaterialComponent.RSButtonIconUno btnModificar;
+    private RSMaterialComponent.RSButtonIconUno btnNuevo;
+    private RSMaterialComponent.RSButtonIconUno btnSalir;
     public static javax.swing.JCheckBox cbTickeet;
     public static javax.swing.JComboBox<String> cboTimbrado;
     private javax.swing.JLabel etiEstado;
     private javax.swing.ButtonGroup grupActivo;
-    private javax.swing.JMenuItem itemCancelar;
-    private javax.swing.JMenuItem itemEliminar;
-    private javax.swing.JMenuItem itemGuardar;
-    private javax.swing.JMenuItem itemModificar;
-    private javax.swing.JMenuItem itemNuevo;
-    private javax.swing.JMenuItem itemSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1394,13 +1220,12 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lbFechaTimbrado;
-    private javax.swing.JMenu menuOpciones;
     public static javax.swing.JRadioButton rbActivo;
     public static javax.swing.JRadioButton rbInactivo;
     private javax.swing.JTable tbPuntoEmision;

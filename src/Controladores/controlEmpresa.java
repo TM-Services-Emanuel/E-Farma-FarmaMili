@@ -77,15 +77,22 @@ public class controlEmpresa {
     
     public static void lisEmpresa(JTable tabla)
     {
-        List lista = null;
+        List lista;
         lista = GestionarEmpresa.listEmpresa();
         for(int i=1;i<lista.size();i++)
         {
             DefaultTableModel tb = (DefaultTableModel)tabla.getModel();
+            String[] filas = new String[8];
             Object[]fila = (Object[])lista.get(i);
-            fila[0].toString();
-            fila[1].toString();
-            tb.addRow(fila);
+            filas[0] = fila[0].toString();
+            filas[1] = fila[1].toString();
+            filas[2] = fila[2].toString();
+            filas[3] = fila[3].toString();
+            filas[4] = fila[4].toString();
+            filas[5] = fila[5].toString();
+            filas[6] = fila[6].toString();
+            filas[7] = fila[7].toString();
+            tb.addRow(filas);
         }
     }
     

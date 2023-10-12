@@ -1,6 +1,7 @@
 package IU;
 
 import Componentes.Mensajes;
+import Componentes.RenderDecimalVenta;
 import Componentes.Software;
 import Componentes.clsExportarExcel;
 import Controladores.CabecerasTablas;
@@ -26,6 +27,7 @@ public final class dlgClientes extends javax.swing.JDialog {
         txtBuscar.requestFocus();
         cabe.cliente(tablaClientes);
         controlCliente.listClientes(tablaClientes, "clientes.cli_codigo");
+        Renders();
         tablaClientes.getTableHeader().setReorderingAllowed(false);
         tablaClientes.getTableHeader().setResizingAllowed(false);
         cargarIcono();
@@ -51,6 +53,10 @@ public final class dlgClientes extends javax.swing.JDialog {
             default -> {
             }
         }
+    }
+    
+     public static void Renders() {
+        dlgClientes.tablaClientes.getColumnModel().getColumn(8).setCellRenderer(new RenderDecimalVenta());
     }
 
     @SuppressWarnings("unchecked")

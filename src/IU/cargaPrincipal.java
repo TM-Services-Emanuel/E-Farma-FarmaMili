@@ -67,9 +67,11 @@ public class cargaPrincipal extends javax.swing.JFrame {
         LabelTitulo12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         rSCheckBox1.setForeground(new java.awt.Color(0, 0, 0));
         rSCheckBox1.setText("rSCheckBox1");
+        getContentPane().add(rSCheckBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(594, 324, -1, -1));
 
         rSDateChooser1.setColorBackground(new java.awt.Color(51, 51, 51));
         rSDateChooser1.setColorButtonHover(new java.awt.Color(17, 35, 46));
@@ -77,6 +79,7 @@ public class cargaPrincipal extends javax.swing.JFrame {
         rSDateChooser1.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         rSDateChooser1.setFormatoFecha("dd/MM/yyyy");
         rSDateChooser1.setFuente(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        getContentPane().add(rSDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(594, 229, 163, 23));
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -187,6 +190,8 @@ public class cargaPrincipal extends javax.swing.JFrame {
         PnlEliminarG.add(LabelTitulo8, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
 
         jPanel2.add(PnlEliminarG, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, 100));
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 359, -1, 110));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -325,6 +330,8 @@ public class cargaPrincipal extends javax.swing.JFrame {
 
         jPanel1.add(PnlEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(393, 3, 100, 100));
 
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 242, 500, 110));
+
         btnSalir.setBackground(new java.awt.Color(17, 35, 46));
         btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
         btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
@@ -335,6 +342,7 @@ public class cargaPrincipal extends javax.swing.JFrame {
                 btnSalirActionPerformed(evt);
             }
         });
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(802, 301, 20, 20));
 
         rSComboBox1.setForeground(new java.awt.Color(0, 0, 0));
         rSComboBox1.setColorArrow(new java.awt.Color(17, 35, 46));
@@ -343,6 +351,7 @@ public class cargaPrincipal extends javax.swing.JFrame {
         rSComboBox1.setColorFondo(new java.awt.Color(255, 255, 255));
         rSComboBox1.setConBorde(true);
         rSComboBox1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        getContentPane().add(rSComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(521, 410, -1, 30));
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -427,58 +436,7 @@ public class cargaPrincipal extends javax.swing.JFrame {
 
         jPanel3.add(PnlCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, 100));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(290, 290, 290)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(186, 186, 186)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(rSDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(rSCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(113, 113, 113)
-                                .addComponent(rSComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(49, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(301, 301, 301)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rSCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(rSComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(119, 119, 119)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(rSDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(107, 107, 107)))
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 13, -1, 110));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

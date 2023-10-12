@@ -7,10 +7,8 @@ import Controladores.CabecerasTablas;
 import Controladores.controlEmpresa;
 import Datos.GestionarEmpresa;
 import Componentes.validarCampos;
-import static IU.frmPrincipal.lbEmpresa;
-import static IU.frmPrincipal.lbSucursal;
+import Controladores.ControlLogeo;
 import java.awt.HeadlessException;
-import java.sql.*;
 import javax.swing.JOptionPane;
 
 public final class dlgEmpresa extends javax.swing.JDialog {
@@ -18,6 +16,7 @@ public final class dlgEmpresa extends javax.swing.JDialog {
     CabecerasTablas cabe = new CabecerasTablas();
     private String visual = null;
     static DataSourceService dss = new DataSourceService();
+    private int ban;
 
     public dlgEmpresa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -38,18 +37,79 @@ public final class dlgEmpresa extends javax.swing.JDialog {
         }
     }
 
+    private void Cancelar() {
+        ban = 0;
+        btnNuevo.setEnabled(true);
+        btnModificar.setEnabled(false);
+        btnGuardar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnSalir.setEnabled(true);
+        txtNFantasia.setEnabled(false);
+        txtNombre.setEnabled(false);
+        txtRuc.setEnabled(false);
+        txtDireccion.setEnabled(false);
+        txtTelefono.setEnabled(false);
+        txtCelular.setEnabled(false);
+        rbSi.setEnabled(false);
+        rbNo.setEnabled(false);
+        limpiarCampos();
+        tbEmpresa.clearSelection();
+        tbEmpresa.setEnabled(true);
+        btnNuevo.requestFocus();
+
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         gpVisual = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
-        btnNuevo = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        btnSalir = new RSMaterialComponent.RSButtonIconUno();
+        jPanel6 = new javax.swing.JPanel();
+        PnlNuevo = new rojeru_san.rspanel.RSPanelImage();
+        btnNuevo = new RSMaterialComponent.RSButtonIconUno();
+        Separador1 = new javax.swing.JSeparator();
+        LabelTitulo1 = new javax.swing.JLabel();
+        PnlModificar = new rojeru_san.rspanel.RSPanelImage();
+        btnModificar = new RSMaterialComponent.RSButtonIconUno();
+        Separador2 = new javax.swing.JSeparator();
+        LabelTitulo2 = new javax.swing.JLabel();
+        PnlGuardar = new rojeru_san.rspanel.RSPanelImage();
+        btnGuardar = new RSMaterialComponent.RSButtonIconUno();
+        Separador3 = new javax.swing.JSeparator();
+        LabelTitulo3 = new javax.swing.JLabel();
+        PnlCancelar = new rojeru_san.rspanel.RSPanelImage();
+        btnCancelar = new RSMaterialComponent.RSButtonIconUno();
+        Separador4 = new javax.swing.JSeparator();
+        LabelTitulo4 = new javax.swing.JLabel();
+        PnlEliminar = new rojeru_san.rspanel.RSPanelImage();
+        btnEliminar = new RSMaterialComponent.RSButtonIconUno();
+        Separador = new javax.swing.JSeparator();
+        LabelTitulo = new javax.swing.JLabel();
+        lbvisual = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lbNombre = new javax.swing.JLabel();
+        lbRuc = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txtTelefono = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        txtRuc = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtCod = new javax.swing.JTextField();
+        txtCelular = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        lbNombre1 = new javax.swing.JLabel();
+        txtNFantasia = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        rbSi = new javax.swing.JRadioButton();
+        rbNo = new javax.swing.JRadioButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbEmpresa = new javax.swing.JTable()
         {
@@ -58,170 +118,225 @@ public final class dlgEmpresa extends javax.swing.JDialog {
                 return false;
             }
         };
-        txtNombre = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        lbNombre = new javax.swing.JLabel();
-        lbRuc = new javax.swing.JLabel();
-        txtRuc = new javax.swing.JTextField();
-        txtCelular = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txtDireccion = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtTelefono = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        txtCod = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        rbSi = new javax.swing.JRadioButton();
-        rbNo = new javax.swing.JRadioButton();
-        lbvisual = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        barMenu = new javax.swing.JMenuBar();
-        menuOpciones = new javax.swing.JMenu();
-        itemNuevo = new javax.swing.JMenuItem();
-        itemModificar = new javax.swing.JMenuItem();
-        itemGuardar = new javax.swing.JMenuItem();
-        itemCancelar = new javax.swing.JMenuItem();
-        itemEliminar = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.setLayout(new java.awt.GridLayout(1, 9));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnNuevo.setFont(new java.awt.Font("SansSerif", 0, 9)); // NOI18N
-        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/document30.png"))); // NOI18N
-        btnNuevo.setText("Nuevo-F1");
-        btnNuevo.setToolTipText("Nuevo - F1");
-        btnNuevo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnNuevo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnNuevo);
+        jPanel5.setBackground(new java.awt.Color(17, 35, 46));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnModificar.setFont(new java.awt.Font("SansSerif", 0, 9)); // NOI18N
-        btnModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit30.png"))); // NOI18N
-        btnModificar.setText("Modif-F5");
-        btnModificar.setToolTipText("Modificar - F5");
-        btnModificar.setEnabled(false);
-        btnModificar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnModificar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnModificar);
-
-        btnGuardar.setFont(new java.awt.Font("SansSerif", 0, 9)); // NOI18N
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save30.png"))); // NOI18N
-        btnGuardar.setText("Guardar-F6");
-        btnGuardar.setToolTipText("Guardar - F6");
-        btnGuardar.setEnabled(false);
-        btnGuardar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnGuardar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnGuardar);
-
-        btnCancelar.setFont(new java.awt.Font("SansSerif", 0, 9)); // NOI18N
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel30.png"))); // NOI18N
-        btnCancelar.setText("Cancel-Esc");
-        btnCancelar.setToolTipText("Cancelar - Esc");
-        btnCancelar.setEnabled(false);
-        btnCancelar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnCancelar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnCancelar);
-
-        btnEliminar.setFont(new java.awt.Font("SansSerif", 0, 9)); // NOI18N
-        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/garbage30.png"))); // NOI18N
-        btnEliminar.setText("Elim-Supr");
-        btnEliminar.setToolTipText("Eliminar - Supr");
-        btnEliminar.setEnabled(false);
-        btnEliminar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnEliminar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnEliminar);
-
-        btnSalir.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back30.png"))); // NOI18N
-        btnSalir.setText("Salir-Alt+F4");
-        btnSalir.setToolTipText("Salir - Alt+F4");
-        btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
+        btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir.setRippleColor(java.awt.Color.white);
+        btnSalir.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalirActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSalir);
+        jPanel5.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(808, 3, 20, 20));
 
-        tbEmpresa.setBackground(new java.awt.Color(255, 255, 204));
-        tbEmpresa.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 10)); // NOI18N
-        tbEmpresa.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tbEmpresa.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        tbEmpresa.getTableHeader().setResizingAllowed(false);
-        tbEmpresa.getTableHeader().setReorderingAllowed(false);
-        tbEmpresa.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbEmpresaMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tbEmpresa);
+        jPanel6.setOpaque(false);
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtNombre.setBackground(new java.awt.Color(255, 255, 204));
-        txtNombre.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        txtNombre.setEnabled(false);
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+        PnlNuevo.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlNuevo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnNuevo.setBackground(new java.awt.Color(0, 102, 0));
+        btnNuevo.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnNuevo.setForegroundHover(new java.awt.Color(0, 102, 0));
+        btnNuevo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnNuevo.setRippleColor(java.awt.Color.white);
+        btnNuevo.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
+                btnNuevoActionPerformed(evt);
             }
         });
-        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtNombreKeyTyped(evt);
-            }
-        });
+        PnlNuevo.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
+        Separador1.setForeground(new java.awt.Color(204, 204, 204));
+        PnlNuevo.add(Separador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo1.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo1.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo1.setText("NUEVO");
+        PnlNuevo.add(LabelTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel6.add(PnlNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 3, 100, 100));
+
+        PnlModificar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlModificar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnModificar.setBackground(new java.awt.Color(255, 102, 0));
+        btnModificar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnModificar.setEnabled(false);
+        btnModificar.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
+        btnModificar.setRippleColor(java.awt.Color.white);
+        btnModificar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        PnlModificar.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
+
+        Separador2.setForeground(new java.awt.Color(204, 204, 204));
+        PnlModificar.add(Separador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo2.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo2.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo2.setText("MODIFICAR");
+        PnlModificar.add(LabelTitulo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel6.add(PnlModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 3, 100, 100));
+
+        PnlGuardar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlGuardar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnGuardar.setBackground(new java.awt.Color(0, 102, 255));
+        btnGuardar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnGuardar.setEnabled(false);
+        btnGuardar.setForegroundHover(new java.awt.Color(0, 102, 0));
+        btnGuardar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
+        btnGuardar.setRippleColor(java.awt.Color.white);
+        btnGuardar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        PnlGuardar.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
+
+        Separador3.setForeground(new java.awt.Color(204, 204, 204));
+        PnlGuardar.add(Separador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo3.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo3.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo3.setText("REGISTRAR");
+        PnlGuardar.add(LabelTitulo3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel6.add(PnlGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, 100));
+
+        PnlCancelar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlCancelar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnCancelar.setBackground(new java.awt.Color(153, 0, 51));
+        btnCancelar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnCancelar.setEnabled(false);
+        btnCancelar.setForegroundHover(new java.awt.Color(153, 0, 51));
+        btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
+        btnCancelar.setRippleColor(java.awt.Color.white);
+        btnCancelar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        PnlCancelar.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
+
+        Separador4.setForeground(new java.awt.Color(204, 204, 204));
+        PnlCancelar.add(Separador4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo4.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo4.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo4.setText("CANCELAR");
+        PnlCancelar.add(LabelTitulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel6.add(PnlCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(296, 3, 100, 100));
+
+        PnlEliminar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlEliminar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnEliminar.setBackground(new java.awt.Color(255, 0, 0));
+        btnEliminar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnEliminar.setEnabled(false);
+        btnEliminar.setForegroundHover(new java.awt.Color(255, 0, 0));
+        btnEliminar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnEliminar.setRippleColor(java.awt.Color.white);
+        btnEliminar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        PnlEliminar.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
+
+        Separador.setForeground(new java.awt.Color(204, 204, 204));
+        PnlEliminar.add(Separador, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo.setText("ELIMINAR");
+        PnlEliminar.add(LabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel6.add(PnlEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(393, 3, 100, 100));
+
+        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 100));
+
+        lbvisual.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jPanel5.add(lbvisual, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 25, 18));
+
+        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 831, 105));
+
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel3.setText("ID Empresa");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 120, -1, 23));
 
+        lbNombre.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         lbNombre.setText("Razón Social");
+        jPanel4.add(lbNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 180, -1, 23));
 
+        lbRuc.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         lbRuc.setText("R.U.C.");
+        jPanel4.add(lbRuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 210, -1, 23));
 
-        txtRuc.setBackground(new java.awt.Color(255, 255, 204));
-        txtRuc.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jLabel4.setText("Dirección");
+        jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 240, -1, 23));
+
+        jLabel5.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jLabel5.setText("Teléfono");
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 270, -1, 23));
+
+        txtTelefono.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        txtTelefono.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtTelefono.setEnabled(false);
+        txtTelefono.setOpaque(false);
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
+        jPanel4.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 270, 137, 23));
+
+        txtDireccion.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        txtDireccion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtDireccion.setEnabled(false);
+        txtDireccion.setOpaque(false);
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
+            }
+        });
+        jPanel4.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 240, 330, 23));
+
+        txtRuc.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        txtRuc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtRuc.setEnabled(false);
+        txtRuc.setOpaque(false);
         txtRuc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtRucActionPerformed(evt);
@@ -235,550 +350,169 @@ public final class dlgEmpresa extends javax.swing.JDialog {
                 txtRucKeyTyped(evt);
             }
         });
+        jPanel4.add(txtRuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 210, 136, 23));
 
-        txtCelular.setBackground(new java.awt.Color(255, 255, 204));
-        txtCelular.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
+        txtNombre.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        txtNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtNombre.setEnabled(false);
+        txtNombre.setOpaque(false);
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+        jPanel4.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 180, 330, 23));
+
+        txtCod.setEditable(false);
+        txtCod.setBackground(new java.awt.Color(255, 255, 255));
+        txtCod.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        txtCod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCod.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel4.add(txtCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 120, 64, 23));
+
+        txtCelular.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        txtCelular.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtCelular.setEnabled(false);
+        txtCelular.setOpaque(false);
         txtCelular.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCelularKeyTyped(evt);
             }
         });
+        jPanel4.add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(313, 270, 132, 23));
 
-        jLabel4.setText("Dirección");
-
-        txtDireccion.setBackground(new java.awt.Color(255, 255, 204));
-        txtDireccion.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        txtDireccion.setEnabled(false);
-        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtDireccionKeyTyped(evt);
-            }
-        });
-
-        jLabel5.setText("Teléfono");
-
-        txtTelefono.setBackground(new java.awt.Color(255, 255, 204));
-        txtTelefono.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        txtTelefono.setEnabled(false);
-        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTelefonoKeyTyped(evt);
-            }
-        });
-
+        jLabel6.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel6.setText("Celular");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(265, 270, -1, 23));
 
-        txtCod.setEditable(false);
-        txtCod.setBackground(new java.awt.Color(255, 255, 204));
-        txtCod.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        txtCod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        lbNombre1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        lbNombre1.setText("Nombre Fantasía");
+        jPanel4.add(lbNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 150, -1, 23));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Activo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 11))); // NOI18N
+        txtNFantasia.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        txtNFantasia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtNFantasia.setEnabled(false);
+        txtNFantasia.setOpaque(false);
+        txtNFantasia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNFantasiaActionPerformed(evt);
+            }
+        });
+        txtNFantasia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNFantasiaKeyTyped(evt);
+            }
+        });
+        jPanel4.add(txtNFantasia, new org.netbeans.lib.awtextra.AbsoluteConstraints(115, 150, 330, 23));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "ESTADO DE LA EMPRESA", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Roboto", 1, 10), new java.awt.Color(255, 102, 0))); // NOI18N
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        rbSi.setBackground(new java.awt.Color(255, 255, 255));
         gpVisual.add(rbSi);
-        rbSi.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
+        rbSi.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         rbSi.setSelected(true);
-        rbSi.setText("Si");
+        rbSi.setText("Activo");
         rbSi.setEnabled(false);
+        rbSi.setFocusPainted(false);
         rbSi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbSiActionPerformed(evt);
             }
         });
+        jPanel2.add(rbSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 30, -1, 15));
 
+        rbNo.setBackground(new java.awt.Color(255, 255, 255));
         gpVisual.add(rbNo);
-        rbNo.setFont(new java.awt.Font("Tahoma", 1, 9)); // NOI18N
-        rbNo.setText("No");
+        rbNo.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        rbNo.setText("Inactivo");
         rbNo.setEnabled(false);
+        rbNo.setFocusPainted(false);
         rbNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbNoActionPerformed(evt);
             }
         });
+        jPanel2.add(rbNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(88, 30, -1, 15));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rbSi)
-                .addGap(18, 18, 18)
-                .addComponent(rbNo)
-                .addContainerGap(14, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbSi)
-                    .addComponent(rbNo))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel4.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 160, 170, 60));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/alert20.png"))); // NOI18N
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel1.setVerifyInputWhenFocusTarget(false);
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)), "IMPORTANTE", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Roboto", 1, 11), new java.awt.Color(255, 102, 0))); // NOI18N
+        jPanel3.setEnabled(false);
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/alert20.png"))); // NOI18N
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel2.setVerifyInputWhenFocusTarget(false);
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Observación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Century Gothic", 1, 11))); // NOI18N
-
-        jLabel7.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel7.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 153, 204));
         jLabel7.setText("Asegurese que solo una EMPRESA este activa en la tabla,");
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 22, -1, -1));
 
-        jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 11)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel8.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 153, 204));
         jLabel8.setText("en el caso de que tenga insertado mas de un registro.");
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 41, -1, 14));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        jPanel4.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(465, 226, 350, 70));
 
-        barMenu.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
-        menuOpciones.setText("Opciones");
-        menuOpciones.setFocusable(false);
-        menuOpciones.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        menuOpciones.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-
-        itemNuevo.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        itemNuevo.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        itemNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/document15.png"))); // NOI18N
-        itemNuevo.setText("Nuevo");
-        itemNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemNuevoActionPerformed(evt);
+        tbEmpresa.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        tbEmpresa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbEmpresa.setGridColor(new java.awt.Color(204, 204, 204));
+        tbEmpresa.setRowHeight(20);
+        tbEmpresa.setShowGrid(true);
+        tbEmpresa.setShowVerticalLines(false);
+        tbEmpresa.getTableHeader().setResizingAllowed(false);
+        tbEmpresa.getTableHeader().setReorderingAllowed(false);
+        tbEmpresa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbEmpresaMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbEmpresaMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbEmpresaMouseReleased(evt);
             }
         });
-        menuOpciones.add(itemNuevo);
+        jScrollPane1.setViewportView(tbEmpresa);
 
-        itemModificar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-        itemModificar.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        itemModificar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/edit15.png"))); // NOI18N
-        itemModificar.setText("Guardar Modificación");
-        itemModificar.setEnabled(false);
-        itemModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemModificarActionPerformed(evt);
-            }
-        });
-        menuOpciones.add(itemModificar);
-
-        itemGuardar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-        itemGuardar.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        itemGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/save15.png"))); // NOI18N
-        itemGuardar.setText("Guardar Nuevo");
-        itemGuardar.setEnabled(false);
-        itemGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemGuardarActionPerformed(evt);
-            }
-        });
-        menuOpciones.add(itemGuardar);
-
-        itemCancelar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
-        itemCancelar.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        itemCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cancel15.png"))); // NOI18N
-        itemCancelar.setText("Cancelar");
-        itemCancelar.setEnabled(false);
-        itemCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemCancelarActionPerformed(evt);
-            }
-        });
-        menuOpciones.add(itemCancelar);
-
-        itemEliminar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
-        itemEliminar.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        itemEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/garbage15.png"))); // NOI18N
-        itemEliminar.setText("Eliminar");
-        itemEliminar.setEnabled(false);
-        itemEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEliminarActionPerformed(evt);
-            }
-        });
-        menuOpciones.add(itemEliminar);
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        jMenuItem1.setFont(new java.awt.Font("Tahoma", 0, 9)); // NOI18N
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back15.png"))); // NOI18N
-        jMenuItem1.setText("Salir");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        menuOpciones.add(jMenuItem1);
-
-        barMenu.add(menuOpciones);
-
-        setJMenuBar(barMenu);
+        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 305, 829, 178));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5))
-                                .addGap(31, 31, 31)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtCelular))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(lbRuc)
-                                    .addComponent(lbNombre))
-                                .addGap(14, 14, 14)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtRuc, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel1))
-                                    .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel2)))))
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbvisual, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 833, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(3, 3, 3)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lbvisual, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lbNombre)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(txtRuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lbRuc, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
-        String cod = GestionarEmpresa.getCodigo();
-        txtCod.setText(cod);
-        btnNuevo.setEnabled(false);
-        itemNuevo.setEnabled(false);
-        btnGuardar.setEnabled(true);
-        itemGuardar.setEnabled(true);
-        btnCancelar.setEnabled(true);
-        itemCancelar.setEnabled(true);
-        txtNombre.setEnabled(true);
-        txtRuc.setEnabled(true);
-        txtDireccion.setEnabled(true);
-        txtTelefono.setEnabled(true);
-        txtCelular.setEnabled(true);
-        rbSi.setEnabled(true);
-        rbNo.setEnabled(true);
-        txtNombre.setText("");
-        txtRuc.setText("");
-        txtDireccion.setText("");
-        txtTelefono.setText("");
-        txtCelular.setText("");
-        Visual();
-        CabecerasTablas.limpiarTablas(tbEmpresa);
-        controlEmpresa.lisEmpresa(tbEmpresa);
-        txtNombre.requestFocus();
-    }//GEN-LAST:event_btnNuevoActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:a
-        try {
-            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION) {
-                btnEliminar.setEnabled(false);
-                itemEliminar.setEnabled(false);
-                btnModificar.setEnabled(false);
-                itemModificar.setEnabled(false);
-                btnCancelar.setEnabled(false);
-                itemCancelar.setEnabled(false);
-                txtNombre.setEnabled(false);
-                txtRuc.setEnabled(false);
-                txtDireccion.setEnabled(false);
-                txtTelefono.setEnabled(false);
-                txtCelular.setEnabled(false);
-                rbSi.setEnabled(false);
-                rbNo.setEnabled(false);
-                controlEmpresa.delEmpresa();
-                limpiarCampos();
-                CabecerasTablas.limpiarTablas(tbEmpresa);
-                controlEmpresa.lisEmpresa(tbEmpresa);
-                btnCancelarActionPerformed(null);
-            }
-        } catch (HeadlessException ee) {
-        }
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
-        if (validarCampos.estaVacio(txtNombre) && validarCampos.estaVacio(txtRuc)) {
-            try {
-                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION) {
-                    controlEmpresa.actEmpresa();
-                    btnNuevo.setEnabled(true);
-                    itemNuevo.setEnabled(true);
-                    btnModificar.setEnabled(false);
-                    itemModificar.setEnabled(false);
-                    btnEliminar.setEnabled(false);
-                    itemEliminar.setEnabled(false);
-                    btnCancelar.setEnabled(false);
-                    itemCancelar.setEnabled(false);
-                    txtNombre.setEnabled(false);
-                    txtRuc.setEnabled(false);
-                    txtDireccion.setEnabled(false);
-                    txtTelefono.setEnabled(false);
-                    txtCelular.setEnabled(false);
-                    rbSi.setEnabled(false);
-                    rbNo.setEnabled(false);
-                    limpiarCampos();
-                    CabecerasTablas.limpiarTablas(tbEmpresa);
-                    controlEmpresa.lisEmpresa(tbEmpresa);
-                }
-            } catch (HeadlessException ee) {
-            }
-
-        } else {
-            Mensajes.informacion("Debe llenar obligatoriamente los campos con *");
-            if (txtNombre.getText().equals("")) {
-                txtNombre.requestFocus();
-            } else if (txtRuc.getText().equals("")) {
-                txtRuc.requestFocus();
-            }
-        }
-
-    }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        if (validarCampos.estaVacio(txtNombre) && validarCampos.estaVacio(txtRuc)) {
-            try {
-                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION) {
-                    String cod = GestionarEmpresa.getCodigo();
-                    txtCod.setText(cod);
-                    controlEmpresa.addEmpresa();
-                    btnGuardar.setEnabled(false);
-                    itemGuardar.setEnabled(false);
-                    btnCancelar.setEnabled(false);
-                    itemCancelar.setEnabled(false);
-                    txtNombre.setEnabled(false);
-                    txtRuc.setEnabled(false);
-                    txtDireccion.setEnabled(false);
-                    txtTelefono.setEnabled(false);
-                    txtCelular.setEnabled(false);
-                    rbSi.setEnabled(false);
-                    rbNo.setEnabled(false);
-                    limpiarCampos();
-                    CabecerasTablas.limpiarTablas(tbEmpresa);
-                    controlEmpresa.lisEmpresa(tbEmpresa);
-                }
-            } catch (HeadlessException ee) {
-            }
-        } else {
-            Mensajes.informacion("Debe llenar obligatoriamente los campos con resaltados");
-            if (txtNombre.getText().equals("")) {
-                txtNombre.requestFocus();
-            } else if (txtRuc.getText().equals("")) {
-                txtRuc.requestFocus();
-            }
-        }
-
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        //cargarComboBox.cargar(dlgGestAriculos.cbUnidad, "SELECT * FROM unidad WHERE uni_indicador='S'");
-        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
-        if (rpta == 0) {
-            informacionGral();
-            this.dispose();
-        }
-
-    }//GEN-LAST:event_btnSalirActionPerformed
-
     private void tbEmpresaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEmpresaMouseClicked
         // TODO add your handling code here:
-        btnNuevo.setEnabled(false);
-        itemNuevo.setEnabled(false);
-        btnModificar.setEnabled(true);
-        itemModificar.setEnabled(true);
-        btnEliminar.setEnabled(true);
-        itemEliminar.setEnabled(true);
-        txtNombre.setEnabled(true);
-        txtRuc.setEnabled(true);
-        txtDireccion.setEnabled(true);
-        txtTelefono.setEnabled(true);
-        txtCelular.setEnabled(true);
-        btnGuardar.setEnabled(false);
-        itemGuardar.setEnabled(false);
-        btnCancelar.setEnabled(true);
-        itemCancelar.setEnabled(true);
-        rbSi.setEnabled(true);
-        rbNo.setEnabled(true);
 
-        int fila = tbEmpresa.getSelectedRow();
-        String cod = tbEmpresa.getValueAt(fila, 0).toString();
-        String nom = tbEmpresa.getValueAt(fila, 1).toString();
-        String ruc = tbEmpresa.getValueAt(fila, 2).toString();
-        String direccion = tbEmpresa.getValueAt(fila, 3).toString();
-        String telefono = tbEmpresa.getValueAt(fila, 4).toString();
-        String celular = tbEmpresa.getValueAt(fila, 5).toString();
-        visual = tbEmpresa.getValueAt(fila, 6).toString();
-
-        txtCod.setText(cod);
-        txtNombre.setText(nom);
-        txtRuc.setText(ruc);
-        txtDireccion.setText(direccion);
-        txtTelefono.setText(telefono);
-        txtCelular.setText(celular);
-        if (visual.equals("SI")) {
-            rbSi.setSelected(true);
-        } else {
-            rbNo.setSelected(true);
-        }
-        Visual();
     }//GEN-LAST:event_tbEmpresaMouseClicked
-
-    private void itemNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoActionPerformed
-        // TODO add your handling code here:
-        btnNuevoActionPerformed(null);
-    }//GEN-LAST:event_itemNuevoActionPerformed
-
-    private void itemModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemModificarActionPerformed
-        // TODO add your handling code here:
-        btnModificarActionPerformed(null);
-    }//GEN-LAST:event_itemModificarActionPerformed
-
-    private void itemGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemGuardarActionPerformed
-        // TODO add your handling code here:
-        btnGuardarActionPerformed(null);
-    }//GEN-LAST:event_itemGuardarActionPerformed
-
-    private void itemCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCancelarActionPerformed
-        // TODO add your handling code here:
-        btnCancelarActionPerformed(null);
-    }//GEN-LAST:event_itemCancelarActionPerformed
-
-    private void itemEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarActionPerformed
-        // TODO add your handling code here:
-        btnEliminarActionPerformed(null);
-    }//GEN-LAST:event_itemEliminarActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
-        btnNuevo.setEnabled(true);
-        itemNuevo.setEnabled(true);
-        btnModificar.setEnabled(false);
-        itemModificar.setEnabled(false);
-        btnGuardar.setEnabled(false);
-        itemGuardar.setEnabled(false);
-        btnCancelar.setEnabled(false);
-        itemCancelar.setEnabled(false);
-        btnEliminar.setEnabled(false);
-        itemEliminar.setEnabled(false);
-        txtNombre.setEnabled(false);
-        txtRuc.setEnabled(false);
-        txtDireccion.setEnabled(false);
-        txtTelefono.setEnabled(false);
-        txtCelular.setEnabled(false);
-        rbSi.setEnabled(false);
-        rbNo.setEnabled(false);
-        limpiarCampos();
-        tbEmpresa.clearSelection();
-        btnNuevo.requestFocus();
-    }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
@@ -879,18 +613,169 @@ public final class dlgEmpresa extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtRucActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
-        btnSalir.doClick();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
+        if (rpta == 0) {
+            ControlLogeo.Empresa();
+            frmPrincipal.informacionGral();
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        ban = 1;
+        String cod = GestionarEmpresa.getCodigo();
+        txtCod.setText(cod);
+        btnNuevo.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnSalir.setEnabled(false);
+        txtNFantasia.setEnabled(true);
+        txtNombre.setEnabled(true);
+        txtRuc.setEnabled(true);
+        txtDireccion.setEnabled(true);
+        txtTelefono.setEnabled(true);
+        txtCelular.setEnabled(true);
+        rbSi.setEnabled(true);
+        rbNo.setEnabled(true);
+        limpiarCampos();
+        Visual();
+        tbEmpresa.setEnabled(false);
+        txtNFantasia.requestFocus();
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        if (validarCampos.estaVacio(txtNombre) && validarCampos.estaVacio(txtRuc)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
+                    controlEmpresa.actEmpresa();
+                    Cancelar();
+                }
+            } catch (HeadlessException ee) {
+            }
+
+        } else {
+            Mensajes.informacion("Debe llenar obligatoriamente los campos con *");
+            if (txtNombre.getText().equals("")) {
+                txtNombre.requestFocus();
+            } else if (txtRuc.getText().equals("")) {
+                txtRuc.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        if (validarCampos.estaVacio(txtNombre) && validarCampos.estaVacio(txtRuc)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
+                    String cod = GestionarEmpresa.getCodigo();
+                    txtCod.setText(cod);
+                    controlEmpresa.addEmpresa();
+                    Cancelar();
+                }
+            } catch (HeadlessException ee) {
+            }
+        } else {
+            Mensajes.informacion("Debe llenar obligatoriamente los campos con resaltados");
+            if (txtNombre.getText().equals("")) {
+                txtNombre.requestFocus();
+            } else if (txtRuc.getText().equals("")) {
+                txtRuc.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+        int rpta = Mensajes.confirmar("¿Seguro que desea cancelar esta operación?");
+        if (rpta == 0) {
+            Cancelar();
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        try {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resp == JOptionPane.YES_OPTION) {
+                controlEmpresa.delEmpresa();
+                Cancelar();
+            }
+        } catch (HeadlessException ee) {
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtNFantasiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNFantasiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNFantasiaActionPerformed
+
+    private void txtNFantasiaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNFantasiaKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNFantasiaKeyTyped
+
+    private void tbEmpresaMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEmpresaMouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbEmpresaMouseReleased
+
+    private void tbEmpresaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEmpresaMousePressed
+        // TODO add your handling code here:
+        if (ban == 0) {
+            btnNuevo.setEnabled(false);
+            btnModificar.setEnabled(true);
+            btnEliminar.setEnabled(true);
+            txtNFantasia.setEnabled(true);
+            txtNombre.setEnabled(true);
+            txtRuc.setEnabled(true);
+            txtDireccion.setEnabled(true);
+            txtTelefono.setEnabled(true);
+            txtCelular.setEnabled(true);
+            btnGuardar.setEnabled(false);
+            btnCancelar.setEnabled(true);
+            btnSalir.setEnabled(false);
+            rbSi.setEnabled(true);
+            rbNo.setEnabled(true);
+
+            int fila = tbEmpresa.getSelectedRow();
+            String cod = tbEmpresa.getValueAt(fila, 0).toString();
+            String nomF = tbEmpresa.getValueAt(fila, 1).toString();
+            String nom = tbEmpresa.getValueAt(fila, 2).toString();
+            String ruc = tbEmpresa.getValueAt(fila, 3).toString();
+            String direccion = tbEmpresa.getValueAt(fila, 4).toString();
+            String telefono = tbEmpresa.getValueAt(fila, 5).toString();
+            String celular = tbEmpresa.getValueAt(fila, 6).toString();
+            visual = tbEmpresa.getValueAt(fila, 7).toString();
+
+            txtCod.setText(cod);
+            txtNFantasia.setText(nomF);
+            txtNombre.setText(nom);
+            txtRuc.setText(ruc);
+            txtDireccion.setText(direccion);
+            txtTelefono.setText(telefono);
+            txtCelular.setText(celular);
+            if (visual.equals("SI")) {
+                rbSi.setSelected(true);
+            } else {
+                rbNo.setSelected(true);
+            }
+            Visual();
+        }
+    }//GEN-LAST:event_tbEmpresaMousePressed
     void limpiarCampos() {
         txtCod.setText("");
+        txtNFantasia.setText("");
         txtNombre.setText("");
         txtRuc.setText("");
         txtDireccion.setText("");
         txtTelefono.setText("");
         txtCelular.setText("");
-        //lbvisual.setText("");
+        CabecerasTablas.limpiarTablas(tbEmpresa);
+        controlEmpresa.lisEmpresa(tbEmpresa);
     }
 
     void Visual() {
@@ -898,26 +783,6 @@ public final class dlgEmpresa extends javax.swing.JDialog {
             lbvisual.setText("SI");
         } else {
             lbvisual.setText("NO");
-        }
-    }
-
-    public void informacionGral() {
-        String sql = "select * from v_sucursal where em_visualizar='SI' and em_indicador='S'";
-        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
-            rs.first();
-            if (rs.getRow() != 0) {
-                lbSucursal.setText(rs.getString(2));
-                lbEmpresa.setText(rs.getString(3));
-            } else {
-                System.out.println("No se puede cargar Información Gral.");
-                frmPrincipal.lbEmpresa.setText("NOMBRE FARMACIA");
-                frmPrincipal.lbSucursal.setText("NOMBRE SUCURSAL");
-            }
-            rs.close();
-            st.close();
-            cn.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
         }
     }
 
@@ -966,42 +831,51 @@ public final class dlgEmpresa extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar barMenu;
-    private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnSalir;
+    private javax.swing.JLabel LabelTitulo;
+    private javax.swing.JLabel LabelTitulo1;
+    private javax.swing.JLabel LabelTitulo2;
+    private javax.swing.JLabel LabelTitulo3;
+    private javax.swing.JLabel LabelTitulo4;
+    private rojeru_san.rspanel.RSPanelImage PnlCancelar;
+    private rojeru_san.rspanel.RSPanelImage PnlEliminar;
+    private rojeru_san.rspanel.RSPanelImage PnlGuardar;
+    private rojeru_san.rspanel.RSPanelImage PnlModificar;
+    private rojeru_san.rspanel.RSPanelImage PnlNuevo;
+    private javax.swing.JSeparator Separador;
+    private javax.swing.JSeparator Separador1;
+    private javax.swing.JSeparator Separador2;
+    private javax.swing.JSeparator Separador3;
+    private javax.swing.JSeparator Separador4;
+    private RSMaterialComponent.RSButtonIconUno btnCancelar;
+    private RSMaterialComponent.RSButtonIconUno btnEliminar;
+    private RSMaterialComponent.RSButtonIconUno btnGuardar;
+    private RSMaterialComponent.RSButtonIconUno btnModificar;
+    private RSMaterialComponent.RSButtonIconUno btnNuevo;
+    private RSMaterialComponent.RSButtonIconUno btnSalir;
     public static javax.swing.ButtonGroup gpVisual;
-    private javax.swing.JMenuItem itemCancelar;
-    private javax.swing.JMenuItem itemEliminar;
-    private javax.swing.JMenuItem itemGuardar;
-    private javax.swing.JMenuItem itemModificar;
-    private javax.swing.JMenuItem itemNuevo;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JLabel lbNombre;
+    public static javax.swing.JLabel lbNombre1;
     public static javax.swing.JLabel lbRuc;
     public static javax.swing.JLabel lbvisual;
-    private javax.swing.JMenu menuOpciones;
     public static javax.swing.JRadioButton rbNo;
     public static javax.swing.JRadioButton rbSi;
     private javax.swing.JTable tbEmpresa;
     public static javax.swing.JTextField txtCelular;
     public static javax.swing.JTextField txtCod;
     public static javax.swing.JTextField txtDireccion;
+    public static javax.swing.JTextField txtNFantasia;
     public static javax.swing.JTextField txtNombre;
     public static javax.swing.JTextField txtRuc;
     public static javax.swing.JTextField txtTelefono;

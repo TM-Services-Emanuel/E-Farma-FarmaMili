@@ -1004,6 +1004,7 @@ public final class dlgGestClientes extends javax.swing.JDialog {
         cabe.cliente(dlgClientes.tablaClientes);
         CabecerasTablas.limpiarTablas(dlgClientes.tablaClientes);
         controlCliente.listClientes(dlgClientes.tablaClientes, "clientes.cli_codigo");
+        dlgClientes.Renders();
         dlgClientes.txtBuscar.setText("");
         dlgClientes.txtBuscar.requestFocus();
     }

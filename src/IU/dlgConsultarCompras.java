@@ -1,8 +1,8 @@
 package IU;
 
 import Componentes.Mensajes;
-import Componentes.RenderDecimal;
 import Componentes.RenderDecimal1;
+import Componentes.RenderDecimalVenta;
 import Componentes.Software;
 import Controladores.CabecerasTablas;
 import Controladores.controlCompra;
@@ -19,29 +19,42 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         cabe.consDetalleCompras(tbDetalleCompra);
         controlCompra.listarCompras(tbCompra);
         Renders();
-        
+
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Gestión de compras realizadas");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Gestión de compras realizadas");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Gestión de compras realizadas");
         }
     }
-    
+
     public static void Renders() {
-        dlgConsultarCompras.tbCompra.getColumnModel().getColumn(9).setCellRenderer(new RenderDecimal());
+        dlgConsultarCompras.tbCompra.getColumnModel().getColumn(9).setCellRenderer(new RenderDecimalVenta());
     }
+
     public static void RendersD() {
         dlgConsultarCompras.tbDetalleCompra.getColumnModel().getColumn(5).setCellRenderer(new RenderDecimal1());
-        dlgConsultarCompras.tbDetalleCompra.getColumnModel().getColumn(6).setCellRenderer(new RenderDecimal());
+        dlgConsultarCompras.tbDetalleCompra.getColumnModel().getColumn(6).setCellRenderer(new RenderDecimalVenta());
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        btnSalir = new RSMaterialComponent.RSButtonIconUno();
+        jPanel5 = new javax.swing.JPanel();
+        PnlActualizar = new rojeru_san.rspanel.RSPanelImage();
+        btnActualizar = new RSMaterialComponent.RSButtonIconUno();
+        Separador7 = new javax.swing.JSeparator();
+        LabelTitulo7 = new javax.swing.JLabel();
+        PnlEliminarG = new rojeru_san.rspanel.RSPanelImage();
+        btnAnular = new RSMaterialComponent.RSButtonIconUno();
+        Separador8 = new javax.swing.JSeparator();
+        LabelTitulo8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbCompra = new javax.swing.JTable()
         {
@@ -65,18 +78,94 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
                 return false;
             }
         };
-        jLabel6 = new javax.swing.JLabel();
-        txtTotalCompra = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        btnAnular = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
 
-        tbCompra.setBackground(new java.awt.Color(255, 255, 204));
-        tbCompra.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 10)); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setBackground(new java.awt.Color(17, 35, 46));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
+        btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir.setRippleColor(java.awt.Color.white);
+        btnSalir.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 3, 20, 20));
+
+        jPanel5.setOpaque(false);
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        PnlActualizar.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlActualizar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnActualizar.setBackground(new java.awt.Color(0, 153, 255));
+        btnActualizar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnActualizar.setForegroundHover(new java.awt.Color(0, 153, 255));
+        btnActualizar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REFRESH);
+        btnActualizar.setRippleColor(java.awt.Color.white);
+        btnActualizar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+        PnlActualizar.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
+
+        Separador7.setForeground(new java.awt.Color(204, 204, 204));
+        PnlActualizar.add(Separador7, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo7.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo7.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo7.setText("ACTUALIZAR");
+        PnlActualizar.add(LabelTitulo7, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel5.add(PnlActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 3, 100, 100));
+
+        PnlEliminarG.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlEliminarG.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnAnular.setBackground(new java.awt.Color(255, 0, 0));
+        btnAnular.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnAnular.setForegroundHover(new java.awt.Color(255, 0, 0));
+        btnAnular.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnAnular.setRippleColor(java.awt.Color.white);
+        btnAnular.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnAnular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnularActionPerformed(evt);
+            }
+        });
+        PnlEliminarG.add(btnAnular, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
+
+        Separador8.setForeground(new java.awt.Color(204, 204, 204));
+        PnlEliminarG.add(Separador8, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo8.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo8.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo8.setText("ELIMINAR");
+        PnlEliminarG.add(LabelTitulo8, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel5.add(PnlEliminarG, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 3, 100, 100));
+
+        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 883, 102));
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+
+        tbCompra.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         tbCompra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -88,7 +177,10 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tbCompra.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tbCompra.setGridColor(new java.awt.Color(204, 204, 204));
+        tbCompra.setRowHeight(20);
+        tbCompra.setShowGrid(true);
+        tbCompra.setShowVerticalLines(false);
         tbCompra.getTableHeader().setResizingAllowed(false);
         tbCompra.getTableHeader().setReorderingAllowed(false);
         tbCompra.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -101,27 +193,46 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tbCompra);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 100, 883, 280));
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel1.setText("Factura de Compra:");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 18, -1, -1));
 
         txtCodCompra.setEditable(false);
-        txtCodCompra.setBackground(new java.awt.Color(255, 255, 204));
+        txtCodCompra.setBackground(new java.awt.Color(255, 255, 255));
+        txtCodCompra.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtCodCompra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtCodCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel1.add(txtCodCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 15, 121, 23));
 
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel2.setText("Fecha y Hora:");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(259, 18, -1, -1));
 
         txtFechaCompra.setEditable(false);
-        txtFechaCompra.setBackground(new java.awt.Color(255, 255, 204));
+        txtFechaCompra.setBackground(new java.awt.Color(255, 255, 255));
+        txtFechaCompra.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtFechaCompra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFechaCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel1.add(txtFechaCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 15, 146, 23));
 
+        jLabel3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         jLabel3.setText("Proveedor :");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 47, -1, -1));
 
         txtProveedor.setEditable(false);
-        txtProveedor.setBackground(new java.awt.Color(255, 255, 204));
+        txtProveedor.setBackground(new java.awt.Color(255, 255, 255));
+        txtProveedor.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        txtProveedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel1.add(txtProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 44, 357, 23));
 
-        tbDetalleCompra.setBackground(new java.awt.Color(255, 255, 204));
-        tbDetalleCompra.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 10)); // NOI18N
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+
+        tbDetalleCompra.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         tbDetalleCompra.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -133,132 +244,28 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tbDetalleCompra.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tbDetalleCompra.setEnabled(false);
+        tbDetalleCompra.setGridColor(new java.awt.Color(204, 204, 204));
+        tbDetalleCompra.setRowHeight(20);
+        tbDetalleCompra.setShowGrid(true);
+        tbDetalleCompra.setShowVerticalLines(false);
         tbDetalleCompra.getTableHeader().setResizingAllowed(false);
         tbDetalleCompra.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tbDetalleCompra);
 
-        jLabel6.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 13)); // NOI18N
-        jLabel6.setText("TOTAL COMPRA");
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 70, 871, 239));
 
-        txtTotalCompra.setBackground(new java.awt.Color(255, 255, 204));
-        txtTotalCompra.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 14)); // NOI18N
-        txtTotalCompra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtCodCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFechaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtProveedor))
-                        .addGap(392, 392, 392))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTotalCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 803, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtCodCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtFechaCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTotalCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
-
-        btnAnular.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnAnular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/receipt_106581 - copia (2) - copia.png"))); // NOI18N
-        btnAnular.setText("Anular Compra");
-        btnAnular.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnAnular.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnAnular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAnularActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnAnular);
-
-        btnActualizar.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/receipt_106581 - copia - copia.png"))); // NOI18N
-        btnActualizar.setText("Actualizar Listado");
-        btnActualizar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnActualizar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnActualizar);
-
-        jButton3.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back30.png"))); // NOI18N
-        jButton3.setText("Salir");
-        jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton3);
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 385, 873, 310));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 831, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 885, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -275,19 +282,32 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         }*/
     }//GEN-LAST:event_tbCompraMouseClicked
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void tbCompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCompraMousePressed
         // TODO add your handling code here:
-        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
-        if (rpta == 0) {
-            this.dispose();
+        try {
+            CabecerasTablas.limpiarTablas(tbDetalleCompra);
+            controlCompra.listarDetalleCompras(tbDetalleCompra);
+            RendersD();
+        } catch (Exception e) {
+            Mensajes.error(e.toString());
         }
-        
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_tbCompraMousePressed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        cabe.consCompras(tbCompra);
+        cabe.consDetalleCompras(tbDetalleCompra);
+        controlCompra.listarCompras(tbCompra);
+        Renders();
+        txtCodCompra.setText("");
+        txtFechaCompra.setText("");
+        txtProveedor.setText("");
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
         // TODO add your handling code here:
         if (dlgConsultarCompras.tbCompra.getSelectedRow() < 0) {
-            Mensajes.error("Seleccione una fila de la tabla");
+            Mensajes.error("No es posible procesar la operación.\nSeleccione la venta que desea anular.");
         } else {
             int x = dlgConsultarCompras.tbCompra.getSelectedRow();
             String estado = dlgConsultarCompras.tbCompra.getValueAt(x, 10).toString();
@@ -314,27 +334,13 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnAnularActionPerformed
 
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
-        cabe.consCompras(tbCompra);
-        cabe.consDetalleCompras(tbDetalleCompra);
-        controlCompra.listarCompras(tbCompra);
-        Renders();
-        txtCodCompra.setText("");
-        txtFechaCompra.setText("");
-        txtProveedor.setText("");
-    }//GEN-LAST:event_btnActualizarActionPerformed
-
-    private void tbCompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCompraMousePressed
-        // TODO add your handling code here:
-        try {
-            CabecerasTablas.limpiarTablas(tbDetalleCompra);
-            controlCompra.listarDetalleCompras(tbDetalleCompra);
-            RendersD();
-        } catch (Exception e) {
-            Mensajes.error(e.toString());
+        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
+        if (rpta == 0) {
+            this.dispose();
         }
-    }//GEN-LAST:event_tbCompraMousePressed
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -379,15 +385,22 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnAnular;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel LabelTitulo7;
+    private javax.swing.JLabel LabelTitulo8;
+    private rojeru_san.rspanel.RSPanelImage PnlActualizar;
+    private rojeru_san.rspanel.RSPanelImage PnlEliminarG;
+    private javax.swing.JSeparator Separador7;
+    private javax.swing.JSeparator Separador8;
+    private RSMaterialComponent.RSButtonIconUno btnActualizar;
+    private RSMaterialComponent.RSButtonIconUno btnAnular;
+    private RSMaterialComponent.RSButtonIconUno btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public static javax.swing.JTable tbCompra;
@@ -395,6 +408,5 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
     public static javax.swing.JTextField txtCodCompra;
     public static javax.swing.JTextField txtFechaCompra;
     public static javax.swing.JTextField txtProveedor;
-    public static javax.swing.JTextField txtTotalCompra;
     // End of variables declaration//GEN-END:variables
 }

@@ -165,8 +165,6 @@ public class ControlLogeo {
                     System.out.println("PUNTO DE EXPEDICIÓN: " + Timbrado.getPuntoExpedicion());
                     Timbrado.setFacturaFin(rs.getInt(10));
                     System.out.println("FACTURAR HASTA NRO.: " + Timbrado.getFacturaFin());
-                    //Timbrado.setIdBoca(rs.getInt(17));
-                    //System.out.println("ID BOCA: " + Timbrado.getIdBoca());
                     Timbrado.setImpresora(rs.getString(15));
                     System.out.println("IMPRESORA: " + Timbrado.getImpresora());
                     Timbrado.setHabilitado("SI");

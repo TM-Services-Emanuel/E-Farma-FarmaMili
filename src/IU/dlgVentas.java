@@ -64,12 +64,18 @@ public final class dlgVentas extends javax.swing.JDialog {
     private void AccesoRapido(int n) {
 
         switch (n) {
-            case KeyEvent.VK_F1 -> btnNuevo.doClick();
-            case KeyEvent.VK_F6 -> btnGuardar.doClick();
-            case KeyEvent.VK_ESCAPE -> btnCancelar.doClick();
-            case KeyEvent.VK_DELETE -> btnRestar.doClick();
-            case KeyEvent.VK_F9 -> btnBuscarArticulo.doClick();
-            case KeyEvent.VK_F3 -> btnProveedor.doClick();
+            case KeyEvent.VK_F1 ->
+                btnNuevo.doClick();
+            case KeyEvent.VK_F6 ->
+                btnGuardar.doClick();
+            case KeyEvent.VK_ESCAPE ->
+                btnCancelar.doClick();
+            case KeyEvent.VK_DELETE ->
+                btnRestar.doClick();
+            case KeyEvent.VK_F9 ->
+                btnBuscarArticulo.doClick();
+            case KeyEvent.VK_F3 ->
+                btnProveedor.doClick();
             default -> {
             }
         }
@@ -122,6 +128,7 @@ public final class dlgVentas extends javax.swing.JDialog {
         btnSalir.setEnabled(true);
         btnGuardar.setEnabled(false);
         btnCancelar.setEnabled(false);
+        controlFactura.canCelar();
         cant();
     }
 
@@ -201,7 +208,6 @@ public final class dlgVentas extends javax.swing.JDialog {
         rContado.setSelected(true);
         CabecerasTablas.limpiarTablasVentas(tbDetalle);
         CabecerasTablas.ventas(tbDetalle);
-        controlFactura.canCelar();
         txtCodVendedorF.setText("");
         lbEmpleadoF.setText("");
         txthabilitado.setText("");
@@ -697,7 +703,7 @@ public final class dlgVentas extends javax.swing.JDialog {
             Ticket += String.format("%1$1s", Descripcion + "\n");
             //Ticket += String.format("%1$11s %2$15s %3$19s" ,"CANT: "+tbDetalle.getValueAt(i, 3).toString(), "PRECIO: "+formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))), "SUBTOTAL: "+formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", ""))))+ "\n";
             Ticket += String.format("%1$-6s %2$-8s %3$-5s %4$-9s %5$-5s", Cant, formateador.format(Integer.parseInt(Ppublic.replace(".", "").replace(",", ""))),
-                    formateador.format(Integer.parseInt(Desc.replace(".", "").replace(",", ""))),
+                    Desc,
                     formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))),
                     formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", "")))) + "\n";
         }
@@ -2442,35 +2448,20 @@ public final class dlgVentas extends javax.swing.JDialog {
                     cn.close();
                     Mensajes.informacion("VENTA REGISTRADA EXITOSAMENTE");
                     dlgFinFacturaL.dispose();
-                    if (cond.equals("CONTADO")) {
-                        String Letra = L.Convertir((txtTotal.getText().replace(".", "").replace(",", "")), true);
-                        llamarReporteFactura(Integer.parseInt(txtCodF.getText().trim()), Letra);
-                        CabecerasTablas.limpiarTablasVentas(tbDetalle);
-                        CabecerasTablas.ventas(tbDetalle);
-                        controlFactura.canCelar();
-                        Cancelar();
-                        txtAbonoF.setText("0");
-                        txtVueltoF.setText("0");
-                        cant();
-                    } else {
-                        String Letra = L.Convertir((txtTotal.getText().replace(".", "").replace(",", "")), true);
-                        llamarReporteFactura(Integer.parseInt(txtCodF.getText().trim()), Letra);
-                        CabecerasTablas.limpiarTablasVentas(tbDetalle);
-                        CabecerasTablas.ventas(tbDetalle);
-                        controlFactura.canCelar();
-                        Cancelar();
-                        txtAbonoF.setText("0");
-                        txtVueltoF.setText("0");
-                        cant();
-
-                    }
+                    String Letra = L.Convertir((txtTotal.getText().replace(".", "").replace(",", "")), true);
+                    llamarReporteFactura(Integer.parseInt(txtCodF.getText().trim()), Letra);
+                    Cancelar();
+                    txtAbonoF.setText("0");
+                    txtVueltoF.setText("0");
+                    cant();
                 } catch (SQLException e) {
                     try {
                         cn.rollback();
                         cn.close();
                         Mensajes.error("TRANSACCION FALLIDA.\nLOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
-                        controlFactura.canCelar();
                         dlgFinFacturaL.dispose();
+                        Cancelar();
+                        
                     } catch (SQLException se) {
                         Mensajes.error(se.getMessage());
                     }
@@ -2635,43 +2626,29 @@ public final class dlgVentas extends javax.swing.JDialog {
                     dlgFinTicket.dispose();
                     if (cond.equals("CONTADO")) {
                         imprimirTicket();
-                        CabecerasTablas.limpiarTablasVentas(tbDetalle);
-                        CabecerasTablas.ventas(tbDetalle);
-                        controlFactura.canCelar();
                         Cancelar();
                         txtAbonoT.setText("0");
                         txtVueltoT.setText("0");
                         cant();
                     } else {
-                        CabecerasTablas.limpiarTablasVentas(tbDetalle);
-                        CabecerasTablas.ventas(tbDetalle);
-                        controlFactura.canCelar();
                         jasper.BoletaCredito("\\Reports\\ventas\\venta_credito.jasper", "cod", Integer.valueOf(txtCodT.getText().trim()));
                         jasper.cerrar();
                         Cancelar();
                         txtAbonoT.setText("0");
                         txtVueltoT.setText("0");
                         cant();
-
                     }
-                    //CabecerasTablas.limpiarTablas(tbDetalle);
-                    //cabe.compras(tbDetalle);
-                    //controlFactura.canCelar();  
                 } catch (SQLException e) {
                     try {
                         cn.rollback();
                         cn.close();
                         Mensajes.error("TRANSACCION FALLIDA.\nLOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
-                        controlFactura.canCelar();
+                        Cancelar();
                         dlgFinTicket.dispose();
                     } catch (SQLException se) {
                         Mensajes.error(se.getMessage());
                     }
                 }
-                //Cancelar();
-                //txtAbono.setText("0");
-                //txtVuelto.setText("0");
-                //cant();
             }
         } catch (Exception ee) {
             System.out.println(ee.getMessage());
@@ -2854,12 +2831,22 @@ public final class dlgVentas extends javax.swing.JDialog {
                     dlgVentas.lbDescuentoF.setText(dlgVentas.txtDescuento.getText());
                     dlgVentas.lbDescuentoT.setText(dlgVentas.txtDescuento.getText());
                 }
+                if (Timbrado.getValidado().equals("SI")) {
+                    btnFacturaLegal.setEnabled(true);
+                } else if (Timbrado.getValidado().equals("NO")) {
+                    btnFacturaLegal.setEnabled(false);
+                }
+
+                if (Tickets.getHabilitado().equals("SI")) {
+                    btnTicket.setEnabled(true);
+                } else if (Tickets.getHabilitado().equals("NO")) {
+                    btnTicket.setEnabled(false);
+                }
                 OpcionesEmision.setSize(338, 241);
                 OpcionesEmision.setLocationRelativeTo(this);
                 OpcionesEmision.setModal(true);
                 OpcionesEmision.setTitle("OPCIONES DE EMISIÓN");
                 OpcionesEmision.setVisible(true);
-                //btnConfirmar.requestFocus();
             } else {
                 if (Integer.parseInt(txtTotal.getText().replace(".", "").replace(",", "")) <= Integer.parseInt(txtdisponible.getText().replace(".", "").replace(",", ""))) {
                     DecimalFormat df = new DecimalFormat("#,###");
@@ -2870,6 +2857,17 @@ public final class dlgVentas extends javax.swing.JDialog {
                     if (dlgVentas.txtDescuento.getText().replace(".", "").replace(",", "").length() >= 1) {
                         dlgVentas.lbDescuentoF.setText(dlgVentas.txtDescuento.getText());
                         dlgVentas.lbDescuentoT.setText(dlgVentas.txtDescuento.getText());
+                    }
+                    if (Timbrado.getValidado().equals("SI")) {
+                        btnFacturaLegal.setEnabled(true);
+                    } else if (Timbrado.getValidado().equals("NO")) {
+                        btnFacturaLegal.setEnabled(false);
+                    }
+
+                    if (Tickets.getHabilitado().equals("SI")) {
+                        btnTicket.setEnabled(true);
+                    } else if (Tickets.getHabilitado().equals("NO")) {
+                        btnTicket.setEnabled(false);
                     }
                     OpcionesEmision.setSize(338, 241);
                     OpcionesEmision.setLocationRelativeTo(this);

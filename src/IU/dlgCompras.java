@@ -559,6 +559,7 @@ public final class dlgCompras extends javax.swing.JDialog {
         txtRazonS.setEditable(false);
         txtRazonS.setBackground(new java.awt.Color(255, 255, 255));
         txtRazonS.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        txtRazonS.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtRazonS.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtRazonS.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -1266,7 +1267,7 @@ public final class dlgCompras extends javax.swing.JDialog {
                         cn.commit();
                         st.close();
                         cn.close();
-                        Mensajes.Sistema("La compra ha sido regitrada exitosamente");
+                        Mensajes.Sistema("LA COMPRA HA SIDO REGISTRADA EXITOSAMENTE");
                     } catch (SQLException e) {
                         try {
                             cn.rollback();
