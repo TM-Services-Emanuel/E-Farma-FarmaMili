@@ -5,6 +5,7 @@ import Componentes.DecimalFormatRenderer;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.Numero_a_Letra;
 import Componentes.PrinterService;
 import Componentes.RenderDecimal1conPuntos;
@@ -24,6 +25,7 @@ import Datos.GestionarVendedor;
 import java.awt.event.KeyEvent;
 import Modelo.Articulo;
 import Modelo.Vendedor;
+import java.awt.Point;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
@@ -38,9 +40,12 @@ public final class dlgVentas extends javax.swing.JDialog {
     public ReporteF jasper;
     Numero_a_Letra L;
     static DataSourceService dss = new DataSourceService();
+    private static Point point;
+    public static int min;
 
     public dlgVentas(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
+        min = 0;
         initComponents();
         titulo();
         jasper = new ReporteF();
@@ -76,6 +81,8 @@ public final class dlgVentas extends javax.swing.JDialog {
                 btnBuscarArticulo.doClick();
             case KeyEvent.VK_F3 ->
                 btnProveedor.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
             default -> {
             }
         }
@@ -206,7 +213,7 @@ public final class dlgVentas extends javax.swing.JDialog {
         txtEmision.setText("");
         txtFacturaN.setText("");
         rContado.setSelected(true);
-        CabecerasTablas.limpiarTablasVentas(tbDetalle);
+        CabecerasTablas.limpiarTablaVentas(tbDetalle);
         CabecerasTablas.ventas(tbDetalle);
         txtCodVendedorF.setText("");
         lbEmpleadoF.setText("");
@@ -264,7 +271,8 @@ public final class dlgVentas extends javax.swing.JDialog {
                     dlgFinFacturaL.setVisible(true);
                     txtCodVendedorF.requestFocus();
                 } else {
-                    Mensajes.Sistema("Se ha alcanzado la cantidad máxima de facturas habilitadas para este puento de expedición");
+                    Notif.NotifyFail("Notificación del sistema", "Se ha alcanzado la cantidad máxima de facturas habilitadas para este puento de expedición");
+                    //Mensajes.Sistema("Se ha alcanzado la cantidad máxima de facturas habilitadas para este puento de expedición");
                 }
             } while (rs.next());
             rs.close();
@@ -272,7 +280,8 @@ public final class dlgVentas extends javax.swing.JDialog {
             cn.close();
 
         } catch (SQLException ex) {
-            Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir factura legal.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
+            Notif.NotifyInformation("Notificación del sistema", "OBSERVACIÓN: En estos momentos es imposible emitir factura legal.\r\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\r\n\nPara mayor información comuniquese con el proveedor del Sistema.");
+           // Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir factura legal.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
         }
     }
 
@@ -336,14 +345,16 @@ public final class dlgVentas extends javax.swing.JDialog {
                     dlgFinTicket.setVisible(true);
                     //txtCodVendedorT.requestFocus();
                 } else {
-                    Mensajes.Sistema("Se ha alcanzado la cantidad máxima de ticket habilitadas para este puento de expedición");
+                    //Mensajes.Sistema("Se ha alcanzado la cantidad máxima de ticket habilitadas para este puento de expedición");
+                    Notif.NotifyFail("Notificación del sistema", "Se ha alcanzado la cantidad máxima de ticket habilitadas para este puento de expedición");
                 }
             } while (rs.next());
             rs.close();
             st.close();
             cn.close();
         } catch (SQLException ex) {
-            Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir Ticket de venta.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
+            Notif.NotifyInformation("Notificación del sistema", "OBSERVACIÓN: En estos momentos es imposible emitir Ticket de venta.\r\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\r\n\nPara mayor información comuniquese con el proveedor del Sistema.");
+           // Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir Ticket de venta.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
         }
     }
 
@@ -895,6 +906,10 @@ public final class dlgVentas extends javax.swing.JDialog {
         jPanel17 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         GrupoOpciones = new javax.swing.ButtonGroup();
+        dlgMinimizado = new javax.swing.JFrame();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        btnEvento1 = new RSMaterialComponent.RSButtonIconUno();
         Blanco = new org.edisoncor.gui.panel.PanelImage();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -947,7 +962,8 @@ public final class dlgVentas extends javax.swing.JDialog {
         txt10 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
-        jPanel6 = new javax.swing.JPanel();
+        panelCabecera = new javax.swing.JPanel();
+        btnEvento = new RSMaterialComponent.RSButtonIconUno();
         btnSalir = new RSMaterialComponent.RSButtonIconUno();
         txtidEmision = new javax.swing.JTextField();
         txtFechaReal = new javax.swing.JTextField();
@@ -1606,9 +1622,55 @@ public final class dlgVentas extends javax.swing.JDialog {
             .addComponent(Blanco3, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
+        dlgMinimizado.setUndecorated(true);
+
+        jPanel3.setBackground(new java.awt.Color(17, 35, 46));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel28.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setText("Gestionar Productos");
+        jPanel3.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 9, 110, 12));
+
+        btnEvento1.setBackground(new java.awt.Color(17, 35, 46));
+        btnEvento1.setToolTipText("F12");
+        btnEvento1.setBackgroundHover(new java.awt.Color(17, 35, 46));
+        btnEvento1.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_UP);
+        btnEvento1.setRippleColor(java.awt.Color.white);
+        btnEvento1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEvento1ActionPerformed(evt);
+            }
+        });
+        btnEvento1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEvento1KeyPressed(evt);
+            }
+        });
+        jPanel3.add(btnEvento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 2, 25, 25));
+
+        javax.swing.GroupLayout dlgMinimizadoLayout = new javax.swing.GroupLayout(dlgMinimizado.getContentPane());
+        dlgMinimizado.getContentPane().setLayout(dlgMinimizadoLayout);
+        dlgMinimizadoLayout.setHorizontalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        dlgMinimizadoLayout.setVerticalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         Blanco.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
         Blanco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoBlanco.jpg"))); // NOI18N
@@ -1617,6 +1679,11 @@ public final class dlgVentas extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel1.setOpaque(false);
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel1KeyPressed(evt);
+            }
+        });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -1628,6 +1695,11 @@ public final class dlgVentas extends javax.swing.JDialog {
         txtCod.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtCod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCod.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtCod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtCod, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 40, 128, 23));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -1643,6 +1715,11 @@ public final class dlgVentas extends javax.swing.JDialog {
         txtCaja.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtCaja.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCaja.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtCaja.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCajaKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(104, 10, 128, 23));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
@@ -1736,15 +1813,27 @@ public final class dlgVentas extends javax.swing.JDialog {
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 100, 550, 70));
 
         txtFecha.setEditable(false);
+        txtFecha.setBackground(new java.awt.Color(255, 255, 255));
         txtFecha.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtFecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtFecha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtFecha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFechaKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 70, 78, 23));
 
         txtHora.setEditable(false);
+        txtHora.setBackground(new java.awt.Color(255, 255, 255));
         txtHora.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtHora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtHora.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtHora.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtHoraKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtHora, new org.netbeans.lib.awtextra.AbsoluteConstraints(188, 70, 44, 23));
 
         jPanel12.setBackground(java.awt.Color.white);
@@ -1896,6 +1985,11 @@ public final class dlgVentas extends javax.swing.JDialog {
         lbPublic.setForeground(new java.awt.Color(255, 255, 255));
         lbPublic.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         lbPublic.setBorder(null);
+        lbPublic.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lbPublicKeyPressed(evt);
+            }
+        });
         jPanel2.add(lbPublic, new org.netbeans.lib.awtextra.AbsoluteConstraints(552, 5, 420, 23));
 
         lbPVenta.setEditable(false);
@@ -1904,6 +1998,11 @@ public final class dlgVentas extends javax.swing.JDialog {
         lbPVenta.setForeground(new java.awt.Color(255, 255, 255));
         lbPVenta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         lbPVenta.setBorder(null);
+        lbPVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                lbPVentaKeyPressed(evt);
+            }
+        });
         jPanel2.add(lbPVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(552, 34, 420, 23));
 
         btnBuscarArticulo.setText("CARGAR ARTICULOS - F9");
@@ -1912,6 +2011,7 @@ public final class dlgVentas extends javax.swing.JDialog {
         btnBuscarArticulo.setColorPrimarioHover(new java.awt.Color(255, 137, 2));
         btnBuscarArticulo.setColorSecundario(new java.awt.Color(255, 137, 2));
         btnBuscarArticulo.setColorSecundarioHover(new java.awt.Color(255, 102, 0));
+        btnBuscarArticulo.setFocusPainted(false);
         btnBuscarArticulo.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         btnBuscarArticulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1929,6 +2029,11 @@ public final class dlgVentas extends javax.swing.JDialog {
 
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel7.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel7KeyPressed(evt);
+            }
+        });
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
@@ -1947,6 +2052,11 @@ public final class dlgVentas extends javax.swing.JDialog {
         txtTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTotalActionPerformed(evt);
+            }
+        });
+        txtTotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTotalKeyPressed(evt);
             }
         });
         jPanel7.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 35, 374, 30));
@@ -2070,11 +2180,44 @@ public final class dlgVentas extends javax.swing.JDialog {
 
         Blanco.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(574, 105, 400, 180));
 
-        jPanel6.setBackground(new java.awt.Color(17, 35, 46));
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelCabecera.setBackground(new java.awt.Color(17, 35, 46));
+        panelCabecera.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panelCabeceraMouseDragged(evt);
+            }
+        });
+        panelCabecera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panelCabeceraMousePressed(evt);
+            }
+        });
+        panelCabecera.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                panelCabeceraKeyPressed(evt);
+            }
+        });
+        panelCabecera.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnEvento.setBackground(new java.awt.Color(17, 35, 46));
+        btnEvento.setToolTipText("MINIMIZAR");
+        btnEvento.setBackgroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_DOWN);
+        btnEvento.setRippleColor(java.awt.Color.white);
+        btnEvento.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEventoActionPerformed(evt);
+            }
+        });
+        btnEvento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEventoKeyPressed(evt);
+            }
+        });
+        panelCabecera.add(btnEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(934, 3, 20, 20));
 
         btnSalir.setBackground(new java.awt.Color(17, 35, 46));
-        btnSalir.setToolTipText("ALT+F4");
+        btnSalir.setToolTipText("F12");
         btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
         btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
         btnSalir.setRippleColor(java.awt.Color.white);
@@ -2089,15 +2232,15 @@ public final class dlgVentas extends javax.swing.JDialog {
                 btnSalirKeyPressed(evt);
             }
         });
-        jPanel6.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(956, 3, 20, 20));
+        panelCabecera.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(956, 3, 20, 20));
 
         txtidEmision.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtidEmisionActionPerformed(evt);
             }
         });
-        jPanel6.add(txtidEmision, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 13, 71, -1));
-        jPanel6.add(txtFechaReal, new org.netbeans.lib.awtextra.AbsoluteConstraints(469, 43, 70, -1));
+        panelCabecera.add(txtidEmision, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 13, 71, -1));
+        panelCabecera.add(txtFechaReal, new org.netbeans.lib.awtextra.AbsoluteConstraints(469, 43, 70, -1));
 
         btnModCantidad.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 9)); // NOI18N
         btnModCantidad.setForeground(new java.awt.Color(204, 0, 0));
@@ -2110,7 +2253,7 @@ public final class dlgVentas extends javax.swing.JDialog {
                 btnModCantidadActionPerformed(evt);
             }
         });
-        jPanel6.add(btnModCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(546, 13, 38, 21));
+        panelCabecera.add(btnModCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(546, 13, 38, 21));
 
         btnRestar.setText("R");
         btnRestar.addActionListener(new java.awt.event.ActionListener() {
@@ -2118,20 +2261,20 @@ public final class dlgVentas extends javax.swing.JDialog {
                 btnRestarActionPerformed(evt);
             }
         });
-        jPanel6.add(btnRestar, new org.netbeans.lib.awtextra.AbsoluteConstraints(546, 42, -1, -1));
+        panelCabecera.add(btnRestar, new org.netbeans.lib.awtextra.AbsoluteConstraints(546, 42, -1, -1));
 
         txtCodCliente.setEditable(false);
         txtCodCliente.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 12)); // NOI18N
         txtCodCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel6.add(txtCodCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(398, 13, 63, 22));
+        panelCabecera.add(txtCodCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(398, 13, 63, 22));
 
         lbCond.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         lbCond.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel6.add(lbCond, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 81, 20));
+        panelCabecera.add(lbCond, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, 81, 20));
 
         lbCred.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
         lbCred.setText("jLabel12");
-        jPanel6.add(lbCred, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 42, -1, -1));
+        panelCabecera.add(lbCred, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 42, -1, -1));
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Create.png"))); // NOI18N
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -2139,7 +2282,7 @@ public final class dlgVentas extends javax.swing.JDialog {
                 btnAddActionPerformed(evt);
             }
         });
-        jPanel6.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 63, -1, -1));
+        panelCabecera.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(306, 63, -1, -1));
 
         jPanel20.setOpaque(false);
         jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -2243,12 +2386,12 @@ public final class dlgVentas extends javax.swing.JDialog {
 
         jPanel20.add(PnlCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, 100));
 
-        jPanel6.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 110));
+        panelCabecera.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 110));
 
         txtCodArticulo.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        jPanel6.add(txtCodArticulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, 37, 20));
+        panelCabecera.add(txtCodArticulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 50, 37, 20));
 
-        Blanco.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 978, 102));
+        Blanco.add(panelCabecera, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 978, 102));
 
         etiCant.setBackground(new java.awt.Color(17, 35, 46));
         etiCant.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
@@ -2256,6 +2399,11 @@ public final class dlgVentas extends javax.swing.JDialog {
         etiCant.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         etiCant.setText("Artículos registrados:");
         etiCant.setOpaque(true);
+        etiCant.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                etiCantKeyPressed(evt);
+            }
+        });
         Blanco.add(etiCant, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 632, 977, 16));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -2446,7 +2594,8 @@ public final class dlgVentas extends javax.swing.JDialog {
                     cn.commit();
                     st.close();
                     cn.close();
-                    Mensajes.informacion("VENTA REGISTRADA EXITOSAMENTE");
+                    //Mensajes.informacion("VENTA REGISTRADA EXITOSAMENTE");
+                    Notif.NotifySuccess("Notificación del sistema", "Venta registrada satisfactoriamente!");
                     dlgFinFacturaL.dispose();
                     String Letra = L.Convertir((txtTotal.getText().replace(".", "").replace(",", "")), true);
                     llamarReporteFactura(Integer.parseInt(txtCodF.getText().trim()), Letra);
@@ -2458,10 +2607,11 @@ public final class dlgVentas extends javax.swing.JDialog {
                     try {
                         cn.rollback();
                         cn.close();
-                        Mensajes.error("TRANSACCION FALLIDA.\nLOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
+                        //Mensajes.error("TRANSACCION FALLIDA.\nLOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
+                        Notif.NotifyError("Notificación del sistema", "TRANSACCION FALLIDA.\nLOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
                         dlgFinFacturaL.dispose();
                         Cancelar();
-                        
+
                     } catch (SQLException se) {
                         Mensajes.error(se.getMessage());
                     }
@@ -2622,7 +2772,8 @@ public final class dlgVentas extends javax.swing.JDialog {
                     cn.commit();
                     st.close();
                     cn.close();
-                    Mensajes.Sistema("VENTA REGISTRADA EXITOSAMENTE");
+                    //Mensajes.Sistema("VENTA REGISTRADA EXITOSAMENTE");
+                    Notif.NotifySuccess("Notificación del sistema", "Venta registrada satisfactoriamente!");
                     dlgFinTicket.dispose();
                     if (cond.equals("CONTADO")) {
                         imprimirTicket();
@@ -2642,7 +2793,8 @@ public final class dlgVentas extends javax.swing.JDialog {
                     try {
                         cn.rollback();
                         cn.close();
-                        Mensajes.error("TRANSACCION FALLIDA.\nLOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
+                       // Mensajes.error("TRANSACCION FALLIDA.\nLOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
+                        Notif.NotifyError("Notificación del sistema", "TRANSACCION FALLIDA.\nLOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
                         Cancelar();
                         dlgFinTicket.dispose();
                     } catch (SQLException se) {
@@ -2818,7 +2970,7 @@ public final class dlgVentas extends javax.swing.JDialog {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         if (tbDetalle.getRowCount() <= 0) {
-            Mensajes.error("El detalle de la compra esta vacia");
+            Mensajes.Sistema("No se puede procesar la venta.\nEl detalle de articulos a vender se encuentra vacio.");
             btnBuscarArticulo.doClick();
         } else {
             if (lbCond.getText().equals("CONTADO")) {
@@ -3110,6 +3262,116 @@ public final class dlgVentas extends javax.swing.JDialog {
         AccesoRapidoTicket(evt.getKeyCode());
     }//GEN-LAST:event_txtCodTKeyPressed
 
+    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_jPanel1KeyPressed
+
+    private void lbPublicKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lbPublicKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_lbPublicKeyPressed
+
+    private void lbPVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lbPVentaKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_lbPVentaKeyPressed
+
+    private void jPanel7KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel7KeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_jPanel7KeyPressed
+
+    private void txtTotalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtTotalKeyPressed
+
+    private void panelCabeceraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_panelCabeceraKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_panelCabeceraKeyPressed
+
+    private void txtFechaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtFechaKeyPressed
+
+    private void txtHoraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHoraKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtHoraKeyPressed
+
+    private void txtCodKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtCodKeyPressed
+
+    private void txtCajaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCajaKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtCajaKeyPressed
+
+    private void etiCantKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_etiCantKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_etiCantKeyPressed
+
+    private void btnEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoActionPerformed
+        // TODO add your handling code here:
+        min = 1;
+        System.out.println("btnEvento min: " + min);
+        this.setVisible(false);
+        Notif.Notify_Minim_dlgVentas("Notificación del sistema", "Formulario de Ventas minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+    }//GEN-LAST:event_btnEventoActionPerformed
+
+    private void btnEventoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEventoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEventoKeyPressed
+
+    private void btnEvento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEvento1ActionPerformed
+        // TODO add your handling code here:
+        min = 0;
+        System.out.println("btnEvento1 min: " + min);
+        dlgMinimizado.dispose();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+
+    }//GEN-LAST:event_btnEvento1ActionPerformed
+
+    private void btnEvento1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEvento1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEvento1KeyPressed
+
+    private void panelCabeceraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMousePressed
+        // TODO add your handling code here:
+        point = evt.getPoint();
+        getComponentAt(point);
+    }//GEN-LAST:event_panelCabeceraMousePressed
+
+    private void panelCabeceraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMouseDragged
+        // TODO add your handling code here:
+        int CurrentX = this.getLocation().x;
+        int CurrentY = this.getLocation().y;
+
+        int MoveX = (CurrentX + evt.getX()) - (CurrentX + point.x);
+        int MoveY = (CurrentY + evt.getY()) - (CurrentY + point.y);
+
+        int x = CurrentX + MoveX;
+        int y = CurrentY + MoveY;
+
+        this.setLocation(x, y);
+    }//GEN-LAST:event_panelCabeceraMouseDragged
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        if(btnNuevo.isEnabled() && txtArt.getText().isEmpty()){
+            btnNuevo.requestFocus();
+        }else if (btnBuscarArticulo.isEnabled() && txtArt.getText().isEmpty()){
+            btnBuscarArticulo.requestFocus();
+        }
+    }//GEN-LAST:event_formWindowActivated
+
     /**
      * @param args the command line arguments
      */
@@ -3173,6 +3435,8 @@ public final class dlgVentas extends javax.swing.JDialog {
     public static RSMaterialComponent.RSButtonIconUno btnCancelar;
     public static javax.swing.JButton btnConfirmarFactura;
     public static javax.swing.JButton btnConfirmarTicket;
+    public static RSMaterialComponent.RSButtonIconUno btnEvento;
+    public static RSMaterialComponent.RSButtonIconUno btnEvento1;
     public static javax.swing.JButton btnFacturaLegal;
     public static RSMaterialComponent.RSButtonIconUno btnGuardar;
     private javax.swing.JButton btnModCantidad;
@@ -3184,6 +3448,7 @@ public final class dlgVentas extends javax.swing.JDialog {
     private javax.swing.ButtonGroup buttonGroup1;
     public static javax.swing.JDialog dlgFinFacturaL;
     public static javax.swing.JDialog dlgFinTicket;
+    private javax.swing.JFrame dlgMinimizado;
     public static javax.swing.JLabel etiCant;
     private javax.swing.JMenuItem itemCantidad;
     private javax.swing.JLabel jLabel1;
@@ -3205,6 +3470,7 @@ public final class dlgVentas extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -3223,8 +3489,8 @@ public final class dlgVentas extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
@@ -3252,6 +3518,7 @@ public final class dlgVentas extends javax.swing.JDialog {
     public static javax.swing.JLabel lbTimbrado;
     public static javax.swing.JLabel lbValidaz;
     private javax.swing.JPopupMenu menuEmergente;
+    private javax.swing.JPanel panelCabecera;
     public static rojerusan.RSRadioButton rContado;
     public static rojerusan.RSRadioButton rCredito;
     public static javax.swing.JTable tbDetalle;

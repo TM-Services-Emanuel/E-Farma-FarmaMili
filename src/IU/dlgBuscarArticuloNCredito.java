@@ -9,11 +9,10 @@ import javax.swing.SwingUtilities;
 
 public class dlgBuscarArticuloNCredito extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
     public dlgBuscarArticuloNCredito(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cabe.tablaArticuloAuxiliar(jTable1);
+        CabecerasTablas.tablaArticuloAuxiliar(jTable1);
         controlArticulo.listArticulo(jTable1, "articulo.art_codigo");
         grupo();
     }
@@ -27,13 +26,6 @@ public class dlgBuscarArticuloNCredito extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jPanel1 = new javax.swing.JPanel();
         rbtnCod = new javax.swing.JRadioButton();
         rbtnRub = new javax.swing.JRadioButton();
@@ -188,23 +180,23 @@ public class dlgBuscarArticuloNCredito extends javax.swing.JDialog {
         busCodigo();
         else
         if(rbtnDesc.isSelected()){
-            CabecerasTablas.limpiarTablas(jTable1);
+            CabecerasTablas.limpiarTablaTablaArticuloAuxiliar(jTable1);
 //            controlArticulo.filtrar(jTable1, cod);
         }
         else
         if(rbtnRub.isSelected()){
-            CabecerasTablas.limpiarTablas(jTable1);
+            CabecerasTablas.limpiarTablaTablaArticuloAuxiliar(jTable1);
 //            controlArticulo.filtrarRubro(jTable1, cod);
         }
         else
         if(rbtnMarc.isSelected()){
-            CabecerasTablas.limpiarTablas(jTable1);
+            CabecerasTablas.limpiarTablaTablaArticuloAuxiliar(jTable1);
 //            controlArticulo.filtrarMarca(jTable1, cod);
         }
         else
         if(rbtnProv.isSelected())
         {
-            CabecerasTablas.limpiarTablas(jTable1);
+            CabecerasTablas.limpiarTablaTablaArticuloAuxiliar(jTable1);
  //           controlArticulo.filrarProveedor(jTable1, cod);
         }
     }//GEN-LAST:event_txtArtKeyReleased
@@ -259,7 +251,7 @@ public class dlgBuscarArticuloNCredito extends javax.swing.JDialog {
     void seleccionRadio()
     {
         txtArt.setEditable(true);
-        cabe.tablaArticuloAuxiliar(jTable1);
+        CabecerasTablas.tablaArticuloAuxiliar(jTable1);
         controlArticulo.listArticulo(jTable1, "articulo.art_codigo");
         txtArt.setText("");
         txtArt.requestFocus();
@@ -337,7 +329,13 @@ public class dlgBuscarArticuloNCredito extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable jTable1;
+    public static final javax.swing.JTable jTable1 = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     private javax.swing.JRadioButton rbtnCod;
     private javax.swing.JRadioButton rbtnDesc;
     private javax.swing.JRadioButton rbtnMarc;

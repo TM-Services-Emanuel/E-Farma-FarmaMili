@@ -11,23 +11,21 @@ import javax.swing.JOptionPane;
 
 public class dlgCiudad extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
     public dlgCiudad(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.ciudad(tbCiudad);
+        CabecerasTablas.ciudad(tbCiudad);
         controlCiudad.listCiudad(tbCiudad);
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Gestionar ciudades");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Gestionar ciudades");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Gestionar ciudades");
         }
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -36,13 +34,6 @@ public class dlgCiudad extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbCiudad = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jPanel2 = new javax.swing.JPanel();
         btnNuevo = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -345,10 +336,11 @@ public class dlgCiudad extends javax.swing.JDialog {
         // TODO add your handling code here:
         int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
         if (rpta == 0) {
-            try{
+            try {
                 cargarComboBox.cargar(dlgGestProveedor.cbCiudad, "SELECT * FROM ciudad WHERE ciu_indicador='S'");
-            cargarComboBox.cargar(dlgGestClientes.cbCiudad, "SELECT * FROM ciudad WHERE ciu_indicador='S'");
-            }catch(Exception e){}
+                cargarComboBox.cargar(dlgGestClientes.cbCiudad, "SELECT * FROM ciudad WHERE ciu_indicador='S'");
+            } catch (Exception e) {
+            }
             this.dispose();
         }
     }//GEN-LAST:event_btnSalirActionPerformed
@@ -365,33 +357,23 @@ public class dlgCiudad extends javax.swing.JDialog {
         itemCancelar.setEnabled(true);
         txtCiudad.setEnabled(true);
         txtCiudad.setText("");
-        CabecerasTablas.limpiarTablas(tbCiudad);
-        controlCiudad.listCiudad(tbCiudad);
         txtCiudad.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if (validarCampos.estaVacio(txtCiudad) ) {
-            try{
-                int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION){
+        if (validarCampos.estaVacio(txtCiudad)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
                     String cod = GestionarCiudad.getCodigo();
                     txtCod.setText(cod);
                     controlCiudad.addCiudad();
-                    btnNuevo.setEnabled(true);
-                    itemNuevo.setEnabled(true);
-                    btnGuardar.setEnabled(false);
-                    itemGuardar.setEnabled(false);
-                    btnCancelar.setEnabled(false);
-                    itemCancelar.setEnabled(false);
-                    txtCiudad.setEnabled(false);
-                    limpiarCampos();
-                    CabecerasTablas.limpiarTablas(tbCiudad);
-                    controlCiudad.listCiudad(tbCiudad);
+                    btnCancelarActionPerformed(null);
                 }
-            }catch(Exception ee){}            
-        }else {
+            } catch (Exception ee) {
+            }
+        } else {
             Mensajes.informacion("Debe llenar obligatoriamente el campo Ciudad");
             txtCiudad.requestFocus();
         }
@@ -399,45 +381,26 @@ public class dlgCiudad extends javax.swing.JDialog {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        try{
-            int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION){
+        try {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resp == JOptionPane.YES_OPTION) {
                 controlCiudad.actCiudad();
-                btnNuevo.setEnabled(true);
-                itemNuevo.setEnabled(true);
-                btnModificar.setEnabled(false);
-                itemModificar.setEnabled(false);
-                btnEliminar.setEnabled(false);
-                itemEliminar.setEnabled(false);
-                btnCancelar.setEnabled(false);
-                itemCancelar.setEnabled(false);
-                txtCiudad.setEnabled(false);
-                limpiarCampos();
-                CabecerasTablas.limpiarTablas(tbCiudad);
-                controlCiudad.listCiudad(tbCiudad);
+                btnCancelarActionPerformed(null);
             }
-        }catch(Exception ee){}
+        } catch (Exception ee) {
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        try{
-            int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION){
-                btnEliminar.setEnabled(false);
-                itemEliminar.setEnabled(false);
-                btnModificar.setEnabled(false);
-                itemModificar.setEnabled(false);
-                btnCancelar.setEnabled(false);
-                itemCancelar.setEnabled(false);
-                txtCiudad.setEnabled(false);
+        try {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resp == JOptionPane.YES_OPTION) {
                 controlCiudad.delCiudad();
-                limpiarCampos();
-                CabecerasTablas.limpiarTablas(tbCiudad);
-                controlCiudad.listCiudad(tbCiudad);
                 btnCancelarActionPerformed(null);
             }
-        }catch(Exception ee){}        
+        } catch (Exception ee) {
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -454,6 +417,8 @@ public class dlgCiudad extends javax.swing.JDialog {
         itemEliminar.setEnabled(false);
         txtCiudad.setEnabled(false);
         limpiarCampos();
+        CabecerasTablas.limpiarTablaCiudad(tbCiudad);
+        controlCiudad.listCiudad(tbCiudad);
         tbCiudad.clearSelection();
         btnNuevo.requestFocus();
     }//GEN-LAST:event_btnCancelarActionPerformed
@@ -485,19 +450,19 @@ public class dlgCiudad extends javax.swing.JDialog {
 
     private void txtCiudadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCiudadKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
     }//GEN-LAST:event_txtCiudadKeyTyped
 
     private void txtCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiudadActionPerformed
         // TODO add your handling code here:
-        if(btnGuardar.isEnabled()){
+        if (btnGuardar.isEnabled()) {
             btnGuardar.doClick();
-        }else{
+        } else {
             btnModificar.doClick();
         }
     }//GEN-LAST:event_txtCiudadActionPerformed
@@ -507,12 +472,11 @@ public class dlgCiudad extends javax.swing.JDialog {
         btnSalir.doClick();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    void limpiarCampos()
-    {
+    void limpiarCampos() {
         txtCod.setText("");
         txtCiudad.setText("");
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -546,7 +510,7 @@ public class dlgCiudad extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(() -> {
             dlgCiudad dialog = new dlgCiudad(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                
+
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     System.exit(0);
@@ -574,7 +538,13 @@ public class dlgCiudad extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuOpciones;
-    private javax.swing.JTable tbCiudad;
+    private final javax.swing.JTable tbCiudad = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCiudad;
     public static javax.swing.JTextField txtCod;
     // End of variables declaration//GEN-END:variables

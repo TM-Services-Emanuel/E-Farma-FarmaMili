@@ -18,26 +18,15 @@ import java.awt.event.KeyEvent;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author TM-SERVICES
- */
 public class dlgBuscadorArticuloTransferencia extends javax.swing.JDialog {
-    
-    CabecerasTablas cabe = new CabecerasTablas();
 
-    /**
-     * Creates new form dlgBuscadorArticuloVenta
-     * @param parent
-     * @param modal
-     */
     public dlgBuscadorArticuloTransferencia(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png")));
-        cabe.tablaArticuloAuxiliarTransferencia(tbDetalle);
-        CabecerasTablas.limpiarTablas(tbDetalle);
+        CabecerasTablas.tablaArticuloAuxiliarTransferencia(tbDetalle);
+        CabecerasTablas.limpiarTablaTablaArticuloAuxiliarTransferencia(tbDetalle);
         controlArticulo.filtrarCodBarraActivo(tbDetalle, "");
         Renders();
         txtBuscar.requestFocus();
@@ -68,7 +57,6 @@ public class dlgBuscadorArticuloTransferencia extends javax.swing.JDialog {
         pnFondoCabecera = new javax.swing.JPanel();
         txtBuscar = new rojeru_san.rsfield.RSTextMaterial();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -207,8 +195,7 @@ public class dlgBuscadorArticuloTransferencia extends javax.swing.JDialog {
         try {
             String cod = txtBuscar.getText();
             txtBuscar.requestFocus();
-            cabe.tablaArticuloAuxiliarTransferencia(tbDetalle);
-            CabecerasTablas.limpiarTablas(tbDetalle);
+            CabecerasTablas.limpiarTablaTablaArticuloAuxiliarTransferencia(tbDetalle);
             controlArticulo.filtrarCodBarraActivo(tbDetalle, cod);
             Renders();
         } catch (Exception e) {
@@ -273,7 +260,7 @@ public class dlgBuscadorArticuloTransferencia extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnFondoBlanco;
     private javax.swing.JPanel pnFondoCabecera;
-    public static javax.swing.JTable tbDetalle;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable();
     private rojeru_san.rsfield.RSTextMaterial txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
 
 public class dlgAjusteStock1 extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
+    //CabecerasTablas cabe = new CabecerasTablas();
 
     //private ResultSet rs;
    // public Statement sentencia;
@@ -22,7 +22,7 @@ public class dlgAjusteStock1 extends javax.swing.JDialog {
     public dlgAjusteStock1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cabe.ajusteStock(tbDetalle);
+        CabecerasTablas.ajusteStock(tbDetalle);
         controlArticulo.listArticuloActivo(tbDetalle, "v_articulo.cod");
         cant();
         cbkBuscarActionPerformed(null);
@@ -40,7 +40,7 @@ public class dlgAjusteStock1 extends javax.swing.JDialog {
             rCodigo.setEnabled(false);
             rDescripcion.setEnabled(false);
             txtBuscar.setText("");
-            CabecerasTablas.limpiarTablas(tbDetalle);
+            CabecerasTablas.limpiarTablaAjusteStock(tbDetalle);
             controlArticulo.listArticuloActivo(tbDetalle, "v_articulo.cod");
             cant();
         }
@@ -57,13 +57,6 @@ public class dlgAjusteStock1 extends javax.swing.JDialog {
         buttonGroup1 = new javax.swing.ButtonGroup();
         etiCant = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         btnSalir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -323,9 +316,9 @@ public class dlgAjusteStock1 extends javax.swing.JDialog {
         try {
             String cod = txtBuscar.getText();
             
-            CabecerasTablas.limpiarTablas(tbDetalle);
+            CabecerasTablas.limpiarTablaAjusteStock(tbDetalle);
             controlArticulo.listArticuloActivo(tbDetalle, "v_articulo.cod");
-            CabecerasTablas.limpiarTablas(tbDetalle);
+            //CabecerasTablas.limpiarTablas(tbDetalle);
             controlArticulo.filtrarCodBarraActivo(tbDetalle, cod);
             controlArticulo.filtrarDescripcionActivo(tbDetalle, cod);
             
@@ -468,7 +461,13 @@ public class dlgAjusteStock1 extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton rCodigo;
     private javax.swing.JRadioButton rDescripcion;
-    public static javax.swing.JTable tbDetalle;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,41 +5,43 @@ import Componentes.DecimalFormatRenderer;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
-import Componentes.ReporteF;
+import Componentes.Notif;
 import Componentes.Software;
 import Componentes.generarCodigos;
 import Componentes.validarCampos;
 import Controladores.CabecerasTablas;
-import Controladores.controlArticulo;
 import Controladores.controlCompra;
 import Datos.GestionarCompra;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import javax.swing.JOptionPane;
-import Modelo.Articulo;
+import java.awt.BorderLayout;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.swing.JRViewer;
 
 public final class dlgCompras extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
-    public static int PrecioVenta;
-    public static double costoiva;
-    public static int descuento;
-    public static int ganancia;
-    public static Articulo ar;
-    public static int Pcosto;
-    public ReporteF jasper;
     static DataSourceService dss = new DataSourceService();
+    private static Point point;
+    public static int min;
 
     public dlgCompras(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
+        min = 0;
         initComponents();
         titulo();
-        jasper = new ReporteF();
-        cabe.compras(tbDetalle);
+        CabecerasTablas.compras(tbDetalle);
         Cancelar();
         pintarCondicion();
         Renders();
@@ -62,6 +64,8 @@ public final class dlgCompras extends javax.swing.JDialog {
                 btnBuscarArticulo.doClick();
             case KeyEvent.VK_F3 ->
                 btnProveedor.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
             default -> {
             }
         }
@@ -89,6 +93,8 @@ public final class dlgCompras extends javax.swing.JDialog {
         btnGuardar.setEnabled(false);
         btnCancelar.setEnabled(false);
         btnHistorial.setEnabled(false);
+        lbtotal.setEnabled(false);
+        btnSalir.setEnabled(true);
         cant();
     }
 
@@ -152,8 +158,7 @@ public final class dlgCompras extends javax.swing.JDialog {
         lbtotal.setText("");
         rContado.setSelected(true);
         controlCompra.array.vaciar();
-        cabe.compras(tbDetalle);
-        CabecerasTablas.limpiarTablas(tbDetalle);
+        CabecerasTablas.limpiarTablaCompras(tbDetalle);
 
     }
 
@@ -169,6 +174,37 @@ public final class dlgCompras extends javax.swing.JDialog {
         }
     }
 
+    public void llamarReporteHistorial(int cod) throws SQLException {
+        VisorReportes vr = new VisorReportes(null, true);
+        try (Connection cn = dss.getDataSource().getConnection()) {
+            String jasperUrl = System.getProperty("user.dir").concat("\\Reports\\compras\\comprasxart.jasper");
+            JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(jasperUrl);
+            //para los parametro
+            Map parametros = new HashMap();
+            parametros.clear();
+            //Nuestro parametro se llama "pLastName"
+            parametros.put("art", cod);
+            //agregamos los parametros y la conexion a la base de datos
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, parametros, cn);
+            //se crea el visor con el reporte
+            JRViewer jRViewer = new JRViewer(jasperPrint);
+            //se elimina elementos del contenedor JPanel
+            VisorReportes.jpContainer.removeAll();
+            //para el tamaño del reporte se agrega un BorderLayout
+            VisorReportes.jpContainer.setLayout(new BorderLayout());
+            VisorReportes.jpContainer.add(jRViewer, BorderLayout.CENTER);
+            jRViewer.setZoomRatio((float) 1);
+            jRViewer.setVisible(true);
+            VisorReportes.jpContainer.repaint();
+            VisorReportes.jpContainer.revalidate();
+            cn.close();
+        } catch (JRException ex) {
+            System.err.println(ex.getMessage());
+        }
+        vr.setLocationRelativeTo(this);
+        vr.setVisible(true);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -179,8 +215,12 @@ public final class dlgCompras extends javax.swing.JDialog {
         itmPrecio = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
         itmHistorial = new javax.swing.JMenuItem();
+        dlgMinimizado = new javax.swing.JFrame();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        btnEvento1 = new RSMaterialComponent.RSButtonIconUno();
         jPanel9 = new javax.swing.JPanel();
-        jPanel10 = new javax.swing.JPanel();
+        panelCabecera = new javax.swing.JPanel();
         btnSalir = new RSMaterialComponent.RSButtonIconUno();
         jPanel20 = new javax.swing.JPanel();
         PnlNuevo2 = new rojeru_san.rspanel.RSPanelImage();
@@ -202,6 +242,7 @@ public final class dlgCompras extends javax.swing.JDialog {
         btnPrecio = new javax.swing.JButton();
         txtCodA = new javax.swing.JTextField();
         txtCodProv = new javax.swing.JTextField();
+        btnEvento = new RSMaterialComponent.RSButtonIconUno();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCod = new javax.swing.JTextField();
@@ -233,13 +274,6 @@ public final class dlgCompras extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         txtArt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         txtCant = new javax.swing.JTextField();
         txtCosto = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -280,19 +314,75 @@ public final class dlgCompras extends javax.swing.JDialog {
         });
         menuEmergente.add(itmHistorial);
 
+        dlgMinimizado.setUndecorated(true);
+
+        jPanel3.setBackground(new java.awt.Color(17, 35, 46));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel28.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setText("Gestionar Productos");
+        jPanel3.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 9, 110, 12));
+
+        btnEvento1.setBackground(new java.awt.Color(17, 35, 46));
+        btnEvento1.setToolTipText("F12");
+        btnEvento1.setBackgroundHover(new java.awt.Color(17, 35, 46));
+        btnEvento1.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_UP);
+        btnEvento1.setRippleColor(java.awt.Color.white);
+        btnEvento1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEvento1ActionPerformed(evt);
+            }
+        });
+        btnEvento1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEvento1KeyPressed(evt);
+            }
+        });
+        jPanel3.add(btnEvento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 2, 25, 25));
+
+        javax.swing.GroupLayout dlgMinimizadoLayout = new javax.swing.GroupLayout(dlgMinimizado.getContentPane());
+        dlgMinimizado.getContentPane().setLayout(dlgMinimizadoLayout);
+        dlgMinimizadoLayout.setHorizontalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        dlgMinimizadoLayout.setVerticalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel10.setBackground(new java.awt.Color(14, 35, 46));
-        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelCabecera.setBackground(new java.awt.Color(14, 35, 46));
+        panelCabecera.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panelCabeceraMouseDragged(evt);
+            }
+        });
+        panelCabecera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panelCabeceraMousePressed(evt);
+            }
+        });
+        panelCabecera.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnSalir.setBackground(new java.awt.Color(17, 35, 46));
-        btnSalir.setToolTipText("ALT+F4");
+        btnSalir.setToolTipText("F12");
         btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
         btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
         btnSalir.setRippleColor(java.awt.Color.white);
@@ -307,7 +397,7 @@ public final class dlgCompras extends javax.swing.JDialog {
                 btnSalirKeyPressed(evt);
             }
         });
-        jPanel10.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(955, 3, 20, 20));
+        panelCabecera.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(955, 3, 20, 20));
 
         jPanel20.setOpaque(false);
         jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -411,7 +501,7 @@ public final class dlgCompras extends javax.swing.JDialog {
 
         jPanel20.add(PnlCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, 100));
 
-        jPanel10.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 110));
+        panelCabecera.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 110));
 
         btnCantidad.setText("Act. Cant");
         btnCantidad.addActionListener(new java.awt.event.ActionListener() {
@@ -419,7 +509,7 @@ public final class dlgCompras extends javax.swing.JDialog {
                 btnCantidadActionPerformed(evt);
             }
         });
-        jPanel10.add(btnCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 89, -1));
+        panelCabecera.add(btnCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 89, -1));
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Create.png"))); // NOI18N
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -427,7 +517,7 @@ public final class dlgCompras extends javax.swing.JDialog {
                 btnAddActionPerformed(evt);
             }
         });
-        jPanel10.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, -1, -1));
+        panelCabecera.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, -1, -1));
 
         btnRestar.setText("R");
         btnRestar.addActionListener(new java.awt.event.ActionListener() {
@@ -435,12 +525,12 @@ public final class dlgCompras extends javax.swing.JDialog {
                 btnRestarActionPerformed(evt);
             }
         });
-        jPanel10.add(btnRestar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 65, -1));
+        panelCabecera.add(btnRestar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 60, 65, -1));
 
         lbCond.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         lbCond.setForeground(new java.awt.Color(255, 255, 255));
         lbCond.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jPanel10.add(lbCond, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, 81, 25));
+        panelCabecera.add(lbCond, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, 81, 25));
 
         btnPrecio.setText("Act. Precio");
         btnPrecio.addActionListener(new java.awt.event.ActionListener() {
@@ -448,18 +538,41 @@ public final class dlgCompras extends javax.swing.JDialog {
                 btnPrecioActionPerformed(evt);
             }
         });
-        jPanel10.add(btnPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, 89, -1));
-        jPanel10.add(txtCodA, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, 63, -1));
+        panelCabecera.add(btnPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 60, 89, -1));
+        panelCabecera.add(txtCodA, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, 63, -1));
 
         txtCodProv.setEditable(false);
         txtCodProv.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 12)); // NOI18N
         txtCodProv.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jPanel10.add(txtCodProv, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 60, -1));
+        panelCabecera.add(txtCodProv, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 60, -1));
 
-        jPanel9.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 977, 102));
+        btnEvento.setBackground(new java.awt.Color(17, 35, 46));
+        btnEvento.setToolTipText("MINIMIZAR");
+        btnEvento.setBackgroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_DOWN);
+        btnEvento.setRippleColor(java.awt.Color.white);
+        btnEvento.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEventoActionPerformed(evt);
+            }
+        });
+        btnEvento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEventoKeyPressed(evt);
+            }
+        });
+        panelCabecera.add(btnEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(934, 3, 20, 20));
+
+        jPanel9.add(panelCabecera, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 977, 102));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel1.setOpaque(false);
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel1KeyPressed(evt);
+            }
+        });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -668,6 +781,11 @@ public final class dlgCompras extends javax.swing.JDialog {
                 txtTotalActionPerformed(evt);
             }
         });
+        txtTotal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTotalKeyPressed(evt);
+            }
+        });
         jPanel7.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 35, 374, 30));
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -856,6 +974,7 @@ public final class dlgCompras extends javax.swing.JDialog {
         btnBuscarArticulo.setColorPrimarioHover(new java.awt.Color(255, 137, 2));
         btnBuscarArticulo.setColorSecundario(new java.awt.Color(255, 137, 2));
         btnBuscarArticulo.setColorSecundarioHover(new java.awt.Color(255, 102, 0));
+        btnBuscarArticulo.setFocusPainted(false);
         btnBuscarArticulo.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         btnBuscarArticulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -936,6 +1055,7 @@ public final class dlgCompras extends javax.swing.JDialog {
         txtCosto.setText("");
         txtCodA.setText("");
         lbtotal.setText("");
+        lbtotal.setEnabled(false);
         habilitarCANTCOSTO();
         btnBuscarArticuloActionPerformed(null);
 
@@ -1120,12 +1240,14 @@ public final class dlgCompras extends javax.swing.JDialog {
 
     private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
         // TODO add your handling code here:
+
         if (!txtCodA.getText().isEmpty()) {
             int cod = Integer.parseInt(txtCodA.getText());
             try {
-                jasper.Historial_de_compras("\\Reports\\compras\\comprasxart.jasper", "art", cod);
+                llamarReporteHistorial(Integer.parseInt(txtCodA.getText()));
+                //jasper.Historial_de_compras("\\Reports\\compras\\comprasxart.jasper", "art", cod);
                 txtCosto.requestFocus();
-            } catch (Exception e) {
+            } catch (NumberFormatException | SQLException e) {
                 Mensajes.informacion("Artículo sin Historial de Compras");
                 txtCosto.requestFocus();
             }
@@ -1138,6 +1260,7 @@ public final class dlgCompras extends javax.swing.JDialog {
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
             btnAddActionPerformed(null);
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_lbtotalKeyPressed
 
     private void btnCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCantidadActionPerformed
@@ -1190,7 +1313,8 @@ public final class dlgCompras extends javax.swing.JDialog {
         int cod = Integer.parseInt(tbDetalle.getValueAt(fila, 0).toString());
         //int cod = Integer.parseInt(txtCodA.getText());
         try {
-            jasper.Historial_de_compras("\\Reports\\compras\\comprasxart.jasper", "art", cod);
+            llamarReporteHistorial(cod);
+            //jasper.Historial_de_compras("\\Reports\\compras\\comprasxart.jasper", "art", cod);
         } catch (Exception e) {
             Mensajes.informacion("Artículo sin Historial de Compras");
             txtCosto.requestFocus();
@@ -1209,11 +1333,9 @@ public final class dlgCompras extends javax.swing.JDialog {
         }
         pintarCondicion();
         txtFecha.setText(Fecha.fechaCorrecta());
-        //txtFecha.setEnabled(true);
         dcFecha.setEnabled(true);
         txtFactura.setEnabled(true);
         btnProveedor.setEnabled(true);
-        btnProveedor.doClick();
         rContado.setEnabled(true);
         rCredito.setEnabled(true);
         btnBuscarArticulo.setEnabled(true);
@@ -1222,7 +1344,8 @@ public final class dlgCompras extends javax.swing.JDialog {
         btnNuevo.setEnabled(false);
         btnGuardar.setEnabled(true);
         btnCancelar.setEnabled(true);
-
+        btnSalir.setEnabled(false);
+        btnProveedor.doClick();
         habilitarCANTCOSTO();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -1236,16 +1359,16 @@ public final class dlgCompras extends javax.swing.JDialog {
         String cod = GestionarCompra.getCodigo();
         txtCod.setText(cod);
         if (txtFecha.getText().isEmpty()) {
-            Mensajes.error("Seleccione una Fecha");
+            Mensajes.Sistema("Seleccione una Fecha");
             txtFecha.requestFocus();
         } else if (txtFactura.getText().isEmpty()) {
-            Mensajes.error("Ingrese la Factura de Compra");
+            Mensajes.Sistema("Ingrese la Factura de Compra");
             txtFactura.requestFocus();
         } else if (txtCodProv.getText().isEmpty()) {
-            Mensajes.error("Seleccione el Proveedor");
+            Mensajes.Sistema("Seleccione el Proveedor");
             btnProveedor.doClick();
         } else if (tbDetalle.getRowCount() <= 0) {
-            Mensajes.error("El detalle de la compra esta vacia");
+            Mensajes.Sistema("No se puede procesar la compra.\nEl detalle de articulos comprados se encuentra vacio.");
             btnBuscarArticulo.doClick();
         } else {
             try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement()) {
@@ -1267,13 +1390,15 @@ public final class dlgCompras extends javax.swing.JDialog {
                         cn.commit();
                         st.close();
                         cn.close();
-                        Mensajes.Sistema("LA COMPRA HA SIDO REGISTRADA EXITOSAMENTE");
+                        //Mensajes.Sistema("LA COMPRA HA SIDO REGISTRADA EXITOSAMENTE");
+                        Notif.NotifySuccess("Notificación del sistema", "La compra ha sido registrada satisfactoriamente!");
                     } catch (SQLException e) {
                         try {
                             cn.rollback();
                             st.close();
                             cn.close();
-                            Mensajes.error("TRANSACCION FALLIDA. LOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage().toUpperCase());
+                            //Mensajes.error("TRANSACCION FALLIDA. LOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage().toUpperCase());
+                            Notif.NotifyError("Notificación del sistema", "TRANSACCION FALLIDA. LOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage().toUpperCase());
                         } catch (SQLException se) {
                             Mensajes.error(se.getMessage());
                         }
@@ -1323,8 +1448,7 @@ public final class dlgCompras extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             dlgBuscarArticuloCompra bac = new dlgBuscarArticuloCompra(null, true);
-            //bac.setLocationRelativeTo(null);
-            bac.setLocation(230, 250);
+            bac.setLocationRelativeTo(null);
             bac.setVisible(true);
         } catch (Exception e) {
             Mensajes.informacion("No hay conexión con el servidor");
@@ -1398,8 +1522,78 @@ public final class dlgCompras extends javax.swing.JDialog {
 
     private void tbDetalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbDetalleKeyPressed
         // TODO add your handling code here:
-       AccesoRapido(evt.getKeyCode());
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_tbDetalleKeyPressed
+
+    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_jPanel1KeyPressed
+
+    private void txtTotalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTotalKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtTotalKeyPressed
+
+    private void btnEvento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEvento1ActionPerformed
+        // TODO add your handling code here:
+        min = 0;
+        System.out.println("btnEvento1 min: " + min);
+        dlgMinimizado.dispose();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }//GEN-LAST:event_btnEvento1ActionPerformed
+
+    private void btnEvento1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEvento1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEvento1KeyPressed
+
+    private void panelCabeceraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMousePressed
+        // TODO add your handling code here:
+        point = evt.getPoint();
+        getComponentAt(point);
+    }//GEN-LAST:event_panelCabeceraMousePressed
+
+    private void panelCabeceraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMouseDragged
+        // TODO add your handling code here:
+        int CurrentX = this.getLocation().x;
+        int CurrentY = this.getLocation().y;
+
+        int MoveX = (CurrentX + evt.getX()) - (CurrentX + point.x);
+        int MoveY = (CurrentY + evt.getY()) - (CurrentY + point.y);
+
+        int x = CurrentX + MoveX;
+        int y = CurrentY + MoveY;
+
+        this.setLocation(x, y);
+    }//GEN-LAST:event_panelCabeceraMouseDragged
+
+    private void btnEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoActionPerformed
+        // TODO add your handling code here:
+        min = 1;
+        System.out.println("btnEvento min: " + min);
+        this.setVisible(false);
+        Notif.Notify_Minim_dlgCompras("Notificación del sistema", "Formulario de Compras minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+    }//GEN-LAST:event_btnEventoActionPerformed
+
+    private void btnEventoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEventoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEventoKeyPressed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        if (btnNuevo.isEnabled() && txtArt.getText().isEmpty() && txtFactura.getText().isEmpty()) {
+            btnNuevo.requestFocus();
+        } else if (btnBuscarArticulo.isEnabled() && txtArt.getText().isEmpty() && !txtFactura.getText().isEmpty()) {
+            btnBuscarArticulo.requestFocus();
+        } else if (btnBuscarArticulo.isEnabled() && !txtArt.getText().isEmpty() && !txtFactura.getText().isEmpty()) {
+            txtCant.requestFocus();
+        } else if (btnBuscarArticulo.isEnabled() && !txtArt.getText().isEmpty() && txtFactura.getText().isEmpty()) {
+            txtCant.requestFocus();
+        } else if (btnBuscarArticulo.isEnabled() && txtArt.getText().isEmpty() && txtFactura.getText().isEmpty()) {
+            txtFactura.requestFocus();
+        }
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -1455,6 +1649,8 @@ public final class dlgCompras extends javax.swing.JDialog {
     private rojeru_san.rsbutton.RSButtonGradiente btnBuscarArticulo;
     public static RSMaterialComponent.RSButtonIconUno btnCancelar;
     private javax.swing.JButton btnCantidad;
+    public static RSMaterialComponent.RSButtonIconUno btnEvento;
+    public static RSMaterialComponent.RSButtonIconUno btnEvento1;
     public static RSMaterialComponent.RSButtonIconUno btnGuardar;
     public static javax.swing.JButton btnHistorial;
     public static RSMaterialComponent.RSButtonIconUno btnNuevo;
@@ -1464,6 +1660,7 @@ public final class dlgCompras extends javax.swing.JDialog {
     public static RSMaterialComponent.RSButtonIconUno btnSalir;
     private javax.swing.ButtonGroup buttonGroup1;
     public static datechooser.beans.DateChooserCombo dcFecha;
+    private javax.swing.JFrame dlgMinimizado;
     public static javax.swing.JLabel etiCant;
     private javax.swing.JMenuItem itmCantidad;
     private javax.swing.JMenuItem itmHistorial;
@@ -1473,15 +1670,16 @@ public final class dlgCompras extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -1491,11 +1689,18 @@ public final class dlgCompras extends javax.swing.JDialog {
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
     public static javax.swing.JLabel lbCond;
-    private javax.swing.JLabel lbtotal;
+    public static javax.swing.JLabel lbtotal;
     private javax.swing.JPopupMenu menuEmergente;
+    private javax.swing.JPanel panelCabecera;
     public static javax.swing.JRadioButton rContado;
     private javax.swing.JRadioButton rCredito;
-    public static javax.swing.JTable tbDetalle;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txt10;
     public static javax.swing.JTextField txt5;
     public static javax.swing.JTextField txtArt;

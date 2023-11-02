@@ -1,25 +1,40 @@
 package IU;
 
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.RenderDecimal1;
 import Componentes.RenderDecimalVenta;
 import Componentes.Software;
 import Controladores.CabecerasTablas;
 import Controladores.controlCompra;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
 
 public class dlgConsultarCompras extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
+    
+    private static Point point;
 
     public dlgConsultarCompras(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.consCompras(tbCompra);
-        cabe.consDetalleCompras(tbDetalleCompra);
+        CabecerasTablas.consCompras(tbCompra);
+        CabecerasTablas.consDetalleCompras(tbDetalleCompra);
         controlCompra.listarCompras(tbCompra);
         Renders();
 
+    }
+    
+    private void AccesoRapido(int n) {
+
+        switch (n) {
+            case KeyEvent.VK_DELETE ->
+                btnAnular.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
+            default -> {
+            }
+        }
     }
 
     final void titulo() {
@@ -44,7 +59,7 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        panelCabecera = new javax.swing.JPanel();
         btnSalir = new RSMaterialComponent.RSButtonIconUno();
         jPanel5 = new javax.swing.JPanel();
         PnlActualizar = new rojeru_san.rspanel.RSPanelImage();
@@ -56,13 +71,6 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         Separador8 = new javax.swing.JSeparator();
         LabelTitulo8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbCompra = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCodCompra = new javax.swing.JTextField();
@@ -71,13 +79,6 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txtProveedor = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbDetalleCompra = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
@@ -86,10 +87,21 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel4.setBackground(new java.awt.Color(17, 35, 46));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelCabecera.setBackground(new java.awt.Color(17, 35, 46));
+        panelCabecera.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panelCabeceraMouseDragged(evt);
+            }
+        });
+        panelCabecera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panelCabeceraMousePressed(evt);
+            }
+        });
+        panelCabecera.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setToolTipText("F12");
         btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
         btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
         btnSalir.setRippleColor(java.awt.Color.white);
@@ -99,7 +111,12 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
                 btnSalirActionPerformed(evt);
             }
         });
-        jPanel4.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 3, 20, 20));
+        btnSalir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnSalirKeyPressed(evt);
+            }
+        });
+        panelCabecera.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 3, 20, 20));
 
         jPanel5.setOpaque(false);
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -116,6 +133,11 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
+            }
+        });
+        btnActualizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnActualizarKeyPressed(evt);
             }
         });
         PnlActualizar.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
@@ -135,6 +157,7 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         PnlEliminarG.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnAnular.setBackground(new java.awt.Color(255, 0, 0));
+        btnAnular.setToolTipText("DELETE");
         btnAnular.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnAnular.setForegroundHover(new java.awt.Color(255, 0, 0));
         btnAnular.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
@@ -143,6 +166,11 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         btnAnular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnularActionPerformed(evt);
+            }
+        });
+        btnAnular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAnularKeyPressed(evt);
             }
         });
         PnlEliminarG.add(btnAnular, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
@@ -158,9 +186,9 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
 
         jPanel5.add(PnlEliminarG, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 3, 100, 100));
 
-        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        panelCabecera.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 883, 102));
+        jPanel3.add(panelCabecera, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 883, 102));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -191,9 +219,14 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
                 tbCompraMousePressed(evt);
             }
         });
+        tbCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbCompraKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbCompra);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 100, 883, 280));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 104, 883, 276));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -207,6 +240,11 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         txtCodCompra.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtCodCompra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCodCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtCodCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodCompraKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtCodCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 15, 121, 23));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -218,6 +256,11 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         txtFechaCompra.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtFechaCompra.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtFechaCompra.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtFechaCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFechaCompraKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtFechaCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 15, 146, 23));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
@@ -228,6 +271,11 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         txtProveedor.setBackground(new java.awt.Color(255, 255, 255));
         txtProveedor.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtProveedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtProveedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtProveedorKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtProveedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 44, 357, 23));
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -251,6 +299,11 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         tbDetalleCompra.setShowVerticalLines(false);
         tbDetalleCompra.getTableHeader().setResizingAllowed(false);
         tbDetalleCompra.getTableHeader().setReorderingAllowed(false);
+        tbDetalleCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbDetalleCompraKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbDetalleCompra);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 70, 871, 239));
@@ -285,7 +338,7 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
     private void tbCompraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbCompraMousePressed
         // TODO add your handling code here:
         try {
-            CabecerasTablas.limpiarTablas(tbDetalleCompra);
+            CabecerasTablas.limpiarTablaConsDetalleCompras(tbDetalleCompra);
             controlCompra.listarDetalleCompras(tbDetalleCompra);
             RendersD();
         } catch (Exception e) {
@@ -295,24 +348,27 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        cabe.consCompras(tbCompra);
-        cabe.consDetalleCompras(tbDetalleCompra);
+        CabecerasTablas.limpiarTablaConsCompras(tbCompra);
+        CabecerasTablas.limpiarTablaConsDetalleCompras(tbDetalleCompra);
         controlCompra.listarCompras(tbCompra);
         Renders();
         txtCodCompra.setText("");
         txtFechaCompra.setText("");
         txtProveedor.setText("");
+        Notif.NotifySuccess("Notificación del sistema", "Lista actualizada!");
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
         // TODO add your handling code here:
         if (dlgConsultarCompras.tbCompra.getSelectedRow() < 0) {
-            Mensajes.error("No es posible procesar la operación.\nSeleccione la venta que desea anular.");
+            //Mensajes.error("No es posible procesar la operación.\nSeleccione la venta que desea anular.");
+            Notif.NotifyFail("Notificación del sistema", "No es posible procesar la operación.\r\nSeleccione la Compra que desea anular.");
         } else {
             int x = dlgConsultarCompras.tbCompra.getSelectedRow();
             String estado = dlgConsultarCompras.tbCompra.getValueAt(x, 10).toString();
             if (estado.equals("ANULADO")) {
-                Mensajes.informacion("Esta compra ya fue anulada");
+                //Mensajes.informacion("Esta compra ya fue anulada");
+                Notif.NotifyInformation("Notificación del sistema", "No es posible procesar la operación.\r\nEsta Compra ya fue anulada");
             } else {
                 try {
                     String msg;
@@ -320,15 +376,13 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
                     if (rpta == 0) {
                         msg = controlCompra.anularCompra();
                         if (msg == null) {
-                            CabecerasTablas.limpiarTablas(tbCompra);
-                            CabecerasTablas.limpiarTablas(tbDetalleCompra);
-                            cabe.consCompras(tbCompra);
-                            cabe.consDetalleCompras(tbDetalleCompra);
+                            CabecerasTablas.limpiarTablaConsCompras(tbCompra);
+                            CabecerasTablas.limpiarTablaConsDetalleCompras(tbDetalleCompra);
                             controlCompra.listarCompras(tbCompra);
                         }
                     }
                 } catch (Exception e) {
-                    Mensajes.informacion("Seleccione la fila a eliminar");
+                    Mensajes.informacion("Error anulando compra: "+e.getMessage());
                 }
             }
         }
@@ -341,6 +395,66 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
             this.dispose();
         }
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnAnularKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAnularKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnAnularKeyPressed
+
+    private void btnActualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnActualizarKeyPressed
+
+    private void btnSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSalirKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnSalirKeyPressed
+
+    private void tbCompraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbCompraKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_tbCompraKeyPressed
+
+    private void txtCodCompraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodCompraKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtCodCompraKeyPressed
+
+    private void txtProveedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtProveedorKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtProveedorKeyPressed
+
+    private void txtFechaCompraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFechaCompraKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtFechaCompraKeyPressed
+
+    private void tbDetalleCompraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbDetalleCompraKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_tbDetalleCompraKeyPressed
+
+    private void panelCabeceraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMousePressed
+        // TODO add your handling code here:
+        point = evt.getPoint();
+        getComponentAt(point);
+    }//GEN-LAST:event_panelCabeceraMousePressed
+
+    private void panelCabeceraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMouseDragged
+        // TODO add your handling code here:
+        int CurrentX = this.getLocation().x;
+        int CurrentY = this.getLocation().y;
+
+        int MoveX = (CurrentX + evt.getX()) - (CurrentX + point.x);
+        int MoveY = (CurrentY + evt.getY()) - (CurrentY + point.y);
+
+        int x = CurrentX + MoveX;
+        int y = CurrentY + MoveY;
+
+        this.setLocation(x, y);
+    }//GEN-LAST:event_panelCabeceraMouseDragged
 
     /**
      * @param args the command line arguments
@@ -399,12 +513,24 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    public static javax.swing.JTable tbCompra;
-    public static javax.swing.JTable tbDetalleCompra;
+    private javax.swing.JPanel panelCabecera;
+    public static final javax.swing.JTable tbCompra = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
+    public static final javax.swing.JTable tbDetalleCompra = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCodCompra;
     public static javax.swing.JTextField txtFechaCompra;
     public static javax.swing.JTextField txtProveedor;

@@ -188,7 +188,7 @@ public final class dlgGestClientes extends javax.swing.JDialog {
         setResizable(false);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 0)));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         contenedor.setBackground(new java.awt.Color(255, 255, 255));
@@ -1000,9 +1000,8 @@ public final class dlgGestClientes extends javax.swing.JDialog {
     }
 
     void actualizartablaClientes() {
-        CabecerasTablas cabe = new CabecerasTablas();
-        cabe.cliente(dlgClientes.tablaClientes);
-        CabecerasTablas.limpiarTablas(dlgClientes.tablaClientes);
+        CabecerasTablas.cliente(dlgClientes.tablaClientes);
+        CabecerasTablas.limpiarTablaCliente(dlgClientes.tablaClientes);
         controlCliente.listClientes(dlgClientes.tablaClientes, "clientes.cli_codigo");
         dlgClientes.Renders();
         dlgClientes.txtBuscar.setText("");

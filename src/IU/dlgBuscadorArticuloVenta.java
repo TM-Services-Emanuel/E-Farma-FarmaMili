@@ -12,26 +12,15 @@ import java.awt.event.KeyEvent;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
-/**
- *
- * @author TM-SERVICES
- */
 public class dlgBuscadorArticuloVenta extends javax.swing.JDialog {
-    
-    CabecerasTablas cabe = new CabecerasTablas();
 
-    /**
-     * Creates new form dlgBuscadorArticuloVenta
-     * @param parent
-     * @param modal
-     */
     public dlgBuscadorArticuloVenta(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png")));
-        cabe.tablaArticuloAuxiliar(tbDetalle);
-        CabecerasTablas.limpiarTablas(tbDetalle);
+        CabecerasTablas.tablaArticuloAuxiliar(tbDetalle);
+        CabecerasTablas.limpiarTablaTablaArticuloAuxiliar(tbDetalle);
         controlArticulo.filtrarCodBarraActivo(tbDetalle, "");
         Renders();
         txtBuscar.requestFocus();
@@ -62,7 +51,6 @@ public class dlgBuscadorArticuloVenta extends javax.swing.JDialog {
         pnFondoCabecera = new javax.swing.JPanel();
         txtBuscar = new rojeru_san.rsfield.RSTextMaterial();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -201,10 +189,7 @@ public class dlgBuscadorArticuloVenta extends javax.swing.JDialog {
         try {
             String cod = txtBuscar.getText();
             txtBuscar.requestFocus();
-            //CabecerasTablas.limpiarTablas(tbDetalle);
-            //controlArticulo.listArticuloActivo(tbDetalle, "cod");
-            cabe.tablaArticuloAuxiliar(tbDetalle);
-            CabecerasTablas.limpiarTablas(tbDetalle);
+            CabecerasTablas.limpiarTablaTablaArticuloAuxiliar(tbDetalle);
             controlArticulo.filtrarCodBarraActivo(tbDetalle, cod);
             Renders();
         } catch (Exception e) {
@@ -268,7 +253,7 @@ public class dlgBuscadorArticuloVenta extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnFondoBlanco;
     private javax.swing.JPanel pnFondoCabecera;
-    public static javax.swing.JTable tbDetalle;
-    private rojeru_san.rsfield.RSTextMaterial txtBuscar;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable();
+    public static rojeru_san.rsfield.RSTextMaterial txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

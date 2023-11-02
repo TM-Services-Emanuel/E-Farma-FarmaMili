@@ -7,16 +7,16 @@ import Componentes.validarCampos;
 import Controladores.CabecerasTablas;
 import Controladores.ControlDetalleIngreso;
 import Datos.GestionarDetalleIngreso;
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 public class dlgDetalleIngreso extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
+    
     public dlgDetalleIngreso(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.detalleGasto(tbDetalle);
+        CabecerasTablas.detalleGasto(tbDetalle);
         ControlDetalleIngreso.listDetalleGasto(tbDetalle);
     }
     
@@ -43,13 +43,6 @@ public class dlgDetalleIngreso extends javax.swing.JDialog {
         txtCod = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jLabel3 = new javax.swing.JLabel();
         barMenu = new javax.swing.JMenuBar();
         menuOpciones = new javax.swing.JMenu();
@@ -345,7 +338,7 @@ public class dlgDetalleIngreso extends javax.swing.JDialog {
         txtDetalle.setText("");
         String cod = GestionarDetalleIngreso.getCodigo();
         txtCod.setText(cod);
-        CabecerasTablas.limpiarTablas(tbDetalle);
+        CabecerasTablas.limpiarTablaDetalleGasto(tbDetalle);
         ControlDetalleIngreso.listDetalleGasto(tbDetalle);
         txtDetalle.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
@@ -356,11 +349,11 @@ public class dlgDetalleIngreso extends javax.swing.JDialog {
             int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (resp == JOptionPane.YES_OPTION){
                 ControlDetalleIngreso.delDetalleIngreso();
-                CabecerasTablas.limpiarTablas(tbDetalle);
+                CabecerasTablas.limpiarTablaDetalleGasto(tbDetalle);
                 ControlDetalleIngreso.listDetalleGasto(tbDetalle);
                 btnCancelarActionPerformed(null);
             }
-        }catch(Exception ee){}        
+        }catch(HeadlessException ee){}        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -369,11 +362,11 @@ public class dlgDetalleIngreso extends javax.swing.JDialog {
             int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (resp == JOptionPane.YES_OPTION){
                 ControlDetalleIngreso.actDetalleIngreso();
-                CabecerasTablas.limpiarTablas(tbDetalle);
+                CabecerasTablas.limpiarTablaDetalleGasto(tbDetalle);
                 ControlDetalleIngreso.listDetalleGasto(tbDetalle);
                 btnCancelarActionPerformed(null);
             }
-        }catch(Exception ee){}        
+        }catch(HeadlessException ee){}        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
@@ -385,11 +378,11 @@ public class dlgDetalleIngreso extends javax.swing.JDialog {
                     String cod = GestionarDetalleIngreso.getCodigo();
                     txtCod.setText(cod);                    
                     ControlDetalleIngreso.addDetalleIngreso();
-                    CabecerasTablas.limpiarTablas(tbDetalle);
+                    CabecerasTablas.limpiarTablaDetalleGasto(tbDetalle);
                     ControlDetalleIngreso.listDetalleGasto(tbDetalle);
                     btnCancelarActionPerformed(null);
                 }
-            }catch(Exception ee){}            
+            }catch(HeadlessException ee){}            
         }
         else {
             Mensajes.informacion("Debe llenar obligatoriamente el campo Motivo Ingreso");
@@ -561,7 +554,13 @@ public class dlgDetalleIngreso extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuOpciones;
-    private javax.swing.JTable tbDetalle;
+    private static final javax.swing.JTable tbDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCod;
     public static javax.swing.JTextField txtDetalle;
     // End of variables declaration//GEN-END:variables

@@ -13,20 +13,19 @@ import javax.swing.JOptionPane;
 
 public class dlgTimbradoMovil extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
     public dlgTimbradoMovil(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.Timbrado(tbTimbrado);
+        CabecerasTablas.Timbrado(tbTimbrado);
         controlTimbradoMovil.listTimbrado(tbTimbrado);
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Gestionar Timbrado");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Gestionar Timbrado");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Gestionar Timbrado");
         }
     }
 
@@ -56,13 +55,6 @@ public class dlgTimbradoMovil extends javax.swing.JDialog {
         dcFHasta = new datechooser.beans.DateChooserCombo();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbTimbrado = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         barMenu = new javax.swing.JMenuBar();
         menuOpciones = new javax.swing.JMenu();
         itemNuevo = new javax.swing.JMenuItem();
@@ -347,7 +339,7 @@ public class dlgTimbradoMovil extends javax.swing.JDialog {
         Blanco.setLayout(BlancoLayout);
         BlancoLayout.setHorizontalGroup(
             BlancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Oscuro, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+            .addComponent(Oscuro, javax.swing.GroupLayout.PREFERRED_SIZE, 510, Short.MAX_VALUE)
             .addGroup(BlancoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BlancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -468,7 +460,7 @@ public class dlgTimbradoMovil extends javax.swing.JDialog {
             ControlLogeo.Timbrado_Ticket();
             this.dispose();
         }
-        
+
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -488,57 +480,59 @@ public class dlgTimbradoMovil extends javax.swing.JDialog {
         cbEstado.setSelected(true);
         btnSalir.setEnabled(false);
         itemSalir.setEnabled(false);
-        CabecerasTablas.limpiarTablasT(tbTimbrado);
+        CabecerasTablas.limpiarTablaTimbrado(tbTimbrado);
         controlTimbradoMovil.listTimbrado(tbTimbrado);
         txtTimbrado.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        try{
-            int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea desactivar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION){
+        try {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea desactivar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resp == JOptionPane.YES_OPTION) {
                 controlTimbradoMovil.delTimbrado();
-                CabecerasTablas.limpiarTablasT(tbTimbrado);
+                CabecerasTablas.limpiarTablaTimbrado(tbTimbrado);
                 controlTimbradoMovil.listTimbrado(tbTimbrado);
                 btnCancelarActionPerformed(null);
             }
-        }catch(HeadlessException ee){}        
+        } catch (HeadlessException ee) {
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-        try{
-            int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION){
+        try {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resp == JOptionPane.YES_OPTION) {
                 controlTimbradoMovil.actTimbrado();
-                CabecerasTablas.limpiarTablasT(tbTimbrado);
+                CabecerasTablas.limpiarTablaTimbrado(tbTimbrado);
                 controlTimbradoMovil.listTimbrado(tbTimbrado);
                 btnCancelarActionPerformed(null);
             }
-        }catch(HeadlessException ee){}        
+        } catch (HeadlessException ee) {
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-        if (validarCampos.estaVacio(txtTimbrado) ) {
-            try{
-                int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resp == JOptionPane.YES_OPTION){
+        if (validarCampos.estaVacio(txtTimbrado)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
                     String cod = GestionarTimbradoMovil.getCodigo();
                     txtCod.setText(cod);
                     controlTimbradoMovil.addTimbrado();
-                    CabecerasTablas.limpiarTablasT(tbTimbrado);
+                    CabecerasTablas.limpiarTablaTimbrado(tbTimbrado);
                     controlTimbradoMovil.listTimbrado(tbTimbrado);
                     btnCancelarActionPerformed(null);
                 }
-            }catch(HeadlessException ee){}            
-        }
-        else {
+            } catch (HeadlessException ee) {
+            }
+        } else {
             Mensajes.informacion("Debe llenar obligatoriamente los campos Timbrado, Fecha desde y hasta");
             txtTimbrado.requestFocus();
         }
-        
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void tbTimbradoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTimbradoMouseClicked
@@ -570,10 +564,10 @@ public class dlgTimbradoMovil extends javax.swing.JDialog {
         txtTimbrado.setText(nom);
         txtFDesde.setText(desde);
         txtFHasta.setText(hasta);
-        if(estado.equals("Activo")){
+        if (estado.equals("Activo")) {
             cbEstado.setSelected(true);
             cbEstado.setEnabled(false);
-        }else{
+        } else {
             cbEstado.setSelected(false);
             cbEstado.setEnabled(true);
         }
@@ -638,14 +632,14 @@ public class dlgTimbradoMovil extends javax.swing.JDialog {
 
     private void txtTimbradoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimbradoKeyTyped
         // TODO add your handling code here:
-        int limite=10;
+        int limite = 10;
         if (txtTimbrado.getText().length() == limite) {
             evt.consume();
         }
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
     }//GEN-LAST:event_txtTimbradoKeyTyped
@@ -657,9 +651,9 @@ public class dlgTimbradoMovil extends javax.swing.JDialog {
 
     private void txtTimbradoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimbradoActionPerformed
         // TODO add your handling code here:
-        if(btnGuardar.isEnabled()){
+        if (btnGuardar.isEnabled()) {
             btnGuardar.doClick();
-        }else{
+        } else {
             btnModificar.doClick();
         }
     }//GEN-LAST:event_txtTimbradoActionPerformed
@@ -683,14 +677,13 @@ public class dlgTimbradoMovil extends javax.swing.JDialog {
         txtFHasta.setText(Fecha.formatoFechaN(dcFHasta.getText()));
     }//GEN-LAST:event_dcFHastaOnCommit
 
-    void limpiarCampos()
-    {
+    void limpiarCampos() {
         txtCod.setText("");
         txtTimbrado.setText("");
         txtFDesde.setText("");
         txtFHasta.setText("");
-    }    
-    
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -725,9 +718,8 @@ public class dlgTimbradoMovil extends javax.swing.JDialog {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
-        //</editor-fold>
 
+        //</editor-fold>
         java.awt.EventQueue.invokeLater(() -> {
             dlgTimbradoMovil dialog = new dlgTimbradoMovil(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -766,7 +758,13 @@ public class dlgTimbradoMovil extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuOpciones;
-    private javax.swing.JTable tbTimbrado;
+    private static final javax.swing.JTable tbTimbrado = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCod;
     public static javax.swing.JTextField txtFDesde;
     public static javax.swing.JTextField txtFHasta;

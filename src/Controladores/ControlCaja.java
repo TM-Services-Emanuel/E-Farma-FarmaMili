@@ -3,6 +3,7 @@ package Controladores;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Datos.GestionarCaja;
 import IU.dlgCaja;
 import IU.dlgCajaDia;
@@ -21,7 +22,8 @@ static String UsuarioL="";
         Caja caja = new Caja(caFechaI, caHoraI, caInicial,0, 0, 0, caUsuI);
         msg = GestionarCaja.addCaja(caja);
         if (msg == null) {
-            Mensajes.informacion("MOVIMIENTO DIARIO:\nLa caja base de día fue establecida exitosamente.\nPuede comenzar a registrar operaciones.");
+            Notif.NotifySuccess("Notificación del sistema", "MOVIMIENTO DIARIO:\r\nLa caja base de día fue establecida exitosamente.\r\n\nPuede comenzar a registrar operaciones con total normalidad.");
+            //Mensajes.informacion("MOVIMIENTO DIARIO:\nLa caja base de día fue establecida exitosamente.\nPuede comenzar a registrar operaciones.");
         } else {
             Mensajes.error(msg);
         }
@@ -38,7 +40,8 @@ static String UsuarioL="";
         Caja caja = new Caja(caId, caFinal, caEntregado , caDif);
         msg = GestionarCaja.actCaja(caja);
         if (msg == null) {
-            Mensajes.informacion("MOVIMIENTO DIARIO:\nLos valores fueron actualizados exitosamente.");
+            Notif.NotifySuccess("Notificación del sistema", "MOVIMIENTO DIARIO:\r\nLos valores fueron actualizados satisfactoriamente.");
+           // Mensajes.informacion("MOVIMIENTO DIARIO:\r\nLos valores fueron actualizados satisfactoriamente.");
         } else {
             //Mensajes.informacion("Caja del día actualizada");
             Mensajes.error(msg);
@@ -59,7 +62,8 @@ static String UsuarioL="";
         Caja caja = new Caja(caId, caFechaF, caHoraF, caFinal, caEntregado, caDif, caUsuF);
         msg = GestionarCaja.delCaja(caja);
         if (msg == null) {
-            Mensajes.informacion("MOVIMIENTO DIARIO:\nLa caja del Día y su Operaciones fueron finalizados exitosamente.");
+            //Mensajes.informacion("MOVIMIENTO DIARIO:\nLa caja del día y su Operaciones fueron finalizados exitosamente.");
+            Notif.NotifySuccess("Notificación del sistema", "MOVIMIENTO DIARIO:\r\nLa caja del día y su Operaciones fueron finalizados exitosamente.");
             dlgCajaDia.lbEstado.setText("CERRADO");
         } else {
             Mensajes.error(msg);

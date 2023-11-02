@@ -6,6 +6,7 @@ import Componentes.Empresa;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.RenderDecimal;
 import Componentes.ReporteF;
 import Componentes.Software;
@@ -19,6 +20,7 @@ import Datos.GestionarFactura;
 import java.awt.event.KeyEvent;
 import Modelo.Articulo;
 import java.awt.BorderLayout;
+import java.awt.Point;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -37,9 +39,12 @@ public final class dlgTransferencia extends javax.swing.JDialog {
 
     public ReporteF jasper;
     static DataSourceService dss = new DataSourceService();
+    private static Point point;
+    public static int min;
 
     public dlgTransferencia(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
+        min = 0;
         initComponents();
         titulo();
         jasper = new ReporteF();
@@ -56,7 +61,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
                 btnNuevo.doClick();
             case KeyEvent.VK_F6 ->
                 btnGuardar.doClick();
-            case KeyEvent.VK_ALT | KeyEvent.VK_F4 ->
+            case KeyEvent.VK_F12 ->
                 btnSalir.doClick();
             case KeyEvent.VK_ESCAPE ->
                 btnCancelar.doClick();
@@ -179,7 +184,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         txtIdOrigen.setText("");
         txtIdDestino.setText("");
         lbSucursalOrigen.setText("");
-        CabecerasTablas.limpiarTablasTransferencias(tbDetalle);
+        CabecerasTablas.limpiarTablaTransferencias(tbDetalle);
         CabecerasTablas.Transferencias(tbDetalle);
         controlFactura.canCelar();
     }
@@ -198,7 +203,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
             }
         }
     }
-    
+
     public void llamarReporteTransferencia(int cod) throws SQLException {
         VisorReportes vr = new VisorReportes(null, true);
         try (Connection cn = dss.getDataSource().getConnection()) {
@@ -237,6 +242,10 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         menuEmergente = new javax.swing.JPopupMenu();
         itemCantidad = new javax.swing.JMenuItem();
         GrupoOpciones = new javax.swing.ButtonGroup();
+        dlgMinimizado = new javax.swing.JFrame();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        btnEvento1 = new RSMaterialComponent.RSButtonIconUno();
         Blanco = new org.edisoncor.gui.panel.PanelImage();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -264,7 +273,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         txt5 = new javax.swing.JTextField();
         txt10 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jPanel6 = new javax.swing.JPanel();
+        panelCabecera = new javax.swing.JPanel();
         txtFechaReal = new javax.swing.JTextField();
         btnRestar = new javax.swing.JButton();
         lbCred = new javax.swing.JLabel();
@@ -286,6 +295,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         txtIdDestino = new javax.swing.JTextField();
         txtIdOrigen = new javax.swing.JTextField();
         txtTipo = new javax.swing.JTextField();
+        btnEvento = new RSMaterialComponent.RSButtonIconUno();
         etiCant = new javax.swing.JLabel();
         btnBuscarArticulo = new rojeru_san.rsbutton.RSButtonGradiente();
         txtArt = new javax.swing.JTextField();
@@ -313,9 +323,55 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         });
         menuEmergente.add(itemCantidad);
 
+        dlgMinimizado.setUndecorated(true);
+
+        jPanel3.setBackground(new java.awt.Color(17, 35, 46));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel28.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setText("Gestionar Productos");
+        jPanel3.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 9, 110, 12));
+
+        btnEvento1.setBackground(new java.awt.Color(17, 35, 46));
+        btnEvento1.setToolTipText("F12");
+        btnEvento1.setBackgroundHover(new java.awt.Color(17, 35, 46));
+        btnEvento1.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_UP);
+        btnEvento1.setRippleColor(java.awt.Color.white);
+        btnEvento1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEvento1ActionPerformed(evt);
+            }
+        });
+        btnEvento1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEvento1KeyPressed(evt);
+            }
+        });
+        jPanel3.add(btnEvento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 2, 25, 25));
+
+        javax.swing.GroupLayout dlgMinimizadoLayout = new javax.swing.GroupLayout(dlgMinimizado.getContentPane());
+        dlgMinimizado.getContentPane().setLayout(dlgMinimizadoLayout);
+        dlgMinimizadoLayout.setHorizontalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        dlgMinimizadoLayout.setVerticalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         Blanco.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
         Blanco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoBlanco.jpg"))); // NOI18N
@@ -362,6 +418,8 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         });
         jPanel1.add(txtCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(536, 12, 128, 23));
 
+        txtFecha.setEditable(false);
+        txtFecha.setBackground(new java.awt.Color(255, 255, 255));
         txtFecha.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtFecha.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtFecha.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -372,6 +430,8 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         });
         jPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(316, 12, 78, 23));
 
+        txtHora.setEditable(false);
+        txtHora.setBackground(new java.awt.Color(255, 255, 255));
         txtHora.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtHora.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtHora.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
@@ -553,9 +613,19 @@ public final class dlgTransferencia extends javax.swing.JDialog {
 
         Blanco.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(692, 109, 310, 115));
 
-        jPanel6.setBackground(new java.awt.Color(17, 35, 46));
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel6.add(txtFechaReal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 70, -1));
+        panelCabecera.setBackground(new java.awt.Color(17, 35, 46));
+        panelCabecera.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panelCabeceraMouseDragged(evt);
+            }
+        });
+        panelCabecera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panelCabeceraMousePressed(evt);
+            }
+        });
+        panelCabecera.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelCabecera.add(txtFechaReal, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 70, -1));
 
         btnRestar.setText("R");
         btnRestar.addActionListener(new java.awt.event.ActionListener() {
@@ -563,11 +633,11 @@ public final class dlgTransferencia extends javax.swing.JDialog {
                 btnRestarActionPerformed(evt);
             }
         });
-        jPanel6.add(btnRestar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, -1, -1));
+        panelCabecera.add(btnRestar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, -1, -1));
 
         lbCred.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
         lbCred.setText("jLabel12");
-        jPanel6.add(lbCred, new org.netbeans.lib.awtextra.AbsoluteConstraints(311, 13, -1, -1));
+        panelCabecera.add(lbCred, new org.netbeans.lib.awtextra.AbsoluteConstraints(311, 13, -1, -1));
 
         btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Create.png"))); // NOI18N
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
@@ -575,9 +645,10 @@ public final class dlgTransferencia extends javax.swing.JDialog {
                 btnAddActionPerformed(evt);
             }
         });
-        jPanel6.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, -1, -1));
+        panelCabecera.add(btnAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, -1, -1));
 
         btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setToolTipText("F12");
         btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
         btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
         btnSalir.setRippleColor(java.awt.Color.white);
@@ -592,7 +663,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
                 btnSalirKeyPressed(evt);
             }
         });
-        jPanel6.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(987, 2, 20, 20));
+        panelCabecera.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(987, 2, 20, 20));
 
         jPanel20.setOpaque(false);
         jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -767,12 +838,30 @@ public final class dlgTransferencia extends javax.swing.JDialog {
 
         jPanel20.add(PnlCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, -1));
 
-        jPanel6.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
-        jPanel6.add(txtIdDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 40, -1));
-        jPanel6.add(txtIdOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 40, -1));
-        jPanel6.add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 70, 30, -1));
+        panelCabecera.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        panelCabecera.add(txtIdDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 70, 40, -1));
+        panelCabecera.add(txtIdOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 40, -1));
+        panelCabecera.add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 70, 30, -1));
 
-        Blanco.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 1010, -1));
+        btnEvento.setBackground(new java.awt.Color(17, 35, 46));
+        btnEvento.setToolTipText("MINIMIZAR");
+        btnEvento.setBackgroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_DOWN);
+        btnEvento.setRippleColor(java.awt.Color.white);
+        btnEvento.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEventoActionPerformed(evt);
+            }
+        });
+        btnEvento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEventoKeyPressed(evt);
+            }
+        });
+        panelCabecera.add(btnEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(963, 3, 20, 20));
+
+        Blanco.add(panelCabecera, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 1010, -1));
 
         etiCant.setBackground(new java.awt.Color(17, 35, 46));
         etiCant.setFont(new java.awt.Font("Roboto", 1, 10)); // NOI18N
@@ -788,6 +877,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         btnBuscarArticulo.setColorPrimarioHover(new java.awt.Color(255, 137, 2));
         btnBuscarArticulo.setColorSecundario(new java.awt.Color(255, 137, 2));
         btnBuscarArticulo.setColorSecundarioHover(new java.awt.Color(255, 102, 0));
+        btnBuscarArticulo.setFocusPainted(false);
         btnBuscarArticulo.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         btnBuscarArticulo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1014,6 +1104,8 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         rEntrada.setEnabled(true);
         cboDestino.setEnabled(true);
         rSalida.doClick();
+        cboDestino.requestFocus();
+        cboDestino.setPopupVisible(true);
         Rendes();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -1070,8 +1162,9 @@ public final class dlgTransferencia extends javax.swing.JDialog {
                         cn.commit();
                         st.close();
                         cn.close();
-                        Mensajes.informacion("TRANSFERENCIA REALIZADA!");
-                        CabecerasTablas.limpiarTablasTransferencias(tbDetalle);
+                        //Mensajes.informacion("TRANSFERENCIA REALIZADA!");
+                        Notif.NotifySuccess("Notificación del sistema", "La Transferencia ha sido registrada satisfactoriamente!");
+                        CabecerasTablas.limpiarTablaTransferencias(tbDetalle);
                         CabecerasTablas.Transferencias(tbDetalle);
                         controlFactura.canCelarTransf();
                         cant();
@@ -1081,7 +1174,8 @@ public final class dlgTransferencia extends javax.swing.JDialog {
                         try {
                             cn.rollback();
                             cn.close();
-                            Mensajes.error("TRANSACCION FALLIDA. LOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
+                            //Mensajes.error("TRANSACCION FALLIDA. LOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
+                            Notif.NotifyError("Notificación del sistema", "TRANSACCION FALLIDA. LOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage().toUpperCase());
                             controlFactura.canCelarTransf();
                         } catch (SQLException se) {
                             Mensajes.error(se.getMessage());
@@ -1347,6 +1441,65 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_btnSalirKeyPressed
 
+    private void btnEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoActionPerformed
+        // TODO add your handling code here:
+        min = 1;
+        System.out.println("btnEvento min: " + min);
+        this.setVisible(false);
+        Notif.Notify_Minim_dlgTransferencia("Notificación del sistema", "Formulario de Transferencias minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+    }//GEN-LAST:event_btnEventoActionPerformed
+
+    private void btnEventoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEventoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEventoKeyPressed
+
+    private void btnEvento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEvento1ActionPerformed
+        // TODO add your handling code here:
+        min = 0;
+        System.out.println("btnEvento1 min: " + min);
+        dlgMinimizado.dispose();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }//GEN-LAST:event_btnEvento1ActionPerformed
+
+    private void btnEvento1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEvento1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEvento1KeyPressed
+
+    private void panelCabeceraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMousePressed
+        // TODO add your handling code here:
+        point = evt.getPoint();
+        getComponentAt(point);
+    }//GEN-LAST:event_panelCabeceraMousePressed
+
+    private void panelCabeceraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMouseDragged
+        // TODO add your handling code here:
+        int CurrentX = this.getLocation().x;
+        int CurrentY = this.getLocation().y;
+
+        int MoveX = (CurrentX + evt.getX()) - (CurrentX + point.x);
+        int MoveY = (CurrentY + evt.getY()) - (CurrentY + point.y);
+
+        int x = CurrentX + MoveX;
+        int y = CurrentY + MoveY;
+
+        this.setLocation(x, y);
+    }//GEN-LAST:event_panelCabeceraMouseDragged
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        if (btnNuevo.isEnabled()) {
+            btnNuevo.requestFocus();
+        } else if (btnBuscarArticulo.isEnabled() && cboDestino.getSelectedIndex() == 0 && txtCodArticulo.getText().isEmpty()) {
+            cboDestino.setPopupVisible(true);
+            cboDestino.requestFocus();
+        }else if(btnBuscarArticulo.isEnabled() && cboDestino.getSelectedIndex() != 0 && txtCodArticulo.getText().isEmpty()){
+            btnBuscarArticulo.requestFocus();
+        }else if(btnBuscarArticulo.isEnabled() && cboDestino.getSelectedIndex() != 0 && !txtCodArticulo.getText().isEmpty()){
+            txtCant.requestFocus();
+        }
+    }//GEN-LAST:event_formWindowActivated
+
     /**
      * @param args the command line arguments
      */
@@ -1406,17 +1559,21 @@ public final class dlgTransferencia extends javax.swing.JDialog {
     private javax.swing.JButton btnAdd;
     private rojeru_san.rsbutton.RSButtonGradiente btnBuscarArticulo;
     public static RSMaterialComponent.RSButtonIconUno btnCancelar;
+    public static RSMaterialComponent.RSButtonIconUno btnEvento;
+    public static RSMaterialComponent.RSButtonIconUno btnEvento1;
     public static RSMaterialComponent.RSButtonIconUno btnGuardar;
     public static RSMaterialComponent.RSButtonIconUno btnNuevo;
     private javax.swing.JButton btnRestar;
     private RSMaterialComponent.RSButtonIconUno btnSalir;
     private RSMaterialComponent.RSComboBox cboDestino;
+    private javax.swing.JFrame dlgMinimizado;
     public static javax.swing.JLabel etiCant;
     private javax.swing.JMenuItem itemCantidad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
@@ -1425,7 +1582,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel7;
     protected javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
@@ -1434,6 +1591,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
     private javax.swing.JLabel lbDestinoOrigen;
     private javax.swing.JLabel lbSucursalOrigen;
     private javax.swing.JPopupMenu menuEmergente;
+    private javax.swing.JPanel panelCabecera;
     private javax.swing.JPanel panelGrabados;
     public static rojerusan.RSCheckBox rEntrada;
     public static rojerusan.RSCheckBox rSalida;

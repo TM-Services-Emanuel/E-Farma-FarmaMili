@@ -8,61 +8,146 @@ public class CabecerasTablas {
 
     private static final String puntoEmision[] = {"ID", "IDT", "TIMBRADO", "EST.", "P.E.", "DIRECCIÓN", "F.INICIO", "F.FIN", "F.ACTUAL", "TIPO", "DIR. IP", "ESTADO", "IMPRESORA PREDETERMINADA"};
     private static final String timbrado[] = {"ID", "TIMBRADO", "DESDE", "HASTA", "ESTADO"};
-    String articulos[] = {"CODIGO", "CODBARRA", "FAMILIA", "LABORATORIO", "PROVEEDOR", "NOMBRE COMERCIAL", "PRINCIPIO ACTIVO", "ACCION TERAPEUTICA",
+    private static final String articulos[] = {"CODIGO", "CODBARRA", "FAMILIA", "LABORATORIO", "PROVEEDOR", "NOMBRE COMERCIAL", "PRINCIPIO ACTIVO", "ACCION TERAPEUTICA",
         "STOCK", "ST.MIN", "COSTO", "IVA", "COST.IVA", "P.PUBLICO", "% DESC", "P.VENTA", "% FLIA", "% LUCRO", "VENTA", "ACT"};
-    String familia[] = {"ID", "FAMILIA", "%", "I.V.A."};
-    String laboratorio[] = {"ID", "LABORATORIO"};
-    String empresa[] = {"ID","NOMBRE FANTASÍA", "RAZÓN SOCIAL", "R.U.C.", "DIRECCIÓN", "TELÉFONO", "CELULAR", "ACTIVO"};
-    String vendedores[] = {"ID", "NOMBRE Y APELLIDO", "DIRECCIÓN", "TELÉFONO", "CELULAR", "SUELDO", "% COM", "OBSERVACIÓN"};
-    String clientes[] = {"ID", "NOMBRE Y APELLIDO | RAZÓN SOCIAL", "C.I. | R.U.C.", "TELÉFONO", "CONTACTO", "CELULAR", "VTA.CONT.", "VTA.CRED.", "LMTE.CTA.", "CIUDAD", "DIRECCIÓN", "OBSERVACIÓN"};
-    String provedores[] = {"ID", "RAZÓN SOCIAL", "R.U.C.", "TELÉFONO", "CONTACTO", "CELULAR", "CIUDAD", "DIRECCIÓN", "OBSERVACIÓN"};
-    String tablaStock[] = {"Código", "Marca", "Descripción", "Stock"};
-    String tablaAuxiliarArticulo[] = {"Codigo", "Rubro", "Descripcion", "Marca", "Precio"};
-    String ciudad[] = {"ID", "CIUDAD"};
-    String sucursal[] = {"ID", "DESCRIPCIÓN SUCURSAL", " ", "MI_SUC", "ID_EMP", "DE LA EMPRESA", "IP SERVIDOR"};
-    String zona[] = {"CODIGO", "ZONA"};
-    String detalleGasto[] = {"ID", "DESCRIPCIÓN"};
-    String motivo[] = {"ID", "MOTIVOS"};
-    String salidas[] = {"CODART", "NOMBRE COMERCIAL", "CODMOTIVO", "MOTIVO SALIDA", "CANT", "COSTO", "MONTO"};
-    String conSalidas[] = {"OP. N°", "PROVEEDOR", "FECHA", "HORA", "COS.TOTAL", "OBSERVACION", "INDICADOR"};
-    String detalleSalida[] = {"CODART", "MOTIVO SALIDA", "CANT", "OP. N°", "NOMBRE COMERCIAL", "COSTO", "MONTO"};
-    String compras[] = {"COD", "CODBARRA", "NOMBRE COMERCIAL", "CANT", "CANTf", "PRECIO ", "PRECIOF", "IVA", "EXENTA", "EXENTAf", "IVA 5%", "IVA5f", "IVA 10%", "IVA10f", "MONTO", "MONTOf", "PC", "GA", "DE"};
+    private static final String familia[] = {"ID", "FAMILIA", "%", "I.V.A."};
+    private static final String laboratorio[] = {"ID", "LABORATORIO"};
+    private static final String empresa[] = {"ID", "NOMBRE FANTASÍA", "RAZÓN SOCIAL", "R.U.C.", "DIRECCIÓN", "TELÉFONO", "CELULAR", "ACTIVO"};
+    private static final String vendedores[] = {"ID", "NOMBRE Y APELLIDO", "DIRECCIÓN", "TELÉFONO", "CELULAR", "SUELDO", "% COM", "OBSERVACIÓN"};
+    private static final String clientes[] = {"ID", "NOMBRE Y APELLIDO | RAZÓN SOCIAL", "C.I. | R.U.C.", "TELÉFONO", "CONTACTO", "CELULAR", "VTA.CONT.", "VTA.CRED.", "LMTE.CTA.", "CIUDAD", "DIRECCIÓN", "OBSERVACIÓN"};
+    private static final String provedores[] = {"ID", "RAZÓN SOCIAL", "R.U.C.", "TELÉFONO", "CONTACTO", "CELULAR", "CIUDAD", "DIRECCIÓN", "OBSERVACIÓN"};
+    private static final String tablaStock[] = {"Código", "Marca", "Descripción", "Stock"};
+    private static final String tablaAuxiliarArticulo[] = {"Codigo", "Rubro", "Descripcion", "Marca", "Precio"};
+    private static final String ciudad[] = {"ID", "CIUDAD"};
+    private static final String sucursal[] = {"ID", "DESCRIPCIÓN SUCURSAL", " ", "MI_SUC", "ID_EMP", "DE LA EMPRESA", "IP SERVIDOR"};
+    private static final String zona[] = {"CODIGO", "ZONA"};
+    private static final String detalleGasto[] = {"ID", "DESCRIPCIÓN"};
+    private static final String motivo[] = {"ID", "MOTIVOS"};
+    private static final String salidas[] = {"CODART", "NOMBRE COMERCIAL", "CODMOTIVO", "MOTIVO SALIDA", "CANT", "COSTO", "MONTO"};
+    private static final String conSalidas[] = {"OP. N°", "PROVEEDOR", "FECHA", "HORA", "COS.TOTAL", "OBSERVACION", "INDICADOR"};
+    private static final String detalleSalida[] = {"CODART", "MOTIVO SALIDA", "CANT", "OP. N°", "NOMBRE COMERCIAL", "COSTO", "MONTO"};
+    private static final String compras[] = {"COD", "CODBARRA", "NOMBRE COMERCIAL", "CANT", "CANTf", "PRECIO ", "PRECIOF", "IVA", "EXENTA", "EXENTAf", "IVA 5%", "IVA5f", "IVA 10%", "IVA10f", "MONTO", "MONTOf", "PC", "GA", "DE"};
     private static final String facturas[] = {"COD", "CODBARRA", "NOMBRE COMERCIAL", "CANT", "P.PUBL.", "%DES", "PRECIO", "EXENTA", "IVA 5%", "IVA 10%", "SUB-TOTAL", "DESC", "PPtot"};
-    private static final String transferencias[] = {"COD", "CODBARRA", "NOMBRE COMERCIAL", "CANT", "PRECIO", "EXENTA", "IVA 5%", "IVA 10%", "SUB-TOTAL","GANANCIA","DESCUENTO","ORDEN","COSTOIVA"};
-    String categoria[] = {"CODIGO", "CATEGORIA"};
+    private static final String transferencias[] = {"COD", "CODBARRA", "NOMBRE COMERCIAL", "CANT", "PRECIO", "EXENTA", "IVA 5%", "IVA 10%", "SUB-TOTAL", "GANANCIA", "DESCUENTO", "ORDEN", "COSTOIVA"};
+    private static final String categoria[] = {"CODIGO", "CATEGORIA"};
     //String factura[] = {"Cant.", "Cod.", "Descripción", "Precio", "Total", "sActual"};
-    String presupuestos[] = {"Cant.", "Cod.", "Descripción", "Precio", "Total"};
-    String conFactura[] = {"OPERACIÓN", "RAZÓN SOCIAL", "FECHA", "HORA", "COD CLI", "MOV.CAJA", "FACTURA N°", "CONDICION", "PAGO", "TOTAL", "CODVENDE", "ESTADO"};
-    String conTransferencia[] = {"ID","OPERACIÓN", "MOV.CAJA", "FECHA HORA", "TIPO", "ORIGEN", "DESTINO", "TOTAL", "ESTADO"};
-    String detalleFactura[] = {"CANT", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "PRECIO", "SUB-TOTAL"};
-    String detalleTransferencia[] = {"CANT", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "PRECIO", "SUB-TOTAL"};
-    String consPresupuesto[] = {"N°", "Fecha", "Razon Social", "Cód. Clie", "Desc", "Total"};
-    String detallePresupuestoF[] = {"Cant.", "Código", "Descripción", "Precio", "Total"};
-    String busEmpleado[] = {"Cód", "Empleado", "Observación"};
-    String consNotaCredito[] = {"N°", "Fecha", "Razon Social", "Cod. Clie", "Total", "Desc", "Fac"};
-    String detalleNotaCredito[] = {"Cant.", "Cód", "Descripción", "Precio", "Total"};
-    String usuario[] = {"ID", "PERFIL ASIG.", "EMPLEADO", "USUARIO", "PASSWORD", "INDICADOR", "IP", "CODPERFIL", "CODVENDE"};
-    String comisiones[] = {"FECHA", "FACT.", "CLIENTE", "TOTAL", "%COM.", "COMISION"};
-    String consCompras[] = {"OPER. N°", "MOV.CAJ.N°", "FECHA", "HORA", "R.U.C.", "PROVEEDOR", "CONDICIÓN", "FACTURA N°", "Cod. Prov", "TOTAL", "ESTADO"};
-    String consDetalleCompras[] = {"OPER. N°", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "CANT", "COSTO", "MONTO"};
-    static String datos[][] = {};
+    private static final String presupuestos[] = {"Cant.", "Cod.", "Descripción", "Precio", "Total"};
+    private static final String conFactura[] = {"OPERACIÓN", "RAZÓN SOCIAL", "FECHA", "HORA", "COD CLI", "MOV.CAJA", "FACTURA N°", "CONDICION", "PAGO", "TOTAL", "CODVENDE", "ESTADO"};
+    private static final String conTransferencia[] = {"ID", "OPERACIÓN", "MOV.CAJA", "FECHA HORA", "TIPO", "ORIGEN", "DESTINO", "TOTAL", "ESTADO"};
+    private static final String detalleFactura[] = {"CANT", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "PRECIO", "SUB-TOTAL"};
+    private static final String detalleTransferencia[] = {"CANT", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "PRECIO", "SUB-TOTAL"};
+    private static final String consPresupuesto[] = {"N°", "Fecha", "Razon Social", "Cód. Clie", "Desc", "Total"};
+    private static final String detallePresupuestoF[] = {"Cant.", "Código", "Descripción", "Precio", "Total"};
+    private static final String busEmpleado[] = {"Cód", "Empleado", "Observación"};
+    private static final String consNotaCredito[] = {"N°", "Fecha", "Razon Social", "Cod. Clie", "Total", "Desc", "Fac"};
+    private static final String detalleNotaCredito[] = {"Cant.", "Cód", "Descripción", "Precio", "Total"};
+    private static final String usuario[] = {"ID", "PERFIL ASIG.", "EMPLEADO", "USUARIO", "PASSWORD", "INDICADOR", "IP", "CODPERFIL", "CODVENDE"};
+    private static final String comisiones[] = {"FECHA", "FACT.", "CLIENTE", "TOTAL", "%COM.", "COMISION"};
+    private static final String consCompras[] = {"OPER. N°", "MOV.CAJ.N°", "FECHA", "HORA", "R.U.C.", "PROVEEDOR", "CONDICIÓN", "FACTURA N°", "Cod. Prov", "TOTAL", "ESTADO"};
+    private static final String consDetalleCompras[] = {"OPER. N°", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "CANT", "COSTO", "MONTO"};
+    //private static final String datos[][] = {};
+    static String datosConsCompras[][] = {};
     static String datosPE[][] = {};
-    private static DefaultTableModel modelo;
+    static String datosTimbrado[][] = {};
+    static String datosVentas[][] = {};
+    static String datosTransferencia[][] = {};
+    static String datosConsDetalleCompras[][] = {};
+    static String datosUsuario[][] = {};
+    static String datosComision[][] = {};
+    static String datosBusEmpleado[][] = {};
+    static String datosConsNotaCredito[][] = {};
+    static String datosDetalleNotasCredito[][] = {};
+    static String datosConsFacturasNotas[][] = {};
+    static String datosDetallePresupuesto[][] = {};
+    static String datosConsPresupuesto[][] = {};
+    static String datosConsFacturas[][] = {};
+    static String datosConsTransferencias[][] = {};
+    static String datosConsFacturasCreditos[][] = {};
+    static String datosConsFacturasA[][] = {};
+    static String datosDetalleFactura[][] = {};
+    static String datosDetalleTransferencia[][] = {};
+    static String datosDetalleFacturaA[][] = {};
+    static String datosPresupuesto[][] = {};
+    static String datosFactura[][] = {};
+    static String datosBuscarCliente[][] = {};
+    static String datosCategoria[][] = {};
+    static String datosBusProveedor[][] = {};
+    static String datosCompras[][] = {};
+    static String datosDetalleSalidas[][] = {};
+    static String datosConsultaSalidas[][] = {};
+    static String datosTablaArticuloAuxiliar[][] = {};
+    static String datosTablaArticuloAuxiliarCompra[][] = {};
+    static String datosTablaArticuloAuxiliarTransferencia[][] = {};
+    static String datosSalidas[][] = {};
+    static String datosMotivo[][] = {};
+    static String datosCiudad[][] = {};
+    static String datosSucursal[][] = {};
+    static String datosDetalleGasto[][] = {};
+    static String datosAjusteStock[][] = {};
+    static String datosArticulos[][] = {};
+    static String datosFamilia[][] = {};
+    static String datosLaboratorio[][] = {};
+    static String datosEmpresa[][] = {};
+    static String datosProveedor[][] = {};
+    static String datosVendedor[][] = {};
+    static String datosCliente[][] = {};
+    //private static DefaultTableModel modelo;
+    private static DefaultTableModel modeloConsCompras;
     private static DefaultTableModel modeloPE;
-    private static DefaultTableModel modeloT;
-    private static DefaultTableModel modeloVenta;
+    private static DefaultTableModel modeloTimbrado;
+    private static DefaultTableModel modeloVentas;
     private static DefaultTableModel modeloTransferencia;
+    private static DefaultTableModel modeloConsDetalleCompras;
+    private static DefaultTableModel modeloUsuario;
+    private static DefaultTableModel modeloComision;
+    private static DefaultTableModel modeloBusEmpleado;
+    private static DefaultTableModel modeloConsNotaCredito;
+    private static DefaultTableModel modeloDetalleNotasCredito;
+    private static DefaultTableModel modeloConsFacturasNotas;
+    private static DefaultTableModel modeloDetallePresupuesto;
+    private static DefaultTableModel modeloConsPresupuesto;
+    private static DefaultTableModel modeloConsFacturas;
+    private static DefaultTableModel modeloConsTransferencias;
+    private static DefaultTableModel modeloConsFacturasCreditos;
+    private static DefaultTableModel modeloConsFacturasA;
+    private static DefaultTableModel modeloDetalleFactura;
+    private static DefaultTableModel modeloDetalleTransferencia;
+    private static DefaultTableModel modeloDetalleFacturaA;
+    private static DefaultTableModel modeloPresupuesto;
+    private static DefaultTableModel modeloFactura;
+    private static DefaultTableModel modeloBuscarCliente;
+    private static DefaultTableModel modeloCategoria;
+    private static DefaultTableModel modeloBusProveedor;
+    private static DefaultTableModel modeloCompras;
+    private static DefaultTableModel modeloDetalleSalidas;
+    private static DefaultTableModel modeloConsultaSalidas;
+    private static DefaultTableModel modeloTablaArticuloAuxiliar;
+    private static DefaultTableModel modeloTablaArticuloAuxiliarCompra;
+    private static DefaultTableModel modeloTablaArticuloAuxiliarTransferencia;
+    private static DefaultTableModel modeloSalidas;
+    private static DefaultTableModel modeloMotivo;
+    private static DefaultTableModel modeloCiudad;
+    private static DefaultTableModel modeloSucursal;
+    private static DefaultTableModel modeloDetalleGasto;
+    private static DefaultTableModel modeloAjusteStock;
+    private static DefaultTableModel modeloArticulos;
+    private static DefaultTableModel modeloFamilia;
+    private static DefaultTableModel modeloLaboratorio;
+    private static DefaultTableModel modeloEmpresa;
+    private static DefaultTableModel modeloProveedor;
+    private static DefaultTableModel modeloVendedor;
+    private static DefaultTableModel modeloCliente;
+    
     private static TableColumn colum = null;
 
-    public static void limpiarTablas(JTable tabla) {
+    /*public static void limpiarTabla(JTable tabla) {
         tabla.setModel(modelo);
         int filas = tabla.getRowCount();
         for (int i = 0; i < filas; i++) {
             modelo.removeRow(0);
         }
-    }
-
-    public static void limpiarTablasPE(JTable tabla) {
+    }*/
+    public static final void limpiarTablaPE(JTable tabla) {
         tabla.setModel(modeloPE);
         int filas = tabla.getRowCount();
         for (int i = 0; i < filas; i++) {
@@ -70,23 +155,23 @@ public class CabecerasTablas {
         }
     }
 
-    public static void limpiarTablasT(JTable tabla) {
-        tabla.setModel(modeloT);
+    public static final void limpiarTablaTimbrado(JTable tabla) {
+        tabla.setModel(modeloTimbrado);
         int filas = tabla.getRowCount();
         for (int i = 0; i < filas; i++) {
-            modeloT.removeRow(0);
+            modeloTimbrado.removeRow(0);
         }
     }
 
-    public static void limpiarTablasVentas(JTable tabla) {
-        tabla.setModel(modeloVenta);
+    public static final void limpiarTablaVentas(JTable tabla) {
+        tabla.setModel(modeloVentas);
         int filas = tabla.getRowCount();
         for (int i = 0; i < filas; i++) {
-            modeloVenta.removeRow(0);
+            modeloVentas.removeRow(0);
         }
     }
-    
-    public static void limpiarTablasTransferencias(JTable tabla) {
+
+    public static final void limpiarTablaTransferencias(JTable tabla) {
         tabla.setModel(modeloTransferencia);
         int filas = tabla.getRowCount();
         for (int i = 0; i < filas; i++) {
@@ -94,9 +179,337 @@ public class CabecerasTablas {
         }
     }
 
-    public void Timbrado(JTable tabla) {
-        modeloT = new DefaultTableModel(datos, timbrado);
-        tabla.setModel(modeloT);
+    public static final void limpiarTablaConsCompras(JTable tabla) {
+        tabla.setModel(modeloConsCompras);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloConsCompras.removeRow(0);
+        }
+    }
+
+    public static final void limpiarTablaConsDetalleCompras(JTable tabla) {
+        tabla.setModel(modeloConsDetalleCompras);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloConsDetalleCompras.removeRow(0);
+        }
+    }
+
+    public static void limpiarTablaUsuario(JTable tabla) {
+        tabla.setModel(modeloUsuario);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloUsuario.removeRow(0);
+        }
+    }
+
+    public static void limpiarTablaComision(JTable tabla) {
+        tabla.setModel(modeloComision);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloComision.removeRow(0);
+        }
+    }
+
+    public static void limpiarTablaBusEmpleado(JTable tabla) {
+        tabla.setModel(modeloBusEmpleado);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloBusEmpleado.removeRow(0);
+        }
+    }
+
+    public static void limpiarTablaConsNotaCredito(JTable tabla) {
+        tabla.setModel(modeloConsNotaCredito);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloConsNotaCredito.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaDetalleNotasCredito(JTable tabla) {
+        tabla.setModel(modeloDetalleNotasCredito);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloDetalleNotasCredito.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaConsFacturasNotas(JTable tabla) {
+        tabla.setModel(modeloConsFacturasNotas);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloConsFacturasNotas.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaDetallePresupuesto(JTable tabla) {
+        tabla.setModel(modeloDetallePresupuesto);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloDetallePresupuesto.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaConsPresupuesto(JTable tabla) {
+        tabla.setModel(modeloConsPresupuesto);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloConsPresupuesto.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaConsFacturas(JTable tabla) {
+        tabla.setModel(modeloConsFacturas);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloConsFacturas.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaConsTransferencias(JTable tabla) {
+        tabla.setModel(modeloConsTransferencias);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloConsTransferencias.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaConsFacturasCreditos(JTable tabla) {
+        tabla.setModel(modeloConsFacturasCreditos);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloConsFacturasCreditos.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaConsFacturasA(JTable tabla) {
+        tabla.setModel(modeloConsFacturasA);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloConsFacturasA.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaDetalleFactura(JTable tabla) {
+        tabla.setModel(modeloDetalleFactura);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloDetalleFactura.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaDetalleTransferencia(JTable tabla) {
+        tabla.setModel(modeloDetalleTransferencia);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloDetalleTransferencia.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaDetalleFacturaA(JTable tabla) {
+        tabla.setModel(modeloDetalleFacturaA);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloDetalleFacturaA.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaPresupuesto(JTable tabla) {
+        tabla.setModel(modeloPresupuesto);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloPresupuesto.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaFactura(JTable tabla) {
+        tabla.setModel(modeloFactura);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloFactura.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaBuscarCliente(JTable tabla) {
+        tabla.setModel(modeloBuscarCliente);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloBuscarCliente.removeRow(0);
+        }
+    }
+
+    public static void limpiarTablaCategoria(JTable tabla) {
+        tabla.setModel(modeloCategoria);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloCategoria.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaBusProveedor(JTable tabla) {
+        tabla.setModel(modeloBusProveedor);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloBusProveedor.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaCompras(JTable tabla) {
+        tabla.setModel(modeloCompras);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloCompras.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaDetalleSalidas(JTable tabla) {
+        tabla.setModel(modeloDetalleSalidas);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloDetalleSalidas.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaConsultaSalidas(JTable tabla) {
+        tabla.setModel(modeloConsultaSalidas);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloConsultaSalidas.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaTablaArticuloAuxiliar(JTable tabla) {
+        tabla.setModel(modeloTablaArticuloAuxiliar);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloTablaArticuloAuxiliar.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaTablaArticuloAuxiliarCompra(JTable tabla) {
+        tabla.setModel(modeloTablaArticuloAuxiliarCompra);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloTablaArticuloAuxiliarCompra.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaTablaArticuloAuxiliarTransferencia(JTable tabla) {
+        tabla.setModel(modeloTablaArticuloAuxiliarTransferencia);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloTablaArticuloAuxiliarTransferencia.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaSalidas(JTable tabla) {
+        tabla.setModel(modeloSalidas);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloSalidas.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaMotivo(JTable tabla) {
+        tabla.setModel(modeloMotivo);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloMotivo.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaCiudad(JTable tabla) {
+        tabla.setModel(modeloCiudad);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloCiudad.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaSucursal(JTable tabla) {
+        tabla.setModel(modeloSucursal);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloSucursal.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaDetalleGasto(JTable tabla) {
+        tabla.setModel(modeloDetalleGasto);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloDetalleGasto.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaAjusteStock(JTable tabla) {
+        tabla.setModel(modeloAjusteStock);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloAjusteStock.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaArticulos(JTable tabla) {
+        tabla.setModel(modeloArticulos);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloArticulos.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaFamilia(JTable tabla) {
+        tabla.setModel(modeloFamilia);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloFamilia.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaLaboratorio(JTable tabla) {
+        tabla.setModel(modeloLaboratorio);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloLaboratorio.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaEmpresa(JTable tabla) {
+        tabla.setModel(modeloEmpresa);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloEmpresa.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaProveedor(JTable tabla) {
+        tabla.setModel(modeloProveedor);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloProveedor.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaVendedor(JTable tabla) {
+        tabla.setModel(modeloVendedor);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloVendedor.removeRow(0);
+        }
+    }
+    
+    public static void limpiarTablaCliente(JTable tabla) {
+        tabla.setModel(modeloCliente);
+        int filas = tabla.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            modeloCliente.removeRow(0);
+        }
+    }
+    
+    public final static void Timbrado(JTable tabla) {
+        modeloTimbrado = new DefaultTableModel(datosTimbrado, timbrado);
+        tabla.setModel(modeloTimbrado);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(50);
         colum = tabla.getColumnModel().getColumn(1);
@@ -109,7 +522,7 @@ public class CabecerasTablas {
         colum.setPreferredWidth(80);
     }
 
-    public void PuntoEmision(JTable tabla) {
+    public static final void PuntoEmision(JTable tabla) {
         modeloPE = new DefaultTableModel(datosPE, puntoEmision);
         tabla.setModel(modeloPE);
         colum = tabla.getColumnModel().getColumn(0);
@@ -152,9 +565,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(200);
     }
 
-    public void consCompras(JTable tabla) {
-        modelo = new DefaultTableModel(datos, consCompras);
-        tabla.setModel(modelo);
+    public static final void consCompras(JTable tabla) {
+        modeloConsCompras = new DefaultTableModel(datosConsCompras, consCompras);
+        tabla.setModel(modeloConsCompras);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -189,9 +602,9 @@ public class CabecerasTablas {
 
     }
 
-    public void consDetalleCompras(JTable tabla) {
-        modelo = new DefaultTableModel(datos, consDetalleCompras);
-        tabla.setModel(modelo);
+    public static final void consDetalleCompras(JTable tabla) {
+        modeloConsDetalleCompras = new DefaultTableModel(datosConsDetalleCompras, consDetalleCompras);
+        tabla.setModel(modeloConsDetalleCompras);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -211,9 +624,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(70);
     }
 
-    public void usuario(JTable tabla) {
-        modelo = new DefaultTableModel(datos, usuario);
-        tabla.setModel(modelo);
+    public static final void usuario(JTable tabla) {
+        modeloUsuario = new DefaultTableModel(datosUsuario, usuario);
+        tabla.setModel(modeloUsuario);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(60);
         colum = tabla.getColumnModel().getColumn(1);
@@ -244,9 +657,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
     }
 
-    public void comision(JTable tabla) {
-        modelo = new DefaultTableModel(datos, comisiones);
-        tabla.setModel(modelo);
+    public static final void comision(JTable tabla) {
+        modeloComision = new DefaultTableModel(datosComision, comisiones);
+        tabla.setModel(modeloComision);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(60);
         colum = tabla.getColumnModel().getColumn(1);
@@ -261,9 +674,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(80);
     }
 
-    public void busEmpleado(JTable tabla) {
-        modelo = new DefaultTableModel(datos, busEmpleado);
-        tabla.setModel(modelo);
+    public static final void busEmpleado(JTable tabla) {
+        modeloBusEmpleado = new DefaultTableModel(datosBusEmpleado, busEmpleado);
+        tabla.setModel(modeloBusEmpleado);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(50);
         colum = tabla.getColumnModel().getColumn(1);
@@ -272,9 +685,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(200);
     }
 
-    public void consNotaCredito(JTable tabla) {
-        modelo = new DefaultTableModel(datos, consNotaCredito);
-        tabla.setModel(modelo);
+    public static final void consNotaCredito(JTable tabla) {
+        modeloConsNotaCredito = new DefaultTableModel(datosConsNotaCredito, consNotaCredito);
+        tabla.setModel(modeloConsNotaCredito);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -297,9 +710,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
     }
 
-    public void detalleNotasCredito(JTable tabla) {
-        modelo = new DefaultTableModel(datos, detalleNotaCredito);
-        tabla.setModel(modelo);
+    public static final void detalleNotasCredito(JTable tabla) {
+        modeloDetalleNotasCredito = new DefaultTableModel(datosDetalleNotasCredito, detalleNotaCredito);
+        tabla.setModel(modeloDetalleNotasCredito);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -312,9 +725,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(70);
     }
 
-    public void consFacturasNotas(JTable tabla) {
-        modelo = new DefaultTableModel(datos, conFactura);
-        tabla.setModel(modelo);
+    public static final void consFacturasNotas(JTable tabla) {
+        modeloConsFacturasNotas = new DefaultTableModel(datosConsFacturasNotas, conFactura);
+        tabla.setModel(modeloConsFacturasNotas);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -340,9 +753,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
     }
 
-    public void detallePresupuesto(JTable tabla) {
-        modelo = new DefaultTableModel(datos, detallePresupuestoF);
-        tabla.setModel(modelo);
+    public static final void detallePresupuesto(JTable tabla) {
+        modeloDetallePresupuesto = new DefaultTableModel(datosDetallePresupuesto, detallePresupuestoF);
+        tabla.setModel(modeloDetallePresupuesto);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -355,9 +768,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(70);
     }
 
-    public void consPresupuesto(JTable tabla) {
-        modelo = new DefaultTableModel(datos, consPresupuesto);
-        tabla.setModel(modelo);
+    public static final void consPresupuesto(JTable tabla) {
+        modeloConsPresupuesto = new DefaultTableModel(datosConsPresupuesto, consPresupuesto);
+        tabla.setModel(modeloConsPresupuesto);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -373,9 +786,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
     }
 
-    public void consFacturas(JTable tabla) {
-        modelo = new DefaultTableModel(datos, conFactura);
-        tabla.setModel(modelo);
+    public static final void consFacturas(JTable tabla) {
+        modeloConsFacturas = new DefaultTableModel(datosConsFacturas, conFactura);
+        tabla.setModel(modeloConsFacturas);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(80);
         colum = tabla.getColumnModel().getColumn(1);
@@ -420,10 +833,10 @@ public class CabecerasTablas {
         colum.setMinWidth(0);
         colum.setPreferredWidth(0);
     }
-    
-    public void consTransferencias(JTable tabla) {
-        modelo = new DefaultTableModel(datos, conTransferencia);
-        tabla.setModel(modelo);
+
+    public static final void consTransferencias(JTable tabla) {
+        modeloConsTransferencias = new DefaultTableModel(datosConsTransferencias, conTransferencia);
+        tabla.setModel(modeloConsTransferencias);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(80);
         colum.setMaxWidth(0);
@@ -447,9 +860,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(170);
     }
 
-    public void consFacturasCreditos(JTable tabla) {
-        modelo = new DefaultTableModel(datos, conFactura);
-        tabla.setModel(modelo);
+    public static final void consFacturasCreditos(JTable tabla) {
+        modeloConsFacturasCreditos = new DefaultTableModel(datosConsFacturasCreditos, conFactura);
+        tabla.setModel(modeloConsFacturasCreditos);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(80);
         colum = tabla.getColumnModel().getColumn(1);
@@ -485,9 +898,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(70);
     }
 
-    public void consFacturasA(JTable tabla) {
-        modelo = new DefaultTableModel(datos, conFactura);
-        tabla.setModel(modelo);
+    public static final void consFacturasA(JTable tabla) {
+        modeloConsFacturasA = new DefaultTableModel(datosConsFacturasA, conFactura);
+        tabla.setModel(modeloConsFacturasA);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -510,29 +923,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
     }
 
-    public void detalleFactura(JTable tabla) {
-        modelo = new DefaultTableModel(datos, detalleFactura);
-        tabla.setModel(modelo);
-        colum = tabla.getColumnModel().getColumn(0);
-        colum.setPreferredWidth(70);
-        colum = tabla.getColumnModel().getColumn(1);
-        colum.setPreferredWidth(70);
-        colum.setMaxWidth(0);
-        colum.setMinWidth(0);
-        colum.setPreferredWidth(0);
-        colum = tabla.getColumnModel().getColumn(2);
-        colum.setPreferredWidth(120);
-        colum = tabla.getColumnModel().getColumn(3);
-        colum.setPreferredWidth(480);
-        colum = tabla.getColumnModel().getColumn(4);
-        colum.setPreferredWidth(70);
-        colum = tabla.getColumnModel().getColumn(5);
-        colum.setPreferredWidth(70);
-    }
-    
-    public void detalleTransferencia(JTable tabla) {
-        modelo = new DefaultTableModel(datos, detalleTransferencia);
-        tabla.setModel(modelo);
+    public static final void detalleFactura(JTable tabla) {
+        modeloDetalleFactura = new DefaultTableModel(datosDetalleFactura, detalleFactura);
+        tabla.setModel(modeloDetalleFactura);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -550,9 +943,29 @@ public class CabecerasTablas {
         colum.setPreferredWidth(70);
     }
 
-    public void detalleFacturaA(JTable tabla) {
-        modelo = new DefaultTableModel(datos, detalleFactura);
-        tabla.setModel(modelo);
+    public static final void detalleTransferencia(JTable tabla) {
+        modeloDetalleTransferencia = new DefaultTableModel(datosDetalleTransferencia, detalleTransferencia);
+        tabla.setModel(modeloDetalleTransferencia);
+        colum = tabla.getColumnModel().getColumn(0);
+        colum.setPreferredWidth(70);
+        colum = tabla.getColumnModel().getColumn(1);
+        colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(2);
+        colum.setPreferredWidth(120);
+        colum = tabla.getColumnModel().getColumn(3);
+        colum.setPreferredWidth(480);
+        colum = tabla.getColumnModel().getColumn(4);
+        colum.setPreferredWidth(70);
+        colum = tabla.getColumnModel().getColumn(5);
+        colum.setPreferredWidth(70);
+    }
+
+    public static final void detalleFacturaA(JTable tabla) {
+        modeloDetalleFacturaA = new DefaultTableModel(datosDetalleFacturaA, detalleFactura);
+        tabla.setModel(modeloDetalleFacturaA);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -567,9 +980,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(70);
     }
 
-    public void presupuesto(JTable tabla) {
-        modelo = new DefaultTableModel(datos, presupuestos);
-        tabla.setModel(modelo);
+    public static final void presupuesto(JTable tabla) {
+        modeloPresupuesto = new DefaultTableModel(datosPresupuesto, presupuestos);
+        tabla.setModel(modeloPresupuesto);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -582,9 +995,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(70);
     }
 
-    public void factura(JTable tabla) {
-        modelo = new DefaultTableModel(datos, facturas);
-        tabla.setModel(modelo);
+    public static final void factura(JTable tabla) {
+        modeloFactura = new DefaultTableModel(datosFactura, facturas);
+        tabla.setModel(modeloFactura);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(80);
         colum = tabla.getColumnModel().getColumn(1);
@@ -599,9 +1012,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(80);
     }
 
-    public void buscarCliente(JTable tabla) {
-        modelo = new DefaultTableModel(datos, clientes);
-        tabla.setModel(modelo);
+    public static final void buscarCliente(JTable tabla) {
+        modeloBuscarCliente = new DefaultTableModel(datosBuscarCliente, clientes);
+        tabla.setModel(modeloBuscarCliente);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -655,18 +1068,18 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
     }
 
-    public void categoria(JTable tabla) {
-        modelo = new DefaultTableModel(datos, categoria);
-        tabla.setModel(modelo);
+    public static final void categoria(JTable tabla) {
+        modeloCategoria = new DefaultTableModel(datosCategoria, categoria);
+        tabla.setModel(modeloCategoria);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(50);
         colum = tabla.getColumnModel().getColumn(1);
         colum.setPreferredWidth(150);
     }
 
-    public void busProveedor(JTable tabla) {
-        modelo = new DefaultTableModel(datos, provedores);
-        tabla.setModel(modelo);
+    public static final void busProveedor(JTable tabla) {
+        modeloBusProveedor = new DefaultTableModel(datosBusProveedor, provedores);
+        tabla.setModel(modeloBusProveedor);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(60);
         colum = tabla.getColumnModel().getColumn(1);
@@ -701,8 +1114,8 @@ public class CabecerasTablas {
     }
 
     public static final void ventas(JTable tabla) {
-        modeloVenta = new DefaultTableModel(datos, facturas);
-        tabla.setModel(modeloVenta);
+        modeloVentas = new DefaultTableModel(datosVentas, facturas);
+        tabla.setModel(modeloVentas);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(60);
         colum.setMaxWidth(0);
@@ -768,7 +1181,7 @@ public class CabecerasTablas {
     }
 
     public static final void Transferencias(JTable tabla) {
-        modeloTransferencia = new DefaultTableModel(datos, transferencias);
+        modeloTransferencia = new DefaultTableModel(datosTransferencia, transferencias);
         tabla.setModel(modeloTransferencia);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(60);
@@ -810,9 +1223,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
     }
 
-    public void compras(JTable tabla) {
-        modelo = new DefaultTableModel(datos, compras);
-        tabla.setModel(modelo);
+    public static final void compras(JTable tabla) {
+        modeloCompras = new DefaultTableModel(datosCompras, compras);
+        tabla.setModel(modeloCompras);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(60);
         colum.setMaxWidth(0);
@@ -926,9 +1339,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(70);    */
     }
 
-    public void detalleSalidas(JTable tabla) {
-        modelo = new DefaultTableModel(datos, detalleSalida);
-        tabla.setModel(modelo);
+    public static final void detalleSalidas(JTable tabla) {
+        modeloDetalleSalidas = new DefaultTableModel(datosDetalleSalidas, detalleSalida);
+        tabla.setModel(modeloDetalleSalidas);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(80);
         colum.setMaxWidth(0);
@@ -949,9 +1362,9 @@ public class CabecerasTablas {
 
     }
 
-    public void consultaSalidas(JTable tabla) {
-        modelo = new DefaultTableModel(datos, conSalidas);
-        tabla.setModel(modelo);
+    public static final void consultaSalidas(JTable tabla) {
+        modeloConsultaSalidas = new DefaultTableModel(datosConsultaSalidas, conSalidas);
+        tabla.setModel(modeloConsultaSalidas);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(1);
@@ -971,8 +1384,8 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
     }
 
-    public void tablaArticuloAuxiliar(JTable tabla) {
-        modelo = new DefaultTableModel(datos, articulos){
+    public static final void tablaArticuloAuxiliar(JTable tabla) {
+        modeloTablaArticuloAuxiliar = new DefaultTableModel(datosTablaArticuloAuxiliar, articulos) {
             boolean[] canEdit = new boolean[]{
                 false, false, false, false, false, false, false, false, false, false,
                 false, false, false, false, false, false, false, false, false, false
@@ -982,7 +1395,7 @@ public class CabecerasTablas {
                 return canEdit[columnIndex];
             }
         };
-        tabla.setModel(modelo);
+        tabla.setModel(modeloTablaArticuloAuxiliar);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1072,9 +1485,9 @@ public class CabecerasTablas {
         colum.setMinWidth(0);
         colum.setPreferredWidth(0);
     }
-    
-    public void tablaArticuloAuxiliarCompra(JTable tabla) {
-        modelo = new DefaultTableModel(datos, articulos){
+
+    public static final void tablaArticuloAuxiliarCompra(JTable tabla) {
+        modeloTablaArticuloAuxiliarCompra = new DefaultTableModel(datosTablaArticuloAuxiliarCompra, articulos) {
             boolean[] canEdit = new boolean[]{
                 false, false, false, false, false, false, false, false, false, false,
                 false, false, false, false, false, false, false, false, false, false
@@ -1084,7 +1497,7 @@ public class CabecerasTablas {
                 return canEdit[columnIndex];
             }
         };
-        tabla.setModel(modelo);
+        tabla.setModel(modeloTablaArticuloAuxiliarCompra);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1171,9 +1584,9 @@ public class CabecerasTablas {
         colum.setMinWidth(0);
         colum.setPreferredWidth(0);
     }
-    
-    public void tablaArticuloAuxiliarTransferencia(JTable tabla) {
-        modelo = new DefaultTableModel(datos, articulos){
+
+    public static final void tablaArticuloAuxiliarTransferencia(JTable tabla) {
+        modeloTablaArticuloAuxiliarTransferencia = new DefaultTableModel(datosTablaArticuloAuxiliarTransferencia, articulos) {
             boolean[] canEdit = new boolean[]{
                 false, false, false, false, false, false, false, false, false, false,
                 false, false, false, false, false, false, false, false, false, false
@@ -1183,7 +1596,7 @@ public class CabecerasTablas {
                 return canEdit[columnIndex];
             }
         };
-        tabla.setModel(modelo);
+        tabla.setModel(modeloTablaArticuloAuxiliarTransferencia);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1271,9 +1684,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
     }
 
-    public void salidas(JTable tabla) {
-        modelo = new DefaultTableModel(datos, salidas);
-        tabla.setModel(modelo);
+    public static final void salidas(JTable tabla) {
+        modeloSalidas = new DefaultTableModel(datosSalidas, salidas);
+        tabla.setModel(modeloSalidas);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(80);
         colum.setMaxWidth(0);
@@ -1296,27 +1709,27 @@ public class CabecerasTablas {
         colum.setPreferredWidth(60);
     }
 
-    public void motivo(JTable tabla) {
-        modelo = new DefaultTableModel(datos, motivo);
-        tabla.setModel(modelo);
+    public static final void motivo(JTable tabla) {
+        modeloMotivo = new DefaultTableModel(datosMotivo, motivo);
+        tabla.setModel(modeloMotivo);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(65);
         colum = tabla.getColumnModel().getColumn(1);
         colum.setPreferredWidth(390);
     }
 
-    public void ciudad(JTable tabla) {
-        modelo = new DefaultTableModel(datos, ciudad);
-        tabla.setModel(modelo);
+    public static final void ciudad(JTable tabla) {
+        modeloCiudad = new DefaultTableModel(datosCiudad, ciudad);
+        tabla.setModel(modeloCiudad);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(65);
         colum = tabla.getColumnModel().getColumn(1);
         colum.setPreferredWidth(390);
     }
 
-    public void sucursal(JTable tabla) {
-        modelo = new DefaultTableModel(datos, sucursal);
-        tabla.setModel(modelo);
+    public static final void sucursal(JTable tabla) {
+        modeloSucursal = new DefaultTableModel(datosSucursal, sucursal);
+        tabla.setModel(modeloSucursal);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(60);
         colum = tabla.getColumnModel().getColumn(1);
@@ -1347,18 +1760,18 @@ public class CabecerasTablas {
         colum = tabla.getColumnModel().getColumn(1);
         colum.setPreferredWidth(150);
     }*/
-    public void detalleGasto(JTable tabla) {
-        modelo = new DefaultTableModel(datos, detalleGasto);
-        tabla.setModel(modelo);
+    public static final void detalleGasto(JTable tabla) {
+        modeloDetalleGasto = new DefaultTableModel(datosDetalleGasto, detalleGasto);
+        tabla.setModel(modeloDetalleGasto);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(80);
         colum = tabla.getColumnModel().getColumn(1);
         colum.setPreferredWidth(380);
     }
 
-    public void ajusteStock(JTable tabla) {
-        modelo = new DefaultTableModel(datos, articulos);
-        tabla.setModel(modelo);
+    public static final void ajusteStock(JTable tabla) {
+        modeloAjusteStock = new DefaultTableModel(datosAjusteStock, articulos);
+        tabla.setModel(modeloAjusteStock);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1446,9 +1859,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
     }
 
-    public void Articulos(JTable tabla) {
-        modelo = new DefaultTableModel(datos, articulos);
-        tabla.setModel(modelo);
+    public static final void Articulos(JTable tabla) {
+        modeloArticulos = new DefaultTableModel(datosArticulos, articulos);
+        tabla.setModel(modeloArticulos);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1515,9 +1928,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(30);
     }
 
-    public void familia(JTable tabla) {
-        modelo = new DefaultTableModel(datos, familia);
-        tabla.setModel(modelo);
+    public static final void familia(JTable tabla) {
+        modeloFamilia = new DefaultTableModel(datosFamilia, familia);
+        tabla.setModel(modeloFamilia);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(65);
         colum = tabla.getColumnModel().getColumn(1);
@@ -1528,18 +1941,18 @@ public class CabecerasTablas {
         colum.setPreferredWidth(80);
     }
 
-    public void laboratorio(JTable tabla) {
-        modelo = new DefaultTableModel(datos, laboratorio);
-        tabla.setModel(modelo);
+    public static final void laboratorio(JTable tabla) {
+        modeloLaboratorio = new DefaultTableModel(datosLaboratorio, laboratorio);
+        tabla.setModel(modeloLaboratorio);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(80);
         colum = tabla.getColumnModel().getColumn(1);
         colum.setPreferredWidth(350);
     }
 
-    public void empresa(JTable tabla) {
-        modelo = new DefaultTableModel(datos, empresa);
-        tabla.setModel(modelo);
+    public static final void empresa(JTable tabla) {
+        modeloEmpresa = new DefaultTableModel(datosEmpresa, empresa);
+        tabla.setModel(modeloEmpresa);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(60);
         colum.setMaxWidth(0);
@@ -1561,9 +1974,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(60);
     }
 
-    public void proveedor(JTable tabla) {
-        modelo = new DefaultTableModel(datos, provedores);
-        tabla.setModel(modelo);
+    public static final void proveedor(JTable tabla) {
+        modeloProveedor = new DefaultTableModel(datosProveedor, provedores);
+        tabla.setModel(modeloProveedor);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1590,8 +2003,8 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
     }
 
-    public void vendedor(JTable tabla) {
-        modelo = new DefaultTableModel(datos, vendedores) {
+    public static final void vendedor(JTable tabla) {
+        modeloVendedor = new DefaultTableModel(datosVendedor, vendedores) {
             boolean[] canEdit = new boolean[]{
                 false, false, false, false, false, false, false, false, false
             };
@@ -1600,7 +2013,7 @@ public class CabecerasTablas {
                 return canEdit[columnIndex];
             }
         };
-        tabla.setModel(modelo);
+        tabla.setModel(modeloVendedor);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(60);
         colum.setMaxWidth(0);
@@ -1631,8 +2044,8 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);*/
     }
 
-    public void cliente(JTable tabla) {
-        modelo = new DefaultTableModel(datos, clientes) {
+    public static final void cliente(JTable tabla) {
+        modeloCliente = new DefaultTableModel(datosCliente, clientes) {
             boolean[] canEdit = new boolean[]{
                 false, true, false, false, false, false, false, false, false, false, false, false
             };
@@ -1642,7 +2055,7 @@ public class CabecerasTablas {
                 return canEdit[columnIndex];
             }
         };
-        tabla.setModel(modelo);
+        tabla.setModel(modeloCliente);
         colum = tabla.getColumnModel().getColumn(0);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);

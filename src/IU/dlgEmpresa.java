@@ -1,7 +1,7 @@
 package IU;
 
-import Componentes.DataSourceService;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.Software;
 import Controladores.CabecerasTablas;
 import Controladores.controlEmpresa;
@@ -12,17 +12,14 @@ import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 public final class dlgEmpresa extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
     private String visual = null;
-    static DataSourceService dss = new DataSourceService();
     private int ban;
 
     public dlgEmpresa(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.empresa(tbEmpresa);
+        CabecerasTablas.empresa(tbEmpresa);
         controlEmpresa.lisEmpresa(tbEmpresa);
         tbEmpresa.getTableHeader().setReorderingAllowed(false);
         Visual();
@@ -111,13 +108,6 @@ public final class dlgEmpresa extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbEmpresa = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
@@ -701,14 +691,19 @@ public final class dlgEmpresa extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        try {
-            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION) {
-                controlEmpresa.delEmpresa();
-                Cancelar();
+        if(tbEmpresa.getSelectedRow() < 0 ){
+            Notif.NotifyFail("Notificación del sistema", "No es posible procesar la eliminación\r\nSeleccione en la tabla la Empresa que desea eliminar.");
+        }else{
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
+                    controlEmpresa.delEmpresa();
+                    Cancelar();
+                }
+            } catch (HeadlessException ee) {
             }
-        } catch (HeadlessException ee) {
         }
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtNFantasiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNFantasiaActionPerformed
@@ -774,7 +769,7 @@ public final class dlgEmpresa extends javax.swing.JDialog {
         txtDireccion.setText("");
         txtTelefono.setText("");
         txtCelular.setText("");
-        CabecerasTablas.limpiarTablas(tbEmpresa);
+        CabecerasTablas.limpiarTablaEmpresa(tbEmpresa);
         controlEmpresa.lisEmpresa(tbEmpresa);
     }
 
@@ -871,7 +866,13 @@ public final class dlgEmpresa extends javax.swing.JDialog {
     public static javax.swing.JLabel lbvisual;
     public static javax.swing.JRadioButton rbNo;
     public static javax.swing.JRadioButton rbSi;
-    private javax.swing.JTable tbEmpresa;
+    private static final javax.swing.JTable tbEmpresa = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCelular;
     public static javax.swing.JTextField txtCod;
     public static javax.swing.JTextField txtDireccion;

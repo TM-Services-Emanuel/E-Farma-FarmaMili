@@ -11,29 +11,27 @@ import java.awt.event.KeyEvent;
 
 public class dlgBuscarCliente extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
-
     public dlgBuscarCliente(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png")));
         titulo();
-        cabe.buscarCliente(tbDetalle);
-        CabecerasTablas.limpiarTablas(tbDetalle);
+        CabecerasTablas.buscarCliente(tbDetalle);
+        CabecerasTablas.limpiarTablaBuscarCliente(tbDetalle);
         controlCliente.listClientes(tbDetalle, "clientes.cli_codigo");
         Renders();
         txtBuscar.requestFocus();
     }
-    
+
     public static void Renders() {
         dlgBuscarCliente.tbDetalle.getColumnModel().getColumn(8).setCellRenderer(new RenderDecimalVenta());
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Buscar cliente");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Buscar cliente");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Buscar cliente");
         }
     }
 
@@ -44,13 +42,6 @@ public class dlgBuscarCliente extends javax.swing.JDialog {
         grupoBotones = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jPanel2 = new javax.swing.JPanel();
         txtBuscar = new rojeru_san.rsfield.RSTextMaterial();
         btn = new RSMaterialComponent.RSButtonIconUno();
@@ -152,7 +143,7 @@ public class dlgBuscarCliente extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             controlFactura.selectCliente();
             this.dispose();
-        }else if(evt.getKeyCode()== KeyEvent.VK_ESCAPE){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             txtBuscar.requestFocus();
             txtBuscar.selectAll();
         }
@@ -163,11 +154,14 @@ public class dlgBuscarCliente extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
                 String cod = txtBuscar.getText();
-                CabecerasTablas.limpiarTablas(tbDetalle);
-                controlCliente.listClientes(tbDetalle, "clientes.cli_codigo");
-                CabecerasTablas.limpiarTablas(tbDetalle);
-                controlCliente.filtRuc(tbDetalle, cod);
-                controlCliente.filtClientes(tbDetalle, cod);
+                if (cod.length() == 0) {
+                    CabecerasTablas.limpiarTablaBuscarCliente(tbDetalle);
+                    controlCliente.listClientes(tbDetalle, "clientes.cli_codigo");
+                } else {
+                    //controlCliente.filtRuc(tbDetalle, cod);
+                    controlCliente.filtClientes(tbDetalle, cod);
+                }
+
             } catch (Exception e) {
                 System.out.println("Caracter Invalido " + e.getMessage());
             }
@@ -176,11 +170,10 @@ public class dlgBuscarCliente extends javax.swing.JDialog {
                 txtBuscar.selectAll();
             } else {
                 tbDetalle.requestFocus();
-                // tbDetalle.changeSelection(0, 0, false, false);
                 tbDetalle.getSelectionModel().setSelectionInterval(0, 0);
             }
 
-        }else if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.dispose();
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
@@ -189,11 +182,13 @@ public class dlgBuscarCliente extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             String cod = txtBuscar.getText();
-            CabecerasTablas.limpiarTablas(tbDetalle);
-            controlCliente.listClientes(tbDetalle, "clientes.cli_codigo");
-            CabecerasTablas.limpiarTablas(tbDetalle);
-            controlCliente.filtRuc(tbDetalle, cod);
-            controlCliente.filtClientes(tbDetalle, cod);
+            if (cod.length() == 0) {
+                CabecerasTablas.limpiarTablaBuscarCliente(tbDetalle);
+                controlCliente.listClientes(tbDetalle, "clientes.cli_codigo");
+            } else {
+                //controlCliente.filtRuc(tbDetalle, cod);
+                controlCliente.filtClientes(tbDetalle, cod);
+            }
             Renders();
         } catch (Exception e) {
             System.out.println("Caracter Invalido " + e.getMessage());
@@ -241,9 +236,8 @@ public class dlgBuscarCliente extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(dlgBuscarCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        //</editor-fold>
 
+        //</editor-fold>
         java.awt.EventQueue.invokeLater(() -> {
             dlgBuscarCliente dialog = new dlgBuscarCliente(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -261,7 +255,13 @@ public class dlgBuscarCliente extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tbDetalle;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static rojeru_san.rsfield.RSTextMaterial txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

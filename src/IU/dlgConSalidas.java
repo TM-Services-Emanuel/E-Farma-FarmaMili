@@ -9,43 +9,42 @@ import javax.swing.JOptionPane;
 
 public class dlgConSalidas extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
-
     public dlgConSalidas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.consultaSalidas(tbSalida);
+        CabecerasTablas.consultaSalidas(tbSalida);
         Renders();
-        cabe.detalleSalidas(tbDetalleSalida);
+        CabecerasTablas.detalleSalidas(tbDetalleSalida);
+        Renders();
         controlSalida.listSalidas(tbSalida);
         HabilitarEliminar();
         //btnEliminar.setVisible(false);
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Controlar salidas aplicadas a artículos");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Controlar salidas aplicadas a artículos");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Controlar salidas aplicadas a artículos");
         }
     }
-    
+
     public static void Renders() {
         dlgConSalidas.tbSalida.getColumnModel().getColumn(4).setCellRenderer(new RenderDecimal1());
-       // dlgArticulos.tbProductos.getColumnModel().getColumn(6).setCellRenderer(new RenderDecimal1());
+        // dlgArticulos.tbProductos.getColumnModel().getColumn(6).setCellRenderer(new RenderDecimal1());
     }
-    
+
     public static void RendersD() {
         dlgConSalidas.tbDetalleSalida.getColumnModel().getColumn(5).setCellRenderer(new RenderDecimal1());
         dlgConSalidas.tbDetalleSalida.getColumnModel().getColumn(6).setCellRenderer(new RenderDecimal1());
     }
-    
-    public final void HabilitarEliminar(){
-        if(tbSalida.getSelectedRow()<0){
+
+    public final void HabilitarEliminar() {
+        if (tbSalida.getSelectedRow() < 0) {
             btnEliminar.setEnabled(false);
             itemEliminar.setEnabled(false);
-        }else{
+        } else {
             btnEliminar.setEnabled(true);
             itemEliminar.setEnabled(true);
         }
@@ -57,22 +56,8 @@ public class dlgConSalidas extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbSalida = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbDetalleSalida = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnEliminar = new javax.swing.JButton();
@@ -270,10 +255,10 @@ public class dlgConSalidas extends javax.swing.JDialog {
 
     private void tbSalidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbSalidaMouseClicked
         // TODO add your handling code here:
-        
+
         try {
             HabilitarEliminar();
-            CabecerasTablas.limpiarTablas(tbDetalleSalida);
+            CabecerasTablas.limpiarTablaDetalleSalidas(tbDetalleSalida);
             controlSalida.listDetalle(tbDetalleSalida);
             RendersD();
         } catch (Exception e) {
@@ -287,7 +272,7 @@ public class dlgConSalidas extends javax.swing.JDialog {
         if (rpta == 0) {
             this.dispose();
         }
-        
+
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -300,9 +285,11 @@ public class dlgConSalidas extends javax.swing.JDialog {
             if (resp == JOptionPane.YES_OPTION) {
                 msg = controlSalida.actSalida();
                 if (msg == null) {
-                    cabe.consultaSalidas(tbSalida);
+                    //CabecerasTablas.consultaSalidas(tbSalida);
+                    CabecerasTablas.limpiarTablaConsultaSalidas(tbSalida);
                     tbSalida.clearSelection();
-                    cabe.detalleSalidas(tbDetalleSalida);
+                    CabecerasTablas.limpiarTablaDetalleSalidas(tbDetalleSalida);
+                    //CabecerasTablas.detalleSalidas(tbDetalleSalida);
                     tbDetalleSalida.clearSelection();
                     controlSalida.listSalidas(tbSalida);
                     Renders();
@@ -319,12 +306,12 @@ public class dlgConSalidas extends javax.swing.JDialog {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_formWindowActivated
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_formWindowOpened
 
     private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
@@ -387,7 +374,19 @@ public class dlgConSalidas extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    public static javax.swing.JTable tbDetalleSalida;
-    public static javax.swing.JTable tbSalida;
+    public static final javax.swing.JTable tbDetalleSalida = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
+    public static final javax.swing.JTable tbSalida = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     // End of variables declaration//GEN-END:variables
 }

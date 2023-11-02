@@ -9,23 +9,21 @@ import java.awt.event.KeyEvent;
 
 public class dlgBuscarProveedor extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
-
     public dlgBuscarProveedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.busProveedor(tbDetalle);
+        CabecerasTablas.busProveedor(tbDetalle);
         controlProveedor.listProveedor(tbDetalle, "proveedor.pro_codigo");
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png")));
         txtBuscar.requestFocus();
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Buscar proveedor");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Buscar proveedor");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Buscar proveedor");
         }
     }
 
@@ -38,13 +36,6 @@ public class dlgBuscarProveedor extends javax.swing.JDialog {
         jPanel3 = new javax.swing.JPanel();
         txtBuscar = new rojeru_san.rsfield.RSTextMaterial();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -116,16 +107,14 @@ public class dlgBuscarProveedor extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 690, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -172,15 +161,17 @@ public class dlgBuscarProveedor extends javax.swing.JDialog {
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         // TODO add your handling code here:
-         try {
+        try {
             String cod = txtBuscar.getText();
-            cabe.busProveedor(tbDetalle);
-            controlProveedor.listProveedor(tbDetalle, "proveedor.pro_codigo");
-            CabecerasTablas.limpiarTablas(tbDetalle);
-            controlProveedor.filRuc(tbDetalle, cod);
-            controlProveedor.filProveedor(tbDetalle, cod);
-            controlProveedor.filID(tbDetalle, cod);
-            
+            if (cod.length() == 0) {
+                CabecerasTablas.limpiarTablaBusProveedor(tbDetalle);
+                controlProveedor.listProveedor(tbDetalle, "proveedor.pro_codigo");
+            } else {
+                CabecerasTablas.limpiarTablaBusProveedor(tbDetalle);
+                //controlProveedor.filRuc(tbDetalle, cod);
+                controlProveedor.filProveedor(tbDetalle, cod);
+                //controlProveedor.filID(tbDetalle, cod);
+            }
         } catch (Exception e) {
             System.out.println("Caracter Invalido " + e.getMessage());
         }
@@ -231,13 +222,12 @@ public class dlgBuscarProveedor extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(dlgBuscarProveedor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        //</editor-fold>
 
+        //</editor-fold>
         java.awt.EventQueue.invokeLater(() -> {
             dlgBuscarProveedor dialog = new dlgBuscarProveedor(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                
+
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     System.exit(0);
@@ -251,7 +241,13 @@ public class dlgBuscarProveedor extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tbDetalle;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static rojeru_san.rsfield.RSTextMaterial txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

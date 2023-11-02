@@ -5,6 +5,7 @@ import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.ReporteF;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.Operacion;
 import Componentes.PrinterService;
 import Componentes.RenderDecimal;
@@ -14,6 +15,8 @@ import Componentes.Software;
 import Componentes.traerIP;
 import Controladores.CabecerasTablas;
 import Controladores.controlFactura;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import java.text.DecimalFormat;
@@ -22,10 +25,10 @@ import java.util.logging.Logger;
 
 public class dlgConsultarFacturas extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
     public ReporteF jasper;
     private static String ImpresoraPred;
     static DataSourceService dss = new DataSourceService();
+    private static Point point;
 
     public dlgConsultarFacturas(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
@@ -37,6 +40,22 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         btnActualizarActionPerformed(null);
         txtFechaF.setVisible(false);
 
+    }
+
+    private void AccesoRapido(int n) {
+
+        switch (n) {
+            case KeyEvent.VK_F10 ->
+                btnImprimir.doClick();
+            case KeyEvent.VK_DELETE ->
+                btnAnular.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
+            case KeyEvent.VK_F3 ->
+                btnBuscar.doClick();
+            default -> {
+            }
+        }
     }
 
     final void titulo() {
@@ -159,7 +178,7 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
     private void initComponents() {
 
         Blanco = new org.edisoncor.gui.panel.PanelImage();
-        Oscuro = new org.edisoncor.gui.panel.PanelImage();
+        panelCabecera = new org.edisoncor.gui.panel.PanelImage();
         txtCodCliente = new javax.swing.JTextField();
         txtFechaF = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
@@ -175,15 +194,8 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         btnAnular = new RSMaterialComponent.RSButtonIconUno();
         Separador8 = new javax.swing.JSeparator();
         LabelTitulo8 = new javax.swing.JLabel();
-        btnSalir1 = new RSMaterialComponent.RSButtonIconUno();
+        btnSalir = new RSMaterialComponent.RSButtonIconUno();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblFactura = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         dcFecha = new datechooser.beans.DateChooserCombo();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -201,16 +213,9 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         txtVendedor = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        btnSalir2 = new RSMaterialComponent.RSButtonIconUno();
+        btnBuscar = new RSMaterialComponent.RSButtonIconUno();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
@@ -222,17 +227,27 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         Blanco.setPreferredSize(new java.awt.Dimension(690, 418));
         Blanco.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Oscuro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo.png"))); // NOI18N
-        Oscuro.setPreferredSize(new java.awt.Dimension(690, 418));
-        Oscuro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelCabecera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo.png"))); // NOI18N
+        panelCabecera.setPreferredSize(new java.awt.Dimension(690, 418));
+        panelCabecera.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panelCabeceraMouseDragged(evt);
+            }
+        });
+        panelCabecera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panelCabeceraMousePressed(evt);
+            }
+        });
+        panelCabecera.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtCodCliente.setEditable(false);
         txtCodCliente.setBackground(new java.awt.Color(255, 255, 255));
         txtCodCliente.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtCodCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCodCliente.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        Oscuro.add(txtCodCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 13, 39, -1));
-        Oscuro.add(txtFechaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 45, 90, -1));
+        panelCabecera.add(txtCodCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 13, 39, -1));
+        panelCabecera.add(txtFechaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 45, 90, -1));
 
         jPanel4.setOpaque(false);
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -241,6 +256,7 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         PnlModificar1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnImprimir.setBackground(new java.awt.Color(255, 102, 0));
+        btnImprimir.setToolTipText("F10");
         btnImprimir.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnImprimir.setForegroundHover(new java.awt.Color(255, 102, 0));
         btnImprimir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
@@ -249,6 +265,11 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImprimirActionPerformed(evt);
+            }
+        });
+        btnImprimir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnImprimirKeyPressed(evt);
             }
         });
         PnlModificar1.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 13, 45, 45));
@@ -278,6 +299,11 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
                 btnActualizarActionPerformed(evt);
             }
         });
+        btnActualizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnActualizarKeyPressed(evt);
+            }
+        });
         PnlActualizar.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
         Separador7.setForeground(new java.awt.Color(204, 204, 204));
@@ -295,6 +321,7 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         PnlEliminarG.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnAnular.setBackground(new java.awt.Color(255, 0, 0));
+        btnAnular.setToolTipText("DELETE");
         btnAnular.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnAnular.setForegroundHover(new java.awt.Color(255, 0, 0));
         btnAnular.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
@@ -303,6 +330,11 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         btnAnular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnularActionPerformed(evt);
+            }
+        });
+        btnAnular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAnularKeyPressed(evt);
             }
         });
         PnlEliminarG.add(btnAnular, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
@@ -318,21 +350,22 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
 
         jPanel4.add(PnlEliminarG, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 3, 100, 100));
 
-        Oscuro.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        panelCabecera.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        btnSalir1.setBackground(new java.awt.Color(17, 35, 46));
-        btnSalir1.setBackgroundHover(new java.awt.Color(205, 0, 0));
-        btnSalir1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
-        btnSalir1.setRippleColor(java.awt.Color.white);
-        btnSalir1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
-        btnSalir1.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setToolTipText("F12");
+        btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
+        btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir.setRippleColor(java.awt.Color.white);
+        btnSalir.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalir1ActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
-        Oscuro.add(btnSalir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 3, 20, 20));
+        panelCabecera.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 3, 20, 20));
 
-        Blanco.add(Oscuro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 883, 102));
+        Blanco.add(panelCabecera, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 883, 102));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jScrollPane1.setOpaque(false);
@@ -366,6 +399,11 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         tblFactura.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 tblFacturaPropertyChange(evt);
+            }
+        });
+        tblFactura.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblFacturaKeyPressed(evt);
             }
         });
         jScrollPane1.setViewportView(tblFactura);
@@ -404,6 +442,11 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         txtRuc.setBackground(new java.awt.Color(255, 255, 255));
         txtRuc.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtRuc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtRuc.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtRucKeyPressed(evt);
+            }
+        });
         jPanel3.add(txtRuc, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 38, 119, 23));
 
         jLabel5.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
@@ -414,6 +457,11 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         txtRazonSocial.setBackground(new java.awt.Color(255, 255, 255));
         txtRazonSocial.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtRazonSocial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtRazonSocial.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtRazonSocialKeyPressed(evt);
+            }
+        });
         jPanel3.add(txtRazonSocial, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 64, 210, 23));
 
         jLabel6.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
@@ -424,6 +472,11 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         txtCondicion.setBackground(new java.awt.Color(255, 255, 255));
         txtCondicion.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtCondicion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtCondicion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCondicionKeyPressed(evt);
+            }
+        });
         jPanel3.add(txtCondicion, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 90, 210, 23));
 
         jLabel8.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
@@ -434,6 +487,11 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         txtPago.setBackground(new java.awt.Color(255, 255, 255));
         txtPago.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtPago.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtPago.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPagoKeyPressed(evt);
+            }
+        });
         jPanel3.add(txtPago, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 116, 210, 23));
 
         jLabel9.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
@@ -444,6 +502,11 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         txtEstado.setBackground(new java.awt.Color(255, 255, 255));
         txtEstado.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtEstado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtEstado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtEstadoKeyPressed(evt);
+            }
+        });
         jPanel3.add(txtEstado, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 142, 210, 23));
 
         jLabel2.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
@@ -454,6 +517,11 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         txtVendedor.setBackground(new java.awt.Color(255, 255, 255));
         txtVendedor.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtVendedor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtVendedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtVendedorKeyPressed(evt);
+            }
+        });
         jPanel3.add(txtVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(98, 168, 210, 23));
 
         jSeparator1.setForeground(new java.awt.Color(204, 204, 204));
@@ -461,19 +529,25 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
 
         Blanco.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(559, 135, -1, 204));
 
-        btnSalir2.setBackground(new java.awt.Color(255, 255, 255));
-        btnSalir2.setForeground(new java.awt.Color(17, 35, 46));
-        btnSalir2.setBackgroundHover(new java.awt.Color(255, 102, 0));
-        btnSalir2.setForegroundText(new java.awt.Color(17, 35, 46));
-        btnSalir2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
-        btnSalir2.setRippleColor(java.awt.Color.white);
-        btnSalir2.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
-        btnSalir2.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setBackground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setForeground(new java.awt.Color(17, 35, 46));
+        btnBuscar.setToolTipText("F3");
+        btnBuscar.setBackgroundHover(new java.awt.Color(255, 102, 0));
+        btnBuscar.setForegroundText(new java.awt.Color(17, 35, 46));
+        btnBuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        btnBuscar.setRippleColor(java.awt.Color.white);
+        btnBuscar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalir2ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
-        Blanco.add(btnSalir2, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 106, 25, 25));
+        btnBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnBuscarKeyPressed(evt);
+            }
+        });
+        Blanco.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 106, 25, 25));
 
         jLabel4.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(153, 153, 153));
@@ -499,6 +573,11 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         tblDetalle.setRowHeight(20);
         tblDetalle.setShowGrid(true);
         tblDetalle.setShowVerticalLines(false);
+        tblDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tblDetalleKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblDetalle);
 
         Blanco.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 457, 883, 250));
@@ -541,7 +620,7 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
     private void tblFacturaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFacturaMousePressed
         // TODO add your handling code here:
         try {
-            CabecerasTablas.limpiarTablas(tblDetalle);
+            CabecerasTablas.limpiarTablaDetalleFactura(tblDetalle);
             controlFactura.listDetalle(tblDetalle);
             controlFactura.ListClientes();
             controlFactura.selecVendedor();
@@ -555,13 +634,12 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         // TODO add your handling code here:c
         try {
             txtFechaF.setText(Fecha.formatoFecha(dcFecha.getText()));
-            CabecerasTablas.limpiarTablas(tblFactura);
-            CabecerasTablas.limpiarTablas(tblDetalle);
-            cabe.consFacturas(tblFactura);
-            cabe.detalleFactura(tblDetalle);
+            CabecerasTablas.limpiarTablaConsFacturas(tblFactura);
+            CabecerasTablas.limpiarTablaDetalleFactura(tblDetalle);
             controlFactura.listFacturas(tblFactura, txtFechaF.getText().trim());
             Renders();
             limpiarCampos();
+            Notif.NotifySuccess("Notificación del sistema", "Lista actualizada!");
         } catch (Exception e) {
         }
     }//GEN-LAST:event_dcFechaOnCommit
@@ -569,12 +647,14 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
         if (dlgConsultarFacturas.tblFactura.getSelectedRow() < 0) {
-            Mensajes.error("No es posible procesar la operación.\nSeleccione la venta que desea re-imprimir");
+            //Mensajes.error("No es posible procesar la operación.\nSeleccione la venta que desea re-imprimir");
+            Notif.NotifyFail("Notificación del sistema", "No es posible procesar la operación.\r\nSeleccione la Venta que desea re-imprimir");
         } else {
             int x = dlgConsultarFacturas.tblFactura.getSelectedRow();
             String estado = dlgConsultarFacturas.tblFactura.getValueAt(x, 11).toString();
             if (estado.equals("ANULADO")) {
-                Mensajes.informacion("VENTA ANULADA: Imposible realizar la re-impresión");
+                //Mensajes.informacion("VENTA ANULADA: Imposible realizar la re-impresión");
+                Notif.NotifyFail("Notificación del sistema", "VENTA ANULADA: Imposible realizar la re-impresión");
             } else {
                 int rpta = Mensajes.confirmar("¿Seguro que desea re-imprimir la venta?");
                 if (rpta == 0) {
@@ -589,7 +669,7 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
                         if (condicion.equals("CONTADO")) {
                             obtenerImpresoraPredeterminada(fact, fecha, hora, total, condicion, cod);
                         } else {
-                            jasper.BoletaCreditoRE("\\Reports\\ventas\\venta_credito_reimpresion.jasper", "cod", Integer.parseInt(cod));
+                            jasper.BoletaCreditoRE("\\Reports\\ventas\\venta_credito_reimpresion.jasper", "cod", Integer.valueOf(cod));
                             try {
                                 StringBuilder sql = new StringBuilder("INSERT INTO reimpresiones (re_fac_codigo, re_descripcion, re_tipo, fecha, usu) VALUES (");
                                 sql.append(cod).append(", ");
@@ -618,15 +698,14 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         try {
-            cabe.consFacturas(tblFactura);
-            CabecerasTablas.limpiarTablas(tblFactura);
-            cabe.detalleFactura(tblDetalle);
-            CabecerasTablas.limpiarTablas(tblDetalle);
-            //cabe.consFacturas(tblFactura);
-            //cabe.detalleFactura(tblDetalle);
+            CabecerasTablas.consFacturas(tblFactura);
+            CabecerasTablas.detalleFactura(tblDetalle);
+            CabecerasTablas.limpiarTablaConsFacturas(tblFactura);
+            CabecerasTablas.limpiarTablaDetalleFactura(tblDetalle);
             controlFactura.listFacturas(tblFactura, txtFechaF.getText().trim());
             Renders();
             limpiarCampos();
+            Notif.NotifySuccess("Notificación del sistema", "Lista actualizada!");
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
@@ -634,12 +713,14 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
     private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
         // TODO add your handling code here:
         if (dlgConsultarFacturas.tblFactura.getSelectedRow() < 0) {
-            Mensajes.error("No es posible procesar la operación.\nSeleccione la venta que desea anular.");
+            Notif.NotifyFail("Notificación del sistema", "No es posible procesar la operación.\r\nSeleccione la venta que desea anular.");
+            //Mensajes.error("No es posible procesar la operación.\r\nSeleccione la venta que desea anular.");
         } else {
             int x = dlgConsultarFacturas.tblFactura.getSelectedRow();
             String estado = dlgConsultarFacturas.tblFactura.getValueAt(x, 11).toString();
             if (estado.equals("ANULADO")) {
-                Mensajes.informacion("Esta venta ya fue anulada");
+                Notif.NotifyFail("Notificación del sistema", "No es posible procesar la operación.\r\nEsta Venta ya fue anulada");
+                //Mensajes.informacion("No es posible procesar la operación.\r\nEsta Venta ya fue anulada");
             } else {
                 String msg;
                 int rpta = Mensajes.confirmar("¿Seguro que desea Anular esta Venta?");
@@ -647,11 +728,8 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
                     try {
                         msg = controlFactura.anularFactura();
                         if (msg == null) {
-                            CabecerasTablas.limpiarTablas(tblFactura);
-                            CabecerasTablas.limpiarTablas(tblDetalle);
-                            cabe.consFacturas(tblFactura);
-                            cabe.detalleFactura(tblDetalle);
                             controlFactura.listFacturas(tblFactura, txtFechaF.getText().trim());
+                            btnActualizarActionPerformed(null);
                         }
                     } catch (Exception e) {
                         System.out.println("Error anulando venta: " + e.getMessage());
@@ -661,15 +739,15 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnAnularActionPerformed
 
-    private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
         if (rpta == 0) {
             this.dispose();
         }
-    }//GEN-LAST:event_btnSalir1ActionPerformed
+    }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir2ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         try {
             String cod = (JOptionPane.showInputDialog("Ingrese N° de factura"));
@@ -683,7 +761,87 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         } catch (Exception e) {
             System.out.println("Consulta cancelada" + e.getMessage());
         }
-    }//GEN-LAST:event_btnSalir2ActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnImprimirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnImprimirKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnImprimirKeyPressed
+
+    private void btnAnularKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAnularKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnAnularKeyPressed
+
+    private void btnActualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnActualizarKeyPressed
+
+    private void btnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnBuscarKeyPressed
+
+    private void tblFacturaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblFacturaKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_tblFacturaKeyPressed
+
+    private void txtRucKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRucKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtRucKeyPressed
+
+    private void txtRazonSocialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRazonSocialKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtRazonSocialKeyPressed
+
+    private void txtCondicionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCondicionKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtCondicionKeyPressed
+
+    private void txtPagoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPagoKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtPagoKeyPressed
+
+    private void txtEstadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtEstadoKeyPressed
+
+    private void txtVendedorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtVendedorKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtVendedorKeyPressed
+
+    private void tblDetalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblDetalleKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_tblDetalleKeyPressed
+
+    private void panelCabeceraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMouseDragged
+        // TODO add your handling code here:
+        int CurrentX = this.getLocation().x;
+        int CurrentY = this.getLocation().y;
+
+        int MoveX = (CurrentX + evt.getX()) - (CurrentX + point.x);
+        int MoveY = (CurrentY + evt.getY()) - (CurrentY + point.y);
+
+        int x = CurrentX + MoveX;
+        int y = CurrentY + MoveY;
+
+        this.setLocation(x, y);
+    }//GEN-LAST:event_panelCabeceraMouseDragged
+
+    private void panelCabeceraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMousePressed
+        // TODO add your handling code here:
+        point = evt.getPoint();
+        getComponentAt(point);
+    }//GEN-LAST:event_panelCabeceraMousePressed
 
     /**
      * @param args the command line arguments
@@ -730,7 +888,6 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
     private javax.swing.JLabel LabelTitulo6;
     private javax.swing.JLabel LabelTitulo7;
     private javax.swing.JLabel LabelTitulo8;
-    private org.edisoncor.gui.panel.PanelImage Oscuro;
     private rojeru_san.rspanel.RSPanelImage PnlActualizar;
     private rojeru_san.rspanel.RSPanelImage PnlEliminarG;
     private rojeru_san.rspanel.RSPanelImage PnlModificar1;
@@ -739,9 +896,9 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
     private javax.swing.JSeparator Separador8;
     private RSMaterialComponent.RSButtonIconUno btnActualizar;
     private RSMaterialComponent.RSButtonIconUno btnAnular;
+    private RSMaterialComponent.RSButtonIconUno btnBuscar;
     private RSMaterialComponent.RSButtonIconUno btnImprimir;
-    private RSMaterialComponent.RSButtonIconUno btnSalir1;
-    private RSMaterialComponent.RSButtonIconUno btnSalir2;
+    private RSMaterialComponent.RSButtonIconUno btnSalir;
     private datechooser.beans.DateChooserCombo dcFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -757,8 +914,21 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    public static javax.swing.JTable tblDetalle;
-    public static javax.swing.JTable tblFactura;
+    private org.edisoncor.gui.panel.PanelImage panelCabecera;
+    public static final javax.swing.JTable tblDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
+    public static final javax.swing.JTable tblFactura = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCodCliente;
     public static javax.swing.JTextField txtCondicion;
     public static javax.swing.JTextField txtEstado;

@@ -16,8 +16,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
     static DataSourceService dss = new DataSourceService();
     private int ban;
 
@@ -26,7 +24,7 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         initComponents();
         cargarComboBox.cargar(cboTimbrado, "SELECT * FROM timbrado WHERE estado='Activo'");
         titulo();
-        cabe.PuntoEmision(tbPuntoEmision);
+        CabecerasTablas.PuntoEmision(tbPuntoEmision);
         controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
         Estados();
     }
@@ -71,8 +69,6 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         btnBuscarImpresora.setEnabled(false);
         txtIP.setEnabled(false);
         limpiarCampos();
-        
-        
         btnNuevo.requestFocus();
     }
 
@@ -908,8 +904,8 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                     int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea Modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                     if (resp == JOptionPane.YES_OPTION) {
                         controlPuntoEmisionMovil.actPuntoEmision();
-                        CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
-                        controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
+                        //CabecerasTablas.limpiarTablaPE(tbPuntoEmision);
+                        //controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
                         Cancelar();
                     }
                 } catch (HeadlessException ee) {
@@ -920,8 +916,8 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                 int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea Modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (resp == JOptionPane.YES_OPTION) {
                     controlPuntoEmisionMovil.actPuntoEmision();
-                    CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
-                    controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
+                    //CabecerasTablas.limpiarTablaPE(tbPuntoEmision);
+                    //controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
                     Cancelar();
                 }
             } catch (HeadlessException ee) {
@@ -967,8 +963,8 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                         String cod = GestionarPuntoEmisionMovil.getCodigo();
                         txtCod.setText(cod);
                         controlPuntoEmisionMovil.addPuntoEmision();
-                        CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
-                        controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
+                        //CabecerasTablas.limpiarTablaPE(tbPuntoEmision);
+                        //controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
                         Cancelar();
                     }
                 } catch (HeadlessException ee) {
@@ -981,8 +977,8 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
                     String cod = GestionarPuntoEmisionMovil.getCodigo();
                     txtCod.setText(cod);
                     controlPuntoEmisionMovil.addPuntoEmision();
-                    CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
-                    controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
+                    //CabecerasTablas.limpiarTablaPE(tbPuntoEmision);
+                    //controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
                     Cancelar();
                 }
             } catch (HeadlessException ee) {
@@ -1004,8 +1000,8 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
             int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea Eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (resp == JOptionPane.YES_OPTION) {
                 controlPuntoEmisionMovil.delPuntoEmision();
-                CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
-                controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
+                //CabecerasTablas.limpiarTablaPE(tbPuntoEmision);
+                //controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
                 Cancelar();
             }
         } catch (HeadlessException ee) {
@@ -1113,7 +1109,7 @@ public class dlgPuntoEmisionMovil extends javax.swing.JDialog {
         rbInactivo.setSelected(true);
         tbPuntoEmision.clearSelection();
         txtImpresora.setText("");
-        CabecerasTablas.limpiarTablasPE(tbPuntoEmision);
+        CabecerasTablas.limpiarTablaPE(tbPuntoEmision);
         controlPuntoEmisionMovil.listPuntoEmision(tbPuntoEmision);
 
     }

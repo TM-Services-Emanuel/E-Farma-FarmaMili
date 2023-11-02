@@ -73,8 +73,7 @@ public class controlVendedor {
     public static String addVendedor() {
         String msg;
         Vendedor v = capturarCampos();
-        String usuario = Login.getUsuarioLogueado();
-        msg = GestionarVendedor.addVendedor(v, usuario);
+        msg = GestionarVendedor.addVendedor(v, Login.getUsuarioLogueado());
         if (msg == null) {
             Mensajes.informacion("Empleado Registrado");
         } else {
@@ -112,8 +111,7 @@ public class controlVendedor {
         int x = dlgVendedor.tablaEmpleados.getSelectedRow();
         String msg;
         String cod = dlgVendedor.tablaEmpleados.getValueAt(x, 0).toString();
-        String usuario = Login.getUsuarioLogueado();
-        msg = GestionarVendedor.delVendedor(cod, usuario);
+        msg = GestionarVendedor.delVendedor(cod, Login.getUsuarioLogueado());
         if (msg == null) {
             Mensajes.informacion("Empleado Eliminado");
         } else {
@@ -123,7 +121,7 @@ public class controlVendedor {
     }
 
     public static void listVendedor(JTable tabla, String cad) {
-        List lista = null;
+        List lista;
         lista = GestionarVendedor.listVendedor(cad);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
@@ -133,7 +131,7 @@ public class controlVendedor {
     }
 
     public static void filNombre(JTable tabla, String cad) {
-        List lista = null;
+        List lista;
         lista = GestionarVendedor.filNombre(cad);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();

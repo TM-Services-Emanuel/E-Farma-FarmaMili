@@ -2,6 +2,7 @@ package Controladores;
 
 import Componentes.Login;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.Redondeo;
 import Datos.ArregloCompras;
 import Datos.GestionarArticulos;
@@ -41,6 +42,7 @@ public class controlCompra {
         dlgCompras.txtArt.setText(art.getDescripcion());
         dlgCompras.txtCant.setText("1");
         dlgCompras.txtCant.selectAll();
+        dlgCompras.lbtotal.setEnabled(true);
         int PC = art.getCosto();
         DecimalFormat df = new DecimalFormat("#,###");
         dlgCompras.txtCosto.setText((df.format(PC)));
@@ -272,75 +274,6 @@ public class controlCompra {
         array.vaciar();
     }
 
-    /*    public static String addCompra() {
-        String msg;
-        int codc = Integer.parseInt(dlgCompras.txtCod.getText());
-        int codProv = Integer.parseInt(dlgCompras.txtCodProv.getText());
-        String condPago = (dlgCompras.lbCond.getText());
-        String Fact= dlgCompras.txtFactura.getText();
-        String fecha = dlgCompras.txtFecha.getText();
-        int total = Integer.parseInt(dlgCompras.txtTotalL.getText());
-        int exenta= Integer.parseInt(dlgCompras.txtExentaL.getText());
-        int iva5= Integer.parseInt(dlgCompras.txt5L.getText());
-        int iva10=Integer.parseInt(dlgCompras.txt10L.getText());
-
-        Compra c = new Compra(codc, codProv,condPago,Fact, fecha, total, exenta, iva5, iva10);
-
-        array.vaciar();
-        msg = GestionarCompra.addCompra(c);
-
-        if (msg == null) {
-            Mensajes.informacion("Compra Realizada");
-            controlCompra.addDetalleCompra();
-        } else {
-            Mensajes.error(msg);
-        }
-        return msg;
-    }*/
-
- /*   public static String addDetalleCompra() {
-        String msg = null;
-        int fila = dlgCompras.tbDetalle.getRowCount();
-        for (int i = 0; i < fila; i++) {
-            int codCompra = Integer.valueOf(dlgCompras.txtCod.getText());
-            int codArt = Integer.valueOf(dlgCompras.tbDetalle.getValueAt(i, 0).toString());
-            int cantidad = Integer.valueOf(dlgCompras.tbDetalle.getValueAt(i, 4).toString());
-            int precio = Integer.valueOf(dlgCompras.tbDetalle.getValueAt(i, 6).toString());
-            int mont = Integer.valueOf(dlgCompras.tbDetalle.getValueAt(i, 14).toString());
-
-            dc = new DetalleCompra(codCompra, codArt, cantidad, precio, mont);
-
-            msg = GestionarCompra.addDetalleCompra(dc);
-        }
-        if (msg == null) {
-            Mensajes.informacion("Detalle Registrado");
-        } else {
-            Mensajes.error(msg);
-        }
-        return msg;
-    }*/
-
- /*  public static void finalizar(JTable tabla) {
-        int fila = 0;
-        DefaultTableModel tb = (DefaultTableModel) dlgCompras.tbDetalle.getModel();
-        int renglones = tb.getRowCount();
-        for (int i = 0; i < renglones; i++) {
-            fila++;
-        }
-        if (fila <= 0) {
-            Mensajes.error("No ha ingresado artículos");
-        } else {
-            dlgFinCompra fc = new dlgFinCompra(null, true);
-            fc.setLocationRelativeTo(null);
-            int total = Redondeo.redondearI(getTotal());
-            DecimalFormat df = new DecimalFormat("#,###");
-            dlgFinCompra.lblTotal.setText("₲ "+df.format(Integer.valueOf(String.valueOf(total).trim().replace(".", "").replace(",", ""))));
-            //dlgFinCompra.lblTotal.setText(String.valueOf(total));
-            fc.setVisible(true);
-        }
-    }*/
-
- /*------CONSULTADO LAS COMPRAS REALIZADAS*/
     public static void listarCompras(JTable tabla) {
         List lista;
         lista = GestionarCompra.listarCompras();
@@ -399,7 +332,8 @@ public class controlCompra {
         String usuario = Login.getUsuarioLogueado();
         msg = GestionarCompra.delCompra(cod, usuario);
         if (msg == null) {
-            Mensajes.informacion("Compra Anulada");
+            //Mensajes.informacion("Compra Anulada");
+            Notif.NotifySuccess("Notificación del sistema", "Compra anulada.");
             controlCompra.actStockEliminarCompra();
         } else {
             Mensajes.error(msg);
@@ -412,12 +346,13 @@ public class controlCompra {
         int f = dlgConsultarCompras.tbDetalleCompra.getRowCount();
         for (int i = 0; i < f; i++) {
             int coda = Integer.parseInt(dlgConsultarCompras.tbDetalleCompra.getValueAt(i, 1).toString());
-            int st = Integer.valueOf(dlgConsultarCompras.tbDetalleCompra.getValueAt(i, 4).toString());
+            int st = Integer.parseInt(dlgConsultarCompras.tbDetalleCompra.getValueAt(i, 4).toString());
             Articulo a = new Articulo(coda, st);
             msg = GestionarArticulos.actStockMENOS(a);
         }
         if (msg == null) {
-            Mensajes.informacion("Stock Actualizado");
+            //Mensajes.informacion("Stock Actualizado");
+            Notif.NotifySuccess("Notificación del sistema", "Stock Actualizado.");
         } else {
             Mensajes.error(msg);
         }
@@ -437,20 +372,20 @@ public class controlCompra {
 
             switch (iva) {
                 case 10 -> {
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 12);
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 13);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 12);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 13);
                 }
                 case 5 -> {
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 10);
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 11);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 10);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 11);
                 }
                 default -> {
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 8);
-                    dlgCompras.tbDetalle.setValueAt(monto, fila, 9);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 8);
+                    dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 9);
                 }
             }
-            dlgCompras.tbDetalle.setValueAt(monto, fila, 14);
-            dlgCompras.tbDetalle.setValueAt(monto, fila, 15);
+            dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 14);
+            dlgCompras.tbDetalle.setValueAt(String.valueOf(monto), fila, 15);
             long total = getTotal();
             String exentas = String.valueOf(getExcetas());
             String iva5 = String.valueOf(get5());

@@ -5,13 +5,11 @@ import Controladores.controlCliente;
 import Controladores.controlPresupuesto;
 
 public class dlgBuscarClientePresupuesto extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
     
     public dlgBuscarClientePresupuesto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cabe.buscarCliente(jTable1);
+        CabecerasTablas.buscarCliente(jTable1);
         controlCliente.listClientes(jTable1, "clientes.cli_codigo");
         grupo();
     }
@@ -30,13 +28,6 @@ public class dlgBuscarClientePresupuesto extends javax.swing.JDialog {
         txtCodCliente = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -200,23 +191,23 @@ public class dlgBuscarClientePresupuesto extends javax.swing.JDialog {
         else
             if(rbtnRuc.isSelected())
             {
-                CabecerasTablas.limpiarTablas(jTable1);
+                CabecerasTablas.limpiarTablaBuscarCliente(jTable1);
 //                controlCliente.filtRuc(jTable1, cod);
             }
         else
                 if(rbtnRazon.isSelected())
                 {
-                    CabecerasTablas.limpiarTablas(jTable1);
+                    CabecerasTablas.limpiarTablaBuscarCliente(jTable1);
                     controlCliente.filtClientes(jTable1, cod);
                 }
                 else if(rbtnContacto.isSelected())
                 {
-                    CabecerasTablas.limpiarTablas(jTable1);
+                    CabecerasTablas.limpiarTablaBuscarCliente(jTable1);
 //                    controlCliente.filContacto(jTable1, cod);
                 }
                 else if(rbtnDireccion.isSelected())
                 {
-                    CabecerasTablas.limpiarTablas(jTable1);
+                    CabecerasTablas.limpiarTablaBuscarCliente(jTable1);
 //                    controlCliente.filDireccion(jTable1, cod);
                 }
     }//GEN-LAST:event_txtCodClienteKeyReleased
@@ -249,7 +240,7 @@ public class dlgBuscarClientePresupuesto extends javax.swing.JDialog {
     void seleccionarRadio()
     {
         txtCodCliente.setEditable(true);
-        cabe.buscarCliente(jTable1);
+        CabecerasTablas.buscarCliente(jTable1);
         controlCliente.listClientes(jTable1, "clientes.cli_codigo");
         txtCodCliente.setText("");
         txtCodCliente.requestFocus();
@@ -327,7 +318,13 @@ public class dlgBuscarClientePresupuesto extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable jTable1;
+    public static final javax.swing.JTable jTable1 = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     private javax.swing.JRadioButton rbtnCodigo;
     private javax.swing.JRadioButton rbtnContacto;
     private javax.swing.JRadioButton rbtnDireccion;

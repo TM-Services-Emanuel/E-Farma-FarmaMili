@@ -8,13 +8,12 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class dlgConsultarPresupuesto extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
+    
     public dlgConsultarPresupuesto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cabe.consPresupuesto(jTable1);
-        cabe.detallePresupuesto(jTable2);
+        CabecerasTablas.consPresupuesto(jTable1);
+        CabecerasTablas.detallePresupuesto(jTable2);
         controlPresupuesto.listPresupuestos(jTable1);
     }
 
@@ -23,13 +22,6 @@ public class dlgConsultarPresupuesto extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jPanel1 = new javax.swing.JPanel();
         btnPendiente = new javax.swing.JButton();
         btnAceptado = new javax.swing.JButton();
@@ -51,13 +43,6 @@ public class dlgConsultarPresupuesto extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         txtDesc = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jLabel7 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -405,7 +390,7 @@ public class dlgConsultarPresupuesto extends javax.swing.JDialog {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         try {
-            CabecerasTablas.limpiarTablas(jTable2);
+            CabecerasTablas.limpiarTablaDetallePresupuesto(jTable2);
             controlPresupuesto.listDetallePresupuesto(jTable2);
             controlPresupuesto.listClientes();
             controlPresupuesto.estado();
@@ -453,8 +438,8 @@ public class dlgConsultarPresupuesto extends javax.swing.JDialog {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         try {
-            CabecerasTablas.limpiarTablas(jTable1);
-            cabe.consPresupuesto(jTable1);
+            CabecerasTablas.limpiarTablaPresupuesto(jTable1);
+            CabecerasTablas.consPresupuesto(jTable1);
             controlPresupuesto.listPresupuestos(jTable1);
             int cod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de presupuesto"));
             for(int i=0;i<jTable1.getRowCount();i++)
@@ -558,8 +543,20 @@ public class dlgConsultarPresupuesto extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    public static javax.swing.JTable jTable1;
-    public static javax.swing.JTable jTable2;
+    public static final javax.swing.JTable jTable1 = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
+    public static final javax.swing.JTable jTable2 = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCodCliente;
     public static javax.swing.JTextField txtCodPresupuesto;
     public static javax.swing.JTextField txtDesc;

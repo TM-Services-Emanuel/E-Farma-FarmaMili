@@ -4,6 +4,7 @@ import Componentes.DataSourceService;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.Redondeo;
 import Datos.*;
 import IU.dlgBuscadorArticuloTransferencia;
@@ -699,7 +700,8 @@ public class controlFactura {
         String usuario = Login.getUsuarioLogueado();
         msg = GestionarFactura.actFactura(cod, usuario);
         if (msg == null) {
-            Mensajes.informacion("Venta Anulada");
+            //Mensajes.informacion("Venta Anulada");
+            Notif.NotifySuccess("Notificación del sistema", "Venta Anulada satisfactoriamente.");
             controlFactura.actStockEliminarFactura();
         } else {
             Mensajes.error(msg);
@@ -715,7 +717,8 @@ public class controlFactura {
         String usuario = Login.getUsuarioLogueado();
         msg = GestionarFactura.actFacturaL(cod, usuario);
         if (msg == null) {
-            Mensajes.informacion("Venta Anulada");
+            //Mensajes.informacion("Venta Anulada");
+            Notif.NotifySuccess("Notificación del sistema", "Venta anulada satisfactoriamente.");
             controlFactura.actStockEliminarFacturaL();
         } else {
             Mensajes.error(msg);
@@ -731,7 +734,8 @@ public class controlFactura {
         String usuario = Login.getUsuarioLogueado();
         msg = GestionarFactura.actTransferencia(cod, usuario);
         if (msg == null) {
-            Mensajes.Sistema("Transferencia anulada satisfactoriamente.");
+           // Mensajes.Sistema("Transferencia anulada satisfactoriamente.");
+            Notif.NotifySuccess("Notificación del sistema", "Transferencia anulada satisfactoriamente.");
             if (tipo.equals("TIPO ENTRADA")) {
                 controlFactura.actStockEliminarTransferenciaE();
             } else if (tipo.equals("TIPO SALIDA")) {
@@ -753,7 +757,8 @@ public class controlFactura {
             msg = GestionarArticulos.actStockMENOS(a);
         }
         if (msg == null) {
-            Mensajes.informacion("Stock Actualizado");
+            Notif.NotifySuccess("Notificación del sistema", "Stock Actualizado.");
+            //Mensajes.informacion("Stock Actualizado");
         } else {
             Mensajes.error(msg);
         }
@@ -770,7 +775,8 @@ public class controlFactura {
             msg = GestionarArticulos.actStockMAS(a);
         }
         if (msg == null) {
-            Mensajes.informacion("Stock Actualizado");
+            Notif.NotifySuccess("Notificación del sistema", "Stock Actualizado.");
+            //Mensajes.informacion("Stock Actualizado");
         } else {
             Mensajes.error(msg);
         }
@@ -787,7 +793,8 @@ public class controlFactura {
             msg = GestionarArticulos.actStockMAS(a);
         }
         if (msg == null) {
-            Mensajes.informacion("Stock Actualizado");
+            Notif.NotifySuccess("Notificación del sistema", "Stock Actualizado.");
+            //Mensajes.informacion("Stock Actualizado");
         } else {
             Mensajes.error(msg);
         }
@@ -804,7 +811,8 @@ public class controlFactura {
             msg = GestionarArticulos.actStockMAS(a);
         }
         if (msg == null) {
-            Mensajes.informacion("Stock Actualizado");
+            //Mensajes.informacion("Stock Actualizado");
+            Notif.NotifySuccess("Notificación del sistema", "Stock Actualizado.");
         } else {
             Mensajes.error(msg);
         }

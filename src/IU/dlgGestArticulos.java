@@ -161,7 +161,26 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         pintarVenta();
         pintarTipo();
         Volver();
+        //Volver2();
         this.dispose();
+    }
+
+    private void AccesoRapido(int n) {
+
+        switch (n) {
+            case KeyEvent.VK_F1 ->
+                btnNuevo.doClick();
+            case KeyEvent.VK_F6 ->
+                btnGuardar.doClick();
+            case KeyEvent.VK_ESCAPE ->
+                btnCancelar.doClick();
+            case KeyEvent.VK_F5 ->
+                btnModificar.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
+            default -> {
+            }
+        }
     }
 
     /**
@@ -282,6 +301,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnSalir.setBackground(new java.awt.Color(255, 255, 255));
+        btnSalir.setToolTipText("F12");
         btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
         btnSalir.setForegroundText(new java.awt.Color(17, 35, 46));
         btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
@@ -292,12 +312,18 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 btnSalirActionPerformed(evt);
             }
         });
+        btnSalir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnSalirKeyPressed(evt);
+            }
+        });
         jPanel12.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(857, 3, 20, 20));
 
         PanelContenedor3.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
         PanelContenedor3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnCancelar.setBackground(new java.awt.Color(205, 0, 0));
+        btnCancelar.setToolTipText("ESCAPPE");
         btnCancelar.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnCancelar.setForegroundHover(new java.awt.Color(205, 0, 0));
         btnCancelar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CANCEL);
@@ -306,6 +332,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
+            }
+        });
+        btnCancelar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCancelarKeyPressed(evt);
             }
         });
         PanelContenedor3.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
@@ -324,6 +355,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         PanelContenedor2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnGuardar.setBackground(new java.awt.Color(0, 102, 255));
+        btnGuardar.setToolTipText("F6");
         btnGuardar.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnGuardar.setForegroundHover(new java.awt.Color(0, 102, 255));
         btnGuardar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SAVE);
@@ -332,6 +364,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
+            }
+        });
+        btnGuardar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGuardarKeyPressed(evt);
             }
         });
         PanelContenedor2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
@@ -350,6 +387,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         PanelContenedor1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnNuevo.setBackground(new java.awt.Color(0, 102, 0));
+        btnNuevo.setToolTipText("F1");
         btnNuevo.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnNuevo.setForegroundHover(new java.awt.Color(0, 102, 0));
         btnNuevo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
@@ -358,6 +396,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
+            }
+        });
+        btnNuevo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnNuevoKeyPressed(evt);
             }
         });
         PanelContenedor1.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
@@ -376,6 +419,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         PanelContenedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnModificar.setBackground(new java.awt.Color(255, 102, 0));
+        btnModificar.setToolTipText("F5");
         btnModificar.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnModificar.setForegroundHover(new java.awt.Color(255, 102, 0));
         btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
@@ -384,6 +428,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
+            }
+        });
+        btnModificar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnModificarKeyPressed(evt);
             }
         });
         PanelContenedor.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
@@ -409,6 +458,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         txtCodProducto.setBackground(new java.awt.Color(255, 255, 255));
         txtCodProducto.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtCodProducto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtCodProducto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtCodProductoKeyPressed(evt);
+            }
+        });
         jPanel1.add(txtCodProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 136, 23));
 
         txtCodBarra.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
@@ -446,6 +500,9 @@ public class dlgGestArticulos extends javax.swing.JDialog {
             }
         });
         txtDescripcion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtDescripcionKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtDescripcionKeyTyped(evt);
             }
@@ -522,6 +579,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 rImportadoActionPerformed(evt);
             }
         });
+        rImportado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                rImportadoKeyPressed(evt);
+            }
+        });
         jPanel8.add(rImportado, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 28, 92, 23));
 
         buttonGroup2.add(rNacional);
@@ -534,6 +596,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         rNacional.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rNacionalActionPerformed(evt);
+            }
+        });
+        rNacional.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                rNacionalKeyPressed(evt);
             }
         });
         jPanel8.add(rNacional, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 7, 92, 23));
@@ -556,6 +623,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 rLibreActionPerformed(evt);
             }
         });
+        rLibre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                rLibreKeyPressed(evt);
+            }
+        });
         jPanel5.add(rLibre, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 7, 97, 23));
 
         buttonGroup1.add(rControlado);
@@ -568,6 +640,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         rControlado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rControladoActionPerformed(evt);
+            }
+        });
+        rControlado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                rControladoKeyPressed(evt);
             }
         });
         jPanel5.add(rControlado, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 28, 97, 23));
@@ -711,6 +788,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 rActivoActionPerformed(evt);
             }
         });
+        rActivo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                rActivoKeyPressed(evt);
+            }
+        });
         jPanel4.add(rActivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 7, 124, 23));
 
         buttonGroup3.add(rInactivo);
@@ -723,6 +805,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         rInactivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rInactivoActionPerformed(evt);
+            }
+        });
+        rInactivo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                rInactivoKeyPressed(evt);
             }
         });
         jPanel4.add(rInactivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 28, 124, 23));
@@ -994,6 +1081,11 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         txtIVACosto.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtIVACosto.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtIVACosto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        txtIVACosto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIVACostoKeyPressed(evt);
+            }
+        });
         jPanel9.add(txtIVACosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(122, 38, 98, 23));
 
         cbImpuesto.setForeground(new java.awt.Color(0, 0, 0));
@@ -1181,15 +1273,16 @@ public class dlgGestArticulos extends javax.swing.JDialog {
             CalcularGanancia();
             ckHabilitar.requestFocus();
         }
-
+        txtGanancia.requestFocus();
+        txtGanancia.selectAll();
     }//GEN-LAST:event_txtPrecioVentaActionPerformed
 
     private void txtPrecioPublicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioPublicoActionPerformed
         // TODO add your handling code here:
         if (!txtPrecioPublico.getText().trim().isEmpty() || Integer.parseInt(txtPrecioPublico.getText()) != 0) {
             CalcularDescuento();
-            txtPrecioVenta.requestFocus();
-            txtPrecioVenta.selectAll();
+            txtDesc.requestFocus();
+            txtDesc.selectAll();
         } else {
             txtDesc.setText("0");
         }
@@ -1230,7 +1323,23 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 DecimalFormat df = new DecimalFormat("#,###");
                 txtCosto.setText(df.format(Integer.valueOf(txtCosto.getText().trim().replace(".", "").replace(",", ""))));
             }
-            cbImpuestoActionPerformed(null);
+            switch (cbImpuesto.getSelectedIndex()) {
+                case 1 -> {
+                    CalculoIVAC(0);
+                    txtCosto.requestFocus();
+                }
+                case 2 -> {
+                    CalculoIVAC(5);
+                    txtCosto.requestFocus();
+                }
+                case 3 -> {
+                    CalculoIVAC(10);
+                    txtCosto.requestFocus();
+                }
+                default -> {
+                    txtCosto.requestFocus();
+                }
+            }
         } catch (NumberFormatException e) {
             System.out.println("c: " + e.getMessage());
         }
@@ -1311,7 +1420,6 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (txtPrecioPublico.getText().replace(".", "").replace(",", "").equals("0")) {
             txtDesc.setText("0");
-            txtPrecioVenta.requestFocus();
         } else {
             int band = CalcularPrecioVentaxDesc();
             if (band == 1) {
@@ -1319,8 +1427,8 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 CalcularGanancia();
             }
         }
-        txtGanancia.requestFocus();
-        txtGanancia.selectAll();
+        txtPrecioVenta.requestFocus();
+        txtPrecioVenta.selectAll();
     }//GEN-LAST:event_txtDescActionPerformed
 
     private void txtDescripcionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyTyped
@@ -1358,6 +1466,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         /* if (!txtCodBarra.getText().trim().isEmpty()) {
             validarCampos.soloNumeros(txtCodBarra);
         }*/
+        AccesoRapido(evt.getKeyCode());
 
     }//GEN-LAST:event_txtCodBarraKeyPressed
 
@@ -1457,6 +1566,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtAccion.requestFocus();
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtPrincipioKeyPressed
 
     private void txtAccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAccionKeyPressed
@@ -1465,6 +1575,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
             cbLaboratorio.requestFocus();
             cbLaboratorio.setPopupVisible(true);
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtAccionKeyPressed
 
     private void txtDescKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescKeyPressed
@@ -1472,6 +1583,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         if (!txtDesc.getText().trim().isEmpty()) {
             validarCampos.soloDecimales(txtDesc);
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtDescKeyPressed
 
     private void txtPrecioVentaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyPressed
@@ -1479,6 +1591,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         if (!txtPrecioVenta.getText().trim().isEmpty()) {
             validarCampos.soloNumeros(txtPrecioVenta);
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtPrecioVentaKeyPressed
 
     private void txtCostoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCostoKeyPressed
@@ -1486,6 +1599,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         if (!txtCosto.getText().trim().isEmpty()) {
             validarCampos.soloNumeros(txtCosto);
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtCostoKeyPressed
 
     private void txtPrecioPublicoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioPublicoKeyPressed
@@ -1493,7 +1607,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         if (!txtPrecioPublico.getText().trim().isEmpty()) {
             validarCampos.soloNumeros(txtPrecioPublico);
         }
-
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtPrecioPublicoKeyPressed
 
     private void txtDescMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtDescMouseClicked
@@ -1504,11 +1618,13 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     private void txtStockKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockKeyPressed
         // TODO add your handling code here:
         validarCampos.soloNumeros(txtStock);
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtStockKeyPressed
 
     private void txtStockMinKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockMinKeyPressed
         // TODO add your handling code here:
         validarCampos.soloNumeros(txtStock);
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtStockMinKeyPressed
 
     private void txtStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtStockActionPerformed
@@ -1555,6 +1671,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         if (!txtGanancia.getText().trim().isEmpty()) {
             validarCampos.soloDecimales(txtGanancia);
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtGananciaKeyPressed
 
     private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
@@ -1576,6 +1693,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
             cbImpuesto.setPopupVisible(true);
             cbImpuesto.requestFocus();
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtPrecioVentaMKeyPressed
 
     private void txtPrecioVentaMKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaMKeyReleased
@@ -1629,6 +1747,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         if (!txtCantM.getText().trim().isEmpty()) {
             validarCampos.soloNumeros(txtPrecioVenta);
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtCantMKeyPressed
 
     private void txtCantMKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantMKeyReleased
@@ -1765,7 +1884,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
             Mensajes.Sistema("Descuento vacío o fuera de rango.\nPor favor, verifique los números ingresados para proceder con el registro");
             txtPrecioPublico.requestFocus();
             txtPrecioPublico.selectAll();
-        }else if (txtDesc.getText().equals("-Infinity")) {
+        } else if (txtDesc.getText().equals("-Infinity")) {
             Mensajes.Sistema("Ganancia vacía o fuera de rango.\nPor favor, verifique los números ingresados para proceder con el registro");
             txtPrecioVenta.requestFocus();
             txtPrecioVenta.selectAll();
@@ -1818,40 +1937,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         // TODO add your handling code here:
         int rpta = Mensajes.confirmar("¿Seguro que desea Cancelar?");
         if (rpta == 0) {
-            limpiarCampos();
-            btnModificar.setEnabled(true);
-            btnModificar.setEnabled(false);
-            btnGuardar.setEnabled(false);
-            btnCancelar.setEnabled(false);
-            btnLaboratorio.setEnabled(false);
-            btnProveedor.setEnabled(false);
-            btnFamilia.setEnabled(false);
-            txtCodBarra.setEnabled(false);
-            txtDescripcion.setEnabled(false);
-            txtPrincipio.setEnabled(false);
-            txtAccion.setEnabled(false);
-            rLibre.setEnabled(false);
-            rControlado.setEnabled(false);
-            rNacional.setEnabled(false);
-            rImportado.setEnabled(false);
-            rActivo.setEnabled(false);
-            rInactivo.setEnabled(false);
-            cbLaboratorio.setEnabled(false);
-            cbFamilia.setEnabled(false);
-            cbProveedor.setEnabled(false);
-            txtCosto.setEnabled(false);
-            txtPrecioPublico.setEnabled(false);
-            txtGanancia.setEnabled(false);
-            txtDesc.setEnabled(false);
-            txtPrecioVenta.setEnabled(false);
-            txtStock.setEnabled(false);
-            txtStockMin.setEnabled(false);
-            btnSalir.setEnabled(true);
-            pintarEstado();
-            pintarVenta();
-            pintarTipo();
-            Volver();
-            this.dispose();
+            Cancelar();
         } else {
             txtCodBarra.requestFocus();
         }
@@ -1862,6 +1948,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
         if (rpta == 0) {
             Volver();
+            //Volver2();
             this.dispose();
         } else {
             txtCodBarra.requestFocus();
@@ -1909,7 +1996,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
             cbProveedor.requestFocus();
             cbProveedor.setPopupVisible(true);
         }
-        //AccesoRapido(evt.getKeyCode());
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_cbLaboratorioKeyPressed
 
     private void cbProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProveedorActionPerformed
@@ -1922,6 +2009,7 @@ public class dlgGestArticulos extends javax.swing.JDialog {
             cbFamilia.requestFocus();
             cbFamilia.setPopupVisible(true);
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_cbProveedorKeyPressed
 
     private void cbFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbFamiliaActionPerformed
@@ -1959,8 +2047,10 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     private void cbFamiliaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbFamiliaKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            txtCosto.requestFocus();
+            cbImpuesto.requestFocus();
+            cbImpuesto.setPopupVisible(true);
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_cbFamiliaKeyPressed
 
     private void ckHabilitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckHabilitarActionPerformed
@@ -1972,44 +2062,10 @@ public class dlgGestArticulos extends javax.swing.JDialog {
         } else {
             txtCantM.setEnabled(false);
             txtPrecioVentaM.setEnabled(false);
-            //txtCantM.setText("2");
-            //txtPrecioVentaM.setText("0");
-            //txtPrecioVentaML.setText("0");
         }
     }//GEN-LAST:event_ckHabilitarActionPerformed
 
     private void ckHabilitarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ckHabilitarKeyPressed
-        // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            cbImpuesto.setPopupVisible(true);
-            cbImpuesto.requestFocus();
-        }
-    }//GEN-LAST:event_ckHabilitarKeyPressed
-
-    private void cbImpuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbImpuestoActionPerformed
-        // TODO add your handling code here:
-        try {
-            if (cbImpuesto.getSelectedIndex() == 0) {
-                Mensajes.Sistema("No se ha especificado el Impuesto a aplicar.\nPor favor, seleccione la opción correspondiente para calcular el costo de iva.");
-                cbImpuesto.setPopupVisible(true);
-                cbImpuesto.requestFocus();
-            } else {
-                switch (cbImpuesto.getSelectedIndex()) {
-                    case 1 ->
-                        CalculoIVAC(0);
-                    case 2 ->
-                        CalculoIVAC(5);
-                    case 3 ->
-                        CalculoIVAC(10);
-                    default -> {
-                    }
-                }
-            }
-        } catch (Exception e) {
-        }
-    }//GEN-LAST:event_cbImpuestoActionPerformed
-
-    private void cbImpuestoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbImpuestoKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txtStock.isEnabled()) {
@@ -2020,7 +2076,142 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 txtStock.selectAll();
             }
         }
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_ckHabilitarKeyPressed
+
+    private void cbImpuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbImpuestoActionPerformed
+        // TODO add your handling code here:
+        /*try {
+            if (cbImpuesto.getSelectedIndex() == 0) {
+                Mensajes.Sistema("No se ha especificado el Impuesto a aplicar.\nPor favor, seleccione la opción correspondiente para calcular el costo de iva.");
+                cbImpuesto.setPopupVisible(true);
+                cbImpuesto.requestFocus();
+            } else {
+                switch (cbImpuesto.getSelectedIndex()) {
+                    case 1 -> {
+                        CalculoIVAC(0);
+                        txtCosto.requestFocus();
+                    }
+                    case 2 -> {
+                        CalculoIVAC(5);
+                        txtCosto.requestFocus();
+                    }
+                    case 3 -> {
+                        CalculoIVAC(10);
+                        txtCosto.requestFocus();
+                    }
+                    default -> {
+                        txtCosto.requestFocus();
+                    }
+                }
+            }
+        } catch (Exception e) {
+        }*/
+    }//GEN-LAST:event_cbImpuestoActionPerformed
+
+    private void cbImpuestoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbImpuestoKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            try {
+                if (cbImpuesto.getSelectedIndex() == 0) {
+                    Mensajes.Sistema("No se ha especificado el Impuesto a aplicar.\nPor favor, seleccione la opción correspondiente para calcular el costo de iva.");
+                    cbImpuesto.setPopupVisible(true);
+                    cbImpuesto.requestFocus();
+                } else {
+                    switch (cbImpuesto.getSelectedIndex()) {
+                        case 1 -> {
+                            CalculoIVAC(0);
+                            txtCosto.requestFocus();
+                        }
+                        case 2 -> {
+                            CalculoIVAC(5);
+                            txtCosto.requestFocus();
+                        }
+                        case 3 -> {
+                            CalculoIVAC(10);
+                            txtCosto.requestFocus();
+                        }
+                        default -> {
+                            txtCosto.requestFocus();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+            }
+            txtCosto.requestFocus();
+        }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_cbImpuestoKeyPressed
+
+    private void btnNuevoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNuevoKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnNuevoKeyPressed
+
+    private void btnModificarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnModificarKeyPressed
+
+    private void btnGuardarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGuardarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnGuardarKeyPressed
+
+    private void btnCancelarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCancelarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnCancelarKeyPressed
+
+    private void rLibreKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rLibreKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_rLibreKeyPressed
+
+    private void rControladoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rControladoKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_rControladoKeyPressed
+
+    private void rNacionalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rNacionalKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_rNacionalKeyPressed
+
+    private void rImportadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rImportadoKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_rImportadoKeyPressed
+
+    private void rActivoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rActivoKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_rActivoKeyPressed
+
+    private void rInactivoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rInactivoKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_rInactivoKeyPressed
+
+    private void txtCodProductoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodProductoKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtCodProductoKeyPressed
+
+    private void txtDescripcionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDescripcionKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtDescripcionKeyPressed
+
+    private void txtIVACostoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIVACostoKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtIVACostoKeyPressed
+
+    private void btnSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSalirKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnSalirKeyPressed
 
     public int CalcularPrecioVentaxGan() {
         int band = 0;
@@ -2068,6 +2259,14 @@ public class dlgGestArticulos extends javax.swing.JDialog {
                 double dif = (double) (pv / pp);
                 double desc = Redondeo.redondearD((1 - dif) * 100);
                 txtDesc.setText(String.valueOf(desc));
+                switch (String.valueOf(desc)) {
+                    case "-Infinity" ->
+                        txtDesc.setText("0");
+                    case "NaN" ->
+                        txtDesc.setText("0");
+                    default ->
+                        txtDesc.setText(String.valueOf(desc));
+                }
             }
         } catch (NumberFormatException e) {
         }
@@ -2106,7 +2305,15 @@ public class dlgGestArticulos extends javax.swing.JDialog {
             pc = Double.parseDouble(txtCosto.getText().replace(".", "").replace(",", ""));
             G = (double) (pc / pv);
             double ganancia = Redondeo.redondearD((1 - G) * 100);
-            txtGanancia.setText(String.valueOf(ganancia));
+
+            switch (String.valueOf(ganancia)) {
+                case "-Infinity" ->
+                    txtGanancia.setText("0");
+                case "NaN" ->
+                    txtGanancia.setText("0");
+                default ->
+                    txtGanancia.setText(String.valueOf(ganancia));
+            }
         } catch (NumberFormatException e) {
         }
     }
@@ -2140,14 +2347,29 @@ public class dlgGestArticulos extends javax.swing.JDialog {
     }
 
     void Volver() {
-        CabecerasTablas cabe = new CabecerasTablas();
-        cabe.Articulos(dlgArticulos.tbProductos);
-        CabecerasTablas.limpiarTablas(dlgArticulos.tbProductos);
-        controlArticulo.listArticulo(dlgArticulos.tbProductos, "cod");
-        dlgArticulos.Renders();
-        dlgArticulos.txtBuscar.requestFocus();
-        dlgArticulos.txtBuscar.setText("");
-        dlgArticulos.tbProductos.clearSelection();
+        try {
+            CabecerasTablas.Articulos(dlgArticulos.tbProductos);
+            CabecerasTablas.limpiarTablaArticulos(dlgArticulos.tbProductos);
+            controlArticulo.listArticulo(dlgArticulos.tbProductos, "cod");
+            dlgArticulos.Renders();
+            dlgArticulos.txtBuscar.requestFocus();
+            dlgArticulos.txtBuscar.setText("");
+            dlgArticulos.tbProductos.clearSelection();
+        } catch (Exception e) {
+        }
+    }
+
+    void Volver2() {
+        try {
+            CabecerasTablas.tablaArticuloAuxiliar(dlgBuscarArticuloCompra.tbDetalle);
+            CabecerasTablas.limpiarTablaTablaArticuloAuxiliar(dlgBuscarArticuloCompra.tbDetalle);
+            controlArticulo.filtrarCodBarraActivo(dlgBuscarArticuloCompra.tbDetalle, "");
+            dlgBuscarArticuloCompra.Renders();
+            dlgBuscarArticuloCompra.txtBuscar.requestFocus();
+            dlgBuscarArticuloCompra.txtBuscar.setText("");
+            dlgBuscarArticuloCompra.tbDetalle.clearSelection();
+        } catch (Exception e) {
+        }
     }
 
     public void modcbLaboratorio() {

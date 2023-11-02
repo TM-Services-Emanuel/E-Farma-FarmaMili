@@ -9,24 +9,22 @@ import java.awt.event.KeyEvent;
 
 public class dlgBuscarCliente1 extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
-
     public dlgBuscarCliente1(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.buscarCliente(tbDetalle);
-        CabecerasTablas.limpiarTablas(tbDetalle);
+        CabecerasTablas.buscarCliente(tbDetalle);
+        CabecerasTablas.limpiarTablaBuscarCliente(tbDetalle);
         controlCliente.listClientes(tbDetalle, "clientes.cli_codigo");
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png")));
         txtBuscar.requestFocus();
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Buscar cliente");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Buscar cliente");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Buscar cliente");
         }
     }
 
@@ -41,13 +39,6 @@ public class dlgBuscarCliente1 extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -120,7 +111,7 @@ public class dlgBuscarCliente1 extends javax.swing.JDialog {
             .addGroup(OscuroLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -155,7 +146,7 @@ public class dlgBuscarCliente1 extends javax.swing.JDialog {
         Blanco.setLayout(BlancoLayout);
         BlancoLayout.setHorizontalGroup(
             BlancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Oscuro, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+            .addComponent(Oscuro, javax.swing.GroupLayout.PREFERRED_SIZE, 656, Short.MAX_VALUE)
             .addGroup(BlancoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -167,7 +158,7 @@ public class dlgBuscarCliente1 extends javax.swing.JDialog {
                 .addComponent(Oscuro, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 10, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -204,11 +195,11 @@ public class dlgBuscarCliente1 extends javax.swing.JDialog {
                 txtBuscar.selectAll();
             } else {
                 tbDetalle.requestFocus();
-               // tbDetalle.changeSelection(0, 0, false, false);
-               tbDetalle.getSelectionModel().setSelectionInterval(0, 0);
+                // tbDetalle.changeSelection(0, 0, false, false);
+                tbDetalle.getSelectionModel().setSelectionInterval(0, 0);
             }
 
-        }else if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             this.dispose();
         }
     }//GEN-LAST:event_txtBuscarKeyPressed
@@ -217,11 +208,14 @@ public class dlgBuscarCliente1 extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             String cod = txtBuscar.getText();
-            CabecerasTablas.limpiarTablas(tbDetalle);
-            controlCliente.listClientes(tbDetalle, "clientes.cli_codigo");
-            CabecerasTablas.limpiarTablas(tbDetalle);
-            controlCliente.filtRuc(tbDetalle, cod);
-            controlCliente.filtClientes(tbDetalle, cod);
+            if (cod.length() == 0) {
+                CabecerasTablas.limpiarTablaBuscarCliente(tbDetalle);
+                controlCliente.listClientes(tbDetalle, "clientes.cli_codigo");
+            } else {
+                CabecerasTablas.limpiarTablaBuscarCliente(tbDetalle);
+                //controlCliente.filtRuc(tbDetalle, cod);
+                controlCliente.filtClientes(tbDetalle, cod);
+            }
         } catch (Exception e) {
             System.out.println("Caracter Invalido " + e.getMessage());
         }
@@ -242,7 +236,7 @@ public class dlgBuscarCliente1 extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             controlFactura.selectCliente1();
             this.dispose();
-        }else if(evt.getKeyCode()== KeyEvent.VK_ESCAPE){
+        } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             txtBuscar.requestFocus();
             txtBuscar.selectAll();
         }
@@ -269,9 +263,8 @@ public class dlgBuscarCliente1 extends javax.swing.JDialog {
         }
         //</editor-fold>
         //</editor-fold>
-        
-        //</editor-fold>
 
+        //</editor-fold>
         java.awt.EventQueue.invokeLater(() -> {
             dlgBuscarCliente1 dialog = new dlgBuscarCliente1(new javax.swing.JFrame(), true);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -290,7 +283,13 @@ public class dlgBuscarCliente1 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tbDetalle;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

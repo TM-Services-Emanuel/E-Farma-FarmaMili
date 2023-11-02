@@ -1,11 +1,11 @@
 package IU;
 
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.RenderDecimal1conPuntos;
 import Componentes.RenderDecimalCosto;
 import Componentes.RenderDecimalPublico;
 import Componentes.RenderDecimalVenta;
-import Componentes.RenderDecimalsinColor;
 import Componentes.ReporteF;
 import Componentes.Software;
 import Componentes.clsExportarExcel;
@@ -13,7 +13,6 @@ import Controladores.CabecerasTablas;
 import Controladores.controlArticulo;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,20 +21,22 @@ import javax.swing.SwingUtilities;
 
 public class dlgArticulos extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
     clsExportarExcel Export;
     public ReporteF jasper;
+    private static Point point;
+    public static int min;
 
     public dlgArticulos(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
+        min = 0;
         initComponents();
         titulo();
-        Barra_Menu.setVisible(false);
         jasper = new ReporteF();
-        cabe.Articulos(tbProductos);
+        CabecerasTablas.Articulos(tbProductos);
         controlArticulo.filtrarGral(tbProductos, "");
         Renders();
         txtBuscar.requestFocus();
+        System.out.println("inicializando min: " + min);
     }
 
     final void titulo() {
@@ -43,6 +44,36 @@ public class dlgArticulos extends javax.swing.JDialog {
             this.setTitle("Gestor de artículos");
         } else {
             this.setTitle(Software.getSoftware() + " - Gestor de artículos");
+        }
+    }
+
+    void Volver2() {
+        try {
+            CabecerasTablas.tablaArticuloAuxiliar(dlgBuscarArticuloCompra.tbDetalle);
+            CabecerasTablas.limpiarTablaTablaArticuloAuxiliar(dlgBuscarArticuloCompra.tbDetalle);
+            controlArticulo.filtrarCodBarraActivo(dlgBuscarArticuloCompra.tbDetalle, "");
+            dlgBuscarArticuloCompra.Renders();
+            dlgBuscarArticuloCompra.txtBuscar.requestFocus();
+            dlgBuscarArticuloCompra.txtBuscar.setText("");
+            dlgBuscarArticuloCompra.tbDetalle.clearSelection();
+        } catch (Exception e) {
+            System.out.println("Error volviendo a dlgBuscarArticuloCompra: " + e.getMessage());
+        }
+    }
+
+    private void AccesoRapido(int n) {
+
+        switch (n) {
+            case KeyEvent.VK_F1 ->
+                btnNuevo.doClick();
+            case KeyEvent.VK_F5 ->
+                btnModificar.doClick();
+            case KeyEvent.VK_DELETE ->
+                btnEliminar.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
+            default -> {
+            }
         }
     }
 
@@ -58,7 +89,11 @@ public class dlgArticulos extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
+        dlgMinimizado = new javax.swing.JFrame();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        btnEvento1 = new RSMaterialComponent.RSButtonIconUno();
+        FondoBlanco = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         PanelContenedor = new rojeru_san.rspanel.RSPanelImage();
         btnNuevo = new RSMaterialComponent.RSButtonIconUno();
@@ -73,39 +108,60 @@ public class dlgArticulos extends javax.swing.JDialog {
         Separador2 = new javax.swing.JSeparator();
         LabelTitulo2 = new javax.swing.JLabel();
         PanelContenedor3 = new rojeru_san.rspanel.RSPanelImage();
-        rSButtonIconUno4 = new RSMaterialComponent.RSButtonIconUno();
+        btnActualizar = new RSMaterialComponent.RSButtonIconUno();
         Separador3 = new javax.swing.JSeparator();
         LabelTitulo3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txtBuscar = new RSMaterialComponent.RSTextFieldMaterialIcon();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbProductos = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
+        btnSalir = new RSMaterialComponent.RSButtonIconUno();
+        btnEvento = new RSMaterialComponent.RSButtonIconUno();
+
+        dlgMinimizado.setUndecorated(true);
+
+        jPanel1.setBackground(new java.awt.Color(17, 35, 46));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel19.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Gestionar Productos");
+        jPanel1.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 9, 110, 12));
+
+        btnEvento1.setBackground(new java.awt.Color(17, 35, 46));
+        btnEvento1.setToolTipText("F12");
+        btnEvento1.setBackgroundHover(new java.awt.Color(17, 35, 46));
+        btnEvento1.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_UP);
+        btnEvento1.setRippleColor(java.awt.Color.white);
+        btnEvento1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEvento1ActionPerformed(evt);
             }
-        };
-        btnSalir1 = new RSMaterialComponent.RSButtonIconUno();
-        Barra_Menu = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        itemNuevoE = new javax.swing.JMenuItem();
-        itemModificarE = new javax.swing.JMenuItem();
-        itemEliminarE = new javax.swing.JMenuItem();
-        jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        itemOrdenC = new javax.swing.JMenuItem();
-        itemOrdenN = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        itemExportar = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        itemSalir = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        itemNuevoE1 = new javax.swing.JMenuItem();
+        });
+        btnEvento1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEvento1KeyPressed(evt);
+            }
+        });
+        jPanel1.add(btnEvento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 2, 25, 25));
+
+        javax.swing.GroupLayout dlgMinimizadoLayout = new javax.swing.GroupLayout(dlgMinimizado.getContentPane());
+        dlgMinimizado.getContentPane().setLayout(dlgMinimizadoLayout);
+        dlgMinimizadoLayout.setHorizontalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        dlgMinimizadoLayout.setVerticalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
         setResizable(false);
+        setType(java.awt.Window.Type.POPUP);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
             }
@@ -118,10 +174,25 @@ public class dlgArticulos extends javax.swing.JDialog {
                 formWindowStateChanged(evt);
             }
         });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        FondoBlanco.setBackground(new java.awt.Color(255, 255, 255));
+        FondoBlanco.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
+        FondoBlanco.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                FondoBlancoMouseDragged(evt);
+            }
+        });
+        FondoBlanco.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                FondoBlancoMousePressed(evt);
+            }
+        });
+        FondoBlanco.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel4.setOpaque(false);
 
@@ -129,6 +200,7 @@ public class dlgArticulos extends javax.swing.JDialog {
         PanelContenedor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnNuevo.setBackground(new java.awt.Color(0, 102, 0));
+        btnNuevo.setToolTipText("F1");
         btnNuevo.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnNuevo.setForegroundHover(new java.awt.Color(0, 102, 0));
         btnNuevo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
@@ -137,6 +209,11 @@ public class dlgArticulos extends javax.swing.JDialog {
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNuevoActionPerformed(evt);
+            }
+        });
+        btnNuevo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnNuevoKeyPressed(evt);
             }
         });
         PanelContenedor.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
@@ -153,6 +230,7 @@ public class dlgArticulos extends javax.swing.JDialog {
         PanelContenedor1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnModificar.setBackground(new java.awt.Color(255, 102, 0));
+        btnModificar.setToolTipText("F5");
         btnModificar.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnModificar.setForegroundHover(new java.awt.Color(255, 102, 0));
         btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
@@ -161,6 +239,11 @@ public class dlgArticulos extends javax.swing.JDialog {
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
+            }
+        });
+        btnModificar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnModificarKeyPressed(evt);
             }
         });
         PanelContenedor1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
@@ -178,6 +261,7 @@ public class dlgArticulos extends javax.swing.JDialog {
         PanelContenedor2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnEliminar.setBackground(new java.awt.Color(255, 0, 0));
+        btnEliminar.setToolTipText("DELETE");
         btnEliminar.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnEliminar.setForegroundHover(new java.awt.Color(255, 0, 0));
         btnEliminar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
@@ -186,6 +270,11 @@ public class dlgArticulos extends javax.swing.JDialog {
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
+            }
+        });
+        btnEliminar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEliminarKeyPressed(evt);
             }
         });
         PanelContenedor2.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
@@ -202,18 +291,23 @@ public class dlgArticulos extends javax.swing.JDialog {
         PanelContenedor3.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
         PanelContenedor3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        rSButtonIconUno4.setBackground(new java.awt.Color(0, 153, 255));
-        rSButtonIconUno4.setBackgroundHover(new java.awt.Color(255, 255, 255));
-        rSButtonIconUno4.setForegroundHover(new java.awt.Color(0, 153, 255));
-        rSButtonIconUno4.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REFRESH);
-        rSButtonIconUno4.setRippleColor(java.awt.Color.white);
-        rSButtonIconUno4.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
-        rSButtonIconUno4.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setBackground(new java.awt.Color(0, 153, 255));
+        btnActualizar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnActualizar.setForegroundHover(new java.awt.Color(0, 153, 255));
+        btnActualizar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.REFRESH);
+        btnActualizar.setRippleColor(java.awt.Color.white);
+        btnActualizar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIconUno4ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
-        PanelContenedor3.add(rSButtonIconUno4, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
+        btnActualizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnActualizarKeyPressed(evt);
+            }
+        });
+        PanelContenedor3.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 15, 45, 45));
 
         Separador3.setForeground(new java.awt.Color(204, 204, 204));
         PanelContenedor3.add(Separador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 65, 76, 3));
@@ -251,10 +345,10 @@ public class dlgArticulos extends javax.swing.JDialog {
                 .addGap(0, 0, 0))
         );
 
-        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 1, 410, 100));
+        FondoBlanco.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 1, 410, 100));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo_2.5.png"))); // NOI18N
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, -10, 690, 120));
+        FondoBlanco.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, -10, 690, 120));
 
         txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
         txtBuscar.setColorIcon(new java.awt.Color(17, 35, 46));
@@ -279,11 +373,11 @@ public class dlgArticulos extends javax.swing.JDialog {
                 txtBuscarKeyTyped(evt);
             }
         });
-        jPanel3.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 70, 669, 30));
+        FondoBlanco.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(688, 70, 583, 30));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
-        tbProductos.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        tbProductos.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         tbProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -316,131 +410,56 @@ public class dlgArticulos extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tbProductos);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 110, 1356, 529));
+        FondoBlanco.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 105, 1270, 528));
 
-        btnSalir1.setBackground(new java.awt.Color(255, 255, 255));
-        btnSalir1.setBackgroundHover(new java.awt.Color(205, 0, 0));
-        btnSalir1.setForegroundText(new java.awt.Color(17, 35, 46));
-        btnSalir1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
-        btnSalir1.setRippleColor(java.awt.Color.white);
-        btnSalir1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
-        btnSalir1.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setBackground(new java.awt.Color(255, 255, 255));
+        btnSalir.setToolTipText("F12");
+        btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
+        btnSalir.setForegroundText(new java.awt.Color(17, 35, 46));
+        btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir.setRippleColor(java.awt.Color.white);
+        btnSalir.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalir1ActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
-        jPanel3.add(btnSalir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 4, 25, 25));
-
-        jMenu1.setText("Opciones");
-        jMenu1.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jMenu1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-
-        itemNuevoE.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        itemNuevoE.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemNuevoE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/addproducto - copia.png"))); // NOI18N
-        itemNuevoE.setText("Nuevo");
-        itemNuevoE.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemNuevoEActionPerformed(evt);
+        btnSalir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnSalirKeyPressed(evt);
             }
         });
-        jMenu1.add(itemNuevoE);
+        FondoBlanco.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1244, 4, 25, 25));
 
-        itemModificarE.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
-        itemModificarE.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemModificarE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/modificarproducto - copia.png"))); // NOI18N
-        itemModificarE.setText("Modificar");
-        itemModificarE.addActionListener(new java.awt.event.ActionListener() {
+        btnEvento.setBackground(new java.awt.Color(255, 255, 255));
+        btnEvento.setToolTipText("MINIMIZAR");
+        btnEvento.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnEvento.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento.setForegroundText(new java.awt.Color(17, 35, 46));
+        btnEvento.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_DOWN);
+        btnEvento.setRippleColor(java.awt.Color.white);
+        btnEvento.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemModificarEActionPerformed(evt);
+                btnEventoActionPerformed(evt);
             }
         });
-        jMenu1.add(itemModificarE);
-
-        itemEliminarE.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, 0));
-        itemEliminarE.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemEliminarE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/deleteproducto - copia.png"))); // NOI18N
-        itemEliminarE.setText("Eliminar");
-        itemEliminarE.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemEliminarEActionPerformed(evt);
+        btnEvento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEventoKeyPressed(evt);
             }
         });
-        jMenu1.add(itemEliminarE);
-        jMenu1.add(jSeparator4);
-
-        itemOrdenC.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemOrdenC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/orderC15.png"))); // NOI18N
-        itemOrdenC.setText("Ordenar por Código");
-        itemOrdenC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemOrdenCActionPerformed(evt);
-            }
-        });
-        jMenu1.add(itemOrdenC);
-
-        itemOrdenN.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemOrdenN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/orderN15.png"))); // NOI18N
-        itemOrdenN.setText("Ordenar por Nombre Comercial");
-        itemOrdenN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemOrdenNActionPerformed(evt);
-            }
-        });
-        jMenu1.add(itemOrdenN);
-        jMenu1.add(jSeparator2);
-
-        itemExportar.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/excel15.png"))); // NOI18N
-        itemExportar.setText("Exportar datos a EXCEL");
-        itemExportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemExportarActionPerformed(evt);
-            }
-        });
-        jMenu1.add(itemExportar);
-        jMenu1.add(jSeparator3);
-
-        itemSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        itemSalir.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back15.png"))); // NOI18N
-        itemSalir.setText("Salir");
-        itemSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemSalirActionPerformed(evt);
-            }
-        });
-        jMenu1.add(itemSalir);
-
-        Barra_Menu.add(jMenu1);
-
-        jMenu2.setText("Reporte");
-        jMenu2.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jMenu2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-
-        itemNuevoE1.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemNuevoE1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reports.png"))); // NOI18N
-        itemNuevoE1.setText("Reporte de Artículos con Stock Crítico");
-        itemNuevoE1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemNuevoE1ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(itemNuevoE1);
-
-        Barra_Menu.add(jMenu2);
-
-        setJMenuBar(Barra_Menu);
+        FondoBlanco.add(btnEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1214, 4, 25, 25));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 1360, Short.MAX_VALUE)
+            .addComponent(FondoBlanco, javax.swing.GroupLayout.DEFAULT_SIZE, 1274, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(FondoBlanco, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
         );
 
         pack();
@@ -455,7 +474,7 @@ public class dlgArticulos extends javax.swing.JDialog {
             modelos.setSelectionInterval(number, number);
         }
     }//GEN-LAST:event_tbProductosMousePressed
-    void nuevoArticulo() {
+    public static void nuevoArticulo() {
         dlgGestArticulos gestArticulos = new dlgGestArticulos(null, true);
         gestArticulos.setLocationRelativeTo(null);
         gestArticulos.Nuevo();
@@ -492,7 +511,7 @@ public class dlgArticulos extends javax.swing.JDialog {
             int rpta = Mensajes.confirmar("Desea realmente eliminar " + desc + " de la lista");
             if (rpta == 0) {
                 controlArticulo.delArticulo();
-                CabecerasTablas.limpiarTablas(tbProductos);
+                CabecerasTablas.limpiarTablaArticulos(tbProductos);
                 controlArticulo.listArticulo(tbProductos, "cod");
                 txtBuscar.setText("");
                 txtBuscar.requestFocus();
@@ -508,48 +527,6 @@ public class dlgArticulos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_tbProductosMouseClicked
 
-    private void itemNuevoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoEActionPerformed
-        // TODO add your handling code here:
-        btnNuevoActionPerformed(null);
-    }//GEN-LAST:event_itemNuevoEActionPerformed
-
-    private void itemModificarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemModificarEActionPerformed
-        // TODO add your handling code here:
-        btnModificarActionPerformed(null);
-    }//GEN-LAST:event_itemModificarEActionPerformed
-
-    private void itemEliminarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemEliminarEActionPerformed
-        // TODO add your handling code here:
-        btnEliminarActionPerformed(null);
-    }//GEN-LAST:event_itemEliminarEActionPerformed
-
-    private void itemOrdenCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemOrdenCActionPerformed
-        // TODO add your handling code here:
-        CabecerasTablas.limpiarTablas(tbProductos);
-        controlArticulo.listArticulo(tbProductos, "cod");
-    }//GEN-LAST:event_itemOrdenCActionPerformed
-
-    private void itemOrdenNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemOrdenNActionPerformed
-        // TODO add your handling code here:
-        CabecerasTablas.limpiarTablas(tbProductos);
-        controlArticulo.listArticulo(tbProductos, "descripcion");
-    }//GEN-LAST:event_itemOrdenNActionPerformed
-
-    private void itemExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemExportarActionPerformed
-
-        try {
-            Export = new clsExportarExcel();
-            Export.exportarExcel(tbProductos);
-        } catch (IOException ex) {
-            Logger.getLogger(dlgClientes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_itemExportarActionPerformed
-
-    private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
-        // TODO add your handling code here:
-        btnSalir1ActionPerformed(null);
-    }//GEN-LAST:event_itemSalirActionPerformed
-
     private void tbProductosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbProductosKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -558,6 +535,7 @@ public class dlgArticulos extends javax.swing.JDialog {
             txtBuscar.requestFocus();
             txtBuscar.selectAll();
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_tbProductosKeyPressed
 
     private void formWindowLostFocus(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowLostFocus
@@ -568,27 +546,14 @@ public class dlgArticulos extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_formWindowStateChanged
 
-    private void itemNuevoE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoE1ActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        try {
-            dlgReporteStockCritico rsc = new dlgReporteStockCritico(null, false);
-            rsc.setLocationRelativeTo(null);
-            rsc.setVisible(true);
-        } catch (Exception e) {
-            Mensajes.informacion("No hay conexión con el servidor");
-        }
-
-        //
-    }//GEN-LAST:event_itemNuevoE1ActionPerformed
-
-    private void rSButtonIconUno4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconUno4ActionPerformed
-        // TODO add your handling code here:
-        cabe.Articulos(tbProductos);
+        CabecerasTablas.limpiarTablaArticulos(tbProductos);
         controlArticulo.filtrarGral(tbProductos, "");
         Renders();
         txtBuscar.setText("");
         txtBuscar.requestFocus();
-    }//GEN-LAST:event_rSButtonIconUno4ActionPerformed
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
@@ -627,6 +592,7 @@ public class dlgArticulos extends javax.swing.JDialog {
                 tbProductos.getSelectionModel().setSelectionInterval(0, 0);
             }
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
@@ -634,13 +600,8 @@ public class dlgArticulos extends javax.swing.JDialog {
         System.out.println(txtBuscar.getText().trim().length());
         try {
             String cod = txtBuscar.getText();
-            cabe.Articulos(tbProductos);
-            CabecerasTablas.limpiarTablas(tbProductos);
+            CabecerasTablas.limpiarTablaArticulos(tbProductos);
             controlArticulo.filtrarGral(tbProductos, cod);
-            /*cabe.Articulos(tbProductos);
-            controlArticulo.listArticulo(tbProductos, "cod");
-            CabecerasTablas.limpiarTablas(tbProductos);
-            controlArticulo.filtrarGral(tbProductos, cod);*/
             Renders();
         } catch (Exception e) {
             System.out.println("Mensaje de Error: " + e.getMessage());
@@ -657,13 +618,96 @@ public class dlgArticulos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtBuscarKeyTyped
 
-    private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         int rpta = Mensajes.confirmar("¿Seguro que desea cerrar este formulario?");
         if (rpta == 0) {
-            this.dispose();
+            try {
+                Volver2();
+                System.out.println("btnCerrar min: " + min);
+                min = 0;
+                this.dispose();
+            } catch (Exception e) {
+                System.out.println("Error btnSalir: " + e.getMessage());
+            }
         }
-    }//GEN-LAST:event_btnSalir1ActionPerformed
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnNuevoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNuevoKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnNuevoKeyPressed
+
+    private void btnModificarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnModificarKeyPressed
+
+    private void btnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnEliminarKeyPressed
+
+    private void btnActualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnActualizarKeyPressed
+
+    private void btnSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSalirKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnSalirKeyPressed
+
+    private void btnEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoActionPerformed
+        // TODO add your handling code here:
+        min = 1;
+        System.out.println("btnEvento min: " + min);
+        this.setVisible(false);
+        Notif.Notify_Minim_dlgArticulos("Notificación del sistema", "Formulario de Gestión de Productos minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+    }//GEN-LAST:event_btnEventoActionPerformed
+
+    private void btnEventoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEventoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEventoKeyPressed
+
+    private void FondoBlancoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoBlancoMousePressed
+        // TODO add your handling code here:
+        point = evt.getPoint();
+        getComponentAt(point);
+    }//GEN-LAST:event_FondoBlancoMousePressed
+
+    private void FondoBlancoMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoBlancoMouseDragged
+        // TODO add your handling code here:
+        int CurrentX = this.getLocation().x;
+        int CurrentY = this.getLocation().y;
+
+        int MoveX = (CurrentX + evt.getX()) - (CurrentX + point.x);
+        int MoveY = (CurrentY + evt.getY()) - (CurrentY + point.y);
+
+        int x = CurrentX + MoveX;
+        int y = CurrentY + MoveY;
+
+        this.setLocation(x, y);
+    }//GEN-LAST:event_FondoBlancoMouseDragged
+
+    private void btnEvento1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEvento1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEvento1KeyPressed
+
+    private void btnEvento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEvento1ActionPerformed
+        // TODO add your handling code here:
+        min = 0;
+        System.out.println("btnEvento1 min: " + min);
+        dlgMinimizado.dispose();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        
+    }//GEN-LAST:event_btnEvento1ActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        txtBuscar.requestFocus();
+    }//GEN-LAST:event_formWindowActivated
 
     public static void main(String args[]) {
 
@@ -703,7 +747,7 @@ public class dlgArticulos extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar Barra_Menu;
+    private javax.swing.JPanel FondoBlanco;
     private javax.swing.JLabel LabelTitulo;
     private javax.swing.JLabel LabelTitulo1;
     private javax.swing.JLabel LabelTitulo2;
@@ -716,29 +760,26 @@ public class dlgArticulos extends javax.swing.JDialog {
     private javax.swing.JSeparator Separador1;
     private javax.swing.JSeparator Separador2;
     private javax.swing.JSeparator Separador3;
+    private RSMaterialComponent.RSButtonIconUno btnActualizar;
     private RSMaterialComponent.RSButtonIconUno btnEliminar;
+    private RSMaterialComponent.RSButtonIconUno btnEvento;
+    public static RSMaterialComponent.RSButtonIconUno btnEvento1;
     private RSMaterialComponent.RSButtonIconUno btnModificar;
     private RSMaterialComponent.RSButtonIconUno btnNuevo;
-    private RSMaterialComponent.RSButtonIconUno btnSalir1;
-    private javax.swing.JMenuItem itemEliminarE;
-    private javax.swing.JMenuItem itemExportar;
-    private javax.swing.JMenuItem itemModificarE;
-    private javax.swing.JMenuItem itemNuevoE;
-    public javax.swing.JMenuItem itemNuevoE1;
-    private javax.swing.JMenuItem itemOrdenC;
-    private javax.swing.JMenuItem itemOrdenN;
-    private javax.swing.JMenuItem itemSalir;
+    private RSMaterialComponent.RSButtonIconUno btnSalir;
+    private javax.swing.JFrame dlgMinimizado;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
-    private javax.swing.JPopupMenu.Separator jSeparator4;
-    private RSMaterialComponent.RSButtonIconUno rSButtonIconUno4;
-    public static javax.swing.JTable tbProductos;
+    private final javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
+    public static final javax.swing.JTable tbProductos = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static RSMaterialComponent.RSTextFieldMaterialIcon txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

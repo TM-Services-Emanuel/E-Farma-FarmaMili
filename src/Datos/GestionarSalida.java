@@ -25,11 +25,6 @@ public class GestionarSalida {
         sql.append(s.getObs()).append("','S','");
         sql.append(s.getUsuario()).append("')");
         msg = Operacion.exeOperacion(sql.toString());
-//        msg = Operacion.exeOperacion("INSERT INTO salidas VALUES (" 
-//                + s.getCodSal() + ",'" 
-//                + s.getFecha() + "','" 
-//                + Fecha.darHora() + "'," 
-//                + s.getMonto() + ",'S')");
         return msg;
     }
 

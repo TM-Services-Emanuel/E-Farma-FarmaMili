@@ -15,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class controlNotaCredito {
 
-    static CabecerasTablas cabe = new CabecerasTablas();
     static Factura fac;
     static Cliente cli;
     static Vendedor vend;
@@ -66,8 +65,8 @@ public class controlNotaCredito {
     }
 
     public static void addArray() { //Agregar informacion de la factura al Array
-        CabecerasTablas.limpiarTablas(dlgNotasCredito.jTable1);
-        cabe.detallePresupuesto(dlgNotasCredito.jTable1);
+        CabecerasTablas.limpiarTablaDetallePresupuesto(dlgNotasCredito.jTable1);
+        CabecerasTablas.detallePresupuesto(dlgNotasCredito.jTable1);
         controlNotaCredito.listDetalle(dlgNotasCredito.jTable1);
         DefaultTableModel tb = (DefaultTableModel) dlgNotasCredito.jTable1.getModel();
         int fila = tb.getRowCount();

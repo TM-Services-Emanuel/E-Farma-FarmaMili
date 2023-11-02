@@ -10,11 +10,10 @@ import java.awt.event.KeyEvent;
 
 public class dlgNotasCredito extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
     public dlgNotasCredito(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cabe.detallePresupuesto(jTable1);
+        CabecerasTablas.detallePresupuesto(jTable1);
         String cod = GestionarNotaCretito.getCodigo();
         txtCodNota.setText(cod);
     }
@@ -51,13 +50,6 @@ public class dlgNotasCredito extends javax.swing.JDialog {
         txtCodArticulo = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jLabel12 = new javax.swing.JLabel();
         txtDescTotal = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -442,7 +434,7 @@ public class dlgNotasCredito extends javax.swing.JDialog {
         });
         jMenu1.add(jMenuItem5);
 
-        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem6.setText("[-] Descuento Global");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -812,7 +804,13 @@ public class dlgNotasCredito extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    public static javax.swing.JTable jTable1;
+    public static final javax.swing.JTable jTable1 = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JLabel lblDescripcion;
     public static javax.swing.JTextField txtCant;
     public static javax.swing.JTextField txtCodArticulo;

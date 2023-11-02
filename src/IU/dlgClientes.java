@@ -1,13 +1,13 @@
 package IU;
 
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.RenderDecimalVenta;
 import Componentes.Software;
 import Componentes.clsExportarExcel;
 import Controladores.CabecerasTablas;
 import Controladores.controlCliente;
 import static IU.dlgBuscarCliente.tbDetalle;
-import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -17,15 +17,17 @@ import javax.swing.SwingUtilities;
 
 public final class dlgClientes extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
     clsExportarExcel Export;
+    private static Point point;
+    public static int min;
 
     public dlgClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        min = 0;
         initComponents();
         titulo();
         txtBuscar.requestFocus();
-        cabe.cliente(tablaClientes);
+        CabecerasTablas.cliente(tablaClientes);
         controlCliente.listClientes(tablaClientes, "clientes.cli_codigo");
         Renders();
         tablaClientes.getTableHeader().setReorderingAllowed(false);
@@ -50,13 +52,32 @@ public final class dlgClientes extends javax.swing.JDialog {
                 btnEliminar.doClick();
             case KeyEvent.VK_F5 ->
                 btnModificar.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
             default -> {
             }
         }
     }
-    
-     public static void Renders() {
+
+    public static void Renders() {
         dlgClientes.tablaClientes.getColumnModel().getColumn(8).setCellRenderer(new RenderDecimalVenta());
+    }
+
+    private void Modificar() {
+        try {
+            dlgGestClientes cli = new dlgGestClientes(null, true);
+            cli.setLocationRelativeTo(null);
+            controlCliente.aModificar();
+            cli.setTitle("Modificación de Cliente");
+            dlgGestClientes.btnModificar.setEnabled(true);
+            dlgGestClientes.btnGuardar.setEnabled(false);
+            dlgGestClientes.btnNuevo.setEnabled(false);
+            dlgGestClientes.btnCancelar.setEnabled(true);
+            cli.setVisible(true);
+        } catch (Exception e) {
+            Mensajes.Sistema("No se pudo cargar información del proveedor");
+            txtBuscar.requestFocus();
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -66,16 +87,13 @@ public final class dlgClientes extends javax.swing.JDialog {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         itemPModificarP = new javax.swing.JMenuItem();
         itemPEliminarP = new javax.swing.JMenuItem();
+        dlgMinimizado = new javax.swing.JFrame();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        btnEvento1 = new RSMaterialComponent.RSButtonIconUno();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaClientes = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
-        jPanel5 = new javax.swing.JPanel();
+        panelCabecera = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         PnlNuevo1 = new rojeru_san.rspanel.RSPanelImage();
         btnNuevo = new RSMaterialComponent.RSButtonIconUno();
@@ -91,6 +109,7 @@ public final class dlgClientes extends javax.swing.JDialog {
         LabelTitulo8 = new javax.swing.JLabel();
         btnSalir = new RSMaterialComponent.RSButtonIconUno();
         txtBuscar = new rojeru_san.rsfield.RSTextMaterial();
+        btnEvento = new RSMaterialComponent.RSButtonIconUno();
 
         jPopupMenu1.setLabel("Opciones");
 
@@ -114,9 +133,55 @@ public final class dlgClientes extends javax.swing.JDialog {
         });
         jPopupMenu1.add(itemPEliminarP);
 
+        dlgMinimizado.setUndecorated(true);
+
+        jPanel6.setBackground(new java.awt.Color(17, 35, 46));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel28.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setText("Gestionar Productos");
+        jPanel6.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 9, 110, 12));
+
+        btnEvento1.setBackground(new java.awt.Color(17, 35, 46));
+        btnEvento1.setToolTipText("F12");
+        btnEvento1.setBackgroundHover(new java.awt.Color(17, 35, 46));
+        btnEvento1.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_UP);
+        btnEvento1.setRippleColor(java.awt.Color.white);
+        btnEvento1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEvento1ActionPerformed(evt);
+            }
+        });
+        btnEvento1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEvento1KeyPressed(evt);
+            }
+        });
+        jPanel6.add(btnEvento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 2, 25, 25));
+
+        javax.swing.GroupLayout dlgMinimizadoLayout = new javax.swing.GroupLayout(dlgMinimizado.getContentPane());
+        dlgMinimizado.getContentPane().setLayout(dlgMinimizadoLayout);
+        dlgMinimizadoLayout.setHorizontalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        dlgMinimizadoLayout.setVerticalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
@@ -154,13 +219,26 @@ public final class dlgClientes extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tablaClientesKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tablaClientesKeyReleased(evt);
+            }
         });
         jScrollPane1.setViewportView(tablaClientes);
 
         jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 110, 1168, 494));
 
-        jPanel5.setBackground(new java.awt.Color(17, 35, 46));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelCabecera.setBackground(new java.awt.Color(17, 35, 46));
+        panelCabecera.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panelCabeceraMouseDragged(evt);
+            }
+        });
+        panelCabecera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panelCabeceraMousePressed(evt);
+            }
+        });
+        panelCabecera.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -264,9 +342,10 @@ public final class dlgClientes extends javax.swing.JDialog {
 
         jPanel2.add(PnlEliminarG, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, 100));
 
-        jPanel5.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        panelCabecera.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setToolTipText("F12");
         btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
         btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
         btnSalir.setRippleColor(java.awt.Color.white);
@@ -281,7 +360,7 @@ public final class dlgClientes extends javax.swing.JDialog {
                 btnSalirKeyPressed(evt);
             }
         });
-        jPanel5.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1146, 3, 20, 20));
+        panelCabecera.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1146, 3, 20, 20));
 
         txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
         txtBuscar.setColorMaterial(new java.awt.Color(255, 102, 0));
@@ -298,9 +377,27 @@ public final class dlgClientes extends javax.swing.JDialog {
                 txtBuscarKeyTyped(evt);
             }
         });
-        jPanel5.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 75, 680, 23));
+        panelCabecera.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 75, 680, 23));
 
-        jPanel4.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 1169, 105));
+        btnEvento.setBackground(new java.awt.Color(17, 35, 46));
+        btnEvento.setToolTipText("MINIMIZAR");
+        btnEvento.setBackgroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_DOWN);
+        btnEvento.setRippleColor(java.awt.Color.white);
+        btnEvento.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEventoActionPerformed(evt);
+            }
+        });
+        btnEvento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEventoKeyPressed(evt);
+            }
+        });
+        panelCabecera.add(btnEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1122, 3, 20, 20));
+
+        jPanel4.add(panelCabecera, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 1169, 105));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -340,38 +437,14 @@ public final class dlgClientes extends javax.swing.JDialog {
     private void tablaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClientesMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            try {
-                dlgGestClientes cli = new dlgGestClientes(null, true);
-                cli.setLocationRelativeTo(null);
-                controlCliente.aModificar();
-                cli.setTitle("Modificación de Cliente");
-                dlgGestClientes.btnModificar.setEnabled(true);
-                dlgGestClientes.btnGuardar.setEnabled(false);
-                dlgGestClientes.btnNuevo.setEnabled(false);
-                dlgGestClientes.btnCancelar.setEnabled(true);
-                cli.setVisible(true);
-            } catch (Exception e) {
-                Mensajes.informacion("No se pudo cargar información del Cliente");
-            }
+            Modificar();
         }
     }//GEN-LAST:event_tablaClientesMouseClicked
 
     private void tablaClientesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaClientesKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                dlgGestClientes cli = new dlgGestClientes(null, true);
-                cli.setLocationRelativeTo(null);
-                controlCliente.aModificar();
-                cli.setTitle("Modificación de Cliente");
-                dlgGestClientes.btnModificar.setEnabled(true);
-                dlgGestClientes.btnGuardar.setEnabled(false);
-                dlgGestClientes.btnNuevo.setEnabled(false);
-                dlgGestClientes.btnCancelar.setEnabled(true);
-                cli.setVisible(true);
-            } catch (Exception e) {
-                Mensajes.informacion("No se pudo cargar información del Cliente" + e.getMessage());
-            }
+            Modificar();
         } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             txtBuscar.requestFocus();
         }
@@ -391,7 +464,7 @@ public final class dlgClientes extends javax.swing.JDialog {
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         // TODO add your handling code here:
         String cod = txtBuscar.getText();
-        CabecerasTablas.limpiarTablas(tablaClientes);
+        CabecerasTablas.limpiarTablaCliente(tablaClientes);
         controlCliente.filtClientes(tablaClientes, cod);
     }//GEN-LAST:event_txtBuscarKeyReleased
 
@@ -421,31 +494,29 @@ public final class dlgClientes extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         try {
-            dlgGestClientes cli = new dlgGestClientes(null, true);
-            cli.setLocationRelativeTo(null);
-            controlCliente.aModificar();
-            cli.setTitle("Modificación de Cliente");
-            dlgGestClientes.btnModificar.setEnabled(true);
-            dlgGestClientes.btnGuardar.setEnabled(false);
-            dlgGestClientes.btnNuevo.setEnabled(false);
-            dlgGestClientes.btnCancelar.setEnabled(true);
-            cli.setVisible(true);
+            if (tablaClientes.getSelectedRow() < 0) {
+                Notif.NotifyFail("Notificación del sistema", "No es posible cargar el formulario de ABM.\r\nSeleccione el Cliente a la cual desea realizar modificaciones.");
+                txtBuscar.requestFocus();
+            } else {
+                Modificar();
+            }
         } catch (Exception e) {
-            Mensajes.Sistema("No es posible cargar el formulario de ABM.\nSeleccione el cliente a la cual desea realizar modificaciones.");
-            txtBuscar.requestFocus();
+            System.out.println(e.getMessage());
+            Mensajes.informacion("No se pudo cargar información del Cliente");
+
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         if (tablaClientes.getSelectedRow() < 0) {
-            Mensajes.Sistema("No es posible procesar la eliminación.\nSeleccione el cliente que desea eliminar del sistema.");
+           Notif.NotifyFail("Notificación del sistema", "No es posible procesar la eliminación.\r\nSeleccione el Cliente que desea eliminar del sistema.");
             txtBuscar.requestFocus();
         } else {
             int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (resp == JOptionPane.YES_OPTION) {
                 controlCliente.delCliente();
-                CabecerasTablas.limpiarTablas(tablaClientes);
+                CabecerasTablas.limpiarTablaCliente(tablaClientes);
                 controlCliente.listClientes(tablaClientes, "clientes.cli_codigo");
                 txtBuscar.setText("");
                 txtBuscar.requestFocus();
@@ -462,8 +533,8 @@ public final class dlgClientes extends javax.swing.JDialog {
             } catch (Exception e) {
             }
             try {
-                cabe.buscarCliente(dlgBuscarCliente.tbDetalle);
-                CabecerasTablas.limpiarTablas(dlgBuscarCliente.tbDetalle);
+                CabecerasTablas.buscarCliente(dlgBuscarCliente.tbDetalle);
+                CabecerasTablas.limpiarTablaBuscarCliente(dlgBuscarCliente.tbDetalle);
                 controlCliente.listClientes(dlgBuscarCliente.tbDetalle, "clientes.cli_codigo");
                 dlgBuscarCliente.txtBuscar.requestFocus();
             } catch (Exception e) {
@@ -492,6 +563,60 @@ public final class dlgClientes extends javax.swing.JDialog {
         // TODO add your handling code here:
         AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_btnSalirKeyPressed
+
+    private void btnEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoActionPerformed
+        // TODO add your handling code here:
+        min = 1;
+        System.out.println("btnEvento min: " + min);
+        this.setVisible(false);
+        Notif.Notify_Minim_dlgClientes("Notificación del sistema", "Formulario de Gestionar Clientes minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+    }//GEN-LAST:event_btnEventoActionPerformed
+
+    private void btnEventoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEventoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEventoKeyPressed
+
+    private void btnEvento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEvento1ActionPerformed
+        // TODO add your handling code here:
+        min = 0;
+        System.out.println("btnEvento1 min: " + min);
+        dlgMinimizado.dispose();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }//GEN-LAST:event_btnEvento1ActionPerformed
+
+    private void btnEvento1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEvento1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEvento1KeyPressed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        txtBuscar.requestFocus();
+    }//GEN-LAST:event_formWindowActivated
+
+    private void panelCabeceraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMousePressed
+        // TODO add your handling code here:
+        point = evt.getPoint();
+        getComponentAt(point);
+    }//GEN-LAST:event_panelCabeceraMousePressed
+
+    private void panelCabeceraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMouseDragged
+        // TODO add your handling code here:
+        int CurrentX = this.getLocation().x;
+        int CurrentY = this.getLocation().y;
+
+        int MoveX = (CurrentX + evt.getX()) - (CurrentX + point.x);
+        int MoveY = (CurrentY + evt.getY()) - (CurrentY + point.y);
+
+        int x = CurrentX + MoveX;
+        int y = CurrentY + MoveY;
+
+        this.setLocation(x, y);
+    }//GEN-LAST:event_panelCabeceraMouseDragged
+
+    private void tablaClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaClientesKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tablaClientesKeyReleased
 
     void cargarIcono() {
         try {
@@ -550,17 +675,28 @@ public final class dlgClientes extends javax.swing.JDialog {
     private javax.swing.JSeparator Separador6;
     private javax.swing.JSeparator Separador8;
     private RSMaterialComponent.RSButtonIconUno btnEliminar;
+    public static RSMaterialComponent.RSButtonIconUno btnEvento;
+    public static RSMaterialComponent.RSButtonIconUno btnEvento1;
     private RSMaterialComponent.RSButtonIconUno btnModificar;
     public static RSMaterialComponent.RSButtonIconUno btnNuevo;
     private RSMaterialComponent.RSButtonIconUno btnSalir;
+    private javax.swing.JFrame dlgMinimizado;
     private javax.swing.JMenuItem itemPEliminarP;
     private javax.swing.JMenuItem itemPModificarP;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tablaClientes;
+    private javax.swing.JPanel panelCabecera;
+    public static final javax.swing.JTable tablaClientes = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static rojeru_san.rsfield.RSTextMaterial txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

@@ -9,13 +9,11 @@ import javax.swing.JOptionPane;
 
 public class dlgConsNotaCredito extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
-
     public dlgConsNotaCredito(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cabe.consNotaCredito(jTable1);
-        cabe.detalleNotasCredito(jTable2);
+        CabecerasTablas.consNotaCredito(jTable1);
+        CabecerasTablas.detalleNotasCredito(jTable2);
         controlNotaCredito.listNotaCredtito(jTable1);
     }
 
@@ -24,13 +22,6 @@ public class dlgConsNotaCredito extends javax.swing.JDialog {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -50,13 +41,6 @@ public class dlgConsNotaCredito extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         txtRuc = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jLabel8 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -327,7 +311,7 @@ public class dlgConsNotaCredito extends javax.swing.JDialog {
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
         try {
-            CabecerasTablas.limpiarTablas(jTable2);
+            CabecerasTablas.limpiarTablaDetalleNotasCredito(jTable2);
             int fila = jTable1.getSelectedRow();
             String cod = jTable1.getValueAt(fila, 0).toString();
             String fecha = jTable1.getValueAt(fila, 1).toString();
@@ -355,10 +339,10 @@ public class dlgConsNotaCredito extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             controlNotaCredito.anularNotaCredito();
-            CabecerasTablas.limpiarTablas(jTable1);
-            CabecerasTablas.limpiarTablas(jTable2);
-            cabe.consNotaCredito(jTable1);
-            cabe.detalleNotasCredito(jTable2);
+            CabecerasTablas.limpiarTablaConsNotaCredito(jTable1);
+            CabecerasTablas.limpiarTablaDetalleNotasCredito(jTable2);
+            //cabe.consNotaCredito(jTable1);
+            //cabe.detalleNotasCredito(jTable2);
             controlNotaCredito.listNotaCredtito(jTable1);
         } catch (Exception e) {
             Mensajes.informacion("Seleccione una fila a eliminar");
@@ -369,10 +353,8 @@ public class dlgConsNotaCredito extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             int cod = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el Numero de factura"));
-            for(int i=0;i<jTable1.getRowCount();i++)
-            {
-                if(jTable1.getValueAt(i, 0).equals(cod))
-                {
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                if (jTable1.getValueAt(i, 0).equals(cod)) {
                     jTable1.changeSelection(i, 1, false, false);
                     break;
                 }
@@ -391,13 +373,13 @@ public class dlgConsNotaCredito extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void llamarReporteNotaCredito() throws SQLException {
-            ReporteF gr;
-            gr = new ReporteF();
-            int codF = Integer.parseInt(txtCodNotaCred.getText());
-            //gr.MostrarReporteConParametro(System.getProperty("user.dir")+"/Reportes/NotasCredito/notacredito.jasper", "Notas de Credito", codF,"NCreditos/NCred-"+codF+".pdf");
-            gr.cerrar();
+        ReporteF gr;
+        gr = new ReporteF();
+        int codF = Integer.parseInt(txtCodNotaCred.getText());
+        //gr.MostrarReporteConParametro(System.getProperty("user.dir")+"/Reportes/NotasCredito/notacredito.jasper", "Notas de Credito", codF,"NCreditos/NCred-"+codF+".pdf");
+        gr.cerrar();
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -462,8 +444,20 @@ public class dlgConsNotaCredito extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    public static javax.swing.JTable jTable1;
-    public static javax.swing.JTable jTable2;
+    public static final javax.swing.JTable jTable1 = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
+    public static final javax.swing.JTable jTable2 = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCodCliente;
     public static javax.swing.JTextField txtCodFactura;
     public static javax.swing.JTextField txtCodNotaCred;

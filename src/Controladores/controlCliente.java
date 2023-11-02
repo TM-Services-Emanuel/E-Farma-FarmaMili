@@ -2,6 +2,7 @@ package Controladores;
 
 import Componentes.Login;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Datos.GestionarCliente;
 import IU.dlgClientes;
 import IU.dlgGestClientes;
@@ -12,9 +13,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class controlCliente {
-    static String UsuarioL="";
-    public static void aModificar()
-    {
+
+    public static void aModificar() {
         int x = dlgClientes.tablaClientes.getSelectedRow();
         String cod = dlgClientes.tablaClientes.getValueAt(x, 0).toString();
         Cliente c = GestionarCliente.busCliente(cod);
@@ -28,24 +28,23 @@ public class controlCliente {
         dlgGestClientes.txtCelular.setText(c.getCelu());
         dlgGestClientes.txtDireccion.setText(c.getDireccion());
         dlgGestClientes.txaS.setText(c.getOsb());
-        if(c.getContado().equals("SI")){
-           dlgGestClientes.chbContado.setSelected(true); 
-        }else{
+        if (c.getContado().equals("SI")) {
+            dlgGestClientes.chbContado.setSelected(true);
+        } else {
             dlgGestClientes.chbContado.setSelected(false);
         }
-        if(c.getCredito().equals("SI")){
+        if (c.getCredito().equals("SI")) {
             dlgGestClientes.chbCredito.setSelected(true);
             dlgGestClientes.txtLimite.setEnabled(true);
-        }else{
+        } else {
             dlgGestClientes.chbCredito.setSelected(false);
             dlgGestClientes.txtLimite.setEnabled(false);
         }
         dlgGestClientes.txtLimite.setText(df.format(Integer.valueOf(c.getLimCuenta())));
     }
-    
-    public static Cliente capturarCampos()
-    {
-        Cliente c = null;
+
+    public static Cliente capturarCampos() {
+        Cliente c;
         String contac;
         String telf;
         String cont;
@@ -55,143 +54,102 @@ public class controlCliente {
         int codCi = Integer.parseInt(dlgGestClientes.lbCiudad.getText());
         String razonS = dlgGestClientes.txtRazonS.getText().toUpperCase();
         String ruc = dlgGestClientes.txtRuc.getText().toUpperCase();
-        if(dlgGestClientes.txtContacto.getText().toUpperCase().isEmpty()){
-            contac="' '";
-        }else{
+        if (dlgGestClientes.txtContacto.getText().toUpperCase().isEmpty()) {
+            contac = "' '";
+        } else {
             contac = dlgGestClientes.txtContacto.getText().toUpperCase();
         }
         String celu = dlgGestClientes.txtCelular.getText();
-        if(dlgGestClientes.txtTelefono.getText().isEmpty()){
-            telf="' '";
-        }else{
+        if (dlgGestClientes.txtTelefono.getText().isEmpty()) {
+            telf = "' '";
+        } else {
             telf = dlgGestClientes.txtTelefono.getText();
         }
         String direc = dlgGestClientes.txtDireccion.getText().toUpperCase();
-        if(dlgGestClientes.txaS.getText().isEmpty()){
-            obs="' '";
-        }else{
+        if (dlgGestClientes.txaS.getText().isEmpty()) {
+            obs = "' '";
+        } else {
             obs = dlgGestClientes.txaS.getText().toUpperCase();
         }
-        if(dlgGestClientes.chbContado.isSelected()){
-            cont="SI";
-        }else{
-            cont="NO";
+        if (dlgGestClientes.chbContado.isSelected()) {
+            cont = "SI";
+        } else {
+            cont = "NO";
         }
-        if(dlgGestClientes.chbCredito.isSelected()){
-            cred="SI";
-        }else{
-            cred="NO";
+        if (dlgGestClientes.chbCredito.isSelected()) {
+            cred = "SI";
+        } else {
+            cred = "NO";
         }
-        int limCta = Integer.parseInt(dlgGestClientes.txtLimite.getText().trim().replace(".", "").replace(",", "") );
-        String usuario = UsuarioL=Login.getUsuarioLogueado();
-        c = new Cliente(codC, codCi,razonS,ruc , contac, celu, telf, direc, obs, cont, cred, limCta, usuario);                
+        int limCta = Integer.parseInt(dlgGestClientes.txtLimite.getText().trim().replace(".", "").replace(",", ""));
+        c = new Cliente(codC, codCi, razonS, ruc, contac, celu, telf, direc, obs, cont, cred, limCta, Login.getUsuarioLogueado());
         return c;
     }
-    
-    public static String addCliente()
-    {
+
+    public static String addCliente() {
         String msg;
         Cliente c = capturarCampos();
         msg = GestionarCliente.addCliente(c);
-        if(msg==null)
-        {
-            Mensajes.informacion("Cliente Registrado");
-        }
-        else{
+        if (msg == null) {
+            Notif.NotifySuccess("Notificación del sistema", "Cliente Registrado");
+        } else {
             Mensajes.error(msg);
         }
         return msg;
     }
-    
-    public static String actCliente()
-    {
+
+    public static String actCliente() {
         String msg;
         Cliente c = capturarCampos();
         msg = GestionarCliente.actCliente(c);
-        if(msg==null)
-        {
-            Mensajes.informacion("Cliente Actualizado");
-        }
-        else{
+        if (msg == null) {
+            Notif.NotifySuccess("Notificación del sistema", "Cliente Actualizado");
+        } else {
             Mensajes.error(msg);
         }
         return msg;
     }
-    
-    public static String delCliente()
-    {
+
+    public static String delCliente() {
         int x = dlgClientes.tablaClientes.getSelectedRow();
         String msg;
         String cod = dlgClientes.tablaClientes.getValueAt(x, 0).toString();
-        String usuario = UsuarioL=Login.getUsuarioLogueado();
-        msg = GestionarCliente.delCliente(cod, usuario);
-        if(msg==null)
-        {
-            Mensajes.informacion("Cliente Eliminado");
-        }
-        else{
+        msg = GestionarCliente.delCliente(cod, Login.getUsuarioLogueado());
+        if (msg == null) {
+            Notif.NotifySuccess("Notificación del sistema", "Cliente Eliminado");
+        } else {
             Mensajes.error(msg);
         }
         return msg;
     }
-    
-    public static void listClientes(JTable tabla, String cod)
-    {
+
+    public static void listClientes(JTable tabla, String cod) {
         List lista;
         lista = GestionarCliente.listClientes(cod);
-        for(int i=1;i<lista.size();i++)
-        {
-            DefaultTableModel tb = (DefaultTableModel)tabla.getModel();
-            Object[]fila = (Object[])lista.get(i);
+        for (int i = 1; i < lista.size(); i++) {
+            DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
+            Object[] fila = (Object[]) lista.get(i);
             tb.addRow(fila);
         }
     }
-    
-    public static void filtClientes(JTable tabla, String cad)
-    {
-        List lista = null;
+
+    public static void filtClientes(JTable tabla, String cad) {
+        List lista;
         lista = GestionarCliente.filRazonS(cad);
-        for(int i=1;i<lista.size();i++)
-        {
-            DefaultTableModel tb = (DefaultTableModel)tabla.getModel();
-            Object[]fila = (Object[])lista.get(i);
+        for (int i = 1; i < lista.size(); i++) {
+            DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
+            Object[] fila = (Object[]) lista.get(i);
             tb.addRow(fila);
         }
     }
-    
-    public static void filtRuc(JTable tabla, String cad)
-    {
-        List lista = null;
+
+    public static void filtRuc(JTable tabla, String cad) {
+        List lista;
         lista = GestionarCliente.filRuc(cad);
-        for(int i=1;i<lista.size();i++)
-        {
-            DefaultTableModel tb = (DefaultTableModel)tabla.getModel();
-            Object[]fila = (Object[])lista.get(i);
+        for (int i = 1; i < lista.size(); i++) {
+            DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
+            Object[] fila = (Object[]) lista.get(i);
             tb.addRow(fila);
         }
     }
-    /*public static void filContacto(JTable tabla, String cad)
-    {
-        List lista = null;
-        lista = GestionarCliente.filContacto(cad);
-        for(int i=1;i<lista.size();i++)
-        {
-            DefaultTableModel tb = (DefaultTableModel)tabla.getModel();
-            Object[]fila = (Object[])lista.get(i);
-            tb.addRow(fila);
-        }
-    }
-    */
-    /*public static void filDireccion(JTable tabla, String cad)
-    {
-        List lista = null;
-        lista = GestionarCliente.filDireccion(cad);
-        for(int i=1;i<lista.size();i++)
-        {
-            DefaultTableModel tb = (DefaultTableModel)tabla.getModel();
-            Object[]fila = (Object[])lista.get(i);
-            tb.addRow(fila);
-        }
-    }
-   */         
 }

@@ -2,6 +2,7 @@ package IU;
 
 import Componentes.DataSourceService;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.Software;
 import Componentes.cargarComboBox;
 import Componentes.validarCampos;
@@ -16,7 +17,6 @@ import javax.swing.JOptionPane;
 
 public class dlgSucursal extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
     static DataSourceService dss = new DataSourceService();
     private int ban;
 
@@ -25,7 +25,7 @@ public class dlgSucursal extends javax.swing.JDialog {
         initComponents();
         titulo();
 
-        cabe.sucursal(tbSucursal);
+        CabecerasTablas.sucursal(tbSucursal);
         controlSucursal.listSucursal(tbSucursal);
         cargarComboBox.cargar(cboEmpresa, "SELECT * FROM empresa WHERE em_visualizar='SI' and em_indicador='S'");
         tbSucursal.getTableHeader().setReorderingAllowed(false);
@@ -41,7 +41,7 @@ public class dlgSucursal extends javax.swing.JDialog {
     }
 
     private void Cancelar() {
-        CabecerasTablas.limpiarTablas(tbSucursal);
+        CabecerasTablas.limpiarTablaSucursal(tbSucursal);
         controlSucursal.listSucursal(tbSucursal);
         btnNuevo.setEnabled(true);
         btnModificar.setEnabled(false);
@@ -116,13 +116,6 @@ public class dlgSucursal extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         txtSucursal = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbSucursal = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         cboEmpresa = new RSMaterialComponent.RSComboBox();
         jLabel4 = new javax.swing.JLabel();
         rMiSuc = new rojerusan.RSCheckBox();
@@ -544,13 +537,17 @@ public class dlgSucursal extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        try {
-            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION) {
-                controlSucursal.delSucursal();
-                Cancelar();
+        if (tbSucursal.getSelectedRow() < 0) {
+            Notif.NotifyFail("Notificación del sistema", "No es posible procesar la eliminación.\r\nSeleccione en la tabla la Sucursal que desea eliminar.");
+        } else {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
+                    controlSucursal.delSucursal();
+                    Cancelar();
+                }
+            } catch (HeadlessException ee) {
             }
-        } catch (HeadlessException ee) {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -719,7 +716,13 @@ public class dlgSucursal extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTextField lbCod;
     public static rojerusan.RSCheckBox rMiSuc;
-    private javax.swing.JTable tbSucursal;
+    private static final javax.swing.JTable tbSucursal = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCod;
     public static javax.swing.JTextField txtIPSucursal;
     public static javax.swing.JTextField txtSucursal;

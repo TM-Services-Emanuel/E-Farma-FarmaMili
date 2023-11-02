@@ -28,8 +28,6 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
     public ReporteF jasper;
     private static String ImpresoraPred;
     static DataSourceService dss = new DataSourceService();
@@ -39,7 +37,7 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
         initComponents();
         titulo();
         jasper = new ReporteF();
-        cabe.consFacturasCreditos(tblFactura);
+        CabecerasTablas.consFacturasCreditos(tblFactura);
         controlFactura.listFacturasCreditoPendienteGeneral(tblFactura);
         txtLimiteCredito.setText("0");
         DecimalFormat df = new DecimalFormat("#,###");
@@ -253,13 +251,6 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
         btnBuscarCliente = new javax.swing.JButton();
         btnGenerar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblFactura = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         lbCantidad = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -805,7 +796,7 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
         Blanco.setLayout(BlancoLayout);
         BlancoLayout.setHorizontalGroup(
             BlancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Oscuro, javax.swing.GroupLayout.DEFAULT_SIZE, 902, Short.MAX_VALUE)
+            .addComponent(Oscuro, javax.swing.GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
             .addGroup(BlancoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(BlancoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -991,8 +982,7 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
         if (lblCodDetalle.getText().isEmpty()) {
             Mensajes.informacion("No se puede Generar el filtrado.\nBusque y seleccione un cliente para organizar los datos.");
         } else {
-            CabecerasTablas.limpiarTablas(tblFactura);
-            cabe.consFacturasCreditos(tblFactura);
+            CabecerasTablas.limpiarTablaConsFacturasCreditos(tblFactura);
             controlFactura.listFacturasCreditoPendienteActivo2(tblFactura, lblCodDetalle.getText());
             Renders();
             lineaCredito(lblCodDetalle.getText());
@@ -1004,8 +994,7 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        CabecerasTablas.limpiarTablas(tblFactura);
-        cabe.consFacturasCreditos(tblFactura);
+        CabecerasTablas.limpiarTablaConsFacturasCreditos(tblFactura);
         controlFactura.listFacturasCreditoPendienteGeneral(tblFactura);
         txtLimiteCredito.setText("0");
         DecimalFormat df = new DecimalFormat("#,###");
@@ -1262,7 +1251,13 @@ public class dlgConsultarCreditosFacturas extends javax.swing.JDialog {
     public static javax.swing.JLabel lblCodCliente;
     public static javax.swing.JLabel lblCodDetallIngreso;
     public static javax.swing.JTextField lblCodDetalle;
-    public static javax.swing.JTable tblFactura;
+    public static final javax.swing.JTable tblFactura = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCaja;
     public static javax.swing.JTextField txtCliente;
     public static javax.swing.JTextField txtClientes;

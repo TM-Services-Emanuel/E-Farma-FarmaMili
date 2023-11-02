@@ -14,8 +14,6 @@ import javax.swing.JOptionPane;
 
 public final class dlgGestVendedor extends javax.swing.JDialog {
 
-    static String UsuarioL = "";
-
     public dlgGestVendedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -1030,9 +1028,8 @@ public final class dlgGestVendedor extends javax.swing.JDialog {
     }
 
     void actualizartablaEmpleados() {
-        CabecerasTablas cabe = new CabecerasTablas();
-        cabe.vendedor(dlgVendedor.tablaEmpleados);
-        CabecerasTablas.limpiarTablas(dlgVendedor.tablaEmpleados);
+        CabecerasTablas.vendedor(dlgVendedor.tablaEmpleados);
+        CabecerasTablas.limpiarTablaVendedor(dlgVendedor.tablaEmpleados);
         controlVendedor.listVendedor(dlgVendedor.tablaEmpleados, "vendedor.ven_codigo");
     }
 

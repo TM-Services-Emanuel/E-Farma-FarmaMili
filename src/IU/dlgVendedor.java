@@ -5,7 +5,6 @@ import Componentes.Software;
 import Componentes.clsExportarExcel;
 import Controladores.CabecerasTablas;
 import Controladores.controlVendedor;
-import static IU.dlgGestVendedor.btnNuev;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -14,15 +13,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
 public final class dlgVendedor extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
     clsExportarExcel Export;
 
     public dlgVendedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.vendedor(tablaEmpleados);
+        CabecerasTablas.vendedor(tablaEmpleados);
         controlVendedor.listVendedor(tablaEmpleados, "vendedor.ven_codigo");
         tablaEmpleados.getTableHeader().setReorderingAllowed(false);
         cargarIcono();
@@ -33,6 +30,22 @@ public final class dlgVendedor extends javax.swing.JDialog {
             this.setTitle("Gestionar empleados");
         } else {
             this.setTitle(Software.getSoftware() + " - Gestionar empleados");
+        }
+    }
+    
+    private void AccesoRapido(int n) {
+
+        switch (n) {
+            case KeyEvent.VK_F1 ->
+                btnNuevo.doClick();
+            case KeyEvent.VK_DELETE ->
+                btnEliminar.doClick();
+            case KeyEvent.VK_F5 ->
+                btnModificar.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
+            default -> {
+            }
         }
     }
 
@@ -47,11 +60,11 @@ public final class dlgVendedor extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         PnlNuevo1 = new rojeru_san.rspanel.RSPanelImage();
-        btnNuevoE = new RSMaterialComponent.RSButtonIconUno();
+        btnNuevo = new RSMaterialComponent.RSButtonIconUno();
         Separador5 = new javax.swing.JSeparator();
         LabelTitulo5 = new javax.swing.JLabel();
         PnlModificar1 = new rojeru_san.rspanel.RSPanelImage();
-        btnModificarE = new RSMaterialComponent.RSButtonIconUno();
+        btnModificar = new RSMaterialComponent.RSButtonIconUno();
         Separador6 = new javax.swing.JSeparator();
         LabelTitulo6 = new javax.swing.JLabel();
         PnlActualizar = new rojeru_san.rspanel.RSPanelImage();
@@ -59,19 +72,12 @@ public final class dlgVendedor extends javax.swing.JDialog {
         Separador7 = new javax.swing.JSeparator();
         LabelTitulo7 = new javax.swing.JLabel();
         PnlEliminarG = new rojeru_san.rspanel.RSPanelImage();
-        btnEliminarE = new RSMaterialComponent.RSButtonIconUno();
+        btnEliminar = new RSMaterialComponent.RSButtonIconUno();
         Separador8 = new javax.swing.JSeparator();
         LabelTitulo8 = new javax.swing.JLabel();
-        rSButtonIconUno1 = new RSMaterialComponent.RSButtonIconUno();
+        btnSalir = new RSMaterialComponent.RSButtonIconUno();
         txtBuscar = new RSMaterialComponent.RSTextFieldMaterialIcon();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaEmpleados = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
 
         jPopupMenu1.setLabel("Opciones");
 
@@ -109,15 +115,21 @@ public final class dlgVendedor extends javax.swing.JDialog {
 
         PnlNuevo1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
 
-        btnNuevoE.setBackground(new java.awt.Color(0, 102, 0));
-        btnNuevoE.setBackgroundHover(new java.awt.Color(255, 255, 255));
-        btnNuevoE.setForegroundHover(new java.awt.Color(0, 102, 0));
-        btnNuevoE.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
-        btnNuevoE.setRippleColor(java.awt.Color.white);
-        btnNuevoE.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
-        btnNuevoE.addActionListener(new java.awt.event.ActionListener() {
+        btnNuevo.setBackground(new java.awt.Color(0, 102, 0));
+        btnNuevo.setToolTipText("F1");
+        btnNuevo.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnNuevo.setForegroundHover(new java.awt.Color(0, 102, 0));
+        btnNuevo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnNuevo.setRippleColor(java.awt.Color.white);
+        btnNuevo.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoEActionPerformed(evt);
+                btnNuevoActionPerformed(evt);
+            }
+        });
+        btnNuevo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnNuevoKeyPressed(evt);
             }
         });
 
@@ -140,14 +152,14 @@ public final class dlgVendedor extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(PnlNuevo1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(btnNuevoE, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         PnlNuevo1Layout.setVerticalGroup(
             PnlNuevo1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlNuevo1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnNuevoE, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(Separador5, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
@@ -159,15 +171,21 @@ public final class dlgVendedor extends javax.swing.JDialog {
 
         PnlModificar1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
 
-        btnModificarE.setBackground(new java.awt.Color(255, 102, 0));
-        btnModificarE.setBackgroundHover(new java.awt.Color(255, 255, 255));
-        btnModificarE.setForegroundHover(new java.awt.Color(255, 102, 0));
-        btnModificarE.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
-        btnModificarE.setRippleColor(java.awt.Color.white);
-        btnModificarE.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
-        btnModificarE.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setBackground(new java.awt.Color(255, 102, 0));
+        btnModificar.setToolTipText("F5");
+        btnModificar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnModificar.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
+        btnModificar.setRippleColor(java.awt.Color.white);
+        btnModificar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarEActionPerformed(evt);
+                btnModificarActionPerformed(evt);
+            }
+        });
+        btnModificar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnModificarKeyPressed(evt);
             }
         });
 
@@ -190,14 +208,14 @@ public final class dlgVendedor extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PnlModificar1Layout.createSequentialGroup()
                 .addContainerGap(29, Short.MAX_VALUE)
-                .addComponent(btnModificarE, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26))
         );
         PnlModificar1Layout.setVerticalGroup(
             PnlModificar1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlModificar1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnModificarE, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(Separador6, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
@@ -218,6 +236,11 @@ public final class dlgVendedor extends javax.swing.JDialog {
         btn6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn6ActionPerformed(evt);
+            }
+        });
+        btn6.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btn6KeyPressed(evt);
             }
         });
 
@@ -259,15 +282,21 @@ public final class dlgVendedor extends javax.swing.JDialog {
 
         PnlEliminarG.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
 
-        btnEliminarE.setBackground(new java.awt.Color(255, 0, 0));
-        btnEliminarE.setBackgroundHover(new java.awt.Color(255, 255, 255));
-        btnEliminarE.setForegroundHover(new java.awt.Color(255, 0, 0));
-        btnEliminarE.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
-        btnEliminarE.setRippleColor(java.awt.Color.white);
-        btnEliminarE.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
-        btnEliminarE.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setBackground(new java.awt.Color(255, 0, 0));
+        btnEliminar.setToolTipText("DELETE");
+        btnEliminar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnEliminar.setForegroundHover(new java.awt.Color(255, 0, 0));
+        btnEliminar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
+        btnEliminar.setRippleColor(java.awt.Color.white);
+        btnEliminar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarEActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        btnEliminar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEliminarKeyPressed(evt);
             }
         });
 
@@ -290,14 +319,14 @@ public final class dlgVendedor extends javax.swing.JDialog {
                 .addContainerGap())
             .addGroup(PnlEliminarGLayout.createSequentialGroup()
                 .addGap(27, 27, 27)
-                .addComponent(btnEliminarE, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         PnlEliminarGLayout.setVerticalGroup(
             PnlEliminarGLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PnlEliminarGLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnEliminarE, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(Separador8, javax.swing.GroupLayout.PREFERRED_SIZE, 3, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
@@ -307,12 +336,18 @@ public final class dlgVendedor extends javax.swing.JDialog {
 
         jPanel5.add(PnlEliminarG, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, -1));
 
-        rSButtonIconUno1.setBackground(new java.awt.Color(17, 35, 46));
-        rSButtonIconUno1.setBackgroundHover(new java.awt.Color(255, 0, 0));
-        rSButtonIconUno1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
-        rSButtonIconUno1.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setToolTipText("F12");
+        btnSalir.setBackgroundHover(new java.awt.Color(255, 0, 0));
+        btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonIconUno1ActionPerformed(evt);
+                btnSalirActionPerformed(evt);
+            }
+        });
+        btnSalir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnSalirKeyPressed(evt);
             }
         });
 
@@ -323,12 +358,12 @@ public final class dlgVendedor extends javax.swing.JDialog {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(rSButtonIconUno1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(rSButtonIconUno1, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
@@ -434,12 +469,12 @@ public final class dlgVendedor extends javax.swing.JDialog {
 
     private void itemPModificarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPModificarEActionPerformed
         // TODO add your handling code here:
-        btnModificarEActionPerformed(null);
+        btnModificarActionPerformed(null);
     }//GEN-LAST:event_itemPModificarEActionPerformed
 
     private void itemPEliminarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPEliminarEActionPerformed
         // TODO add your handling code here:
-        btnEliminarEActionPerformed(null);
+        btnEliminarActionPerformed(null);
     }//GEN-LAST:event_itemPEliminarEActionPerformed
 
     private void tablaEmpleadosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEmpleadosMousePressed
@@ -493,18 +528,19 @@ public final class dlgVendedor extends javax.swing.JDialog {
 
             }
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_tablaEmpleadosKeyPressed
 
-    private void btnNuevoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEActionPerformed
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
         dlgGestVendedor vend = new dlgGestVendedor(null, true);
         vend.setLocationRelativeTo(null);
         vend.setTitle("Agregar Empleado");
         dlgGestVendedor.btnNuev.doClick();
         vend.setVisible(true);
-    }//GEN-LAST:event_btnNuevoEActionPerformed
+    }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void btnModificarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarEActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         try {
             dlgGestVendedor ven = new dlgGestVendedor(null, true);
@@ -519,16 +555,16 @@ public final class dlgVendedor extends javax.swing.JDialog {
         } catch (Exception e) {
             Mensajes.informacion("Seleccione un fila de la tabla");
         }
-    }//GEN-LAST:event_btnModificarEActionPerformed
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
         // TODO add your handling code here:
         txtBuscar.setText("");
-        CabecerasTablas.limpiarTablas(tablaEmpleados);
+        CabecerasTablas.limpiarTablaVendedor(tablaEmpleados);
         controlVendedor.listVendedor(tablaEmpleados, "vendedor.ven_codigo");
     }//GEN-LAST:event_btn6ActionPerformed
 
-    private void btnEliminarEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarEActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         if (tablaEmpleados.getSelectedRow() < 0) {
             Mensajes.informacion("Seleccione un fila de la tabla");
@@ -537,14 +573,14 @@ public final class dlgVendedor extends javax.swing.JDialog {
                 int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (resp == JOptionPane.YES_OPTION) {
                     controlVendedor.delVendedor();
-                    CabecerasTablas.limpiarTablas(tablaEmpleados);
+                    CabecerasTablas.limpiarTablaVendedor(tablaEmpleados);
                     controlVendedor.listVendedor(tablaEmpleados, "vendedor.ven_codigo");
                 }
             } catch (Exception e) {
                 //Mensajes.informacion("Seleccione un fila de la tabla");
             }
         }
-    }//GEN-LAST:event_btnEliminarEActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
@@ -557,12 +593,13 @@ public final class dlgVendedor extends javax.swing.JDialog {
             tablaEmpleados.requestFocus();
             tablaEmpleados.changeSelection(0, 5, false, false);
         }
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         // TODO add your handling code here:
         String cod = txtBuscar.getText();
-        CabecerasTablas.limpiarTablas(tablaEmpleados);
+        CabecerasTablas.limpiarTablaVendedor(tablaEmpleados);
         controlVendedor.filNombre(tablaEmpleados, cod);
     }//GEN-LAST:event_txtBuscarKeyReleased
 
@@ -580,13 +617,38 @@ public final class dlgVendedor extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtBuscarKeyTyped
 
-    private void rSButtonIconUno1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonIconUno1ActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         int rpta = Mensajes.confirmar("¿Seguro que desea cerrar este formulario?");
         if (rpta == 0) {
             this.dispose();
         }
-    }//GEN-LAST:event_rSButtonIconUno1ActionPerformed
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnNuevoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNuevoKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnNuevoKeyPressed
+
+    private void btnModificarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnModificarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnModificarKeyPressed
+
+    private void btnEliminarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEliminarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnEliminarKeyPressed
+
+    private void btn6KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn6KeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btn6KeyPressed
+
+    private void btnSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSalirKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnSalirKeyPressed
 
 
     void cargarIcono() {
@@ -648,9 +710,10 @@ public final class dlgVendedor extends javax.swing.JDialog {
     private javax.swing.JSeparator Separador7;
     private javax.swing.JSeparator Separador8;
     private RSMaterialComponent.RSButtonIconUno btn6;
-    private RSMaterialComponent.RSButtonIconUno btnEliminarE;
-    private RSMaterialComponent.RSButtonIconUno btnModificarE;
-    private RSMaterialComponent.RSButtonIconUno btnNuevoE;
+    private RSMaterialComponent.RSButtonIconUno btnEliminar;
+    private RSMaterialComponent.RSButtonIconUno btnModificar;
+    private RSMaterialComponent.RSButtonIconUno btnNuevo;
+    private RSMaterialComponent.RSButtonIconUno btnSalir;
     private javax.swing.JMenuItem itemPEliminarE;
     private javax.swing.JMenuItem itemPModificarE;
     private javax.swing.JPanel jPanel3;
@@ -658,8 +721,13 @@ public final class dlgVendedor extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private RSMaterialComponent.RSButtonIconUno rSButtonIconUno1;
-    public static javax.swing.JTable tablaEmpleados;
+    public static final javax.swing.JTable tablaEmpleados = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static RSMaterialComponent.RSTextFieldMaterialIcon txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

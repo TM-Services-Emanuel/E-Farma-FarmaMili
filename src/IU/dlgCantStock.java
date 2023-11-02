@@ -26,10 +26,8 @@ public class dlgCantStock extends javax.swing.JDialog {
     }
 
     public void actualizar() {
-        CabecerasTablas cabe = new CabecerasTablas();
-        cabe.ajusteStock(dlgAjusteStock.tbDetalle);
-        controlArticulo.listArticuloActivo(dlgAjusteStock.tbDetalle, "cod");
-        CabecerasTablas.limpiarTablas(dlgAjusteStock.tbDetalle);
+        CabecerasTablas.ajusteStock(dlgAjusteStock.tbDetalle);
+        CabecerasTablas.limpiarTablaAjusteStock(dlgAjusteStock.tbDetalle);
         controlArticulo.listArticuloActivo(dlgAjusteStock.tbDetalle, "cod");
         dlgAjusteStock.txtBuscar.requestFocus();
         dlgAjusteStock.txtBuscar.setText("");

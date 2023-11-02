@@ -13,13 +13,11 @@ import javax.swing.SwingUtilities;
 
 public class dlgAjusteStock extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
-
     public dlgAjusteStock(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.ajusteStock(tbDetalle);
+        CabecerasTablas.ajusteStock(tbDetalle);
         controlArticulo.listArticuloActivo(tbDetalle, "v_articulo.cod");
         txtBuscar.requestFocus();
     }
@@ -37,13 +35,6 @@ public class dlgAjusteStock extends javax.swing.JDialog {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         btnSalir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -187,7 +178,7 @@ public class dlgAjusteStock extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(btnSalir))
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -245,9 +236,9 @@ public class dlgAjusteStock extends javax.swing.JDialog {
         try {
             String cod = txtBuscar.getText();
             
-            CabecerasTablas.limpiarTablas(tbDetalle);
+            CabecerasTablas.limpiarTablaAjusteStock(tbDetalle);
             controlArticulo.listArticuloActivo(tbDetalle, "v_articulo.cod");
-            CabecerasTablas.limpiarTablas(tbDetalle);
+            //CabecerasTablas.limpiarTablas(tbDetalle);
             controlArticulo.filtrarCodBarraActivo(tbDetalle, cod);
         } catch (Exception e) {
             System.out.println("Caracter Invalido " + e.getMessage());
@@ -353,7 +344,13 @@ public class dlgAjusteStock extends javax.swing.JDialog {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tbDetalle;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

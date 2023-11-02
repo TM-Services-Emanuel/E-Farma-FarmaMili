@@ -30,13 +30,6 @@ public class dlgZona extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -127,7 +120,7 @@ public class dlgZona extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -169,7 +162,7 @@ public class dlgZona extends javax.swing.JDialog {
         jTextField2.setEnabled(true);
         String cod = GestionarZona.getCodigo();
         jLabel1.setText(cod);
-        CabecerasTablas.limpiarTablas(jTable1);
+        //CabecerasTablas.limpiarTablas(jTable1);
         controlZona.listZona(jTable1);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -181,7 +174,7 @@ public class dlgZona extends javax.swing.JDialog {
         jButton3.setEnabled(false);
         jTextField2.setEnabled(false);
         limpiarCampos();
-        CabecerasTablas.limpiarTablas(jTable1);
+        //CabecerasTablas.limpiarTablas(jTable1);
         controlZona.listZona(jTable1);
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -192,7 +185,7 @@ public class dlgZona extends javax.swing.JDialog {
         jTextField2.setEnabled(false);
         controlZona.delZona();
         limpiarCampos();
-        CabecerasTablas.limpiarTablas(jTable1);
+        //CabecerasTablas.limpiarTablas(jTable1);
         controlZona.listZona(jTable1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -207,7 +200,7 @@ public class dlgZona extends javax.swing.JDialog {
         jButton4.setEnabled(false);
         jTextField2.setEnabled(false);
         limpiarCampos();
-        CabecerasTablas.limpiarTablas(jTable1);
+        //CabecerasTablas.limpiarTablas(jTable1);
         controlZona.listZona(jTable1);
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -287,7 +280,13 @@ public class dlgZona extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private static final javax.swing.JTable jTable1 = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

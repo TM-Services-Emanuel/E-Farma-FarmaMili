@@ -1,6 +1,7 @@
 package IU;
 
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.Software;
 import Componentes.cargarComboBox;
 import Controladores.CabecerasTablas;
@@ -14,18 +15,20 @@ import javax.swing.SwingUtilities;
 
 public final class dlgProveedores extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
+    private static Point point;
+    public static int min;
 
     public dlgProveedores(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        min = 0;
         initComponents();
         titulo();
-        cabe.proveedor(tablaProveedores);
+        CabecerasTablas.proveedor(tablaProveedores);
         controlProveedor.listProveedor(tablaProveedores, "proveedor.pro_codigo");
         cargarIcono();
         txtBuscar.requestFocus();
     }
-    
+
     private void AccesoRapido(int n) {
 
         switch (n) {
@@ -35,6 +38,8 @@ public final class dlgProveedores extends javax.swing.JDialog {
                 btnEliminar.doClick();
             case KeyEvent.VK_F5 ->
                 btnModificar.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
             default -> {
             }
         }
@@ -48,6 +53,18 @@ public final class dlgProveedores extends javax.swing.JDialog {
         }
     }
 
+    public void modificar() {
+        dlgGestProveedor prov = new dlgGestProveedor(null, true);
+        prov.setLocationRelativeTo(null);
+        controlProveedor.aModificar();
+        dlgGestProveedor.btnModificar.setEnabled(true);
+        dlgGestProveedor.btnGuardar.setEnabled(false);
+        dlgGestProveedor.btnNuevo.setEnabled(false);
+        dlgGestProveedor.btnCancelar.setEnabled(true);
+        prov.modcbCiudad();
+        prov.setVisible(true);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -55,8 +72,12 @@ public final class dlgProveedores extends javax.swing.JDialog {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         itemPModificarP = new javax.swing.JMenuItem();
         itemPEliminarP = new javax.swing.JMenuItem();
+        dlgMinimizado = new javax.swing.JFrame();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        btnEvento1 = new RSMaterialComponent.RSButtonIconUno();
         jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        panelCabecera = new javax.swing.JPanel();
         btnSalir = new RSMaterialComponent.RSButtonIconUno();
         txtBuscar = new rojeru_san.rsfield.RSTextMaterial();
         jPanel2 = new javax.swing.JPanel();
@@ -72,14 +93,8 @@ public final class dlgProveedores extends javax.swing.JDialog {
         btnEliminar = new RSMaterialComponent.RSButtonIconUno();
         Separador8 = new javax.swing.JSeparator();
         LabelTitulo8 = new javax.swing.JLabel();
+        btnEvento = new RSMaterialComponent.RSButtonIconUno();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tablaProveedores = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
 
         jPopupMenu1.setLabel("Opciones");
 
@@ -103,18 +118,75 @@ public final class dlgProveedores extends javax.swing.JDialog {
         });
         jPopupMenu1.add(itemPEliminarP);
 
+        dlgMinimizado.setUndecorated(true);
+
+        jPanel5.setBackground(new java.awt.Color(17, 35, 46));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel28.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setText("Gestionar Productos");
+        jPanel5.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 9, 110, 12));
+
+        btnEvento1.setBackground(new java.awt.Color(17, 35, 46));
+        btnEvento1.setToolTipText("F12");
+        btnEvento1.setBackgroundHover(new java.awt.Color(17, 35, 46));
+        btnEvento1.setForegroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_UP);
+        btnEvento1.setRippleColor(java.awt.Color.white);
+        btnEvento1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEvento1ActionPerformed(evt);
+            }
+        });
+        btnEvento1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEvento1KeyPressed(evt);
+            }
+        });
+        jPanel5.add(btnEvento1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 2, 25, 25));
+
+        javax.swing.GroupLayout dlgMinimizadoLayout = new javax.swing.GroupLayout(dlgMinimizado.getContentPane());
+        dlgMinimizado.getContentPane().setLayout(dlgMinimizadoLayout);
+        dlgMinimizadoLayout.setHorizontalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        dlgMinimizadoLayout.setVerticalGroup(
+            dlgMinimizadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel4.setBackground(new java.awt.Color(17, 35, 46));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelCabecera.setBackground(new java.awt.Color(17, 35, 46));
+        panelCabecera.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panelCabeceraMouseDragged(evt);
+            }
+        });
+        panelCabecera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panelCabeceraMousePressed(evt);
+            }
+        });
+        panelCabecera.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setToolTipText("F12");
         btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
         btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
         btnSalir.setRippleColor(java.awt.Color.white);
@@ -129,7 +201,7 @@ public final class dlgProveedores extends javax.swing.JDialog {
                 btnSalirKeyPressed(evt);
             }
         });
-        jPanel4.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1146, 3, 20, 20));
+        panelCabecera.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1146, 3, 20, 20));
 
         txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
         txtBuscar.setColorMaterial(new java.awt.Color(255, 102, 0));
@@ -146,7 +218,7 @@ public final class dlgProveedores extends javax.swing.JDialog {
                 txtBuscarKeyTyped(evt);
             }
         });
-        jPanel4.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 75, 680, 23));
+        panelCabecera.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(483, 75, 680, 23));
 
         jPanel2.setOpaque(false);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -250,9 +322,27 @@ public final class dlgProveedores extends javax.swing.JDialog {
 
         jPanel2.add(PnlEliminarG, new org.netbeans.lib.awtextra.AbsoluteConstraints(199, 3, 100, 100));
 
-        jPanel4.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        panelCabecera.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 1169, 105));
+        btnEvento.setBackground(new java.awt.Color(17, 35, 46));
+        btnEvento.setToolTipText("MINIMIZAR");
+        btnEvento.setBackgroundHover(new java.awt.Color(255, 102, 0));
+        btnEvento.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_DOWN);
+        btnEvento.setRippleColor(java.awt.Color.white);
+        btnEvento.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnEvento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEventoActionPerformed(evt);
+            }
+        });
+        btnEvento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnEventoKeyPressed(evt);
+            }
+        });
+        panelCabecera.add(btnEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1122, 3, 20, 20));
+
+        jPanel3.add(panelCabecera, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 1169, 105));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jScrollPane1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -343,16 +433,9 @@ public final class dlgProveedores extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
             try {
-                dlgGestProveedor prov = new dlgGestProveedor(null, true);
-                prov.setLocationRelativeTo(null);
-                controlProveedor.aModificar();
-                prov.setTitle("Modificación de Proveedor");
-                dlgGestProveedor.btnModificar.setEnabled(true);
-                dlgGestProveedor.btnGuardar.setEnabled(false);
-                dlgGestProveedor.btnNuevo.setEnabled(false);
-                dlgGestProveedor.btnCancelar.setEnabled(true);
-                prov.setVisible(true);
+                modificar();
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 Mensajes.informacion("No se pudo cargar información del proveedor");
             }
         }
@@ -366,15 +449,7 @@ public final class dlgProveedores extends javax.swing.JDialog {
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
-                dlgGestProveedor prov = new dlgGestProveedor(null, true);
-                prov.setLocationRelativeTo(null);
-                controlProveedor.aModificar();
-                prov.setTitle("Modificación de Proveedor");
-                dlgGestProveedor.btnModificar.setEnabled(true);
-                dlgGestProveedor.btnGuardar.setEnabled(false);
-                dlgGestProveedor.btnNuevo.setEnabled(false);
-                dlgGestProveedor.btnCancelar.setEnabled(true);
-                prov.setVisible(true);
+                modificar();
             } catch (Exception e) {
                 Mensajes.informacion("No se pudo cargar información del proveedor");
             }
@@ -423,7 +498,7 @@ public final class dlgProveedores extends javax.swing.JDialog {
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         // TODO add your handling code here:
         String cod = txtBuscar.getText();
-        CabecerasTablas.limpiarTablas(tablaProveedores);
+        CabecerasTablas.limpiarTablaProveedor(tablaProveedores);
         controlProveedor.filProveedor(tablaProveedores, cod);
     }//GEN-LAST:event_txtBuscarKeyReleased
 
@@ -445,7 +520,6 @@ public final class dlgProveedores extends javax.swing.JDialog {
         // TODO add your handling code here:
         dlgGestProveedor prov = new dlgGestProveedor(null, true);
         prov.setLocationRelativeTo(null);
-        prov.setTitle("Agregar Proveedor");
         prov.Nuevo();
         prov.setVisible(true);
     }//GEN-LAST:event_btnNuevoActionPerformed
@@ -458,18 +532,16 @@ public final class dlgProveedores extends javax.swing.JDialog {
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         try {
-            dlgGestProveedor prov = new dlgGestProveedor(null, true);
-            prov.setLocationRelativeTo(null);
-            controlProveedor.aModificar();
-            prov.setTitle("Modificación de Proveedor");
-            dlgGestProveedor.btnModificar.setEnabled(true);
-            dlgGestProveedor.btnGuardar.setEnabled(false);
-            dlgGestProveedor.btnNuevo.setEnabled(false);
-            dlgGestProveedor.btnCancelar.setEnabled(true);
-            prov.setVisible(true);
+            if (tablaProveedores.getSelectedRow() < 0) {
+                Notif.NotifyFail("Notificación del sistema", "No es posible cargar el formulario de ABM.\r\nSeleccione el Proveedor a la cual desea realizar modificaciones.");
+                txtBuscar.requestFocus();
+            } else {
+                modificar();
+            }
         } catch (Exception e) {
-            Mensajes.Sistema("No es posible cargar el formulario de ABM.\nSeleccione el cliente a la cual desea realizar modificaciones.");
-            txtBuscar.requestFocus();
+            System.out.println(e.getMessage());
+            Mensajes.informacion("No se pudo cargar información del proveedor");
+
         }
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -481,14 +553,15 @@ public final class dlgProveedores extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         if (tablaProveedores.getSelectedRow() < 0) {
-            Mensajes.Sistema("No es posible procesar la eliminación.\nSeleccione el cliente que desea eliminar del sistema.");
+            //Mensajes.Sistema("No es posible procesar la eliminación.\r\nSeleccione el cliente que desea eliminar del sistema.");
+            Notif.NotifyFail("Notificación del sistema", "No es posible procesar la eliminación.\r\nSeleccione el Proveedor que desea eliminar del sistema.");
             txtBuscar.requestFocus();
         } else {
             try {
                 int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (resp == JOptionPane.YES_OPTION) {
                     controlProveedor.delProveedor();
-                    CabecerasTablas.limpiarTablas(tablaProveedores);
+                    CabecerasTablas.limpiarTablaProveedor(tablaProveedores);
                     controlProveedor.listProveedor(tablaProveedores, "proveedor.pro_codigo");
                     txtBuscar.setText("");
                     txtBuscar.requestFocus();
@@ -502,6 +575,56 @@ public final class dlgProveedores extends javax.swing.JDialog {
         // TODO add your handling code here:
         AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_btnEliminarKeyPressed
+
+    private void btnEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEventoActionPerformed
+        // TODO add your handling code here:
+        min = 1;
+        System.out.println("btnEvento min: " + min);
+        this.setVisible(false);
+        Notif.Notify_Minim_dlgProveedores("Notificación del sistema", "Formulario de Gest. Proveedores minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+    }//GEN-LAST:event_btnEventoActionPerformed
+
+    private void btnEventoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEventoKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEventoKeyPressed
+
+    private void btnEvento1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEvento1ActionPerformed
+        // TODO add your handling code here:
+        min = 0;
+        System.out.println("btnEvento1 min: " + min);
+        dlgMinimizado.dispose();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+    }//GEN-LAST:event_btnEvento1ActionPerformed
+
+    private void btnEvento1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEvento1KeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEvento1KeyPressed
+
+    private void panelCabeceraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMousePressed
+        // TODO add your handling code here:
+        point = evt.getPoint();
+        getComponentAt(point);
+    }//GEN-LAST:event_panelCabeceraMousePressed
+
+    private void panelCabeceraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMouseDragged
+        // TODO add your handling code here:
+        int CurrentX = this.getLocation().x;
+        int CurrentY = this.getLocation().y;
+
+        int MoveX = (CurrentX + evt.getX()) - (CurrentX + point.x);
+        int MoveY = (CurrentY + evt.getY()) - (CurrentY + point.y);
+
+        int x = CurrentX + MoveX;
+        int y = CurrentY + MoveY;
+
+        this.setLocation(x, y);
+    }//GEN-LAST:event_panelCabeceraMouseDragged
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        txtBuscar.requestFocus();
+    }//GEN-LAST:event_formWindowActivated
 
     void cargarIcono() {
         try {
@@ -559,17 +682,28 @@ public final class dlgProveedores extends javax.swing.JDialog {
     private javax.swing.JSeparator Separador6;
     private javax.swing.JSeparator Separador8;
     private RSMaterialComponent.RSButtonIconUno btnEliminar;
+    public static RSMaterialComponent.RSButtonIconUno btnEvento;
+    public static RSMaterialComponent.RSButtonIconUno btnEvento1;
     private RSMaterialComponent.RSButtonIconUno btnModificar;
     public static RSMaterialComponent.RSButtonIconUno btnNuevo;
     private RSMaterialComponent.RSButtonIconUno btnSalir;
+    private javax.swing.JFrame dlgMinimizado;
     private javax.swing.JMenuItem itemPEliminarP;
     private javax.swing.JMenuItem itemPModificarP;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tablaProveedores;
+    private javax.swing.JPanel panelCabecera;
+    public static final javax.swing.JTable tablaProveedores = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static rojeru_san.rsfield.RSTextMaterial txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

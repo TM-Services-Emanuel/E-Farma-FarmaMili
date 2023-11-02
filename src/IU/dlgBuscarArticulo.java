@@ -15,8 +15,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 public final class dlgBuscarArticulo extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
     DetalleSalida ds;
     public DefaultTableModel ModelArticulos;
     public DefaultTableModel modeloproductos;
@@ -25,7 +23,7 @@ public final class dlgBuscarArticulo extends javax.swing.JDialog {
     public dlgBuscarArticulo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cabe.tablaArticuloAuxiliar(tbDetalle);
+        CabecerasTablas.tablaArticuloAuxiliar(tbDetalle);
         controlArticulo.filtrarCodBarraActivo(tbDetalle, "");
         Renders();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png")));
@@ -42,13 +40,6 @@ public final class dlgBuscarArticulo extends javax.swing.JDialog {
 
         grupoBotones = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
@@ -200,14 +191,8 @@ public final class dlgBuscarArticulo extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             String cod = txtBuscar.getText();
-            cabe.tablaArticuloAuxiliar(tbDetalle);
-            CabecerasTablas.limpiarTablas(tbDetalle);
+            CabecerasTablas.limpiarTablaTablaArticuloAuxiliar(tbDetalle);
             controlArticulo.filtrarCodBarraActivo(tbDetalle, cod);
-
-            /*CabecerasTablas.limpiarTablas(tbDetalle);
-            controlArticulo.listArticuloActivo(tbDetalle, "cod");
-            CabecerasTablas.limpiarTablas(tbDetalle);
-            controlArticulo.filtrarCodBarraActivo(tbDetalle, cod);*/
             Renders();
         } catch (Exception e) {
             System.out.println("Caracter Invalido " + e.getMessage());
@@ -307,7 +292,13 @@ public final class dlgBuscarArticulo extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tbDetalle;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

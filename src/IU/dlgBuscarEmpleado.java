@@ -7,15 +7,14 @@ import java.awt.Toolkit;
 
 public final class dlgBuscarEmpleado extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
     public dlgBuscarEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         cargarIcono();
-        cabe.busEmpleado(tbBuscarEmpleado);
+        CabecerasTablas.busEmpleado(tbBuscarEmpleado);
         controlUsuario.listEmpleado(tbBuscarEmpleado);
         tbBuscarEmpleado.getTableHeader().setReorderingAllowed(false);
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -27,13 +26,6 @@ public final class dlgBuscarEmpleado extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         cbkBuscar = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbBuscarEmpleado = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -179,22 +171,21 @@ public final class dlgBuscarEmpleado extends javax.swing.JDialog {
 
     private void tbBuscarEmpleadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBuscarEmpleadoMouseClicked
         // TODO add your handling code here:
-        if(evt.getClickCount()==2)
-        {
+        if (evt.getClickCount() == 2) {
             System.out.println("doble click hecho!");
             try {
                 controlUsuario.selecEmpleado();
-                
+
                 this.dispose();
             } catch (Exception e) {
-                System.out.println("el maldito error: "+e.getMessage());
+                System.out.println("el maldito error: " + e.getMessage());
             }
         }
     }//GEN-LAST:event_tbBuscarEmpleadoMouseClicked
 
     private void formKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyTyped
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_formKeyTyped
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
@@ -209,7 +200,7 @@ public final class dlgBuscarEmpleado extends javax.swing.JDialog {
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         // TODO add your handling code here:
         String cod = txtBuscar.getText();
-        CabecerasTablas.limpiarTablas(tbBuscarEmpleado);
+        CabecerasTablas.limpiarTablaBusEmpleado(tbBuscarEmpleado);
         controlUsuario.filNombre(tbBuscarEmpleado, cod);
     }//GEN-LAST:event_txtBuscarKeyReleased
 
@@ -220,15 +211,14 @@ public final class dlgBuscarEmpleado extends javax.swing.JDialog {
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
-        int limite=25;
-        if (txtBuscar.getText().length()== limite)
-        {
+        int limite = 25;
+        if (txtBuscar.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtBuscarKeyTyped
@@ -241,17 +231,19 @@ public final class dlgBuscarEmpleado extends javax.swing.JDialog {
             Mensajes.error("No se pudo cargo icono");
         }
     }
-    void habilitarbusqueda(){
-        if(cbkBuscar.isSelected()){
+
+    void habilitarbusqueda() {
+        if (cbkBuscar.isSelected()) {
             txtBuscar.setEnabled(true);
             txtBuscar.requestFocus();
-        }else{
+        } else {
             txtBuscar.setEnabled(false);
             txtBuscar.setText("");
-            CabecerasTablas.limpiarTablas(tbBuscarEmpleado);
+            CabecerasTablas.limpiarTablaBusEmpleado(tbBuscarEmpleado);
             controlUsuario.listEmpleado(tbBuscarEmpleado);
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -299,7 +291,13 @@ public final class dlgBuscarEmpleado extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tbBuscarEmpleado;
+    public static final javax.swing.JTable tbBuscarEmpleado = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

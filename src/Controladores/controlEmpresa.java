@@ -2,6 +2,7 @@ package Controladores;
 
 import Componentes.Login;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Datos.GestionarEmpresa;
 import IU.dlgEmpresa;
 import Modelo.Empresa;
@@ -10,7 +11,6 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class controlEmpresa {
-    static String UsuarioL="";
     public static String addEmpresa()
     {
         String msg;
@@ -21,12 +21,12 @@ public class controlEmpresa {
         String telefono = dlgEmpresa.txtTelefono.getText().toUpperCase();
         String celular = dlgEmpresa.txtCelular.getText().toUpperCase();
         String visual = dlgEmpresa.lbvisual.getText().toUpperCase();
-        String usuario = UsuarioL=Login.getUsuarioLogueado();
-        Empresa e = new Empresa(cod, nombre, ruc, direccion, telefono, celular, visual,usuario);
+        Empresa e = new Empresa(cod, nombre, ruc, direccion, telefono, celular, visual,Login.getUsuarioLogueado());
         msg = GestionarEmpresa.addEmpresa(e);
         if(msg==null)
         {
-            Mensajes.informacion("Empresa Registrada");
+            //Mensajes.informacion("Empresa Registrada");
+            Notif.NotifySuccess("Notificación del sistema", "Empresa Registrada");
         }
         else{
             Mensajes.error(msg);
@@ -45,12 +45,12 @@ public class controlEmpresa {
         String celular = dlgEmpresa.txtCelular.getText().toUpperCase();
         String visual = dlgEmpresa.lbvisual.getText().toUpperCase();
         System.out.println(visual);
-        String usuario = UsuarioL=Login.getUsuarioLogueado();
-        Empresa e = new Empresa(cod, nombre, ruc, direccion, telefono, celular, visual, usuario);
+        Empresa e = new Empresa(cod, nombre, ruc, direccion, telefono, celular, visual, Login.getUsuarioLogueado());
         msg = GestionarEmpresa.actEmpresa(e);
         if(msg==null)
         {
-            Mensajes.informacion("Empresa Actualizada");
+            //Mensajes.informacion("Empresa Actualizada");
+            Notif.NotifySuccess("Notificación del sistema", "Empresa Actualizada");
         }
         else{
             Mensajes.error(msg);
@@ -62,11 +62,11 @@ public class controlEmpresa {
     {
         String msg;
         String cod = dlgEmpresa.txtCod.getText();
-        String usuario = UsuarioL=Login.getUsuarioLogueado();
-        msg = GestionarEmpresa.delEmpresa(cod, usuario);
+        msg = GestionarEmpresa.delEmpresa(cod, Login.getUsuarioLogueado());
         if(msg==null)
         {
-            Mensajes.informacion("Empresa Eliminada");
+           // Mensajes.informacion("Empresa Eliminada");
+            Notif.NotifySuccess("Notificación del sistema", "Empresa Eliminada");
         }
         else{
             Mensajes.error(msg);

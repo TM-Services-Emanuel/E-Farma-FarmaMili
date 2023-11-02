@@ -5,6 +5,7 @@ import Componentes.Empresa;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.Tickets;
 import Componentes.Timbrado;
 import Componentes.traerIP;
@@ -22,13 +23,13 @@ public class ControlLogeo {
 
     static Timer timer;
     int cont;
-    public static final int ONE_SECOND=2;
-    
+    public static final int ONE_SECOND = 2;
+
     static Usuario u;
     static String user;
     static String pass;
     public static String UsuarioL = "";
-    
+
     static DataSourceService dss = new DataSourceService();
 
     public static String logear() {
@@ -36,81 +37,80 @@ public class ControlLogeo {
         //pass = Encript.getStringMessageDigest(frmAcceso.psPasword.getText(), Encript.MD5);
         pass = String.valueOf(frmAcceso.psPasword.getPassword());
         u = Logeo.logear(user, pass);
-        
+
         if (u.getPefil().equalsIgnoreCase("ADMINISTRADOR")) {
             //ip=u.getIp();
             //System.out.println(u.getIp()+" vs "+ traerIP.getIP() );
             //if (ip.equals(traerIP.getIP())) {
-                String msg = Logeo.acceso(u);
-                abrirPrincipal();
-                frmPrincipal.lblUsuario.setText(u.getNomUsuario());
-                frmPrincipal.lbUsuario.setText(u.getUsuario());
-                UsuarioL=u.getUsuario();
-                Login.setUsuarioLogueado(UsuarioL);
-                Login.setPasswordLogeado(u.getPassword());
-                Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
-                frmPrincipal.lbPerfil.setText(u.getPefil());
+            String msg = Logeo.acceso(u);
+            abrirPrincipal();
+            frmPrincipal.lblUsuario.setText(u.getNomUsuario());
+            frmPrincipal.lbUsuario.setText(u.getUsuario());
+            UsuarioL = u.getUsuario();
+            Login.setUsuarioLogueado(UsuarioL);
+            Login.setPasswordLogeado(u.getPassword());
+            Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
+            frmPrincipal.lbPerfil.setText(u.getPefil());
             //} else {
             //    frmAcceso.lblMensaje.setText("Dirección IP no autorizada para la conexión, verifique la Configuración.");
             //}
-        }else if (u.getPefil().equalsIgnoreCase("VENTA")) {
+        } else if (u.getPefil().equalsIgnoreCase("VENTA")) {
             //ip=u.getIp();
             //if (ip.equals(traerIP.getIP())) {
-                String msg = Logeo.acceso(u);
-                abrirPrincipal();
-                frmPrincipal.lblUsuario.setText(u.getNomUsuario());
-                frmPrincipal.lbUsuario.setText(u.getUsuario());
-                UsuarioL=u.getUsuario();
-                Login.setUsuarioLogueado(UsuarioL);
-                Login.setPasswordLogeado(u.getPassword());
-                Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
-                frmPrincipal.lbPerfil.setText(u.getPefil());
+            String msg = Logeo.acceso(u);
+            abrirPrincipal();
+            frmPrincipal.lblUsuario.setText(u.getNomUsuario());
+            frmPrincipal.lbUsuario.setText(u.getUsuario());
+            UsuarioL = u.getUsuario();
+            Login.setUsuarioLogueado(UsuarioL);
+            Login.setPasswordLogeado(u.getPassword());
+            Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
+            frmPrincipal.lbPerfil.setText(u.getPefil());
             //} else {
             //    frmAcceso.lblMensaje.setText("Dirección IP no autorizada para la conexión, verifique la Configuración.");
             //}
-        }else if (u.getPefil().equalsIgnoreCase("COMPRA")) {
+        } else if (u.getPefil().equalsIgnoreCase("COMPRA")) {
             //ip=u.getIp();
             //if (ip.equals(traerIP.getIP())) {
-                String msg = Logeo.acceso(u);
-                abrirPrincipal();
-                frmPrincipal.lblUsuario.setText(u.getNomUsuario());
-                frmPrincipal.lbUsuario.setText(u.getUsuario());
-                UsuarioL=u.getUsuario();
-                Login.setUsuarioLogueado(UsuarioL);
-                Login.setPasswordLogeado(u.getPassword());
-                Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
-                frmPrincipal.lbPerfil.setText(u.getPefil());
+            String msg = Logeo.acceso(u);
+            abrirPrincipal();
+            frmPrincipal.lblUsuario.setText(u.getNomUsuario());
+            frmPrincipal.lbUsuario.setText(u.getUsuario());
+            UsuarioL = u.getUsuario();
+            Login.setUsuarioLogueado(UsuarioL);
+            Login.setPasswordLogeado(u.getPassword());
+            Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
+            frmPrincipal.lbPerfil.setText(u.getPefil());
             //} else {
             //    frmAcceso.lblMensaje.setText("Dirección IP no autorizada para la conexión, verifique la Configuración.");
             //}
-        }else if (u.getPefil().equalsIgnoreCase("ALMACEN")) {
+        } else if (u.getPefil().equalsIgnoreCase("ALMACEN")) {
             //ip=u.getIp();
             //if (ip.equals(traerIP.getIP())) {
-                String msg = Logeo.acceso(u);
-                abrirPrincipal();
-                frmPrincipal.lblUsuario.setText(u.getNomUsuario());
-                frmPrincipal.lbUsuario.setText(u.getUsuario());
-                UsuarioL=u.getUsuario();
-                Login.setUsuarioLogueado(UsuarioL);
-                Login.setPasswordLogeado(u.getPassword());
-                Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
-                frmPrincipal.lbPerfil.setText(u.getPefil());
+            String msg = Logeo.acceso(u);
+            abrirPrincipal();
+            frmPrincipal.lblUsuario.setText(u.getNomUsuario());
+            frmPrincipal.lbUsuario.setText(u.getUsuario());
+            UsuarioL = u.getUsuario();
+            Login.setUsuarioLogueado(UsuarioL);
+            Login.setPasswordLogeado(u.getPassword());
+            Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
+            frmPrincipal.lbPerfil.setText(u.getPefil());
             //} else {
             //    frmAcceso.lblMensaje.setText("Dirección IP no autorizada para la conexión, verifique la Configuración.");
             //}
-        }
-        else if (u.getPefil().equalsIgnoreCase("DESARROLLADOR")) {
+        } else if (u.getPefil().equalsIgnoreCase("DESARROLLADOR")) {
             //ip=u.getIp();
             //if (ip.equals(traerIP.getIP())) {
-                String msg = Logeo.acceso(u);
-                abrirPrincipal();
-                frmPrincipal.lblUsuario.setText(u.getNomUsuario());
-                frmPrincipal.lbUsuario.setText(u.getUsuario());
-                UsuarioL=u.getUsuario();
-                Login.setUsuarioLogueado(UsuarioL);
-                Login.setPasswordLogeado(u.getPassword());
-                Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
-                frmPrincipal.lbPerfil.setText(u.getPefil());
+            String msg = Logeo.acceso(u);
+            abrirPrincipal();
+            frmPrincipal.lblUsuario.setText(u.getNomUsuario());
+            frmPrincipal.lbUsuario.setText(u.getUsuario());
+            UsuarioL = u.getUsuario();
+            Login.setUsuarioLogueado(UsuarioL);
+            Login.setPasswordLogeado(u.getPassword());
+            Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
+            frmPrincipal.lbPerfil.setText(u.getPefil());
             //} else {
             //    frmAcceso.lblMensaje.setText("Dirección IP no autorizada para la conexión, verifique la Configuración.");
             //}
@@ -139,10 +139,10 @@ public class ControlLogeo {
             p.setExtendedState(frmPrincipal.MAXIMIZED_BOTH);
             p.setVisible(true);
         } catch (SQLException ex) {
-            System.out.println("Error levantando formulario principal: "+ex.getMessage());
+            System.out.println("Error levantando formulario principal: " + ex.getMessage());
         }
     }
-    
+
     public static void Timbrado_Ticket() {
         try {
             String sql = "SELECT * FROM v_puntoemision3 WHERE ip='" + traerIP.getIP() + "' AND tipo='L' AND estado='Activo'";
@@ -178,7 +178,8 @@ public class ControlLogeo {
                             Timbrado.setValidado("SI");
                         } else if (FechaA.after(FechaT)) {
                             Timbrado.setValidado("NO");
-                            Mensajes.Sistema("EMISIÓN DE FACTURA LEGAL NO HABILITADO:\nEl Timbrado actual ha expirado.\nPara retomar las facturaciones legales sera necesario configurar un nuevo Timbrado.");
+                            //Mensajes.Sistema("EMISIÓN DE FACTURA LEGAL NO HABILITADO:\nEl Timbrado actual ha expirado.\nPara retomar las facturaciones legales sera necesario configurar un nuevo Timbrado.");
+                            Notif.NotifyInformation("Notificación del sistema", "EMISIÓN DE FACTURA LEGAL NO HABILITADO:\r\nEl Timbrado actual ha expirado.\r\n\nPara retomar las facturaciones legales sera necesario configurar un nuevo Timbrado.");
                         } else if (FechaA.before(FechaT)) {
                             Timbrado.setValidado("SI");
                         }
@@ -187,7 +188,8 @@ public class ControlLogeo {
                     }
 
                 } else {
-                    Mensajes.Sistema("EMISIÓN DE FACTURA LEGAL NO HABILITADO:\nNo se encuentra Punto de expedición para la emisión de facturas legales.");
+                    //Mensajes.Sistema("EMISIÓN DE FACTURA LEGAL NO HABILITADO:\nNo se encuentra Punto de expedición para la emisión de facturas legales.");
+                    Notif.NotifyInformation("Notificación del sistema", "EMISIÓN DE FACTURA LEGAL NO HABILITADO:\r\nNo se encuentra Punto de expedición para la emisión de facturas legales.\r\n\nPara retomar las facturaciones legales sera necesario configurar un punto de expedición..");
                     Timbrado.setHabilitado("NO");
                     System.out.println("FACTURA LEGAL HABILITADO: " + Timbrado.getHabilitado());
                     System.out.println("-------------------------------------------------------");
@@ -219,7 +221,8 @@ public class ControlLogeo {
                     System.out.println("TICKET HABILITADO: " + Tickets.getHabilitado());
                     System.out.println("-------------------------------------------------------");
                 } else {
-                    Mensajes.Sistema("EMISIÓN DE TICKET NO HABILITADO:\nNo se encuentra un Punto de expedición para emisión de tickets.");
+                    Notif.NotifyInformation("Notificación del sistema", "EMISIÓN DE TICKET NO HABILITADO:\nNo se encuentra un Punto de expedición para emisión de tickets.");
+                    //Mensajes.Sistema("EMISIÓN DE TICKET NO HABILITADO:\nNo se encuentra un Punto de expedición para emisión de tickets.");
                     Tickets.setHabilitado("NO");
                     System.out.println("TICKET HABILITADO: " + Tickets.getHabilitado());
                     System.out.println("-------------------------------------------------------");
@@ -232,8 +235,8 @@ public class ControlLogeo {
             System.out.println("Error obteniendo Ticket: " + e.getMessage());
         }
     }
-    
-    public static void Empresa(){
+
+    public static void Empresa() {
         try {
             String sql = "select * from v_sucursal where suc_indicador='S' AND mi_suc='S'";
             try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql);) {
@@ -249,7 +252,7 @@ public class ControlLogeo {
                     System.out.println("ID SUCURSAL: " + Empresa.getIdSucursal());
                     Empresa.setSucursal(rs.getString(2));
                     System.out.println("SUCURSAL: " + Empresa.getSucursal());
-                    Empresa.setCelular(rs.getString(8)+" "+rs.getString(9));
+                    Empresa.setCelular(rs.getString(8) + " " + rs.getString(9));
                     System.out.println("CELULAR: " + Empresa.getCelular());
                     Empresa.setDireccion(rs.getString(10));
                     System.out.println("DIRECCION: " + Empresa.getDireccion());
@@ -257,7 +260,7 @@ public class ControlLogeo {
                     System.out.println("EMPRESA HABILITADA: " + Empresa.getHabilitado());
                     System.out.println("-------------------------------------------------------");
                 } else {
-                    System.out.println("EMPRESA HABILITADO: "+Empresa.getHabilitado());
+                    System.out.println("EMPRESA HABILITADO: " + Empresa.getHabilitado());
                     System.out.println("-------------------------------------------------------");
                 }
                 rs.close();

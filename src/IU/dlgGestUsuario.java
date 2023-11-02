@@ -12,26 +12,25 @@ import javax.swing.JOptionPane;
 
 public class dlgGestUsuario extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
     public dlgGestUsuario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.usuario(tbUsuarios);
+        CabecerasTablas.usuario(tbUsuarios);
         controlUsuario.listUsuario(tbUsuarios);
         tbUsuarios.getTableHeader().setReorderingAllowed(false);
         txtCodEmpleado.setVisible(false);
         cant();
     }
-    
-    final void titulo(){
-        if(Software.getSoftware().equals("null")){
+
+    final void titulo() {
+        if (Software.getSoftware().equals("null")) {
             this.setTitle("Gestionar usuarios(Administrador)");
-        }else{
-            this.setTitle(Software.getSoftware()+" - Gestionar usuarios(Administrador)");
+        } else {
+            this.setTitle(Software.getSoftware() + " - Gestionar usuarios(Administrador)");
         }
     }
-    
+
     private void cant() {
         int total = tbUsuarios.getRowCount();
         etiCant.setText("Registros acumulados: " + String.valueOf(total));
@@ -53,13 +52,6 @@ public class dlgGestUsuario extends javax.swing.JDialog {
         cbPerfil = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbUsuarios = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         txtCodEmpleado = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtIP = new javax.swing.JTextField();
@@ -487,8 +479,8 @@ public class dlgGestUsuario extends javax.swing.JDialog {
     private void tbUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbUsuariosMouseClicked
         // TODO add your handling code here:
         int x = tbUsuarios.getSelectedRow();
-        int cperf=Integer.parseInt(tbUsuarios.getValueAt(x, 7).toString());
-        if(cperf == 5){
+        int cperf = Integer.parseInt(tbUsuarios.getValueAt(x, 7).toString());
+        if (cperf == 5) {
             txtUsuario.setEnabled(false);
             psPassword.setEnabled(false);
             cbPerfil.setEnabled(false);
@@ -497,7 +489,7 @@ public class dlgGestUsuario extends javax.swing.JDialog {
             itemEliminar.setEnabled(false);
             btnModificar.setEnabled(false);
             itemModificar.setEnabled(false);
-        }else{
+        } else {
             txtUsuario.setEnabled(true);
             psPassword.setEnabled(true);
             cbPerfil.setEnabled(true);
@@ -512,7 +504,7 @@ public class dlgGestUsuario extends javax.swing.JDialog {
         txtNomUsuario.setText(tbUsuarios.getValueAt(x, 2).toString());
         txtUsuario.setText(tbUsuarios.getValueAt(x, 3).toString());
         psPassword.setText(tbUsuarios.getValueAt(x, 4).toString());
-        txtCodEmpleado.setText(tbUsuarios.getValueAt(x,8).toString());
+        txtCodEmpleado.setText(tbUsuarios.getValueAt(x, 8).toString());
         cbPerfil.setSelectedItem(u.getPefil());
         txtIP.setText(u.getIp());
         System.out.println(u.getIp());
@@ -562,17 +554,16 @@ public class dlgGestUsuario extends javax.swing.JDialog {
 
     private void txtIPKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIPKeyTyped
         // TODO add your handling code here:
-        char c= evt.getKeyChar();
-        int limite=15;
-        if(Character.isLetter(c)) { 
-              getToolkit().beep(); 
-               
-              evt.consume(); 
-               
-              System.out.println("Ingresa Solo Numeros");
+        char c = evt.getKeyChar();
+        int limite = 15;
+        if (Character.isLetter(c)) {
+            getToolkit().beep();
+
+            evt.consume();
+
+            System.out.println("Ingresa Solo Numeros");
         }
-        if (txtIP.getText().length()== limite)
-        {
+        if (txtIP.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtIPKeyTyped
@@ -599,77 +590,74 @@ public class dlgGestUsuario extends javax.swing.JDialog {
         cbPerfil.setEnabled(true);
         txtIP.setEnabled(true);
         btnBuscarEmpleado.setEnabled(true);
-        cabe.usuario(tbUsuarios);
+        //CabecerasTablas.usuario(tbUsuarios);
         limpiarCampos();
         deshabilitar();
-        CabecerasTablas.limpiarTablas(tbUsuarios);
+        CabecerasTablas.limpiarTablaUsuario(tbUsuarios);
         controlUsuario.listUsuario(tbUsuarios);
         btnBuscarEmpleado.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-                if(validarCampos.estaVacio(txtNomUsuario) && validarCampos.estaVacio(txtUsuario) && validarCampos.estaVacio(psPassword)&& validarCampos.estaVacio(txtIP))
-                {
-                    try{
-                        int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                        if (resp == JOptionPane.YES_OPTION){
-                            String cod = GestionarUsuario.getCodigo();
-                            txtCod.setText(cod);
-                            controlUsuario.addUsuario();
-                            limpiarCampos();
-                            btnCancelarActionPerformed(null);
-                            cabe.usuario(tbUsuarios);
-                            CabecerasTablas.limpiarTablas(tbUsuarios);
-                            controlUsuario.listUsuario(tbUsuarios);  
-                        }
-                    }catch(Exception ee){}            
+        if (validarCampos.estaVacio(txtNomUsuario) && validarCampos.estaVacio(txtUsuario) && validarCampos.estaVacio(psPassword) && validarCampos.estaVacio(txtIP)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea insertar el registro?", "Insertar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
+                    String cod = GestionarUsuario.getCodigo();
+                    txtCod.setText(cod);
+                    controlUsuario.addUsuario();
+                    limpiarCampos();
+                    btnCancelarActionPerformed(null);
+                    //cabe.usuario(tbUsuarios);
+                    CabecerasTablas.limpiarTablaUsuario(tbUsuarios);
+                    controlUsuario.listUsuario(tbUsuarios);
                 }
-            else
-                {
-                    Mensajes.informacion("Hay campos en blanco");
-                }
-        
+            } catch (Exception ee) {
+            }
+        } else {
+            Mensajes.informacion("Hay campos en blanco");
+        }
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
-                if(validarCampos.estaVacio(txtNomUsuario) && validarCampos.estaVacio(txtUsuario) && validarCampos.estaVacio(psPassword)&& validarCampos.estaVacio(txtIP))
-                {
-                    try{
-                        int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                        if (resp == JOptionPane.YES_OPTION){
-                            controlUsuario.actUsuario();
-                            limpiarCampos();
-                            //deshabilitar();
-                            btnCancelarActionPerformed(null);
-                            btnBuscarEmpleado.setEnabled(false);
-                            cabe.usuario(tbUsuarios);
-                            CabecerasTablas.limpiarTablas(tbUsuarios);
-                            controlUsuario.listUsuario(tbUsuarios);
-                        }
-                    }catch(Exception ee){}     
+        if (validarCampos.estaVacio(txtNomUsuario) && validarCampos.estaVacio(txtUsuario) && validarCampos.estaVacio(psPassword) && validarCampos.estaVacio(txtIP)) {
+            try {
+                int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                if (resp == JOptionPane.YES_OPTION) {
+                    controlUsuario.actUsuario();
+                    limpiarCampos();
+                    //deshabilitar();
+                    btnCancelarActionPerformed(null);
+                    btnBuscarEmpleado.setEnabled(false);
+                    //cabe.usuario(tbUsuarios);
+                    CabecerasTablas.limpiarTablaUsuario(tbUsuarios);
+                    controlUsuario.listUsuario(tbUsuarios);
                 }
-                else
-                {
-                    Mensajes.informacion("Hay campos en blanco");
-                }
-        
+            } catch (Exception ee) {
+            }
+        } else {
+            Mensajes.informacion("Hay campos en blanco");
+        }
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        try{
-            int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (resp == JOptionPane.YES_OPTION){
+        try {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (resp == JOptionPane.YES_OPTION) {
                 controlUsuario.delUsuario();
                 btnCancelarActionPerformed(null);
-                cabe.usuario(tbUsuarios);
-                CabecerasTablas.limpiarTablas(tbUsuarios);
+                //cabe.usuario(tbUsuarios);
+                CabecerasTablas.limpiarTablaUsuario(tbUsuarios);
                 controlUsuario.listUsuario(tbUsuarios);
             }
-        }catch(Exception ee){}
-        
+        } catch (Exception ee) {
+        }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void psPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_psPasswordActionPerformed
@@ -709,24 +697,23 @@ public class dlgGestUsuario extends javax.swing.JDialog {
 
     private void txtIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIPActionPerformed
         // TODO add your handling code here:
-        if(btnGuardar.isEnabled()){
+        if (btnGuardar.isEnabled()) {
             btnGuardar.doClick();
-        }else{
+        } else {
             btnModificar.doClick();
         }
     }//GEN-LAST:event_txtIPActionPerformed
 
     private void txtUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyTyped
         // TODO add your handling code here:
-        char c=evt.getKeyChar();
-        if(Character.isLowerCase(c)){
-            String cad=(""+c).toUpperCase();
-            c=cad.charAt(0);
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
             evt.setKeyChar(c);
         }
-        int limite=25;
-        if (txtUsuario.getText().length()== limite)
-        {
+        int limite = 25;
+        if (txtUsuario.getText().length() == limite) {
             evt.consume();
         }
     }//GEN-LAST:event_txtUsuarioKeyTyped
@@ -747,14 +734,12 @@ public class dlgGestUsuario extends javax.swing.JDialog {
 
     private void cbPerfilKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cbPerfilKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             txtIP.requestFocus();
         }
     }//GEN-LAST:event_cbPerfilKeyPressed
 
-    void habilitar()
-            
-    {
+    void habilitar() {
         btnNuevo.setEnabled(false);
         itemNuevo.setEnabled(false);
         //btnModificar.setEnabled(true);
@@ -769,24 +754,22 @@ public class dlgGestUsuario extends javax.swing.JDialog {
         //cbPerfil.setEnabled(true);
         //txtIP.setEnabled(true);
     }
-    
-    void deshabilitar()
-    {
+
+    void deshabilitar() {
         btnModificar.setEnabled(false);
         itemModificar.setEnabled(false);
         btnEliminar.setEnabled(false);
         itemEliminar.setEnabled(false);
     }
-    
-    void limpiarCampos()
-    {
+
+    void limpiarCampos() {
         txtCodEmpleado.setText("");
         txtNomUsuario.setText("");
         txtUsuario.setText("");
         psPassword.setText("");
         txtIP.setText("");
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -808,7 +791,7 @@ public class dlgGestUsuario extends javax.swing.JDialog {
         }
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
 
         /* Create and display the dialog */
@@ -852,7 +835,13 @@ public class dlgGestUsuario extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JMenu menuOpciones;
     public static javax.swing.JPasswordField psPassword;
-    private javax.swing.JTable tbUsuarios;
+    private static final javax.swing.JTable tbUsuarios = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCod;
     public static javax.swing.JLabel txtCodEmpleado;
     public static javax.swing.JTextField txtIP;

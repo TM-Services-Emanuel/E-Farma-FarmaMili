@@ -1,17 +1,13 @@
 package IU;
 
-import Componentes.cargarComboBox;
 import Controladores.CabecerasTablas;
-import Controladores.controlSucursal;
 import Datos.GestionalSucursal;
 
 public class dlgTransporte extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
     public dlgTransporte(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        //cabe.transporte(jTable1);
+       // CabecerasTablas.transporte(jTable1);
         //controlSucursal.listTransporte(jTable1);
     }
 
@@ -29,13 +25,6 @@ public class dlgTransporte extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -177,7 +166,7 @@ public class dlgTransporte extends javax.swing.JDialog {
         String cod = GestionalSucursal.getCodigo();
         jLabel1.setText(cod);
         jTextField2.setText("");
-        CabecerasTablas.limpiarTablas(jTable1);
+        //CabecerasTablas.limpiarTablaTransferencias(jTable1);
         //controlSucursal.listTransporte(jTable1);
     }//GEN-LAST:event_jButton7ActionPerformed
 
@@ -188,7 +177,7 @@ public class dlgTransporte extends javax.swing.JDialog {
         jTextField2.setEnabled(false);
         //controlSucursal.delTransporte();
         limpiarCampos();
-        CabecerasTablas.limpiarTablas(jTable1);
+        //CabecerasTablas.limpiarTablas(jTable1);
         //controlSucursal.listTransporte(jTable1);
     }//GEN-LAST:event_jButton8ActionPerformed
 
@@ -199,7 +188,7 @@ public class dlgTransporte extends javax.swing.JDialog {
         jButton8.setEnabled(false);
         jTextField2.setEnabled(false);
         limpiarCampos();
-        CabecerasTablas.limpiarTablas(jTable1);
+        //CabecerasTablas.limpiarTablas(jTable1);
         //controlSucursal.listTransporte(jTable1);
     }//GEN-LAST:event_jButton9ActionPerformed
 
@@ -209,7 +198,7 @@ public class dlgTransporte extends javax.swing.JDialog {
         jButton10.setEnabled(false);
         jTextField2.setEnabled(false);
         limpiarCampos();
-        CabecerasTablas.limpiarTablas(jTable1);
+       // CabecerasTablas.limpiarTablas(jTable1);
         //controlSucursal.listTransporte(jTable1);
     }//GEN-LAST:event_jButton10ActionPerformed
 
@@ -294,7 +283,13 @@ public class dlgTransporte extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private static final javax.swing.JTable jTable1 = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

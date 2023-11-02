@@ -10,13 +10,11 @@ import Datos.GestionarMotivo;
 import javax.swing.JOptionPane;
 
 public class dlgMotivo extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
     public dlgMotivo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.motivo(tbMotivo);
+        CabecerasTablas.motivo(tbMotivo);
         controlMotivo.listMotivo(tbMotivo);
     }
     
@@ -43,13 +41,6 @@ public class dlgMotivo extends javax.swing.JDialog {
         txtCod = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbMotivo = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jLabel3 = new javax.swing.JLabel();
         barMenu = new javax.swing.JMenuBar();
         menuOpciones = new javax.swing.JMenu();
@@ -345,7 +336,7 @@ public class dlgMotivo extends javax.swing.JDialog {
         itemCancelar.setEnabled(true);
         txtMotivo.setEnabled(true);
         txtMotivo.setText("");
-        CabecerasTablas.limpiarTablas(tbMotivo);
+        CabecerasTablas.limpiarTablaMotivo(tbMotivo);
         controlMotivo.listMotivo(tbMotivo);
         txtMotivo.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
@@ -356,7 +347,7 @@ public class dlgMotivo extends javax.swing.JDialog {
             int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (resp == JOptionPane.YES_OPTION){
                 controlMotivo.delMotivo();
-                CabecerasTablas.limpiarTablas(tbMotivo);
+                CabecerasTablas.limpiarTablaMotivo(tbMotivo);
                 controlMotivo.listMotivo(tbMotivo);
                 btnCancelarActionPerformed(null);
             }
@@ -369,7 +360,7 @@ public class dlgMotivo extends javax.swing.JDialog {
             int resp = JOptionPane.showConfirmDialog(this,"¿Seguro que desea modificar el registro?", "Modificar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (resp == JOptionPane.YES_OPTION){
                 controlMotivo.actMotivo();
-                CabecerasTablas.limpiarTablas(tbMotivo);
+                CabecerasTablas.limpiarTablaMotivo(tbMotivo);
                 controlMotivo.listMotivo(tbMotivo);
                 btnCancelarActionPerformed(null);
             }
@@ -385,7 +376,7 @@ public class dlgMotivo extends javax.swing.JDialog {
                     String cod = GestionarMotivo.getCodigo();
                     txtCod.setText(cod);
                     controlMotivo.addMotivo();
-                    CabecerasTablas.limpiarTablas(tbMotivo);
+                    CabecerasTablas.limpiarTablaMotivo(tbMotivo);
                     controlMotivo.listMotivo(tbMotivo);
                     btnCancelarActionPerformed(null);
                 }
@@ -551,7 +542,13 @@ public class dlgMotivo extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuOpciones;
-    private javax.swing.JTable tbMotivo;
+    private static final javax.swing.JTable tbMotivo = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCod;
     public static javax.swing.JTextField txtMotivo;
     // End of variables declaration//GEN-END:variables

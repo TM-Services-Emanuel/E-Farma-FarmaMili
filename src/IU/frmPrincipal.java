@@ -4,6 +4,7 @@ import Componentes.Empresa;
 import Componentes.Fecha;
 import Componentes.ReporteF;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.Reloj;
 import Componentes.Software;
 import Componentes.generarCodigos;
@@ -17,9 +18,11 @@ import java.util.logging.Logger;
 public final class frmPrincipal extends javax.swing.JFrame {
 
     public ReporteF jasper;
+    public static int PrincipalMinimizado;
 
     public frmPrincipal() throws SQLException {
         ControlLogeo.Empresa();
+        PrincipalMinimizado = 0;
         initComponents();
         this.setExtendedState(frmPrincipal.MAXIMIZED_BOTH);
         informacionGral();
@@ -62,7 +65,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         this.setSize(ancho, alto);
         setLocationRelativeTo(null);
     }
-    
+
     public static void informacionGral() {
         try {
             if (Empresa.getHabilitado().equals("SI")) {
@@ -267,6 +270,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         rpArticulos = new javax.swing.JMenu();
         jMenuItem36 = new javax.swing.JMenuItem();
+        itemNuevoE1 = new javax.swing.JMenuItem();
         jMenuItem38 = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
         jMenuItem40 = new javax.swing.JMenuItem();
@@ -285,6 +289,17 @@ public final class frmPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setBackground(new java.awt.Color(51, 51, 255));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowDeiconified(java.awt.event.WindowEvent evt) {
+                formWindowDeiconified(evt);
+            }
+            public void windowIconified(java.awt.event.WindowEvent evt) {
+                formWindowIconified(evt);
+            }
+        });
 
         panelImage1.setBackground(new java.awt.Color(102, 102, 102));
         panelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/MEDICAMENTOS FARMACIA.jpg"))); // NOI18N
@@ -409,7 +424,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         CONTENEDOR_ACCESO.add(jSeparator27, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 141, 333, 7));
 
         btnSalir.setBackground(new java.awt.Color(255, 0, 0));
-        btnSalir.setToolTipText("Cerrar el Sistema");
+        btnSalir.setToolTipText("F12 - Cerrar el Sistema");
         btnSalir.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnSalir.setForegroundHover(new java.awt.Color(255, 0, 0));
         btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.POWER_SETTINGS_NEW);
@@ -893,7 +908,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jSeparator12.setOpaque(true);
         mnSistema.add(jSeparator12);
 
-        mnCerrarSistema.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
+        mnCerrarSistema.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
         mnCerrarSistema.setBackground(new java.awt.Color(255, 255, 255));
         mnCerrarSistema.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         mnCerrarSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/outline_exit_to_app_black_24.png"))); // NOI18N
@@ -1812,6 +1827,18 @@ public final class frmPrincipal extends javax.swing.JFrame {
         });
         rpArticulos.add(jMenuItem36);
 
+        itemNuevoE1.setBackground(new java.awt.Color(255, 255, 255));
+        itemNuevoE1.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        itemNuevoE1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reports.png"))); // NOI18N
+        itemNuevoE1.setText("REPORTE DE ARTICULOS CON STOCK CRÍTICOS");
+        itemNuevoE1.setBorder(null);
+        itemNuevoE1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemNuevoE1ActionPerformed(evt);
+            }
+        });
+        rpArticulos.add(itemNuevoE1);
+
         jMenuItem38.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem38.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jMenuItem38.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reports.png"))); // NOI18N
@@ -2183,7 +2210,6 @@ public final class frmPrincipal extends javax.swing.JFrame {
         int rpta = Mensajes.confirmar("¿Seguro que desea Cerrar Sesión?");
         if (rpta == 0) {
             String msg = ControlLogeo.desLogeo();
-            //System.exit(0);
             this.dispose();
             frmAcceso ac = new frmAcceso();
             ac.setLocationRelativeTo(null);
@@ -2204,46 +2230,63 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }
 
     void abrirFactura() {
-        try {
-            dlgVentas factura = new dlgVentas(null, true);
-            factura.requestFocus();
-            factura.setLocationRelativeTo(null);
-            factura.setVisible(true);
-        } catch (SQLException e) {
-            Mensajes.informacion("Servidor no esta activo");
+        System.out.println("abrirVentas() min: " + dlgVentas.min);
+        if (dlgVentas.min != 1) {
+            try {
+                dlgVentas factura = new dlgVentas(null, true);
+                factura.setLocationRelativeTo(null);
+                factura.setVisible(true);
+            } catch (SQLException e) {
+                Mensajes.informacion("Servidor no esta activo");
+            }
+        } else {
+            Notif.Notify_Minim_dlgVentas("Notificación del sistema", "Formulario de Ventas minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
 
     }
 
     void abrirCompras() {
-        try {
-            dlgCompras compras = new dlgCompras(this, false);
-            compras.setLocationRelativeTo(null);
-            compras.setVisible(true);
-        } catch (SQLException e) {
-            Mensajes.informacion("Servidor no esta activo");
+        System.out.println("abrirCompras() min: " + dlgCompras.min);
+        if (dlgCompras.min != 1) {
+            try {
+                dlgCompras compras = new dlgCompras(this, true);
+                compras.setLocationRelativeTo(null);
+                compras.setVisible(true);
+            } catch (SQLException e) {
+                Mensajes.informacion("Servidor no esta activo");
+            }
+        } else {
+            Notif.Notify_Minim_dlgCompras("Notificación del sistema", "Formulario de Compras minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
-
     }
 
     void abrirClientes() {
-        try {
-            dlgClientes clientes = new dlgClientes(this, true);
-            //clientes.setSize(1000, 540);
-            clientes.setLocationRelativeTo(null);
-            clientes.setVisible(true);
-        } catch (Exception e) {
-            Mensajes.informacion("Servidor no esta activo");
+        System.out.println("abrirClientes() min: " + dlgClientes.min);
+        if (dlgClientes.min != 1) {
+            try {
+                dlgClientes clientes = new dlgClientes(this, true);
+                clientes.setLocationRelativeTo(null);
+                clientes.setVisible(true);
+            } catch (Exception e) {
+                Mensajes.informacion("Servidor no esta activo");
+            }
+        } else {
+            Notif.Notify_Minim_dlgClientes("Notificación del sistema", "Formulario de Gestionar Clientes minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
     }
 
     void abrirArticulos() {
-        try {
-            dlgArticulos articulo = new dlgArticulos(this, true);
-            articulo.setLocationRelativeTo(null);
-            articulo.setVisible(true);
-        } catch (SQLException e) {
-            Mensajes.informacion("Servidor no esta activo");
+        System.out.println("abrirArticulos() min: " + dlgArticulos.min);
+        if (dlgArticulos.min != 1) {
+            try {
+                dlgArticulos articulo = new dlgArticulos(this, true);
+                articulo.setLocationRelativeTo(null);
+                articulo.setVisible(true);
+            } catch (SQLException e) {
+                Mensajes.informacion("Servidor no esta activo");
+            }
+        } else {
+            Notif.Notify_Minim_dlgArticulos("Notificación del sistema", "Formulario de Gestión de Productos minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
     }
 
@@ -2314,7 +2357,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         try {
             String fe = generarCodigos.getFecha("SELECT ca_fechainicio FROM caja where ca_indicador='S' ORDER BY ca_id DESC LIMIT 1");
             if (!fe.equals(Fecha.fechaCorrecta())) {
-                Mensajes.informacion("La caja ya fue cerrada.\n\nPodra acceder a este formulario para visualizar los movimientos en la siguiente apertura de caja.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
+                Notif.NotifyFail("Notificación del sistema", "El movimiento de caja del día no se ha Inicializado o ya fue Finalizado.\r\n\nLa apertura puede realizarse con los perfiles \"ADMINISTRADOR\" y \"VENTAS\".");
+                //Mensajes.informacion("La caja ya fue cerrada.\n\nPodra acceder a este formulario para visualizar los movimientos en la siguiente apertura de caja.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
             } else {
                 dlgCajaDia cajaDia = new dlgCajaDia(this, true);
                 cajaDia.setLocationRelativeTo(null);
@@ -2331,7 +2375,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         try {
             String fe = generarCodigos.getFecha("SELECT ca_fechainicio FROM caja where ca_indicador='S' ORDER BY ca_id DESC LIMIT 1");
             if (!fe.equals(Fecha.fechaCorrecta())) {
-                Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara registrar pagos de servicios u otros egresos sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
+                Notif.NotifyFail("Notificación del sistema", "La caja del día aún no ha sido inicializada.\r\n\nLa apertura puede realizarse con los perfiles \"ADMINISTRADOR\" y \"VENTAS\".");
+                //Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara registrar pagos de servicios u otros egresos sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
             } else {
                 dlgGastos gastos = new dlgGastos(this, true);
                 gastos.setLocationRelativeTo(null);
@@ -2348,7 +2393,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         try {
             String fe = generarCodigos.getFecha("SELECT ca_fechainicio FROM caja where ca_indicador='S' ORDER BY ca_id DESC LIMIT 1");
             if (!fe.equals(Fecha.fechaCorrecta())) {
-                Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara registrar cobranzas u otros ingresos sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
+                Notif.NotifyFail("Notificación del sistema", "La caja del día aún no ha sido inicializada.\r\nPara registrar cobranzas u otros ingresos sera necesario hacerlo.\r\n\nLa apertura puede realizarse con los perfiles \"ADMINISTRADOR\" y \"VENTAS\".");
+                //Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara registrar cobranzas u otros ingresos sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
             } else {
                 dlgIngreso ingreso = new dlgIngreso(this, true);
                 ingreso.setLocationRelativeTo(null);
@@ -2460,7 +2506,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 caja.setLocationRelativeTo(null);
                 caja.setVisible(true);
             } else {
-                Mensajes.informacion("La caja ya fue inicializada.\n\nPuede comenzar a registrar compras o realizar ventas\nsin ningún inconveniente.");
+                Notif.NotifyFail("Notificación del sistema", "El movimiento de caja del día ya fue inicializado.\r\nPuede comenzar a registrar Compras, Ventas y Transferencias con total normalidad.");
+                //Mensajes.informacion("La caja ya fue inicializada.\n\nPuede comenzar a registrar compras o realizar ventas\nsin ningún inconveniente.");
             }
         } catch (Exception e) {
             Mensajes.informacion("Servidor no esta activo");
@@ -2635,7 +2682,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         String fe = generarCodigos.getFecha("SELECT ca_fechainicio FROM caja where ca_indicador='S' ORDER BY ca_id DESC LIMIT 1");
         if (!fe.equals(Fecha.fechaCorrecta())) {
-            Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara poder comenzar a vender sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
+            //Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara poder comenzar a vender sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
+            Notif.NotifyFail("Notificación del sistema", "La caja del día aún no ha sido inicializada.\r\nPara poder comenzar a registrar las Ventas sera necesario hacerlo.\r\n\nLa apertura puede realizarse con los perfiles \"ADMINISTRADOR\" y \"VENTAS\".");
         } else {
             abrirFactura();
         }
@@ -2645,7 +2693,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         String fe = generarCodigos.getFecha("SELECT ca_fechainicio FROM caja where ca_indicador='S' ORDER BY ca_id DESC LIMIT 1");
         if (!fe.equals(Fecha.fechaCorrecta())) {
-            Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara poder comenzar a registrar las compras a proveedores sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
+            Notif.NotifyFail("Notificación del sistema", "La caja del día aún no ha sido inicializada.\r\nPara poder comenzar a registrar las Compras sera necesario hacerlo.\r\n\nLa apertura puede realizarse con los perfiles \"ADMINISTRADOR\" y \"VENTAS\".");
+            //Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara poder comenzar a registrar las compras a proveedores sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
         } else {
             abrirCompras();
         }
@@ -2703,7 +2752,8 @@ public final class frmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         String fe = generarCodigos.getFecha("SELECT ca_fechainicio FROM caja where ca_indicador='S' ORDER BY ca_id DESC LIMIT 1");
         if (!fe.equals(Fecha.fechaCorrecta())) {
-            Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara poder comenzar a registrar los repartos sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
+            //Mensajes.informacion("La caja del día aún no ha sido inicializada.\n\nPara poder comenzar a registrar los repartos sera necesario hacerlo.\nLa apertura puede realizarse con los perfiles ADMINISTRADOR y VENTAS.");
+            Notif.NotifyFail("Notificación del sistema", "La caja del día aún no ha sido inicializada.\r\nPara poder comenzar a registrar las Transferencias sera necesario hacerlo.\r\n\nLa apertura puede realizarse con los perfiles \"ADMINISTRADOR\" y \"VENTAS\".");
         } else {
             abrirTransferencias();
         }
@@ -2719,23 +2769,79 @@ public final class frmPrincipal extends javax.swing.JFrame {
             Mensajes.informacion("No hay conexión con el servidor");
         }
     }//GEN-LAST:event_btnGV1ActionPerformed
-    void abrirTransferencias() {
+
+    private void itemNuevoE1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoE1ActionPerformed
+        // TODO add your handling code here:
         try {
-            dlgTransferencia trans = new dlgTransferencia(this, true);
-            trans.setLocationRelativeTo(null);
-            trans.setVisible(true);
-        } catch (SQLException e) {
-            Mensajes.informacion("Servidor no esta activo");
+            dlgReporteStockCritico rsc = new dlgReporteStockCritico(null, false);
+            rsc.setLocationRelativeTo(null);
+            rsc.setVisible(true);
+        } catch (Exception e) {
+            Mensajes.informacion("No hay conexión con el servidor");
+        }
+
+        //
+    }//GEN-LAST:event_itemNuevoE1ActionPerformed
+
+    private void formWindowIconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowIconified
+        // TODO add your handling code here:
+        PrincipalMinimizado = 1;
+    }//GEN-LAST:event_formWindowIconified
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        //PrincipalMinimizado = 0;
+    }//GEN-LAST:event_formWindowActivated
+
+    private void formWindowDeiconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeiconified
+        // TODO add your handling code here:
+        PrincipalMinimizado = 0;
+        if (PrincipalMinimizado != 1 && dlgArticulos.min == 1) {
+            Notif.Notify_Minim_dlgArticulos("Notificación del sistema", "Formulario de Gestión de Productos minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+        }
+        if (PrincipalMinimizado != 1 && dlgVentas.min == 1) {
+            Notif.Notify_Minim_dlgVentas("Notificación del sistema", "Formulario de Ventas minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+        }
+        if (PrincipalMinimizado != 1 && dlgCompras.min == 1) {
+            Notif.Notify_Minim_dlgCompras("Notificación del sistema", "Formulario de Compras minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+        }
+        if (PrincipalMinimizado != 1 && dlgTransferencia.min == 1) {
+            Notif.Notify_Minim_dlgTransferencia("Notificación del sistema", "Formulario de Transferencias minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+        }
+        if (PrincipalMinimizado != 1 && dlgProveedores.min == 1) {
+            Notif.Notify_Minim_dlgProveedores("Notificación del sistema", "Formulario de Gest. Proveedores minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+        }
+        if (PrincipalMinimizado != 1 && dlgClientes.min == 1) {
+            Notif.Notify_Minim_dlgClientes("Notificación del sistema", "Formulario de Gestionar Clientes minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+        }
+    }//GEN-LAST:event_formWindowDeiconified
+    void abrirTransferencias() {
+        System.out.println("abrirTransferencia() min: " + dlgTransferencia.min);
+        if (dlgTransferencia.min != 1) {
+            try {
+                dlgTransferencia trans = new dlgTransferencia(this, true);
+                trans.setLocationRelativeTo(null);
+                trans.setVisible(true);
+            } catch (SQLException e) {
+                Mensajes.informacion("Servidor no esta activo");
+            }
+        } else {
+            Notif.Notify_Minim_dlgTransferencia("Notificación del sistema", "Formulario de Transferencias minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
     }
-    
+
     void abrirProveedor() {
-        try {
-            dlgProveedores proveedor = new dlgProveedores(this, true);
-            proveedor.setLocationRelativeTo(null);
-            proveedor.setVisible(true);
-        } catch (Exception e) {
-            Mensajes.informacion("Servidor no esta activo");
+        System.out.println("abrirProveedores() min: " + dlgProveedores.min);
+        if (dlgProveedores.min != 1) {
+            try {
+                dlgProveedores proveedor = new dlgProveedores(this, true);
+                proveedor.setLocationRelativeTo(null);
+                proveedor.setVisible(true);
+            } catch (Exception e) {
+                Mensajes.informacion("Servidor no esta activo");
+            }
+        } else {
+            Notif.Notify_Minim_dlgProveedores("Notificación del sistema", "Formulario de Gest. Proveedores minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
     }
 
@@ -2819,6 +2925,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemGestionarTR1;
     private javax.swing.JMenuItem itemImportar;
     private javax.swing.JMenuItem itemLaboratorio;
+    public javax.swing.JMenuItem itemNuevoE1;
     private javax.swing.JMenuItem itemSucursal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;

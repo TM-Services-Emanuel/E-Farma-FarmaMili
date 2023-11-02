@@ -11,13 +11,12 @@ import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class dlgLaboratorio extends javax.swing.JDialog {
-    CabecerasTablas cabe = new CabecerasTablas();
 
     public dlgLaboratorio(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.laboratorio(tbLaboratorio);
+        CabecerasTablas.laboratorio(tbLaboratorio);
         controlLaboratorio.lisLaboratorio(tbLaboratorio);
         rbBuscarActionPerformed(null);
     }
@@ -47,13 +46,6 @@ public class dlgLaboratorio extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbLaboratorio = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jLabel1 = new javax.swing.JLabel();
         txtBuscador = new javax.swing.JTextField();
         rbBuscar = new javax.swing.JCheckBox();
@@ -406,7 +398,7 @@ public class dlgLaboratorio extends javax.swing.JDialog {
         itemCancelar.setEnabled(true);
         txtLaboratorio.setEnabled(true);
         txtLaboratorio.setText("");
-        CabecerasTablas.limpiarTablas(tbLaboratorio);
+        CabecerasTablas.limpiarTablaLaboratorio(tbLaboratorio);
         controlLaboratorio.lisLaboratorio(tbLaboratorio);
         txtLaboratorio.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
@@ -425,7 +417,7 @@ public class dlgLaboratorio extends javax.swing.JDialog {
                 txtLaboratorio.setEnabled(false);
                 controlLaboratorio.delLaboratorio();
                 limpiarCampos();
-                CabecerasTablas.limpiarTablas(tbLaboratorio);
+                CabecerasTablas.limpiarTablaLaboratorio(tbLaboratorio);
                 controlLaboratorio.lisLaboratorio(tbLaboratorio);
                 btnCancelarActionPerformed(null);
             }
@@ -449,7 +441,7 @@ public class dlgLaboratorio extends javax.swing.JDialog {
                 txtLaboratorio.setEnabled(false);
                 limpiarCampos();*/
                 btnCancelarActionPerformed(null);
-                CabecerasTablas.limpiarTablas(tbLaboratorio);
+                CabecerasTablas.limpiarTablaLaboratorio(tbLaboratorio);
                 controlLaboratorio.lisLaboratorio(tbLaboratorio);
                 //cant();
             }
@@ -474,7 +466,7 @@ public class dlgLaboratorio extends javax.swing.JDialog {
                     txtLaboratorio.setEnabled(false);
                     limpiarCampos();*/
                     btnCancelarActionPerformed(null);
-                    CabecerasTablas.limpiarTablas(tbLaboratorio);
+                    CabecerasTablas.limpiarTablaLaboratorio(tbLaboratorio);
                     controlLaboratorio.lisLaboratorio(tbLaboratorio);
                     //cant();
                 }
@@ -594,9 +586,9 @@ public class dlgLaboratorio extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             String cod = txtBuscador.getText();
-            cabe.laboratorio(tbLaboratorio);
+            //CabecerasTablas.laboratorio(tbLaboratorio);
             controlLaboratorio.lisLaboratorio(tbLaboratorio);
-            CabecerasTablas.limpiarTablas(tbLaboratorio);
+            CabecerasTablas.limpiarTablaLaboratorio(tbLaboratorio);
             controlLaboratorio.filtrarLaboratorios(tbLaboratorio, cod);
         } catch (Exception e) {
             System.out.println("Mensaje de Error: " + e.getMessage());
@@ -731,7 +723,13 @@ public class dlgLaboratorio extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuOpciones;
     private javax.swing.JCheckBox rbBuscar;
-    private javax.swing.JTable tbLaboratorio;
+    private static final javax.swing.JTable tbLaboratorio = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     private javax.swing.JTextField txtBuscador;
     public static javax.swing.JTextField txtCod;
     public static javax.swing.JTextField txtLaboratorio;

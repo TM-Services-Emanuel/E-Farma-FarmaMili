@@ -1,5 +1,6 @@
 package IU;
 
+import Componentes.DataSourceService;
 import Componentes.Mensajes;
 import Componentes.cargarComboBox;
 import Componentes.validarCampos;
@@ -9,9 +10,13 @@ import Datos.GestionarProveedor;
 import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import java.sql.*;
 
 public final class dlgGestProveedor extends javax.swing.JDialog {
+
+    static DataSourceService dss = new DataSourceService();
 
     public dlgGestProveedor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -21,7 +26,7 @@ public final class dlgGestProveedor extends javax.swing.JDialog {
     }
 
     public void Nuevo() {
-        btnNuevo.doClick();
+        btnNuevoActionPerformed(null);
     }
 
     private void Cancelar() {
@@ -42,6 +47,28 @@ public final class dlgGestProveedor extends javax.swing.JDialog {
         btnNuevo.requestFocus();
         actualizartablaProveedores();
         this.dispose();
+    }
+
+    public void modcbCiudad() {
+        DefaultComboBoxModel ml = new DefaultComboBoxModel();
+        String sqlLabs = "SELECT * FROM ciudad WHERE ciu_indicador='S'";
+        String sqlLabEsp = "SELECT * FROM ciudad WHERE ciu_codigo=" + lbCiudad.getText().trim();
+        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sqlLabs); ResultSet rss = st.executeQuery(sqlLabEsp)) {
+            ml.addElement("SELEC. UNA OPCIÓN");
+            while (rs.next()) {
+                ml.addElement(rs.getString("ciu_nombre"));
+            }
+            rss.first();
+            Object descripcion = (Object) rss.getString("ciu_nombre");
+            dlgGestProveedor.cbCiudad.setModel(ml);
+            dlgGestProveedor.cbCiudad.setSelectedItem(descripcion);
+            rs.close();
+            rss.close();
+            st.close();
+            cn.close();
+        } catch (SQLException ew) {
+            System.out.println("Error combomod ciudad: " + ew.getMessage());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -468,12 +495,12 @@ public final class dlgGestProveedor extends javax.swing.JDialog {
 
     private void cbCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCiudadActionPerformed
         // TODO add your handling code here:
-        if (cbCiudad.getSelectedIndex() == 0) {
+        /*if (cbCiudad.getSelectedIndex() == 0) {
             lbCiudad.setText("");
         } else {
             String id = cargarComboBox.getCodidgo(cbCiudad);
             lbCiudad.setText(id);
-        }
+        }*/
     }//GEN-LAST:event_cbCiudadActionPerformed
 
     private void txtDireccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyPressed
@@ -641,8 +668,8 @@ public final class dlgGestProveedor extends javax.swing.JDialog {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         // TODO add your handling code here:
-        limpiarCampos();
         cargarComboBox.cargar(cbCiudad, "SELECT * FROM ciudad WHERE ciu_indicador='S'");
+        limpiarCampos();
         String cod = GestionarProveedor.getCodigo();
         lblCodP.setText(cod);
         btnNuevo.setEnabled(false);
@@ -755,14 +782,13 @@ public final class dlgGestProveedor extends javax.swing.JDialog {
         txtContacto.setText("");
         txtCelular.setText("");
         txtTelefono.setText("");
-        cbCiudad.list();
+        cbCiudad.setSelectedIndex(0);
         txaS.setText("");
     }
 
     void actualizartablaProveedores() {
-        CabecerasTablas cabe = new CabecerasTablas();
-        cabe.proveedor(dlgProveedores.tablaProveedores);
-        CabecerasTablas.limpiarTablas(dlgProveedores.tablaProveedores);
+        CabecerasTablas.proveedor(dlgProveedores.tablaProveedores);
+        CabecerasTablas.limpiarTablaProveedor(dlgProveedores.tablaProveedores);
         controlProveedor.listProveedor(dlgProveedores.tablaProveedores, "proveedor.pro_codigo");
         dlgProveedores.txtBuscar.setText("");
         dlgProveedores.txtBuscar.requestFocus();

@@ -26,19 +26,6 @@ public class GestionarProveedor {
         sql.append(p.getObs()).append("','S','");
         sql.append(p.getUsuario()).append("')");
         msg = Operacion.exeOperacion(sql.toString());
-//        msg = Operacion.exeOperacion("INSERT INTO proveedor  VALUES (" 
-//                + p.getCodP() + ",'" 
-//                + p.getRazoS() + "','" 
-//                + p.getRuc() + "','" 
-//                + p.getContac() + "','" 
-//                + p.getCelu() + "','" 
-//                + p.getTelef() + "','" 
-//                + p.getFax() + "','" 
-//                + p.getDireccion() + "'," 
-//                + p.getCodProvincia() + ",'" 
-//                + p.getEmail() + "','" 
-//                + p.getWeb() + "', '" 
-//                + p.getObs() + "','S')");
         return msg;
     }
 
@@ -55,18 +42,6 @@ public class GestionarProveedor {
         sql.append("',usu='").append(p.getUsuario());
         sql.append("' WHERE pro_codigo=").append(p.getCodP()).append("");
         msg = Operacion.exeOperacion(sql.toString());
-//        msg = Operacion.exeOperacion("UPDATE proveedor SET pro_razonSocial='" + p.getRazoS() 
-//                + "',pro_ruc='" + p.getRuc() 
-//                + "',pro_contacto='" + p.getContac() 
-//                + "',pro_celular='" + p.getCelu() 
-//                + "',pro_telefono='" + p.getTelef() 
-//                + "',pro_fax='" + p.getFax() 
-//                + "',pro_direccion='" + p.getDireccion() 
-//                + "',pro_provincia=" + p.getCodProvincia() 
-//                + ",pro_email='" + p.getEmail() 
-//                + "',pro_web='" + p.getWeb() 
-//                + "', pro_observacion='" + p.getObs() 
-//                + "' WHERE pro_codigo=" + p.getCodP() + "");
         return msg;
     }
 
@@ -74,7 +49,6 @@ public class GestionarProveedor {
         Proveedor p = null;
         StringBuilder sql = new StringBuilder("SELECT * FROM proveedor WHERE pro_codigo = ");
         sql.append(cod).append("");
-//        String sql = "SELECT * FROM proveedor WHERE pro_codigo = " + cod + "";
         Object[] filaObt = Operacion.getFila(sql.toString());
         if (filaObt != null) {
             p = new Proveedor();
@@ -108,21 +82,6 @@ public class GestionarProveedor {
         sql.append("JOIN ciudad ON proveedor.ciudad_ciu_codigo = ciudad.ciu_codigo ");
         sql.append("WHERE proveedor.pro_indicador = 'S' ");
         sql.append("  ORDER BY ").append(cod).append("");
-
-//        String sql = " SELECT proveedor.pro_codigo,"
-//                + "    proveedor.pro_razonsocial,"
-//                + "    proveedor.pro_contacto,"
-//                + "    proveedor.pro_celular,"
-//                + "    proveedor.pro_telefono,"
-//                + "    proveedor.pro_fax,"
-//                + "    proveedor.pro_direccion,"
-//                + "    provincias.prv_nombre,"
-//                + "    proveedor.pro_email,"
-//                + "    proveedor.pro_web"
-//                + "   FROM (proveedor"
-//                + "   JOIN provincias ON ((proveedor.pro_provincia = provincias.prv_codigo)))  "
-//                + "   WHERE proveedor.pro_indicador = 'S' "
-//                + "  ORDER BY " + cod + "";
         return Operacion.getTabla(sql.toString());
     }
 
@@ -131,7 +90,6 @@ public class GestionarProveedor {
         StringBuilder sql = new StringBuilder("UPDATE proveedor SET pro_indicador='N', usu='");
         sql.append(usuario).append("' WHERE pro_codigo =");
         sql.append(cod).append("");
-        //        String sql = "UPDATE proveedor SET pro_indicador='N' WHERE pro_codigo = " + cod + "";
         msg = Operacion.exeOperacion(sql.toString());
         return msg;
     }
@@ -148,21 +106,9 @@ public class GestionarProveedor {
         sql.append("proveedor.pro_observacion ");
         sql.append("FROM proveedor ");
         sql.append("JOIN ciudad ON proveedor.ciudad_ciu_codigo = ciudad.ciu_codigo ");
-        sql.append("WHERE proveedor.pro_indicador = 'S' AND proveedor.pro_razonsocial LIKE '%");
-        sql.append(cod).append("%'");
-//        String sql = "SELECT proveedor.pro_codigo,"
-//                + "    proveedor.pro_razonsocial,"
-//                + "    proveedor.pro_contacto,"
-//                + "    proveedor.pro_celular,"
-//                + "    proveedor.pro_telefono,"
-//                + "    proveedor.pro_fax,"
-//                + "    proveedor.pro_direccion,"
-//                + "    provincias.prv_nombre,"
-//                + "    proveedor.pro_email,"
-//                + "    proveedor.pro_web"
-//                + "   FROM (proveedor"
-//                + "   JOIN provincias ON ((proveedor.pro_provincia = provincias.prv_codigo)))"
-//                + "  WHERE (((proveedor.pro_indicador) = 'S') AND ((proveedor.pro_razonsocial) ILIKE '" + cod + "%'))";
+        sql.append("WHERE proveedor.pro_indicador = 'S' AND proveedor.pro_razonsocial LIKE '%").append(cod).append("%'");
+        sql.append(" OR proveedor.pro_codigo LIKE '%").append(cod).append("%'");
+        sql.append(" OR proveedor.pro_ruc LIKE '%").append(cod).append("%'");
         return Operacion.getTabla(sql.toString());
     }
 
@@ -178,10 +124,10 @@ public class GestionarProveedor {
         sql.append("proveedor.pro_observacion ");
         sql.append("FROM proveedor ");
         sql.append("JOIN ciudad ON proveedor.ciudad_ciu_codigo = ciudad.ciu_codigo ");
-        sql.append("WHERE proveedor.pro_indicador ='S' AND proveedor.pro_codigo LIKE '%");
-        sql.append(cod).append("%'");
+
         return Operacion.getTabla(sql.toString());
     }
+
     public static List filRuc(String cod) {
         StringBuilder sql = new StringBuilder("SELECT proveedor.pro_codigo, ");
         sql.append("proveedor.pro_razonsocial, ");
@@ -194,8 +140,7 @@ public class GestionarProveedor {
         sql.append("proveedor.pro_observacion ");
         sql.append("FROM proveedor ");
         sql.append("JOIN ciudad ON proveedor.ciudad_ciu_codigo = ciudad.ciu_codigo ");
-        sql.append("WHERE proveedor.pro_indicador ='S' AND proveedor.pro_ruc LIKE '%");
-        sql.append(cod).append("%'");
+        sql.append("WHERE proveedor.pro_indicador ='S' AND proveedor.pro_ruc LIKE '%").append(cod).append("%'");
         return Operacion.getTabla(sql.toString());
     }
 }

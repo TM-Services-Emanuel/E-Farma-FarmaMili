@@ -4,6 +4,7 @@ import Componentes.DataSourceService;
 import Componentes.Fecha;
 import Componentes.ReporteF;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Componentes.RenderDecimalVenta;
 import Componentes.RenderDecimalsinColor;
 import Componentes.RenderTextoRojo;
@@ -12,6 +13,8 @@ import Controladores.CabecerasTablas;
 import Controladores.controlFactura;
 import java.awt.BorderLayout;
 import java.awt.HeadlessException;
+import java.awt.Point;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import java.util.HashMap;
@@ -24,9 +27,8 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.swing.JRViewer;
 
 public class dlgConsultarTransferencias extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
     static DataSourceService dss = new DataSourceService();
+    private static Point point;
 
     public dlgConsultarTransferencias(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
@@ -36,6 +38,22 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
         btnActualizarActionPerformed(null);
         txtFechaF.setVisible(false);
 
+    }
+    
+    private void AccesoRapido(int n) {
+
+        switch (n) {
+            case KeyEvent.VK_F10 ->
+                btnImprimir.doClick();
+            case KeyEvent.VK_DELETE ->
+                btnAnular.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
+            case KeyEvent.VK_F3 ->
+                btnBuscar.doClick();
+            default -> {
+            }
+        }
     }
 
     final void titulo() {
@@ -93,9 +111,9 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
     private void initComponents() {
 
         Blanco = new org.edisoncor.gui.panel.PanelImage();
-        Oscuro = new org.edisoncor.gui.panel.PanelImage();
+        panelCabecera = new org.edisoncor.gui.panel.PanelImage();
         txtFechaF = new javax.swing.JTextField();
-        btnSalir2 = new RSMaterialComponent.RSButtonIconUno();
+        btnSalir = new RSMaterialComponent.RSButtonIconUno();
         jPanel3 = new javax.swing.JPanel();
         PnlModificar1 = new rojeru_san.rspanel.RSPanelImage();
         btnImprimir = new RSMaterialComponent.RSButtonIconUno();
@@ -110,22 +128,8 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
         Separador8 = new javax.swing.JSeparator();
         LabelTitulo8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbTransferencias = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbDetalleTransferencias = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         dcFecha = new datechooser.beans.DateChooserCombo();
         jLabel1 = new javax.swing.JLabel();
         btnBuscar = new RSMaterialComponent.RSButtonIconUno();
@@ -141,27 +145,38 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
         Blanco.setPreferredSize(new java.awt.Dimension(690, 418));
         Blanco.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Oscuro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo.png"))); // NOI18N
-        Oscuro.setPreferredSize(new java.awt.Dimension(690, 418));
-        Oscuro.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        Oscuro.add(txtFechaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 90, -1));
+        panelCabecera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondo.png"))); // NOI18N
+        panelCabecera.setPreferredSize(new java.awt.Dimension(690, 418));
+        panelCabecera.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                panelCabeceraMouseDragged(evt);
+            }
+        });
+        panelCabecera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                panelCabeceraMousePressed(evt);
+            }
+        });
+        panelCabecera.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelCabecera.add(txtFechaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 30, 90, -1));
 
-        btnSalir2.setBackground(new java.awt.Color(17, 35, 46));
-        btnSalir2.setBackgroundHover(new java.awt.Color(205, 0, 0));
-        btnSalir2.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
-        btnSalir2.setRippleColor(java.awt.Color.white);
-        btnSalir2.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
-        btnSalir2.addActionListener(new java.awt.event.ActionListener() {
+        btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setToolTipText("F12");
+        btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
+        btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir.setRippleColor(java.awt.Color.white);
+        btnSalir.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalir2ActionPerformed(evt);
+                btnSalirActionPerformed(evt);
             }
         });
-        btnSalir2.addKeyListener(new java.awt.event.KeyAdapter() {
+        btnSalir.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                btnSalir2KeyPressed(evt);
+                btnSalirKeyPressed(evt);
             }
         });
-        Oscuro.add(btnSalir2, new org.netbeans.lib.awtextra.AbsoluteConstraints(903, 3, 20, 20));
+        panelCabecera.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(903, 3, 20, 20));
 
         jPanel3.setOpaque(false);
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -170,6 +185,7 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
         PnlModificar1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnImprimir.setBackground(new java.awt.Color(255, 102, 0));
+        btnImprimir.setToolTipText("F10");
         btnImprimir.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnImprimir.setForegroundHover(new java.awt.Color(255, 102, 0));
         btnImprimir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.PRINT);
@@ -178,6 +194,11 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
         btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnImprimirActionPerformed(evt);
+            }
+        });
+        btnImprimir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnImprimirKeyPressed(evt);
             }
         });
         PnlModificar1.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 13, 45, 45));
@@ -207,6 +228,11 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
                 btnActualizarActionPerformed(evt);
             }
         });
+        btnActualizar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnActualizarKeyPressed(evt);
+            }
+        });
         PnlActualizar.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
 
         Separador7.setForeground(new java.awt.Color(204, 204, 204));
@@ -224,6 +250,7 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
         PnlEliminarG.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnAnular.setBackground(new java.awt.Color(255, 0, 0));
+        btnAnular.setToolTipText("DELETE");
         btnAnular.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnAnular.setForegroundHover(new java.awt.Color(255, 0, 0));
         btnAnular.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
@@ -232,6 +259,11 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
         btnAnular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAnularActionPerformed(evt);
+            }
+        });
+        btnAnular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnAnularKeyPressed(evt);
             }
         });
         PnlEliminarG.add(btnAnular, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
@@ -247,9 +279,9 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
 
         jPanel3.add(PnlEliminarG, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 3, 100, 100));
 
-        Oscuro.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 100));
+        panelCabecera.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 100));
 
-        Blanco.add(Oscuro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 924, 102));
+        Blanco.add(panelCabecera, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 924, 102));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jScrollPane1.setOpaque(false);
@@ -278,6 +310,11 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
                 tbTransferenciasMousePressed(evt);
             }
         });
+        tbTransferencias.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbTransferenciasKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbTransferencias);
 
         Blanco.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 135, 924, 250));
@@ -304,6 +341,11 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
         tbDetalleTransferencias.setRowHeight(20);
         tbDetalleTransferencias.setShowGrid(true);
         tbDetalleTransferencias.setShowVerticalLines(false);
+        tbDetalleTransferencias.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tbDetalleTransferenciasKeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(tbDetalleTransferencias);
 
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 14, 913, 233));
@@ -325,6 +367,7 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
 
         btnBuscar.setBackground(new java.awt.Color(255, 255, 255));
         btnBuscar.setForeground(new java.awt.Color(17, 35, 46));
+        btnBuscar.setToolTipText("F3");
         btnBuscar.setBackgroundHover(new java.awt.Color(255, 102, 0));
         btnBuscar.setForegroundText(new java.awt.Color(17, 35, 46));
         btnBuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
@@ -371,7 +414,7 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
     private void tbTransferenciasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTransferenciasMousePressed
         // TODO add your handling code here:
         try {
-            CabecerasTablas.limpiarTablas(tbDetalleTransferencias);
+            CabecerasTablas.limpiarTablaDetalleTransferencia(tbDetalleTransferencias);
             controlFactura.listDetalleTransferencias(tbDetalleTransferencias);
             RendersD();
         } catch (Exception e) {
@@ -403,13 +446,14 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
 
     private void btnBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarKeyPressed
         // TODO add your handling code here:
-        //AccesoRapido(evt.getKeyCode());
+        AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_btnBuscarKeyPressed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:
         if (dlgConsultarTransferencias.tbTransferencias.getSelectedRow() < 0) {
-            Mensajes.Sistema("No es posible levantar el documento de transferencia.\nPor favor, seleccione la transferencia que desea volver a re-imprimir.");
+            Notif.NotifyFail("Notificación del sistema", "No es posible levantar el documento de transferencia.\r\nPor favor, seleccione la transferencia que desea volver a re-imprimir.");
+            //Mensajes.Sistema("No es posible levantar el documento de transferencia.\nPor favor, seleccione la transferencia que desea volver a re-imprimir.");
         } else {
             try {
                 int x = dlgConsultarTransferencias.tbTransferencias.getSelectedRow();
@@ -424,12 +468,13 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
         try {
-            cabe.consTransferencias(tbTransferencias);
-            CabecerasTablas.limpiarTablas(tbTransferencias);
-            cabe.detalleTransferencia(tbDetalleTransferencias);
-            CabecerasTablas.limpiarTablas(tbDetalleTransferencias);
+            CabecerasTablas.consTransferencias(tbTransferencias);
+            CabecerasTablas.limpiarTablaConsTransferencias(tbTransferencias);
+            CabecerasTablas.detalleTransferencia(tbDetalleTransferencias);
+            CabecerasTablas.limpiarTablaDetalleTransferencia(tbDetalleTransferencias);
             controlFactura.listTransferencias(tbTransferencias, txtFechaF.getText().trim());
             Renders();
+            Notif.NotifySuccess("Notificación del sistema", "Lista actualizada!");
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btnActualizarActionPerformed
@@ -437,12 +482,14 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
     private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
         // TODO add your handling code here:
         if (dlgConsultarTransferencias.tbTransferencias.getSelectedRow() < 0) {
-            Mensajes.error("No es posible procesar la anulación.\nPor favor, seleccione la transferencia que desea anular.");
+            //Mensajes.error("No es posible procesar la anulación.\nPor favor, seleccione la transferencia que desea anular.");
+            Notif.NotifyFail("Notificación del sistema", "No es posible procesar la operación.\r\nSeleccione la Transferencia que desea anular.");
         } else {
             int x = dlgConsultarTransferencias.tbTransferencias.getSelectedRow();
             String estado = dlgConsultarTransferencias.tbTransferencias.getValueAt(x, 8).toString();
             if (estado.equals("TRANSFERENCIA ANULADA")) {
-                Mensajes.Sistema("Esta transferencia ya se encuentra anulada.");
+                //Mensajes.Sistema("Esta transferencia ya se encuentra anulada.");
+                Notif.NotifyFail("Notificación del sistema", "No es posible procesar la operación.\r\nEsta Transferencia ya fue anulada");
             } else {
                 String msg;
                 int rpta = Mensajes.confirmar("¿Seguro que desea procesar la anulación de esta transferencia?");
@@ -460,18 +507,63 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnAnularActionPerformed
 
-    private void btnSalir2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir2ActionPerformed
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
         int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
         if (rpta == 0) {
             this.dispose();
         }
-    }//GEN-LAST:event_btnSalir2ActionPerformed
+    }//GEN-LAST:event_btnSalirActionPerformed
 
-    private void btnSalir2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSalir2KeyPressed
+    private void btnSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSalirKeyPressed
         // TODO add your handling code here:
-        //AccesoRapido(evt.getKeyCode());
-    }//GEN-LAST:event_btnSalir2KeyPressed
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnSalirKeyPressed
+
+    private void btnImprimirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnImprimirKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnImprimirKeyPressed
+
+    private void btnAnularKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnAnularKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnAnularKeyPressed
+
+    private void btnActualizarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnActualizarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnActualizarKeyPressed
+
+    private void tbTransferenciasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbTransferenciasKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_tbTransferenciasKeyPressed
+
+    private void tbDetalleTransferenciasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbDetalleTransferenciasKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_tbDetalleTransferenciasKeyPressed
+
+    private void panelCabeceraMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMousePressed
+        // TODO add your handling code here:
+        point = evt.getPoint();
+        getComponentAt(point);
+    }//GEN-LAST:event_panelCabeceraMousePressed
+
+    private void panelCabeceraMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panelCabeceraMouseDragged
+        // TODO add your handling code here:
+        int CurrentX = this.getLocation().x;
+        int CurrentY = this.getLocation().y;
+
+        int MoveX = (CurrentX + evt.getX()) - (CurrentX + point.x);
+        int MoveY = (CurrentY + evt.getY()) - (CurrentY + point.y);
+
+        int x = CurrentX + MoveX;
+        int y = CurrentY + MoveY;
+
+        this.setLocation(x, y);
+    }//GEN-LAST:event_panelCabeceraMouseDragged
 
     /**
      * @param args the command line arguments
@@ -526,7 +618,6 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
     private javax.swing.JLabel LabelTitulo6;
     private javax.swing.JLabel LabelTitulo7;
     private javax.swing.JLabel LabelTitulo8;
-    private org.edisoncor.gui.panel.PanelImage Oscuro;
     private rojeru_san.rspanel.RSPanelImage PnlActualizar;
     private rojeru_san.rspanel.RSPanelImage PnlEliminarG;
     private rojeru_san.rspanel.RSPanelImage PnlModificar1;
@@ -537,7 +628,7 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
     private RSMaterialComponent.RSButtonIconUno btnAnular;
     private RSMaterialComponent.RSButtonIconUno btnBuscar;
     private RSMaterialComponent.RSButtonIconUno btnImprimir;
-    private RSMaterialComponent.RSButtonIconUno btnSalir2;
+    private RSMaterialComponent.RSButtonIconUno btnSalir;
     private datechooser.beans.DateChooserCombo dcFecha;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -545,8 +636,21 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    public static javax.swing.JTable tbDetalleTransferencias;
-    public static javax.swing.JTable tbTransferencias;
+    private org.edisoncor.gui.panel.PanelImage panelCabecera;
+    public static final javax.swing.JTable tbDetalleTransferencias = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
+    public static final javax.swing.JTable tbTransferencias = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     private javax.swing.JTextField txtFechaF;
     // End of variables declaration//GEN-END:variables
 }

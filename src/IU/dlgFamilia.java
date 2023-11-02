@@ -7,18 +7,17 @@ import Componentes.validarCampos;
 import Controladores.CabecerasTablas;
 import Controladores.controlFamilia;
 import Datos.GestionarFamilia;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 public class dlgFamilia extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
     
     public dlgFamilia(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         titulo();
-        cabe.familia(tbFamilia);
+        CabecerasTablas.familia(tbFamilia);
         controlFamilia.listFamilia(tbFamilia);
         tbFamilia.getTableHeader().setReorderingAllowed(false);
         this.cbIVAActionPerformed(null);
@@ -49,13 +48,6 @@ public class dlgFamilia extends javax.swing.JDialog {
         lbNombre = new javax.swing.JLabel();
         txtFamilia = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbFamilia = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         txtCod = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         lbNombre1 = new javax.swing.JLabel();
@@ -420,11 +412,9 @@ public class dlgFamilia extends javax.swing.JDialog {
         txtFamilia.setEnabled(true);
         txtGanancia.setEnabled(true);
         cbIVA.setEnabled(true);
-        //String cod = GestionarFamilia.getCodigo();
-        //txtCod.setText(cod);
         txtFamilia.setText("");
         txtGanancia.setText("0");
-        CabecerasTablas.limpiarTablas(tbFamilia);
+        CabecerasTablas.limpiarTablaFamilia(tbFamilia);
         controlFamilia.listFamilia(tbFamilia);
         txtFamilia.requestFocus();
     }//GEN-LAST:event_btnNuevoActionPerformed
@@ -445,11 +435,11 @@ public class dlgFamilia extends javax.swing.JDialog {
                 cbIVA.setEnabled(false);
                 controlFamilia.delFamilia();
                 limpiarCampos();
-                CabecerasTablas.limpiarTablas(tbFamilia);
+                CabecerasTablas.limpiarTablaFamilia(tbFamilia);
                 controlFamilia.listFamilia(tbFamilia);
                 btnCancelarActionPerformed(null);
             }
-        }catch(Exception ee){}   
+        }catch(HeadlessException ee){}   
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -471,10 +461,10 @@ public class dlgFamilia extends javax.swing.JDialog {
             txtGanancia.setEnabled(false);
             cbIVA.setEnabled(false);
             limpiarCampos();
-            CabecerasTablas.limpiarTablas(tbFamilia);
+            CabecerasTablas.limpiarTablaFamilia(tbFamilia);
             controlFamilia.listFamilia(tbFamilia);
             }
-        }catch(Exception ee){}     
+        }catch(HeadlessException ee){}     
         } else {
             Mensajes.informacion("Debe llenar obligatoriamente el campo Nombre, % Ganacia e IVA");
             txtFamilia.requestFocus();
@@ -501,10 +491,10 @@ public class dlgFamilia extends javax.swing.JDialog {
                     txtGanancia.setEnabled(false);
                     cbIVA.setEnabled(false);
                     limpiarCampos();
-                    CabecerasTablas.limpiarTablas(tbFamilia);
+                    CabecerasTablas.limpiarTablaFamilia(tbFamilia);
                     controlFamilia.listFamilia(tbFamilia);
                 }
-            }catch(Exception ee){}
+            }catch(HeadlessException ee){}
             
         } else {
             Mensajes.informacion("Debe llenar obligatoriamente los campos: Familia, % Ganacia e I.V.A.");
@@ -533,7 +523,7 @@ public class dlgFamilia extends javax.swing.JDialog {
         String cod = tbFamilia.getValueAt(fila, 0).toString();
         String nom = tbFamilia.getValueAt(fila, 1).toString();
         String ganacia= tbFamilia.getValueAt(fila, 2).toString();
-        int iva= Integer.valueOf(tbFamilia.getValueAt(fila, 3).toString());
+        int iva= Integer.parseInt(tbFamilia.getValueAt(fila, 3).toString());
         switch (iva) {
             case 0 -> cbIVA.setSelectedIndex(1);
             case 5 -> cbIVA.setSelectedIndex(2);
@@ -555,8 +545,7 @@ public class dlgFamilia extends javax.swing.JDialog {
                 cargarComboBox.cargar(dlgGestArticulos.cbFamilia, "SELECT * FROM familia WHERE fam_indicador='S'");
             }catch(Exception e){}
             this.dispose();
-        }
-        
+        }   
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void txtFamiliaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFamiliaActionPerformed
@@ -725,7 +714,13 @@ public class dlgFamilia extends javax.swing.JDialog {
     private javax.swing.JLabel lbNombre;
     private javax.swing.JLabel lbNombre1;
     private javax.swing.JMenu menuOpciones;
-    private javax.swing.JTable tbFamilia;
+    private static final javax.swing.JTable tbFamilia = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtCod;
     public static javax.swing.JTextField txtFamilia;
     public static javax.swing.JTextField txtGanancia;

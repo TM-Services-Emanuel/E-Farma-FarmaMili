@@ -2,6 +2,7 @@ package Controladores;
 
 import Componentes.Login;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Datos.GestionalSucursal;
 import IU.dlgSucursal;
 import Modelo.Sucursal;
@@ -27,7 +28,8 @@ public class controlSucursal {
         msg = GestionalSucursal.addSucursal(s);
         if(msg==null)
         {
-            Mensajes.informacion("Sucursal registrado");
+            Notif.NotifySuccess("Notificación del sistema", "Sucursal registrado");
+            //Mensajes.informacion("Sucursal registrado");
         }
         else{
             Mensajes.error(msg);
@@ -52,7 +54,8 @@ public class controlSucursal {
         msg = GestionalSucursal.actSucursal(s);
         if(msg==null)
         {
-            Mensajes.informacion("Sucursal Actualizado");
+            Notif.NotifySuccess("Notificación del sistema", "Sucursal Actualizado");
+            //Mensajes.informacion("Sucursal Actualizado");
         }
         else{
             Mensajes.error(msg);
@@ -67,7 +70,8 @@ public class controlSucursal {
         msg = GestionalSucursal.delSucursal(cod, Login.getUsuarioLogueado());
         if(msg==null)
         {
-            Mensajes.informacion("Sucursal Eliminado");
+            Notif.NotifySuccess("Notificación del sistema", "Sucursal Eliminado");
+            //Mensajes.informacion("Sucursal Eliminado");
         }
         else{
             Mensajes.error(msg);

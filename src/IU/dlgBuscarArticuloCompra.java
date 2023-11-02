@@ -1,7 +1,6 @@
 package IU;
 
-import Componentes.RenderDecimal;
-import Componentes.RenderDecimal1;
+import Componentes.Mensajes;
 import Componentes.RenderDecimalCosto;
 import Componentes.RenderDecimalPublico;
 import Componentes.Software;
@@ -12,12 +11,11 @@ import Modelo.Articulo;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
 public class dlgBuscarArticuloCompra extends javax.swing.JDialog {
-
-    CabecerasTablas cabe = new CabecerasTablas();
     Articulo art;
 
     public dlgBuscarArticuloCompra(java.awt.Frame parent, boolean modal) {
@@ -25,10 +23,21 @@ public class dlgBuscarArticuloCompra extends javax.swing.JDialog {
         initComponents();
         titulo();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png")));
-        cabe.tablaArticuloAuxiliarCompra(tbDetalle);
+        CabecerasTablas.tablaArticuloAuxiliarCompra(tbDetalle);
         controlArticulo.filtrarCodBarraActivo(tbDetalle, "");
         Renders();
         txtBuscar.requestFocus();
+        btnCrearArticulo.setVisible(false);
+    }
+    
+    private void AccesoRapido(int n) {
+
+        switch (n) {
+            case KeyEvent.VK_F1 ->
+                btnCrearArticulo.doClick();
+            default -> {
+            }
+        }
     }
     
     final void titulo(){
@@ -51,14 +60,8 @@ public class dlgBuscarArticuloCompra extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         txtBuscar = new rojeru_san.rsfield.RSTextMaterial();
+        btnCrearArticulo = new RSMaterialComponent.RSButtonIconUno();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -87,6 +90,25 @@ public class dlgBuscarArticuloCompra extends javax.swing.JDialog {
             }
         });
         jPanel2.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(3, 10, 680, 23));
+
+        btnCrearArticulo.setBackground(new java.awt.Color(255, 255, 255));
+        btnCrearArticulo.setToolTipText("F1 - CREAR NUEVO PRODUCTO");
+        btnCrearArticulo.setBackgroundHover(new java.awt.Color(255, 102, 0));
+        btnCrearArticulo.setForegroundText(new java.awt.Color(255, 102, 0));
+        btnCrearArticulo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
+        btnCrearArticulo.setRippleColor(java.awt.Color.white);
+        btnCrearArticulo.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnCrearArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearArticuloActionPerformed(evt);
+            }
+        });
+        btnCrearArticulo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnCrearArticuloKeyPressed(evt);
+            }
+        });
+        jPanel2.add(btnCrearArticulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 23, 23));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 948, 35));
 
@@ -135,9 +157,8 @@ public class dlgBuscarArticuloCompra extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 950, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,6 +204,8 @@ public class dlgBuscarArticuloCompra extends javax.swing.JDialog {
             txtBuscar.requestFocus();
             txtBuscar.selectAll();
         }
+        
+         AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_tbDetalleKeyPressed
 
     private void tbDetalleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbDetalleKeyReleased
@@ -204,6 +227,7 @@ public class dlgBuscarArticuloCompra extends javax.swing.JDialog {
         }else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 this.dispose();
         }
+         AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
@@ -211,14 +235,8 @@ public class dlgBuscarArticuloCompra extends javax.swing.JDialog {
         try {
             String cod = txtBuscar.getText();
             txtBuscar.requestFocus();
-            cabe.tablaArticuloAuxiliar(tbDetalle);
-            CabecerasTablas.limpiarTablas(tbDetalle);
+            CabecerasTablas.limpiarTablaTablaArticuloAuxiliarCompra(tbDetalle);
             controlArticulo.filtrarCodBarraActivo(tbDetalle, cod);
-
-            /*cabe.tablaArticuloAuxiliar(tbDetalle);
-            controlArticulo.listArticuloActivo(tbDetalle, "cod");
-            CabecerasTablas.limpiarTablas(tbDetalle);
-            controlArticulo.filtrarCodBarraActivo(tbDetalle, cod);*/
             Renders();
         } catch (Exception e) {
             System.out.println("Caracter Invalido " + e.getMessage());
@@ -234,6 +252,22 @@ public class dlgBuscarArticuloCompra extends javax.swing.JDialog {
             evt.setKeyChar(c);
         }
     }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void btnCrearArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearArticuloActionPerformed
+        // TODO add your handling code here:
+        try {
+            dlgArticulos articulo = new dlgArticulos(null, true);
+            articulo.setLocationRelativeTo(null);
+            articulo.setVisible(true);
+        } catch (SQLException e) {
+            Mensajes.informacion("Servidor no esta activo");
+        }
+    }//GEN-LAST:event_btnCrearArticuloActionPerformed
+
+    private void btnCrearArticuloKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCrearArticuloKeyPressed
+        // TODO add your handling code here:
+         AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnCrearArticuloKeyPressed
 
     public static void main(String args[]) {
 
@@ -270,11 +304,18 @@ public class dlgBuscarArticuloCompra extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static RSMaterialComponent.RSButtonIconUno btnCrearArticulo;
     private javax.swing.ButtonGroup grupoBotones;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable tbDetalle;
-    private rojeru_san.rsfield.RSTextMaterial txtBuscar;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
+    public static rojeru_san.rsfield.RSTextMaterial txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

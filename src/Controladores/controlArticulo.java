@@ -1,7 +1,6 @@
 package Controladores;
 
 import Componentes.DataSourceService;
-import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
 import Datos.GestionarArticulos;
@@ -9,9 +8,6 @@ import IU.dlgArticulos;
 import IU.dlgGestArticulos;
 import Modelo.Articulo;
 import java.text.DecimalFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -33,11 +29,8 @@ public class controlArticulo {
             Articulo ar = GestionarArticulos.busArticulo(cod);
             dlgGestArticulos.txtCodProducto.setText(String.valueOf(ar.getCodArticulo()));
             dlgGestArticulos.txtCodBarra.setText((ar.getCodBarra()));
-            //dlgGestAriculos1.cbLaboratorio.setSelectedIndex(ar.getCodLaboratorio());
             dlgGestArticulos.txtCodLab.setText(String.valueOf(ar.getCodLab()));
-            //dlgGestAriculos1.cbFamilia.setSelectedIndex(ar.getCodFamilia());
             dlgGestArticulos.txtCodFam.setText(String.valueOf(ar.getCodFam()));
-            //dlgGestAriculos1.cbProveedor.setSelectedIndex(ar.getCodProveedor());
             dlgGestArticulos.txtCodPro.setText(String.valueOf(ar.getCodProv()));
             dlgGestArticulos.txtDescripcion.setText(ar.getDescripcion());
             dlgGestArticulos.txtPrincipio.setText(ar.getPrincipio());

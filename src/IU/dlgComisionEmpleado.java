@@ -7,13 +7,12 @@ import Controladores.controlComisiones;
 
 public class dlgComisionEmpleado extends javax.swing.JDialog {
 
-    CabecerasTablas cabe = new CabecerasTablas();
     String cod;
 
     public dlgComisionEmpleado(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        cabe.comision(jTable1);
+        CabecerasTablas.comision(jTable1);
         cargarComboBox.cargar(cbEmpleados, "SELECT usu_codigo, NombreVendedor FROM v_usuario WHERE DesPerfil='VENTA' AND usu_indicador='S'");
     }
 
@@ -29,13 +28,6 @@ public class dlgComisionEmpleado extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         txtTotalComisiones = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtTotalVentas = new javax.swing.JTextField();
@@ -210,8 +202,8 @@ public class dlgComisionEmpleado extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             txtComision.setText("0.0");
-            CabecerasTablas.limpiarTablas(jTable1);
-            cabe.comision(jTable1);
+            CabecerasTablas.limpiarTablaComision(jTable1);
+            //cabe.comision(jTable1);
             controlComisiones.listVentas(jTable1, cod);
             controlComisiones.getCalculos();
         } catch (Exception e) {
@@ -281,7 +273,13 @@ public class dlgComisionEmpleado extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    public static javax.swing.JTable jTable1;
+    public static final javax.swing.JTable jTable1 = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txtComision;
     public static javax.swing.JTextField txtTotalComisiones;
     public static javax.swing.JTextField txtTotalVentas;
