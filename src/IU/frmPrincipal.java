@@ -1509,7 +1509,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jMenuItem23.setBackground(new java.awt.Color(255, 255, 255));
         jMenuItem23.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jMenuItem23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ventax40 - copia.png"))); // NOI18N
-        jMenuItem23.setText("REGISTRAR VENTAS DEL DÍA");
+        jMenuItem23.setText("REGISTRAR VENTAS DEL DÍA                                                           ");
         jMenuItem23.setBorder(null);
         jMenuItem23.setOpaque(true);
         jMenuItem23.addActionListener(new java.awt.event.ActionListener() {
@@ -1552,7 +1552,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         TICKETS.setBorder(null);
         TICKETS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/TICK_30 - copia.png"))); // NOI18N
         TICKETS.setText("TICKETS");
-        TICKETS.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        TICKETS.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         TICKETS.setOpaque(true);
 
         mnGV.setBackground(new java.awt.Color(255, 255, 255));
@@ -1595,7 +1595,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         FACTURAS.setBorder(null);
         FACTURAS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/FACT_30 - copia.png"))); // NOI18N
         FACTURAS.setText("FACTURAS LEGALES");
-        FACTURAS.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        FACTURAS.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         FACTURAS.setOpaque(true);
 
         mnGFL.setBackground(new java.awt.Color(255, 255, 255));
@@ -2997,7 +2997,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator20;
     private javax.swing.JPopupMenu.Separator jSeparator21;
     private javax.swing.JToolBar.Separator jSeparator22;
-    private javax.swing.JPopupMenu.Separator jSeparator23;
+    public static javax.swing.JPopupMenu.Separator jSeparator23;
     private javax.swing.JPopupMenu.Separator jSeparator24;
     private javax.swing.JPopupMenu.Separator jSeparator25;
     private javax.swing.JPopupMenu.Separator jSeparator26;
@@ -3043,7 +3043,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnGC;
     private javax.swing.JMenuItem mnGFL;
     public static javax.swing.JMenuItem mnGNCVenta;
-    private javax.swing.JMenuItem mnGPE;
+    public static javax.swing.JMenuItem mnGPE;
     private javax.swing.JMenuItem mnGPuntoEmisionM;
     private javax.swing.JMenuItem mnGTimbradoM;
     private javax.swing.JMenuItem mnGV;

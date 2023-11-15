@@ -211,7 +211,7 @@ public class GestionarArticulos {
     }
     public static List listArticuloActivo(String cod) {
                 String sql = new StringBuffer("SELECT cod, barra, fam, lab, prov, descripcion, principio, accion, stock, stockmin, costo, iva, costoiva,")
-                .append(" ppublico, des, pventa,ganstandar, gan, venta, activo FROM v_articulo_activo")
+                .append(" ppublico, des, pventa,ganstandar, gan, venta, activo FROM v_articulo_activo ORDER BY fam")
                 //.append(" WHERE activo='SI' AND ind= 'S'")
                 //.append(" ORDER BY fam")
                // .append(cod)
@@ -242,7 +242,7 @@ public class GestionarArticulos {
                 .append(cad)
                 .append("%' OR descripcion LIKE '%")
                 .append(cad)
-                .append("%'")
+                .append("%' ORDER BY fam")
                 .toString();
         return Operacion.getTabla(sql);
     }

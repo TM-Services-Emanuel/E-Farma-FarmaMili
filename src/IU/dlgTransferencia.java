@@ -304,13 +304,6 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         txtCodArticulo = new javax.swing.JTextField();
 
         itemCantidad.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
@@ -1595,7 +1588,13 @@ public final class dlgTransferencia extends javax.swing.JDialog {
     private javax.swing.JPanel panelGrabados;
     public static rojerusan.RSCheckBox rEntrada;
     public static rojerusan.RSCheckBox rSalida;
-    public static javax.swing.JTable tbDetalle;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txt10;
     public static javax.swing.JTextField txt5;
     public static javax.swing.JTextField txtArt;

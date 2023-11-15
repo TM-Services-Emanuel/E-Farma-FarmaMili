@@ -81,7 +81,7 @@ public class GestionarProveedor {
         sql.append("FROM proveedor ");
         sql.append("JOIN ciudad ON proveedor.ciudad_ciu_codigo = ciudad.ciu_codigo ");
         sql.append("WHERE proveedor.pro_indicador = 'S' ");
-        sql.append("  ORDER BY ").append(cod).append("");
+        sql.append("  ORDER BY ").append(cod).append(" ASC");
         return Operacion.getTabla(sql.toString());
     }
 
@@ -108,7 +108,7 @@ public class GestionarProveedor {
         sql.append("JOIN ciudad ON proveedor.ciudad_ciu_codigo = ciudad.ciu_codigo ");
         sql.append("WHERE proveedor.pro_indicador = 'S' AND proveedor.pro_razonsocial LIKE '%").append(cod).append("%'");
         sql.append(" OR proveedor.pro_codigo LIKE '%").append(cod).append("%'");
-        sql.append(" OR proveedor.pro_ruc LIKE '%").append(cod).append("%'");
+        sql.append(" OR proveedor.pro_ruc LIKE '%").append(cod).append("%' ORDER BY proveedor.pro_codigo ASC");
         return Operacion.getTabla(sql.toString());
     }
 

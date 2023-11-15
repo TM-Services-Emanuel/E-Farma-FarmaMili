@@ -935,13 +935,6 @@ public final class dlgVentas extends javax.swing.JDialog {
         txtCant = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbDetalle = new javax.swing.JTable()
-        {
-            public boolean isCellEditable(int rowInddex, int celIndex)
-            {
-                return false;
-            }
-        };
         lbPublic = new javax.swing.JTextField();
         lbPVenta = new javax.swing.JTextField();
         btnBuscarArticulo = new rojeru_san.rsbutton.RSButtonGradiente();
@@ -3521,7 +3514,13 @@ public final class dlgVentas extends javax.swing.JDialog {
     private javax.swing.JPanel panelCabecera;
     public static rojerusan.RSRadioButton rContado;
     public static rojerusan.RSRadioButton rCredito;
-    public static javax.swing.JTable tbDetalle;
+    public static final javax.swing.JTable tbDetalle = new javax.swing.JTable()
+    {
+        public boolean isCellEditable(int rowInddex, int celIndex)
+        {
+            return false;
+        }
+    };
     public static javax.swing.JTextField txt10;
     public static javax.swing.JTextField txt5;
     public static javax.swing.JTextField txtAbonoF;

@@ -36,6 +36,9 @@ public class controlPerfil {
             frmPrincipal.divisor4.setVisible(false);
             frmPrincipal.divisor5.setVisible(false);
             frmPrincipal.panelGestFacturas.setVisible(false);
+            frmPrincipal.jMenuItem24.setVisible(false);
+            frmPrincipal.mnGPE.setVisible(false);
+            frmPrincipal.jSeparator23.setVisible(false);
         } else if (perf.equalsIgnoreCase("COMPRA"))
         {
             frmPrincipal.panelProductos.setVisible(false);
@@ -72,6 +75,9 @@ public class controlPerfil {
             frmPrincipal.panelTransferencias.setVisible(false);
             frmPrincipal.panelGestTransferencias.setVisible(false);
             frmPrincipal.mnTransferencias.setVisible(false);
+            frmPrincipal.jMenuItem24.setVisible(false);
+            frmPrincipal.mnGPE.setVisible(false);
+            frmPrincipal.jSeparator23.setVisible(false);
         } else if (perf.equalsIgnoreCase("VENTA"))
         {
             frmPrincipal.panelProductos.setVisible(false);
@@ -99,13 +105,17 @@ public class controlPerfil {
             frmPrincipal.mnConfiguracion.setVisible(false);
             frmPrincipal.smModUsuariosD.setVisible(false);
             frmPrincipal.panelGestionarCompras.setVisible(false);
-            frmPrincipal.mnGVE.setVisible(false);
+            frmPrincipal.mnGVE.setVisible(true);
+            frmPrincipal.mnGVE1.setVisible(true);
             frmPrincipal.divisor5.setVisible(false);
             frmPrincipal.Separator13.setVisible(false);
             frmPrincipal.Separator11.setVisible(false);
             frmPrincipal.panelTransferencias.setVisible(false);
             frmPrincipal.panelGestTransferencias.setVisible(false);
             frmPrincipal.mnTransferencias.setVisible(false);
+            frmPrincipal.jMenuItem24.setVisible(false);
+            frmPrincipal.mnGPE.setVisible(false);
+            frmPrincipal.jSeparator23.setVisible(false);
             
         } else if (perf.equalsIgnoreCase("ADMINISTRADOR")) {
             frmPrincipal.btnArticulos.setVisible(true);
@@ -126,6 +136,10 @@ public class controlPerfil {
             frmPrincipal.mnComision.setVisible(false);
             frmPrincipal.mnConfiguracion.setVisible(false);
             frmPrincipal.smModUsuariosD.setVisible(false);
+            frmPrincipal.mnTransferencias.setVisible(true);
+            frmPrincipal.jMenuItem24.setVisible(false);
+            frmPrincipal.mnGPE.setVisible(false);
+            frmPrincipal.jSeparator23.setVisible(false);
         } else if (perf.equalsIgnoreCase("DESARROLLADOR")) {
             frmPrincipal.btnArticulos.setVisible(true);
             frmPrincipal.btnProveedores.setVisible(true);
@@ -140,6 +154,7 @@ public class controlPerfil {
             frmPrincipal.mnReportes.setVisible(true);
             frmPrincipal.mnComision.setVisible(true);
             frmPrincipal.mnConfiguracion.setVisible(true);
+            frmPrincipal.mnTransferencias.setVisible(true);
         }else {
             frmPrincipal.btnArticulos.setVisible(false);
             frmPrincipal.btnProveedores.setVisible(false);
@@ -155,6 +170,7 @@ public class controlPerfil {
             frmPrincipal.mnComision.setVisible(false);
             frmPrincipal.mnConfiguracion.setVisible(false);
             frmPrincipal.smModUsuariosD.setVisible(false);
+            frmPrincipal.mnTransferencias.setVisible(false);
         }
     }
 

@@ -351,12 +351,12 @@ public class dlgArticulos extends javax.swing.JDialog {
         FondoBlanco.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, -10, 690, 120));
 
         txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
-        txtBuscar.setColorIcon(new java.awt.Color(17, 35, 46));
-        txtBuscar.setColorMaterial(new java.awt.Color(17, 35, 46));
-        txtBuscar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtBuscar.setColorIcon(new java.awt.Color(255, 102, 0));
+        txtBuscar.setColorMaterial(new java.awt.Color(255, 102, 0));
+        txtBuscar.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
         txtBuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
         txtBuscar.setPhColor(new java.awt.Color(102, 102, 102));
-        txtBuscar.setPlaceholder("Buscador de Productos");
+        txtBuscar.setPlaceholder("Barra de busqueda");
         txtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBuscarActionPerformed(evt);

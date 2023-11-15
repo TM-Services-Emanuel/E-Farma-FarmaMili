@@ -191,6 +191,7 @@ public class GestionarCliente {
         sql.append("JOIN ciudad ON clientes.ciudad_ciu_codigo = ciudad.ciu_codigo ");
         sql.append("WHERE clientes.cli_indicador = 'S' AND clientes.cli_razonsocial LIKE '%").append(cad).append("%'");
         sql.append(" OR clientes.cli_ruc LIKE '%").append(cad).append("%'");
+        sql.append(" ORDER BY clientes.cli_codigo");
         return Operacion.getTabla(sql.toString());
     }
     public static List filRuc(String cad) {

@@ -152,19 +152,6 @@ public class dlgBuscarCliente extends javax.swing.JDialog {
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                String cod = txtBuscar.getText();
-                if (cod.length() == 0) {
-                    CabecerasTablas.limpiarTablaBuscarCliente(tbDetalle);
-                    controlCliente.listClientes(tbDetalle, "clientes.cli_codigo");
-                } else {
-                    //controlCliente.filtRuc(tbDetalle, cod);
-                    controlCliente.filtClientes(tbDetalle, cod);
-                }
-
-            } catch (Exception e) {
-                System.out.println("Caracter Invalido " + e.getMessage());
-            }
             if (tbDetalle.getRowCount() == 0) {
                 txtBuscar.requestFocus();
                 txtBuscar.selectAll();
@@ -182,11 +169,12 @@ public class dlgBuscarCliente extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             String cod = txtBuscar.getText();
-            if (cod.length() == 0) {
+            if (cod.length()== 0) {
                 CabecerasTablas.limpiarTablaBuscarCliente(tbDetalle);
                 controlCliente.listClientes(tbDetalle, "clientes.cli_codigo");
             } else {
                 //controlCliente.filtRuc(tbDetalle, cod);
+                CabecerasTablas.limpiarTablaBuscarCliente(tbDetalle);
                 controlCliente.filtClientes(tbDetalle, cod);
             }
             Renders();

@@ -463,9 +463,14 @@ public final class dlgClientes extends javax.swing.JDialog {
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         // TODO add your handling code here:
-        String cod = txtBuscar.getText();
-        CabecerasTablas.limpiarTablaCliente(tablaClientes);
-        controlCliente.filtClientes(tablaClientes, cod);
+        if (txtBuscar.getText().length() <= 0) {
+            CabecerasTablas.limpiarTablaCliente(tablaClientes);
+            controlCliente.listClientes(tablaClientes, "clientes.cli_codigo");
+        } else {
+            CabecerasTablas.limpiarTablaCliente(tablaClientes);
+            controlCliente.filtClientes(tablaClientes, txtBuscar.getText());
+        }
+
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
@@ -510,7 +515,7 @@ public final class dlgClientes extends javax.swing.JDialog {
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
         if (tablaClientes.getSelectedRow() < 0) {
-           Notif.NotifyFail("Notificación del sistema", "No es posible procesar la eliminación.\r\nSeleccione el Cliente que desea eliminar del sistema.");
+            Notif.NotifyFail("Notificación del sistema", "No es posible procesar la eliminación.\r\nSeleccione el Cliente que desea eliminar del sistema.");
             txtBuscar.requestFocus();
         } else {
             int resp = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);

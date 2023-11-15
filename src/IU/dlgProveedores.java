@@ -207,6 +207,11 @@ public final class dlgProveedores extends javax.swing.JDialog {
         txtBuscar.setColorMaterial(new java.awt.Color(255, 102, 0));
         txtBuscar.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtBuscar.setPlaceholder("Barra de busqueda");
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtBuscarKeyPressed(evt);
@@ -453,6 +458,10 @@ public final class dlgProveedores extends javax.swing.JDialog {
             } catch (Exception e) {
                 Mensajes.informacion("No se pudo cargar información del proveedor");
             }
+        }else if(evt.getKeyCode() == KeyEvent.VK_ESCAPE){
+            tablaProveedores.clearSelection();
+            txtBuscar.requestFocus();
+            txtBuscar.selectAll();
         }
         AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_tablaProveedoresKeyPressed
@@ -497,9 +506,14 @@ public final class dlgProveedores extends javax.swing.JDialog {
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         // TODO add your handling code here:
-        String cod = txtBuscar.getText();
-        CabecerasTablas.limpiarTablaProveedor(tablaProveedores);
-        controlProveedor.filProveedor(tablaProveedores, cod);
+        if (txtBuscar.getText().length() <= 0) {
+            CabecerasTablas.limpiarTablaProveedor(tablaProveedores);
+            controlProveedor.listProveedor(tablaProveedores, "proveedor.pro_codigo");
+        } else {
+            CabecerasTablas.limpiarTablaProveedor(tablaProveedores);
+            controlProveedor.filProveedor(tablaProveedores, txtBuscar.getText());
+        }
+
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
@@ -625,6 +639,10 @@ public final class dlgProveedores extends javax.swing.JDialog {
         // TODO add your handling code here:
         txtBuscar.requestFocus();
     }//GEN-LAST:event_formWindowActivated
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
 
     void cargarIcono() {
         try {
