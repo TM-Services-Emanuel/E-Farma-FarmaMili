@@ -1550,9 +1550,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(13);
         colum.setPreferredWidth(70);
-        colum.setMaxWidth(0);
+        /*colum.setMaxWidth(0);
         colum.setMinWidth(0);
-        colum.setPreferredWidth(0);
+        colum.setPreferredWidth(0);*/
         colum = tabla.getColumnModel().getColumn(14);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1560,9 +1560,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(15);
         colum.setPreferredWidth(70);
-        colum.setMaxWidth(0);
+        /*colum.setMaxWidth(0);
         colum.setMinWidth(0);
-        colum.setPreferredWidth(0);
+        colum.setPreferredWidth(0);*/
         colum = tabla.getColumnModel().getColumn(16);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);

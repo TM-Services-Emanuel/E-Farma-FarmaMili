@@ -3,6 +3,7 @@ package IU;
 import Componentes.Mensajes;
 import Componentes.RenderDecimalCosto;
 import Componentes.RenderDecimalPublico;
+import Componentes.RenderDecimalVenta;
 import Componentes.Software;
 import Controladores.CabecerasTablas;
 import Controladores.controlArticulo;
@@ -50,6 +51,7 @@ public class dlgBuscarArticuloCompra extends javax.swing.JDialog {
     public static void Renders() {
         dlgBuscarArticuloCompra.tbDetalle.getColumnModel().getColumn(10).setCellRenderer(new RenderDecimalCosto());
         dlgBuscarArticuloCompra.tbDetalle.getColumnModel().getColumn(13).setCellRenderer(new RenderDecimalPublico());
+        dlgBuscarArticuloCompra.tbDetalle.getColumnModel().getColumn(15).setCellRenderer(new RenderDecimalVenta());
     }
 
     @SuppressWarnings("unchecked")
