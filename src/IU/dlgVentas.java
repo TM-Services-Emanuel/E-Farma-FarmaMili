@@ -2,6 +2,7 @@ package IU;
 
 import Componentes.DataSourceService;
 import Componentes.DecimalFormatRenderer;
+import Componentes.Empresa;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
@@ -19,6 +20,9 @@ import Componentes.generarCodigos;
 import Componentes.validarCampos;
 import Controladores.CabecerasTablas;
 import Controladores.controlFactura;
+import static Controladores.controlFactura.get10;
+import static Controladores.controlFactura.get5;
+import static Controladores.controlFactura.getExcetas;
 import Datos.GestionarArticulos;
 import Datos.GestionarFactura;
 import Datos.GestionarVendedor;
@@ -26,6 +30,7 @@ import java.awt.event.KeyEvent;
 import Modelo.Articulo;
 import Modelo.Vendedor;
 import java.awt.Point;
+import java.io.UnsupportedEncodingException;
 import java.sql.*;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
@@ -42,6 +47,7 @@ public final class dlgVentas extends javax.swing.JDialog {
     static DataSourceService dss = new DataSourceService();
     private static Point point;
     public static int min;
+    public static Numero_a_Letra d;
 
     public dlgVentas(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
@@ -56,6 +62,7 @@ public final class dlgVentas extends javax.swing.JDialog {
         L = new Numero_a_Letra();
         txtCodVendedorF.setText("");
         txtCodVendedorT.setText("");
+        d = new Numero_a_Letra();
     }
 
     final void titulo() {
@@ -281,7 +288,7 @@ public final class dlgVentas extends javax.swing.JDialog {
 
         } catch (SQLException ex) {
             Notif.NotifyInformation("Notificación del sistema", "OBSERVACIÓN: En estos momentos es imposible emitir factura legal.\r\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\r\n\nPara mayor información comuniquese con el proveedor del Sistema.");
-           // Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir factura legal.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
+            // Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir factura legal.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
         }
     }
 
@@ -354,7 +361,7 @@ public final class dlgVentas extends javax.swing.JDialog {
             cn.close();
         } catch (SQLException ex) {
             Notif.NotifyInformation("Notificación del sistema", "OBSERVACIÓN: En estos momentos es imposible emitir Ticket de venta.\r\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\r\n\nPara mayor información comuniquese con el proveedor del Sistema.");
-           // Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir Ticket de venta.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
+            // Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible emitir Ticket de venta.\nEl Sistema no logra identificar un PUNTO DE EMISIÓN habilitado para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
         }
     }
 
@@ -686,8 +693,8 @@ public final class dlgVentas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Error al imprimir " + e);
         }
     }*/
-    public static void imprimirTicket() {
-        //Impresora termica
+ /*public static void imprimirTicket() {
+        //Impresora matricial tmu-220
         PrinterService printerService = new PrinterService();
         int filas = tbDetalle.getRowCount();
         DecimalFormat formateador = new DecimalFormat("#,###");
@@ -712,7 +719,6 @@ public final class dlgVentas extends javax.swing.JDialog {
             String Mont = tbDetalle.getValueAt(i, 10).toString().trim();
 
             Ticket += String.format("%1$1s", Descripcion + "\n");
-            //Ticket += String.format("%1$11s %2$15s %3$19s" ,"CANT: "+tbDetalle.getValueAt(i, 3).toString(), "PRECIO: "+formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))), "SUBTOTAL: "+formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", ""))))+ "\n";
             Ticket += String.format("%1$-6s %2$-8s %3$-5s %4$-9s %5$-5s", Cant, formateador.format(Integer.parseInt(Ppublic.replace(".", "").replace(",", ""))),
                     Desc,
                     formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))),
@@ -726,6 +732,108 @@ public final class dlgVentas extends javax.swing.JDialog {
         Ticket += "\n";
         Ticket += "\n";
         Ticket += "\n";
+        Ticket += "\n";
+        Ticket += "\n";
+        Ticket += "\n";
+
+        try {
+            printerService.printString2(Tickets.getImpresora(), Ticket);
+            byte[] cutP = new byte[]{0x1d, 'V', 1};
+            printerService.printBytes2(Tickets.getImpresora(), cutP);
+        } catch (Exception e) {
+            Mensajes.error("No se encuentra instalada la impresora predeterminada para este punto de impresión");
+        }
+    }*/
+    public static void imprimirTicket() {
+        //Impresora termico 80mm
+        PrinterService printerService = new PrinterService();
+        int filas = tbDetalle.getRowCount();
+        DecimalFormat formateador = new DecimalFormat("#,###");
+        String tot = txtTotal.getText();
+
+        String Ticket = "                TICKET DE VENTA\n";
+        Ticket += "-----------------------------------------------\n";
+        Ticket += "NRO: " + txtEPE.getText().trim() + txtTicketN.getText().trim() + "\n";
+        Ticket += "FECHA: " + txtFecha.getText().trim() + " " + Fecha.darHora() + "\n";
+        Ticket += "VENDEDOR/A: " + lbEmpleadoT.getText().trim() + "\n";
+        Ticket += "-----------------------------------------------\n";
+        Ticket += "CANT    P.PUBL    % DESC   P.UNIT    SUB-TOTAL\n";
+        Ticket += "-----------------------------------------------\n";
+        for (int i = 0; i < filas; i++) {
+
+            String Descripcion = tbDetalle.getValueAt(i, 2).toString().trim();
+            String Cant = tbDetalle.getValueAt(i, 3).toString();
+            //int pp = Integer.parseInt(tbDetalle.getValueAt(i, 4).toString()) / Integer.parseInt(tbDetalle.getValueAt(i, 3).toString());
+            String Ppublic = tbDetalle.getValueAt(i, 4).toString();
+            String Desc = tbDetalle.getValueAt(i, 5).toString();
+            String Punit = tbDetalle.getValueAt(i, 6).toString().trim();
+            String Mont = tbDetalle.getValueAt(i, 10).toString().trim();
+
+            Ticket += String.format("%1$1s", Descripcion + "\n");
+            //Ticket += String.format("%1$11s %2$15s %3$19s" ,"CANT: "+tbDetalle.getValueAt(i, 3).toString(), "PRECIO: "+formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))), "SUBTOTAL: "+formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", ""))))+ "\n";
+            Ticket += String.format("%1$-7s %2$-10s %3$-7s %4$-10s %5$-6s", Cant, formateador.format(Integer.parseInt(Ppublic.replace(".", "").replace(",", ""))),
+                    Desc,
+                    formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))),
+                    formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", "")))) + "\n";
+        }
+        Ticket += "-----------------------------------------------\n";
+        Ticket += String.format("%1$6s %2$30s", "TOTAL A PAGAR:", tot) + "\n";
+        Ticket += "-----------------------------------------------\n";
+        Ticket += "          GRACIAS POR SU PREFERENCIA!\n";
+        Ticket += "\n";
+        Ticket += "\n";
+        Ticket += "\n";
+
+        try {
+            printerService.printString2(Tickets.getImpresora(), Ticket);
+            byte[] cutP = new byte[]{0x1d, 'V', 1};
+            printerService.printBytes2(Tickets.getImpresora(), cutP);
+        } catch (Exception e) {
+            Mensajes.error("No se encuentra instalada la impresora predeterminada para este punto de impresión");
+        }
+    }
+    
+    public static void imprimirTicketCredito() {
+        //Impresora termico 80mm
+        PrinterService printerService = new PrinterService();
+        int filas = tbDetalle.getRowCount();
+        DecimalFormat formateador = new DecimalFormat("#,###");
+        String tot = txtTotal.getText();
+
+        String Ticket = "        TICKET DE VENTA CREDITO\n";
+        Ticket += "-----------------------------------------------\n";
+        Ticket += "NRO: " + txtEPE.getText().trim() + txtTicketN.getText().trim() + "\n";
+        Ticket += "FECHA: " + txtFecha.getText().trim() + " " + Fecha.darHora() + "\n";
+        Ticket += "VENDEDOR/A: " + lbEmpleadoT.getText().trim() + "\n";
+        Ticket += "-----------------------------------------------\n";
+        Ticket += "CANT    P.PUBL    % DESC   P.UNIT    SUB-TOTAL\n";
+        Ticket += "-----------------------------------------------\n";
+        for (int i = 0; i < filas; i++) {
+
+            String Descripcion = tbDetalle.getValueAt(i, 2).toString().trim();
+            String Cant = tbDetalle.getValueAt(i, 3).toString();
+            //int pp = Integer.parseInt(tbDetalle.getValueAt(i, 4).toString()) / Integer.parseInt(tbDetalle.getValueAt(i, 3).toString());
+            String Ppublic = tbDetalle.getValueAt(i, 4).toString();
+            String Desc = tbDetalle.getValueAt(i, 5).toString();
+            String Punit = tbDetalle.getValueAt(i, 6).toString().trim();
+            String Mont = tbDetalle.getValueAt(i, 10).toString().trim();
+
+            Ticket += String.format("%1$1s", Descripcion + "\n");
+            //Ticket += String.format("%1$11s %2$15s %3$19s" ,"CANT: "+tbDetalle.getValueAt(i, 3).toString(), "PRECIO: "+formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))), "SUBTOTAL: "+formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", ""))))+ "\n";
+            Ticket += String.format("%1$-7s %2$-10s %3$-7s %4$-10s %5$-6s", Cant, formateador.format(Integer.parseInt(Ppublic.replace(".", "").replace(",", ""))),
+                    Desc,
+                    formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))),
+                    formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", "")))) + "\n";
+        }
+        Ticket += "-----------------------------------------------\n";
+        Ticket += String.format("%1$6s %2$30s", "TOTAL A PAGAR:", tot) + "\n";
+        Ticket += "-----------------------------------------------\n";
+        Ticket += "\n";
+        Ticket += "\n";
+        Ticket += "\n";
+        Ticket += "             FIRMA Y ACLARACION\n";
+        Ticket += "\n";
+        Ticket += "          GRACIAS POR SU PREFERENCIA!\n";
         Ticket += "\n";
         Ticket += "\n";
         Ticket += "\n";
@@ -833,7 +941,6 @@ public final class dlgVentas extends javax.swing.JDialog {
         ReporteF gr;
         gr = new ReporteF();
         gr.FacturaLegal("\\Reports\\ventas\\facturaLegal.jasper", "cod", cod, "Letra", Letra);
-        gr.cerrar();
     }
 
     @SuppressWarnings("unchecked")
@@ -2589,9 +2696,11 @@ public final class dlgVentas extends javax.swing.JDialog {
                     cn.close();
                     //Mensajes.informacion("VENTA REGISTRADA EXITOSAMENTE");
                     Notif.NotifySuccess("Notificación del sistema", "Venta registrada satisfactoriamente!");
-                    dlgFinFacturaL.dispose();
+
                     String Letra = L.Convertir((txtTotal.getText().replace(".", "").replace(",", "")), true);
-                    llamarReporteFactura(Integer.parseInt(txtCodF.getText().trim()), Letra);
+                    //llamarReporteFactura(Integer.parseInt(txtCodF.getText().trim()), Letra);
+                    imprimirFacturaOriginal();
+                    dlgFinFacturaL.dispose();
                     Cancelar();
                     txtAbonoF.setText("0");
                     txtVueltoF.setText("0");
@@ -2775,8 +2884,8 @@ public final class dlgVentas extends javax.swing.JDialog {
                         txtVueltoT.setText("0");
                         cant();
                     } else {
-                        jasper.BoletaCredito("\\Reports\\ventas\\venta_credito.jasper", "cod", Integer.valueOf(txtCodT.getText().trim()));
-                        jasper.cerrar();
+                        //jasper.BoletaCredito("\\Reports\\ventas\\venta_credito.jasper", "cod", Integer.valueOf(txtCodT.getText().trim()));
+                        imprimirTicketCredito();
                         Cancelar();
                         txtAbonoT.setText("0");
                         txtVueltoT.setText("0");
@@ -2786,7 +2895,7 @@ public final class dlgVentas extends javax.swing.JDialog {
                     try {
                         cn.rollback();
                         cn.close();
-                       // Mensajes.error("TRANSACCION FALLIDA.\nLOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
+                        // Mensajes.error("TRANSACCION FALLIDA.\nLOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
                         Notif.NotifyError("Notificación del sistema", "TRANSACCION FALLIDA.\nLOS DATOS NO FUERON GUARDADOS EN LA BD." + e.getMessage());
                         Cancelar();
                         dlgFinTicket.dispose();
@@ -3358,9 +3467,9 @@ public final class dlgVentas extends javax.swing.JDialog {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
-        if(btnNuevo.isEnabled() && txtArt.getText().isEmpty()){
+        if (btnNuevo.isEnabled() && txtArt.getText().isEmpty()) {
             btnNuevo.requestFocus();
-        }else if (btnBuscarArticulo.isEnabled() && txtArt.getText().isEmpty()){
+        } else if (btnBuscarArticulo.isEnabled() && txtArt.getText().isEmpty()) {
             btnBuscarArticulo.requestFocus();
         }
     }//GEN-LAST:event_formWindowActivated
@@ -3558,4 +3667,177 @@ public final class dlgVentas extends javax.swing.JDialog {
     public static javax.swing.JTextField txtidEmision;
     // End of variables declaration//GEN-END:variables
 
+    public static void imprimirFacturaOriginal() {
+        //Impresora matricial tmu-220
+        PrinterService printerService = new PrinterService();
+        //final byte[] openCD = {27, 112, 0, 60, 120};
+        final byte[] ESC_ALIGN_LEFT = new byte[]{0x1b, 'a', 0x00};
+        final byte[] ESC_ALIGN_CENTER = new byte[]{0x1b, 'a', 0x01};
+        final byte[] cutP = new byte[]{0x1d, 'V', 1};
+        try {
+            int filas = tbDetalle.getRowCount();
+            DecimalFormat formateador = new DecimalFormat("#,###");
+            String msg0 = Empresa.getEmpresa() + "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg0, 1, 1, 1, 1));
+            String msg00 = "----------------------------------------\n";
+            msg00 += "Ventas al por menor de productos farmacéuticos y medicinales, cosméticos y Art. de Tocador\n";
+            msg00 += "----------------------------------------\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg00, 1, 1, 0, 0));
+            //String msg = "\n";
+            String msg = "RUC: " + Empresa.getRUC() + "\n";
+            msg += "CEL: " + Empresa.getCelular() + "\n";
+            msg += Empresa.getDireccion() + "\n";
+            msg += "CAACUPE - DPTO. DE CORDILLERA - PY\n";
+            //msg += "CNEL. OVIEDO - DPTO. DE CAAGUAZU - PY\n";
+            //msg += "PARAGUAY\n";
+            msg += "-----\n";
+            msg += "TIMBRADO: " + Timbrado.getTimbrado() + "\n";
+            msg += "VALIDO DESDE: " + Timbrado.getDesde() + "\n";
+            msg += "VALIDO HASTA: " + Timbrado.getHasta() + "\n";
+            msg += "I.V.A. INCLUIDO\n";
+            msg += "----------------------------------------\n";
+            //int flat = 
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            //if (flat == 1) {
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg1 = "FACTURA "+lbCond.getText().trim()+" NRO: " + txtEstablecimiento.getText().trim()
+                    + "-" + txtEmision.getText().trim() + "-" + txtFacturaN.getText().trim() + "\n";
+            //msg1 += "CONDICION: " + lbCond.getText().trim() + "\n";
+            msg1 += "FECHA/HORA: " + txtFecha.getText().trim() + " " + txtHora.getText().trim() + "\n";
+            msg1 += "VENDEDOR: " + lbEmpleadoF.getText().trim() + "\n";
+            msg1 += "\n";
+            msg1 += "CLIENTE: " + txtRazonS.getText().trim() + "\n";
+            msg1 += "RUC/CI: " + txtRuc.getText().trim() + "\n";
+            msg1 += "----------------------------------------\n";
+            msg1 += "IVA    CANT.     P.UNIT       SUB-TOTAL\n";
+            msg1 += "----------------------------------------\n";
+            for (int i = 0; i < filas; i++) {
+                String codbarra = tbDetalle.getValueAt(i, 1).toString().trim();
+                String Descripcion = tbDetalle.getValueAt(i, 2).toString().trim();
+                String Cant = tbDetalle.getValueAt(i, 3).toString();
+                String Ppublic = tbDetalle.getValueAt(i, 4).toString();
+                String Desc = tbDetalle.getValueAt(i, 5).toString();
+                String Punit = tbDetalle.getValueAt(i, 6).toString().trim();
+                String Mont = tbDetalle.getValueAt(i, 10).toString().trim();
+                String iva = tbDetalle.getValueAt(i, 13).toString().trim();
+                msg1 += String.format("%1$1s", "COD-BARRA: "+codbarra + "\n");
+                msg1 += String.format("%1$1s", Descripcion + "\n");
+                msg1 += String.format("%1$-7s %2$-8s %3$-12s %4$-1s", iva + "%", Cant,
+                        formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))),
+                        formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", "")))) + "\n";
+            }
+            //msg1 += "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_LEFT);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg1, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg2 = "========================================\n";
+            String tot = formateador.format(Integer.parseInt(txtTotal.getText().replace(".", "").replace(",", "")));
+            msg2 += "TOTAL A PAGAR Gs: " + tot + "\n";
+            msg2 += "========================================\n";
+            String letras = d.Convertir(tot.replace(".", "").replace(",", ""), true);
+            msg2 += String.format("%1$1s", letras + "\n");
+            //Ticket += "\n";
+            msg2 += "========================================\n";
+            //msg2 += "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg2, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String exentas = String.valueOf(getExcetas());
+            String iva5 = String.valueOf(controlFactura.get5Completo());
+            String iva10 = String.valueOf(controlFactura.get10Completo());
+            String msg3 = "---- TOTALES GRAVADA ----\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg3, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg4 = "EXENTAS     ----> " + exentas + "\n";
+            msg4 += "GRAVADA 5%  ----> " + formateador.format(Integer.parseInt(iva5)) + "\n";
+            msg4 += "GRAVADA 10% ----> " + formateador.format(Integer.parseInt(iva10)) + "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_LEFT);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg4, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg5 = "---- LIQUIDACION DEL I.V.A. ----\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg5, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg6 = "I.V.A. 5%   ----> " + txt5.getText() + "\n";
+            msg6 += "I.V.A. 10%  ----> " + txt10.getText() + "\n";
+            msg6 += "----------------------------------------\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_LEFT);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg6, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            int totaliva = (Integer.parseInt(txt5.getText().replace(".", "").replace(",", "")) + Integer.parseInt(txt10.getText().replace(".", "").replace(",", "")));
+            //String msg7 = String.format("%1$5s %2$23s", "TOTAL I.V.A.", formateador.format((totaliva))) + "\n";
+            String msg7 = "TOTAL I.V.A. " + formateador.format((totaliva)) + "\n";
+            msg7 += "----------------------------------------\n";
+            msg7 += "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg7, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg8 = "EFECTIVO:" + txtAbonoF.getText().trim() + "\n";
+            msg8 += "VUELTO:  " + txtVueltoF.getText().trim() + "\n";
+            msg8 += "\n";
+            msg8 += "ORIGINAL:  CLIENTE\n";
+            msg8 += "DUPLICADO: ARCHIVO TRIBUTARIO\n";
+            msg8 += "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_LEFT);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg8, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg9 = Empresa.getEmpresa() + "\n";
+            msg9 += "AGRADECE SU PREFERENCIA\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg9, 0, 1, 0, 0));
+            //printerService.printBytes2(Timbrado.getImpresora(), "\r\n\n\n".getBytes());
+            printerService.printBytes2(Timbrado.getImpresora(), cutP);
+            //}
+
+        } catch (Exception e) {
+            Mensajes.error("No se encuentra instalada la impresora predeterminada para este punto de impresión");
+        }
+    }
+
+    public static byte[] getByteString(String str, int bold, int font, int widthsize, int heigthsize) {
+
+        if (str.length() == 0 | widthsize < 0 | widthsize > 3 | heigthsize < 0 | heigthsize > 3
+                | font < 0 | font > 1) {
+            return null;
+        }
+
+        byte[] strData;
+        try {
+            //strData = str.getBytes("iso-8859-1");
+            strData = str.getBytes("CP437");
+            //strData = str.getBytes("US-ASCII");
+            //strData = str.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
+
+        byte[] command = new byte[strData.length + 9];
+
+        byte[] intToWidth = {0x00, 0x10, 0x20, 0x30};//
+        byte[] intToHeight = {0x00, 0x01, 0x02, 0x03};//
+
+        command[0] = 27;// caracter ESC para darle comandos a la impresora
+        command[1] = 69;
+        command[2] = ((byte) bold);
+        command[3] = 27;
+        command[4] = 77;
+        command[5] = ((byte) font);
+        command[6] = 29;
+        command[7] = 33;
+        command[8] = (byte) (intToWidth[widthsize] + intToHeight[heigthsize]);
+
+        System.arraycopy(strData, 0, command, 9, strData.length);
+        return command;
+    }
 }

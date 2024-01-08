@@ -1,5 +1,6 @@
 package Componentes;
 
+import IU.dlgAjusteStock;
 import IU.dlgArticulos;
 import IU.dlgClientes;
 import IU.dlgCompras;
@@ -145,6 +146,22 @@ public class Notif {
                                 dlgVentas.btnEvento1.doClick();
                             } catch (Exception e) {
                                 System.out.println("Error Notify_Minim_dlgVentas: " + e.getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+    
+    public static void Notify_Minim_dlgAjusteStopck(String titulo, String mensaje) {
+        DesktopNotify.showDesktopMessage(titulo,
+                mensaje,
+                DesktopNotify.HELP, (ActionEvent evt) -> {
+                    if (frmPrincipal.PrincipalMinimizado != 1) {
+                        if (dlgAjusteStock.min == 1) {
+                            try {
+                                dlgAjusteStock.btnEvento1.doClick();
+                            } catch (Exception e) {
+                                System.out.println("Error Notify_Minim_dlgAjusteStock: " + e.getMessage());
                             }
                         }
                     }

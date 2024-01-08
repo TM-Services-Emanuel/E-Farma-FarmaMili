@@ -872,7 +872,6 @@ public class dlgConsultarCreditos extends javax.swing.JDialog {
     public void llamarReporteFactura() throws SQLException {
         ReporteF gr;
         gr = new ReporteF();
-        gr.cerrar();
     }
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         // TODO add your handling code here:

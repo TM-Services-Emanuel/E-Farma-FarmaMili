@@ -246,9 +246,6 @@ public class controlCompra {
         } else {
             dc = array.getFila(p);
             int codAr = dc.getCodArticulo();
-            //int cant = dc.getCant();
-            //int prec = dc.getPrecio();
-            //int monto = dc.getMonto();
         }
     }
 

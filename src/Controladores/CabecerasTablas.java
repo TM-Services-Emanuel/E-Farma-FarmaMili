@@ -27,14 +27,14 @@ public class CabecerasTablas {
     private static final String conSalidas[] = {"OP. N°", "PROVEEDOR", "FECHA", "HORA", "COS.TOTAL", "OBSERVACION", "INDICADOR"};
     private static final String detalleSalida[] = {"CODART", "MOTIVO SALIDA", "CANT", "OP. N°", "NOMBRE COMERCIAL", "COSTO", "MONTO"};
     private static final String compras[] = {"COD", "CODBARRA", "NOMBRE COMERCIAL", "CANT", "CANTf", "PRECIO ", "PRECIOF", "IVA", "EXENTA", "EXENTAf", "IVA 5%", "IVA5f", "IVA 10%", "IVA10f", "MONTO", "MONTOf", "PC", "GA", "DE"};
-    private static final String facturas[] = {"COD", "CODBARRA", "NOMBRE COMERCIAL", "CANT", "P.PUBL.", "%DES", "PRECIO", "EXENTA", "IVA 5%", "IVA 10%", "SUB-TOTAL", "DESC", "PPtot"};
+    private static final String facturas[] = {"COD", "CODBARRA", "NOMBRE COMERCIAL", "CANT", "P.PUBL.", "%DES", "PRECIO", "EXENTA", "IVA 5%", "IVA 10%", "SUB-TOTAL", "DESC", "PPtot","idIVA"};
     private static final String transferencias[] = {"COD", "CODBARRA", "NOMBRE COMERCIAL", "CANT", "PRECIO", "EXENTA", "IVA 5%", "IVA 10%", "SUB-TOTAL", "GANANCIA", "DESCUENTO", "ORDEN", "COSTOIVA"};
     private static final String categoria[] = {"CODIGO", "CATEGORIA"};
     //String factura[] = {"Cant.", "Cod.", "Descripción", "Precio", "Total", "sActual"};
     private static final String presupuestos[] = {"Cant.", "Cod.", "Descripción", "Precio", "Total"};
-    private static final String conFactura[] = {"OPERACIÓN", "RAZÓN SOCIAL", "FECHA", "HORA", "COD CLI", "MOV.CAJA", "FACTURA N°", "CONDICION", "PAGO", "TOTAL", "CODVENDE", "ESTADO"};
+    private static final String conFactura[] = {"OPERACIÓN", "RAZÓN SOCIAL", "FECHA", "HORA", "COD CLI", "MOV.CAJA", "FACTURA N°", "CONDICION", "PAGO", "TOTAL", "CODVENDE", "ESTADO","E","5","10"};
     private static final String conTransferencia[] = {"ID", "OPERACIÓN", "MOV.CAJA", "FECHA HORA", "TIPO", "ORIGEN", "DESTINO", "TOTAL", "ESTADO"};
-    private static final String detalleFactura[] = {"CANT", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "PRECIO", "SUB-TOTAL"};
+    private static final String detalleFactura[] = {"CANT", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "PRECIO", "SUB-TOTAL","IVA","E","5","10"};
     private static final String detalleTransferencia[] = {"CANT", "ID", "CÓD. BARRA", "NOMBRE COMERCIAL", "PRECIO", "SUB-TOTAL"};
     private static final String consPresupuesto[] = {"N°", "Fecha", "Razon Social", "Cód. Clie", "Desc", "Total"};
     private static final String detallePresupuestoF[] = {"Cant.", "Código", "Descripción", "Precio", "Total"};
@@ -832,6 +832,21 @@ public class CabecerasTablas {
         colum.setMaxWidth(0);
         colum.setMinWidth(0);
         colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(12);
+        colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(13);
+        colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(14);
+        colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
     }
 
     public static final void consTransferencias(JTable tabla) {
@@ -941,6 +956,26 @@ public class CabecerasTablas {
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(5);
         colum.setPreferredWidth(70);
+        colum = tabla.getColumnModel().getColumn(6);
+        colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(7);
+        colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(8);
+        colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(9);
+        colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
     }
 
     public static final void detalleTransferencia(JTable tabla) {
@@ -1147,6 +1182,11 @@ public class CabecerasTablas {
         colum.setMinWidth(0);
         colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(12);
+        colum.setPreferredWidth(60);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
+        colum = tabla.getColumnModel().getColumn(13);
         colum.setPreferredWidth(60);
         colum.setMaxWidth(0);
         colum.setMinWidth(0);

@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ResumenCaja" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e9bb1a27-f975-4aa4-98f9-75524c5daafa">
-	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bd_farmacia"/>
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[YmRfZmFybWFjaWEuY2FqYSAsMTUsMTUsMGI3ZGRlMDItODQ5Ni00MTQyLThlYmEtNjVkNTc1ZjJh
+NDY3Ow==]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="farmacia.jrdax"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
@@ -16,9 +19,12 @@
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
-	<parameter name="caja" class="java.lang.Integer" isForPrompting="false"/>
+	<parameter name="caja" class="java.lang.Integer"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT * FROM  bd_farmacia.caja WHERE  bd_farmacia.caja.ca_id= $P{caja} ]]>
+		<![CDATA[SELECT *
+FROM bd_farmacia.caja
+WHERE 
+	 bd_farmacia.caja.ca_id = $P{caja}]]>
 	</queryString>
 	<field name="ca_id" class="java.lang.Long">
 		<property name="com.jaspersoft.studio.field.name" value="ca_id"/>
@@ -62,7 +68,12 @@
 		<property name="com.jaspersoft.studio.field.tree.path" value="caja"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="ca_diferencia" class="java.lang.Long">
+	<field name="ca_entregado" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="ca_entregado"/>
+		<property name="com.jaspersoft.studio.field.label" value="ca_entregado"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="caja"/>
+	</field>
+	<field name="ca_diferencia" class="java.lang.Integer">
 		<property name="com.jaspersoft.studio.field.name" value="ca_diferencia"/>
 		<property name="com.jaspersoft.studio.field.label" value="ca_diferencia"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="caja"/>
@@ -284,37 +295,37 @@
 					<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:/E-FARM/Reports/caja/TotalVContado.jrxml"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalVContado.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="-20" y="33" width="575" height="23" uuid="068da335-9e19-47e9-a373-1392f6944794">
+				<reportElement x="-20" y="76" width="575" height="23" uuid="068da335-9e19-47e9-a373-1392f6944794">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<subreportParameter name="caja">
 					<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:/E-FARM/Reports/caja/TotalIngreso.jrxml"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalIngreso.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="-20" y="77" width="575" height="23" uuid="c57200e9-b032-446b-80fd-61ca5c02c57e">
+				<reportElement x="-20" y="120" width="575" height="23" uuid="c57200e9-b032-446b-80fd-61ca5c02c57e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<subreportParameter name="caja">
 					<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:/E-FARM/Reports/caja/TotalCContado.jrxml"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalCContado.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="-20" y="100" width="575" height="23" uuid="cdd2610d-8125-410f-8ca3-d9ea46797102">
+				<reportElement x="-20" y="143" width="575" height="23" uuid="cdd2610d-8125-410f-8ca3-d9ea46797102">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<subreportParameter name="caja">
 					<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:/E-FARM/Reports/caja/TotalGastos.jrxml"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalGastos.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="-20" y="277" width="575" height="23" uuid="311aa4aa-cac4-4453-b987-7eb402732809">
@@ -324,7 +335,7 @@
 					<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:/E-FARM/Reports/caja/TotalVCredito.jrxml"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalVCredito.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement x="-20" y="300" width="575" height="23" uuid="9672a7b3-295e-4c2a-be11-ce6cc712bde9">
@@ -334,7 +345,17 @@
 					<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["C:/E-FARM/Reports/caja/TotalCCredito.jrxml"]]></subreportExpression>
+				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalCCredito.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="-20" y="33" width="575" height="23" uuid="569d5973-c643-4212-9882-726fbc6be458">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<subreportParameter name="caja">
+					<subreportParameterExpression><![CDATA[$P{caja}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalVContadoF.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

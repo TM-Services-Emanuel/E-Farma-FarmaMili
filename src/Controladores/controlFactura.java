@@ -178,6 +178,35 @@ public class controlFactura {
         }
         return (total);
     }
+    
+    public static int getExcetasConsultaFacturaLegal() {
+        int total = 0;
+        DefaultTableModel tb = (DefaultTableModel) dlgConsultarFacturasLegal.tbDetalleFactura.getModel();
+        int fila = tb.getRowCount();
+        for (int i = 0; i < fila; i++) {
+            total += Integer.valueOf(String.valueOf(dlgConsultarFacturasLegal.tbDetalleFactura.getModel().getValueAt(i, 7)).replace(".", "").replace(",", ""));
+        }
+        return (total);
+    }
+    
+    public static int get5ConsultaFacturaLegal() {
+        int total = 0;
+        DefaultTableModel tb = (DefaultTableModel) dlgConsultarFacturasLegal.tbDetalleFactura.getModel();
+        int fila = tb.getRowCount();
+        for (int i = 0; i < fila; i++) {
+            total += Integer.valueOf(String.valueOf(dlgConsultarFacturasLegal.tbDetalleFactura.getModel().getValueAt(i, 8)).replace(".", "").replace(",", ""));
+        }
+        return (total);
+    }
+    public static int get10ConsultaFacturaLegal() {
+        int total = 0;
+        DefaultTableModel tb = (DefaultTableModel) dlgConsultarFacturasLegal.tbDetalleFactura.getModel();
+        int fila = tb.getRowCount();
+        for (int i = 0; i < fila; i++) {
+            total += Integer.valueOf(String.valueOf(dlgConsultarFacturasLegal.tbDetalleFactura.getModel().getValueAt(i, 9)).replace(".", "").replace(",", ""));
+        }
+        return (total);
+    }
 
     public static int getExcetasTransferencia() {
         int total = 0;
@@ -198,6 +227,16 @@ public class controlFactura {
         }
         return (total / 21);
     }
+    
+    public static int get5Completo() {
+        int total = 0;
+        DefaultTableModel tb = (DefaultTableModel) dlgVentas.tbDetalle.getModel();
+        int fila = tb.getRowCount();
+        for (int i = 0; i < fila; i++) {
+            total += Integer.valueOf(String.valueOf(dlgVentas.tbDetalle.getModel().getValueAt(i, 8)).replace(".", "").replace(",", ""));
+        }
+        return total;
+    }
 
     public static int get5Transferencia() {
         int total = 0;
@@ -217,6 +256,15 @@ public class controlFactura {
             total += Integer.valueOf(String.valueOf(dlgVentas.tbDetalle.getModel().getValueAt(i, 9)).replace(".", "").replace(",", ""));
         }
         return (total / 11);
+    }
+    public static int get10Completo() {
+        int total = 0;
+        DefaultTableModel tb = (DefaultTableModel) dlgVentas.tbDetalle.getModel();
+        int fila = tb.getRowCount();
+        for (int i = 0; i < fila; i++) {
+            total += Integer.valueOf(String.valueOf(dlgVentas.tbDetalle.getModel().getValueAt(i, 9)).replace(".", "").replace(",", ""));
+        }
+        return total;
     }
 
     public static int get10Transferencia() {
@@ -296,7 +344,7 @@ public class controlFactura {
     }
 
     public static void insertar(String cod, String codB, String desc, String cant, String prec, String total, int iva, String descuento, String porcDesc, String neto, String ppub, JTable tabla) {
-        String fila[] = new String[19];
+        String fila[] = new String[14];
         DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
         fila[0] = cod;
         fila[1] = codB;
@@ -325,6 +373,7 @@ public class controlFactura {
         fila[10] = total;
         fila[11] = descuento;
         fila[12] = neto;
+        fila[13] = String.valueOf(iva);
         tb.addRow(fila);
     }
 
@@ -734,7 +783,7 @@ public class controlFactura {
         String usuario = Login.getUsuarioLogueado();
         msg = GestionarFactura.actTransferencia(cod, usuario);
         if (msg == null) {
-           // Mensajes.Sistema("Transferencia anulada satisfactoriamente.");
+            // Mensajes.Sistema("Transferencia anulada satisfactoriamente.");
             Notif.NotifySuccess("Notificación del sistema", "Transferencia anulada satisfactoriamente.");
             if (tipo.equals("TIPO ENTRADA")) {
                 controlFactura.actStockEliminarTransferenciaE();
@@ -851,7 +900,7 @@ public class controlFactura {
         lista = GestionarFactura.listFacturasLegal(fecha);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
-            String filas[] = new String[12];
+            String filas[] = new String[15];
             Object[] fila = (Object[]) lista.get(i);
             filas[0] = fila[0].toString();
             filas[1] = fila[1].toString();
@@ -869,6 +918,9 @@ public class controlFactura {
             } else {
                 filas[11] = "ANULADO";
             }
+            filas[12] = fila[12].toString();
+            filas[13] = fila[13].toString();
+            filas[14] = fila[14].toString();
             tb.addRow(filas);
         }
     }
@@ -1104,12 +1156,10 @@ public class controlFactura {
     public static void listDetalleL(JTable tabla) {
         int x = dlgConsultarFacturasLegal.tbFactura.getSelectedRow();
         String cod = dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 0).toString();
-        String fecha = dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 2).toString();
-        String des = dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 4).toString();
-        String total = dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 5).toString();
         dlgConsultarFacturasLegal.txtCondicion.setText(dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 7).toString());
         dlgConsultarFacturasLegal.txtPago.setText(dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 8).toString());
         dlgConsultarFacturasLegal.txtEstado.setText(dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 11).toString());
+        dlgConsultarFacturasLegal.txtTotal.setText(dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 9).toString());
         List lista;
         lista = GestionarFactura.listDetallesL(cod);
         for (int i = 1; i < lista.size(); i++) {
@@ -1117,6 +1167,10 @@ public class controlFactura {
             Object[] fila = (Object[]) lista.get(i);
             tb.addRow(fila);
         }
+        
+        dlgConsultarFacturasLegal.txtExenta.setText(String.valueOf(getExcetasConsultaFacturaLegal()));
+        dlgConsultarFacturasLegal.txt5.setText(String.valueOf(get5ConsultaFacturaLegal()));
+        dlgConsultarFacturasLegal.txt10.setText(String.valueOf(get10ConsultaFacturaLegal()));
     }
 
     public static void listDetalleTransferencias(JTable tabla) {

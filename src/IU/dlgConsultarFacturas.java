@@ -12,6 +12,7 @@ import Componentes.RenderDecimal;
 import Componentes.RenderDecimal1;
 import Componentes.RenderDecimalVenta;
 import Componentes.Software;
+import Componentes.Tickets;
 import Componentes.traerIP;
 import Controladores.CabecerasTablas;
 import Controladores.controlFactura;
@@ -86,41 +87,28 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
     }
 
     public static void obtenerImpresoraPredeterminada(String fact, String fecha, String hora, String total, String condicion, String cod) {
-        String sqlImp = "SELECT * FROM v_puntoemision3 WHERE tipo='T' AND estado='Activo' AND ip='" + traerIP.getIP() + "'";
-        try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rss = st.executeQuery(sqlImp)) {
-            rss.last();
-            do {
-                ImpresoraPred = rss.getString("imp_pred").trim();
-                System.out.println(ImpresoraPred);
-
-            } while (rss.next());
-            rss.close();
-            st.close();
-            cn.close();
-            imprimirTicket(ImpresoraPred, fact, fecha, hora, total);
-            try {
-                StringBuilder sql = new StringBuilder("INSERT INTO reimpresiones (re_fac_codigo, re_descripcion, re_tipo, fecha, usu) VALUES (");
-                sql.append(cod).append(", ");
-                sql.append("'RE-IMPRESION DE TICKET','");
-                sql.append(condicion).append("',");
-                sql.append("now(),'");
-                sql.append(Login.getUsuarioLogueado()).append("')");
-                String msg = Operacion.exeOperacion(sql.toString());
-                if (msg == null) {
-                    System.out.println("la re-impresion ha sido registrada");
-                } else {
-                    System.out.println("Error en registrar la re-impresion: " + msg);
-                }
-            } catch (Exception e) {
-                Mensajes.error("Hubo un error en el registro de la re-impresión");
+        imprimirTicket(Tickets.getImpresora(), fact, fecha, hora, total);
+        try {
+            StringBuilder sql = new StringBuilder("INSERT INTO reimpresiones (re_fac_codigo, re_descripcion, re_tipo, fecha, usu) VALUES (");
+            sql.append(cod).append(", ");
+            sql.append("'RE-IMPRESION DE TICKET','");
+            sql.append(condicion).append("',");
+            sql.append("now(),'");
+            sql.append(Login.getUsuarioLogueado()).append("')");
+            String msg = Operacion.exeOperacion(sql.toString());
+            if (msg == null) {
+                System.out.println("la re-impresion ha sido registrada");
+            } else {
+                System.out.println("Error en registrar la re-impresion: " + msg);
             }
-        } catch (SQLException ex) {
-            Mensajes.informacion("OBSERVACIÓN:\nEn estos momentos es imposible realizar la re-impresión del Ticket.\nEl Sistema no logra identificar la Impresora Predeterminada para esta terminal de venta.\nPara mayor información comuniquese con el proveedor del Sistema.");
+        } catch (Exception e) {
+            Mensajes.error("Hubo un error en el registro de la re-impresión");
         }
+
     }
 
     public static void imprimirTicket(String ImpPred, String fact, String fecha, String hora, String total) {
-        //Impresora termica
+        //Impresora termico 80mm
         PrinterService printerService = new PrinterService();
 
         System.out.println(printerService.getPrinters());
@@ -128,14 +116,14 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
         DecimalFormat formateador = new DecimalFormat("#,###");
         //String tot = formateador.format(Integer.parseInt(txtTotalL.getText().replace(".", "").replace(",", "")));
 
-        String Ticket = "            TICKET DE VENTA\n";
-        Ticket += "----------------------------------------\n";
+        String Ticket = "                TICKET DE VENTA\n";
+        Ticket += "-----------------------------------------------\n";
         Ticket += "NRO: " + fact + "\n";
         Ticket += "FECHA: " + fecha + " " + hora + "\n";
         Ticket += "VENDEDOR/A: " + txtVendedor.getText().trim() + "\n";
-        Ticket += "----------------------------------------\n";
-        Ticket += "CANT   P.PUBL  %DESC  P.UNIT    TOTAL   \n";
-        Ticket += "----------------------------------------\n";
+        Ticket += "-----------------------------------------------\n";
+        Ticket += "CANT    P.PUBL    % DESC   P.UNIT    SUB-TOTAL\n";
+        Ticket += "-----------------------------------------------\n";
         for (int i = 0; i < filas; i++) {
             String Descripcion = tblDetalle.getValueAt(i, 3).toString().trim();
             String Cant = tblDetalle.getValueAt(i, 0).toString();
@@ -147,18 +135,90 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
 
             Ticket += String.format("%1$1s", Descripcion + "\n");
             //Ticket += String.format("%1$11s %2$15s %3$19s" ,"CANT: "+tbDetalle.getValueAt(i, 3).toString(), "PRECIO: "+formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))), "SUBTOTAL: "+formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", ""))))+ "\n";
-            Ticket += String.format("%1$-6s %2$-8s %3$-5s %4$-9s %5$-5s", Cant, Ppublic, Desc,
+            Ticket += String.format("%1$-7s %2$-10s %3$-7s %4$-10s %5$-6s", Cant, Ppublic, Desc,
                     formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))),
                     formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", "")))) + "\n";
         }
-        Ticket += "----------------------------------------\n";
-        Ticket += String.format("%1$6s %2$22s", "TOTAL A PAGAR:", formateador.format(Integer.parseInt(total.replace(".", "").replace(",", "")))) + "\n";
-        Ticket += "----------------------------------------\n";
-        Ticket += "      GRACIAS POR SU PREFERENCIA!\n";
+        Ticket += "-----------------------------------------------\n";
+        Ticket += String.format("%1$6s %2$30s", "TOTAL A PAGAR:", formateador.format(Integer.parseInt(total.replace(".", "").replace(",", "")))) + "\n";
+        Ticket += "-----------------------------------------------\n";
+        Ticket += "          GRACIAS POR SU PREFERENCIA!\n";
         Ticket += "\n";
         Ticket += "\n";
         Ticket += "\n";
+
+        printerService.printString2(ImpPred, Ticket);
+        //print some stuff
+
+        // cut that paper!
+        byte[] cutP = new byte[]{0x1d, 'V', 1};
+
+        printerService.printBytes2(ImpPred, cutP);
+
+    }
+    
+    public static void obtenerImpresoraPredeterminadaCredito(String fact, String fecha, String hora, String total, String condicion, String cod) {
+        imprimirTicketCredito(Tickets.getImpresora(), fact, fecha, hora, total);
+        try {
+            StringBuilder sql = new StringBuilder("INSERT INTO reimpresiones (re_fac_codigo, re_descripcion, re_tipo, fecha, usu) VALUES (");
+            sql.append(cod).append(", ");
+            sql.append("'RE-IMPRESION DE TICKET','");
+            sql.append(condicion).append("',");
+            sql.append("now(),'");
+            sql.append(Login.getUsuarioLogueado()).append("')");
+            String msg = Operacion.exeOperacion(sql.toString());
+            if (msg == null) {
+                System.out.println("la re-impresion ha sido registrada");
+            } else {
+                System.out.println("Error en registrar la re-impresion: " + msg);
+            }
+        } catch (Exception e) {
+            Mensajes.error("Hubo un error en el registro de la re-impresión");
+        }
+
+    }
+    
+    public static void imprimirTicketCredito(String ImpPred, String fact, String fecha, String hora, String total) {
+        //Impresora termico 80mm
+        PrinterService printerService = new PrinterService();
+
+        System.out.println(printerService.getPrinters());
+        int filas = tblDetalle.getRowCount();
+        DecimalFormat formateador = new DecimalFormat("#,###");
+        //String tot = formateador.format(Integer.parseInt(txtTotalL.getText().replace(".", "").replace(",", "")));
+
+        String Ticket = "        TICKET DE VENTA CREDITO\n";
+        Ticket += "-----------------------------------------------\n";
+        Ticket += "NRO: " + fact + "\n";
+        Ticket += "FECHA: " + fecha + " " + hora + "\n";
+        Ticket += "VENDEDOR/A: " + txtVendedor.getText().trim() + "\n";
+        Ticket += "-----------------------------------------------\n";
+        Ticket += "CANT    P.PUBL    % DESC   P.UNIT    SUB-TOTAL\n";
+        Ticket += "-----------------------------------------------\n";
+        for (int i = 0; i < filas; i++) {
+            String Descripcion = tblDetalle.getValueAt(i, 3).toString().trim();
+            String Cant = tblDetalle.getValueAt(i, 0).toString();
+            //int pp = Integer.parseInt(tblDetalle.getValueAt(i, 17).toString()) / Integer.parseInt(tblDetalle.getValueAt(i, 3).toString());
+            String Ppublic = /*String.valueOf(pp)*/ "*";
+            String Desc = /*tblDetalle.getValueAt(i, 16).toString()*/ "*";
+            String Punit = tblDetalle.getValueAt(i, 4).toString().trim();
+            String Mont = tblDetalle.getValueAt(i, 5).toString().trim();
+
+            Ticket += String.format("%1$1s", Descripcion + "\n");
+            //Ticket += String.format("%1$11s %2$15s %3$19s" ,"CANT: "+tbDetalle.getValueAt(i, 3).toString(), "PRECIO: "+formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))), "SUBTOTAL: "+formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", ""))))+ "\n";
+            Ticket += String.format("%1$-7s %2$-10s %3$-7s %4$-10s %5$-6s", Cant, Ppublic, Desc,
+                    formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))),
+                    formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", "")))) + "\n";
+        }
+        Ticket += "-----------------------------------------------\n";
+        Ticket += String.format("%1$6s %2$30s", "TOTAL A PAGAR:", formateador.format(Integer.parseInt(total.replace(".", "").replace(",", "")))) + "\n";
+        Ticket += "-----------------------------------------------\n";
         Ticket += "\n";
+        Ticket += "\n";
+        Ticket += "\n";
+        Ticket += "             FIRMA Y ACLARACION\n";
+        Ticket += "\n";
+        Ticket += "          GRACIAS POR SU PREFERENCIA!\n";
         Ticket += "\n";
         Ticket += "\n";
         Ticket += "\n";
@@ -598,7 +658,6 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
     public void llamarReporteFactura() throws SQLException {
         ReporteF gr;
         gr = new ReporteF();
-        gr.cerrar();
     }
     private void tblFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFacturaMouseClicked
         // TODO add your handling code here:
@@ -669,7 +728,9 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
                         if (condicion.equals("CONTADO")) {
                             obtenerImpresoraPredeterminada(fact, fecha, hora, total, condicion, cod);
                         } else {
-                            jasper.BoletaCreditoRE("\\Reports\\ventas\\venta_credito_reimpresion.jasper", "cod", Integer.valueOf(cod));
+                            obtenerImpresoraPredeterminadaCredito(fact, fecha, hora, total, condicion, cod);
+                            //jasper.BoletaCreditoRE("\\Reports\\ventas\\venta_credito_reimpresion.jasper", "cod", Integer.valueOf(cod));
+                            
                             try {
                                 StringBuilder sql = new StringBuilder("INSERT INTO reimpresiones (re_fac_codigo, re_descripcion, re_tipo, fecha, usu) VALUES (");
                                 sql.append(cod).append(", ");

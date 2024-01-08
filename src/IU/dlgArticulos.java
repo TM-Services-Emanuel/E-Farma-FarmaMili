@@ -507,17 +507,21 @@ public class dlgArticulos extends javax.swing.JDialog {
     void delArticulo() {
         try {
             int x = tbProductos.getSelectedRow();
-            String desc = tbProductos.getValueAt(x, 5).toString();
-            int rpta = Mensajes.confirmar("Desea realmente eliminar " + desc + " de la lista");
-            if (rpta == 0) {
-                controlArticulo.delArticulo();
-                CabecerasTablas.limpiarTablaArticulos(tbProductos);
-                controlArticulo.listArticulo(tbProductos, "cod");
-                txtBuscar.setText("");
-                txtBuscar.requestFocus();
+            if (x < 0) {
+                Mensajes.Sistema("La eliminación no puede ser procesada.\nSeleccione en la tabla el producto que desea eliminar definitivamente de la base de datos.");
+            } else {
+                String desc = tbProductos.getValueAt(x, 5).toString();
+                int rpta = Mensajes.confirmar("Desea realmente eliminar " + desc + " de la lista");
+                if (rpta == 0) {
+                    controlArticulo.delArticulo();
+                    CabecerasTablas.limpiarTablaArticulos(tbProductos);
+                    controlArticulo.listArticulo(tbProductos, "cod");
+                    txtBuscar.setText("");
+                    txtBuscar.requestFocus();
+                }
             }
         } catch (Exception e) {
-            Mensajes.Sistema("La eliminación no puede ser procesada.\nSeleccione en la tabla el producto que desea eliminar definitivamente de la base de datos.");
+           // Mensajes.Sistema("La eliminación no puede ser procesada.\nSeleccione en la tabla el producto que desea eliminar definitivamente de la base de datos.");
         }
     }
     private void tbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMouseClicked
@@ -701,7 +705,7 @@ public class dlgArticulos extends javax.swing.JDialog {
         dlgMinimizado.dispose();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        
+
     }//GEN-LAST:event_btnEvento1ActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

@@ -6,6 +6,7 @@ import Componentes.Mensajes;
 import Componentes.ReporteF;
 import Componentes.cargarComboBox;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,12 +40,34 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
         txtFHastaR.setVisible(false);
         lbFechaActualR.setVisible(false);
     }
+    
+    private void AccesoRapido(int n) {
+
+        switch (n) {
+            case KeyEvent.VK_F6 ->
+                btnGenerar.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
+            default -> {
+            }
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         GrupoReporte = new javax.swing.ButtonGroup();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        PnlNuevo2 = new rojeru_san.rspanel.RSPanelImage();
+        btnGenerar = new RSMaterialComponent.RSButtonIconUno();
+        Separador9 = new javax.swing.JSeparator();
+        LabelTitulo9 = new javax.swing.JLabel();
+        btnSalir = new RSMaterialComponent.RSButtonIconUno();
+        txtFDesdeR = new javax.swing.JTextField();
+        txtFHastaR = new javax.swing.JTextField();
+        lbFechaActualR = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         rbLaboratorioA = new javax.swing.JRadioButton();
         rbLaboratorioF = new javax.swing.JRadioButton();
@@ -57,25 +80,104 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         cboLaboratorio = new javax.swing.JComboBox<>();
-        jPanel2 = new javax.swing.JPanel();
-        btnGenerar = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
-        lbFechaActualR = new javax.swing.JLabel();
-        txtFDesdeR = new javax.swing.JTextField();
-        txtFHastaR = new javax.swing.JTextField();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        itemNuevoGenerar = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        itemSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Generador de Reportes");
+        setUndecorated(true);
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 0, 51)));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setBackground(new java.awt.Color(17, 35, 46));
+        jPanel4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel4KeyPressed(evt);
+            }
+        });
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        PnlNuevo2.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlNuevo2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PnlNuevo2KeyPressed(evt);
+            }
+        });
+        PnlNuevo2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnGenerar.setBackground(new java.awt.Color(0, 102, 0));
+        btnGenerar.setToolTipText("GENERAR DOCUMENTO");
+        btnGenerar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnGenerar.setForegroundHover(new java.awt.Color(0, 102, 0));
+        btnGenerar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DASHBOARD);
+        btnGenerar.setRippleColor(java.awt.Color.white);
+        btnGenerar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarActionPerformed(evt);
+            }
+        });
+        btnGenerar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGenerarKeyPressed(evt);
+            }
+        });
+        PnlNuevo2.add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
+
+        Separador9.setForeground(new java.awt.Color(204, 204, 204));
+        PnlNuevo2.add(Separador9, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo9.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo9.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo9.setText("GENERAR");
+        PnlNuevo2.add(LabelTitulo9, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel4.add(PnlNuevo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 100));
+
+        btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setToolTipText("F12");
+        btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
+        btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir.setRippleColor(java.awt.Color.white);
+        btnSalir.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        btnSalir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnSalirKeyPressed(evt);
+            }
+        });
+        jPanel4.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(418, 2, 20, 20));
+
+        txtFDesdeR.setEditable(false);
+        txtFDesdeR.setBackground(new java.awt.Color(255, 255, 204));
+        txtFDesdeR.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
+        txtFDesdeR.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel4.add(txtFDesdeR, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 93, -1));
+
+        txtFHastaR.setEditable(false);
+        txtFHastaR.setBackground(new java.awt.Color(255, 255, 204));
+        txtFHastaR.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
+        txtFHastaR.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel4.add(txtFHastaR, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, 93, -1));
+
+        lbFechaActualR.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbFechaActualR.setText("jLabel2");
+        jPanel4.add(lbFechaActualR, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 80, 68, -1));
+
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 440, -1));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         GrupoReporte.add(rbLaboratorioA);
+        rbLaboratorioA.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         rbLaboratorioA.setSelected(true);
         rbLaboratorioA.setText("Reporte de la fecha actual:");
         rbLaboratorioA.addActionListener(new java.awt.event.ActionListener() {
@@ -83,19 +185,35 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
                 rbLaboratorioAActionPerformed(evt);
             }
         });
+        rbLaboratorioA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                rbLaboratorioAKeyPressed(evt);
+            }
+        });
+        jPanel1.add(rbLaboratorioA, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 45, -1, 23));
 
         GrupoReporte.add(rbLaboratorioF);
+        rbLaboratorioF.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         rbLaboratorioF.setText("Reporte entre fechas:");
         rbLaboratorioF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbLaboratorioFActionPerformed(evt);
             }
         });
+        rbLaboratorioF.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                rbLaboratorioFKeyPressed(evt);
+            }
+        });
+        jPanel1.add(rbLaboratorioF, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 73, -1, -1));
 
+        jLabel1.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jLabel1.setText("Desde");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 73, 36, 23));
 
-        lbFechaActual.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lbFechaActual.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         lbFechaActual.setText("jLabel2");
+        jPanel1.add(lbFechaActual, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 45, 78, 23));
 
         dcFDesde.setEnabled(false);
         dcFDesde.addCommitListener(new datechooser.events.CommitListener() {
@@ -103,6 +221,7 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
                 dcFDesdeOnCommit(evt);
             }
         });
+        jPanel1.add(dcFDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 73, 27, 23));
 
         dcFHasta.setEnabled(false);
         dcFHasta.addCommitListener(new datechooser.events.CommitListener() {
@@ -110,263 +229,76 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
                 dcFHastaOnCommit(evt);
             }
         });
+        jPanel1.add(dcFHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(373, 100, 27, 23));
 
         txtFDesde.setEditable(false);
-        txtFDesde.setBackground(new java.awt.Color(255, 255, 204));
-        txtFDesde.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 11)); // NOI18N
+        txtFDesde.setBackground(new java.awt.Color(255, 255, 255));
+        txtFDesde.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         txtFDesde.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFDesde.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtFDesde.setEnabled(false);
         txtFDesde.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFDesdeActionPerformed(evt);
             }
         });
+        txtFDesde.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFDesdeKeyPressed(evt);
+            }
+        });
+        jPanel1.add(txtFDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(281, 73, 92, 23));
 
         txtFHasta.setEditable(false);
-        txtFHasta.setBackground(new java.awt.Color(255, 255, 204));
-        txtFHasta.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 11)); // NOI18N
+        txtFHasta.setBackground(new java.awt.Color(255, 255, 255));
+        txtFHasta.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         txtFHasta.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFHasta.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtFHasta.setEnabled(false);
         txtFHasta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFHastaActionPerformed(evt);
             }
         });
+        txtFHasta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFHastaKeyPressed(evt);
+            }
+        });
+        jPanel1.add(txtFHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(281, 100, 92, 23));
 
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jLabel2.setText("Hasta");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 36, 23));
 
+        jLabel3.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         jLabel3.setText("Laboratorio:");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 15, -1, 23));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 131, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dcFHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtFDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(dcFDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbLaboratorioF)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(rbLaboratorioA)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lbFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cboLaboratorio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cboLaboratorio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbLaboratorioA)
-                    .addComponent(lbFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rbLaboratorioF)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dcFDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtFDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtFHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(dcFHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.setLayout(new java.awt.GridLayout(1, 6));
-
-        btnGenerar.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnGenerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reporte x 40.png"))); // NOI18N
-        btnGenerar.setText("Generar Reporte - F6");
-        btnGenerar.setToolTipText("Registrar Nuevo Artículo");
-        btnGenerar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnGenerar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGenerarActionPerformed(evt);
+        cboLaboratorio.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        cboLaboratorio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        cboLaboratorio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cboLaboratorioKeyPressed(evt);
             }
         });
-        jPanel2.add(btnGenerar);
+        jPanel1.add(cboLaboratorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(89, 15, 318, 23));
 
-        btnSalir.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back40.png"))); // NOI18N
-        btnSalir.setText("Salir-Alt+F4");
-        btnSalir.setToolTipText("Salir");
-        btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSalir.setPreferredSize(new java.awt.Dimension(53, 47));
-        btnSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnSalir);
-
-        lbFechaActualR.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbFechaActualR.setText("jLabel2");
-
-        txtFDesdeR.setEditable(false);
-        txtFDesdeR.setBackground(new java.awt.Color(255, 255, 204));
-        txtFDesdeR.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        txtFDesdeR.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        txtFHastaR.setEditable(false);
-        txtFHastaR.setBackground(new java.awt.Color(255, 255, 204));
-        txtFHastaR.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        txtFHastaR.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        jMenu1.setText("Opciones");
-        jMenu1.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jMenu1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-
-        itemNuevoGenerar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-        itemNuevoGenerar.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemNuevoGenerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reports.png"))); // NOI18N
-        itemNuevoGenerar.setText("Generar Reporte          ");
-        itemNuevoGenerar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemNuevoGenerarActionPerformed(evt);
-            }
-        });
-        jMenu1.add(itemNuevoGenerar);
-        jMenu1.add(jSeparator3);
-
-        itemSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        itemSalir.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back15.png"))); // NOI18N
-        itemSalir.setText("Salir");
-        itemSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemSalirActionPerformed(evt);
-            }
-        });
-        jMenu1.add(itemSalir);
-
-        jMenuBar1.add(jMenu1);
-
-        setJMenuBar(jMenuBar1);
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 110, 420, 140));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(lbFechaActualR, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtFHastaR)
-                            .addComponent(txtFDesdeR)))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(txtFDesdeR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtFHastaR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
-                        .addComponent(lbFechaActualR))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void itemNuevoGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoGenerarActionPerformed
-        // TODO add your handling code here:
-        btnGenerar.doClick();
-    }//GEN-LAST:event_itemNuevoGenerarActionPerformed
-
-    private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
-        // TODO add your handling code here:
-        btnSalirActionPerformed(null);
-    }//GEN-LAST:event_itemSalirActionPerformed
-
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
-        if (rpta == 0) {
-            this.dispose();
-        }
-    }//GEN-LAST:event_btnSalirActionPerformed
-
-    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        // TODO add your handling code here:
-        int codLab = 0;
-        if (cboLaboratorio.getSelectedIndex() == 0) {
-            Mensajes.error("Seleccione un Laboratorio");
-            cboLaboratorio.requestFocus();
-            cboLaboratorio.setPopupVisible(true);
-        } else {
-            try {
-                try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + cboLaboratorio.getSelectedItem().toString() + "'")) {
-                    rs.last();
-                    codLab = rs.getInt("lab_codigo");
-                    rs.close();
-                } catch (SQLException ex) {
-                    Mensajes.error("Error al querer obtener ID del laboratorio");
-                }
-            } catch (Exception pr) {
-                Mensajes.informacion("No existe Reporte para este Laboratorio");
-            }
-            if (rbLaboratorioA.isSelected()) {
-                jasper.reporteTresParametroHorizontal("\\Reports\\ventas\\VTporLaboratorio.jasper", "codLab", codLab, "desde", Date.valueOf(lbFechaActualR.getText().trim()), "hasta", Date.valueOf(lbFechaActualR.getText().trim()));
-            } else if (rbLaboratorioF.isSelected()) {
-                if (txtFDesde.getText().trim().isEmpty()) {
-                    Mensajes.informacion("Fije la fecha desde");
-                } else if (txtFHasta.getText().trim().isEmpty()) {
-                    Mensajes.informacion("Fije la fecha hasta");
-                } else if (Date.valueOf(txtFDesdeR.getText().trim()).after(Date.valueOf(txtFHastaR.getText().trim()))) {
-                    Mensajes.error("Error en los parametros fijados.\nFavor verifique las fechas Desde y Hasta.");
-                } else {
-                    jasper.reporteTresParametroHorizontal("\\Reports\\ventas\\VTporLaboratorio.jasper", "codLab", codLab, "desde", Date.valueOf(txtFDesdeR.getText().trim()), "hasta", Date.valueOf(txtFHastaR.getText().trim()));
-                }
-            }
-
-        }
-    }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void rbLaboratorioAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbLaboratorioAActionPerformed
         // TODO add your handling code here:
@@ -407,6 +339,95 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
     private void txtFDesdeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFDesdeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFDesdeActionPerformed
+
+    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
+        // TODO add your handling code here:
+        int codLab = 0;
+        if (cboLaboratorio.getSelectedIndex() == 0) {
+            Mensajes.error("Seleccione un Laboratorio");
+            cboLaboratorio.requestFocus();
+            cboLaboratorio.setPopupVisible(true);
+        } else {
+            try {
+                try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery("SELECT * FROM laboratorio WHERE lab_nombre='" + cboLaboratorio.getSelectedItem().toString() + "'")) {
+                    rs.last();
+                    codLab = rs.getInt("lab_codigo");
+                    rs.close();
+                } catch (SQLException ex) {
+                    Mensajes.error("Error al querer obtener ID del laboratorio");
+                }
+            } catch (Exception pr) {
+                Mensajes.informacion("No existe Reporte para este Laboratorio");
+            }
+            if (rbLaboratorioA.isSelected()) {
+                jasper.reporteTresParametroHorizontal("\\Reports\\ventas\\VTporLaboratorio.jasper", "codLab", codLab, "desde", Date.valueOf(lbFechaActualR.getText().trim()), "hasta", Date.valueOf(lbFechaActualR.getText().trim()));
+            } else if (rbLaboratorioF.isSelected()) {
+                if (txtFDesde.getText().trim().isEmpty()) {
+                    Mensajes.informacion("Fije la fecha desde");
+                } else if (txtFHasta.getText().trim().isEmpty()) {
+                    Mensajes.informacion("Fije la fecha hasta");
+                } else if (Date.valueOf(txtFDesdeR.getText().trim()).after(Date.valueOf(txtFHastaR.getText().trim()))) {
+                    Mensajes.error("Error en los parametros fijados.\nFavor verifique las fechas Desde y Hasta.");
+                } else {
+                    jasper.reporteTresParametroHorizontal("\\Reports\\ventas\\VTporLaboratorio.jasper", "codLab", codLab, "desde", Date.valueOf(txtFDesdeR.getText().trim()), "hasta", Date.valueOf(txtFHastaR.getText().trim()));
+                }
+            }
+
+        }
+    }//GEN-LAST:event_btnGenerarActionPerformed
+
+    private void btnGenerarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGenerarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnGenerarKeyPressed
+
+    private void PnlNuevo2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PnlNuevo2KeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_PnlNuevo2KeyPressed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
+        if (rpta == 0) {
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSalirKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnSalirKeyPressed
+
+    private void jPanel4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel4KeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_jPanel4KeyPressed
+
+    private void cboLaboratorioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cboLaboratorioKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_cboLaboratorioKeyPressed
+
+    private void rbLaboratorioAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbLaboratorioAKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_rbLaboratorioAKeyPressed
+
+    private void rbLaboratorioFKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rbLaboratorioFKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_rbLaboratorioFKeyPressed
+
+    private void txtFDesdeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFDesdeKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtFDesdeKeyPressed
+
+    private void txtFHastaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFHastaKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtFHastaKeyPressed
 
     /**
      * @param args the command line arguments
@@ -461,21 +482,20 @@ public class dlgReporteLaboratorioFecha extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup GrupoReporte;
-    private javax.swing.JButton btnGenerar;
-    private javax.swing.JButton btnSalir;
+    private javax.swing.JLabel LabelTitulo9;
+    private rojeru_san.rspanel.RSPanelImage PnlNuevo2;
+    private javax.swing.JSeparator Separador9;
+    public static RSMaterialComponent.RSButtonIconUno btnGenerar;
+    public static RSMaterialComponent.RSButtonIconUno btnSalir;
     private javax.swing.JComboBox<String> cboLaboratorio;
     public static datechooser.beans.DateChooserCombo dcFDesde;
     public static datechooser.beans.DateChooserCombo dcFHasta;
-    private javax.swing.JMenuItem itemNuevoGenerar;
-    private javax.swing.JMenuItem itemSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lbFechaActual;
     private javax.swing.JLabel lbFechaActualR;
     private javax.swing.JRadioButton rbLaboratorioA;

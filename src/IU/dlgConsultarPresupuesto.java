@@ -469,7 +469,7 @@ public class dlgConsultarPresupuesto extends javax.swing.JDialog {
             gr = new ReporteF();
             int codF = Integer.parseInt(txtCodPresupuesto.getText());
            // gr.MostrarReporteConParametro(System.getProperty("user.dir")+"/Reportes/Presupuesto/Presupuesto.jasper", "Presupuesto de Venta", codF,"Presupuestos/Pres-"+codF+".pdf");
-            gr.cerrar();
+            //gr.cerrar();
     }
     
     /**

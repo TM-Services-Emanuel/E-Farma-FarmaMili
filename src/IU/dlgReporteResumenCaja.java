@@ -1,22 +1,32 @@
 package IU;
 
+import Componentes.DataSourceService;
 import Componentes.Fecha;
 import Componentes.Mensajes;
 import Componentes.ReporteF;
 import Componentes.cargarComboBox;
+import java.awt.BorderLayout;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.swing.JRViewer;
 
 public class dlgReporteResumenCaja extends javax.swing.JDialog {
 
-    public ReporteF jasper;
+    static DataSourceService dss = new DataSourceService();
 
     public dlgReporteResumenCaja(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         initComponents();
-        jasper = new ReporteF();
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Iconos/logo1.png")));
         invisible();
         rbCajaF.doClick();
@@ -27,33 +37,160 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
         txtFDesdeR.setVisible(false);
     }
 
+    private void AccesoRapido(int n) {
+
+        switch (n) {
+            case KeyEvent.VK_F6 ->
+                btnGenerar.doClick();
+            case KeyEvent.VK_F12 ->
+                btnSalir.doClick();
+            default -> {
+            }
+        }
+    }
+
+    public void llamarReporteHistorial(int cod) throws SQLException {
+        VisorReportes vr = new VisorReportes(null, true);
+        try (Connection cn = dss.getDataSource().getConnection()) {
+            String jasperUrl = System.getProperty("user.dir").concat("\\Reports\\caja\\ResumenCaja.jasper");
+            JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(jasperUrl);
+            //para los parametro
+            Map parametros = new HashMap();
+            parametros.clear();
+            //Nuestro parametro se llama "pLastName"
+            parametros.put("caja", cod);
+            //agregamos los parametros y la conexion a la base de datos
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, parametros, cn);
+            //se crea el visor con el reporte
+            JRViewer jRViewer = new JRViewer(jasperPrint);
+            //se elimina elementos del contenedor JPanel
+            VisorReportes.jpContainer.removeAll();
+            //para el tamaño del reporte se agrega un BorderLayout
+            VisorReportes.jpContainer.setLayout(new BorderLayout());
+            VisorReportes.jpContainer.add(jRViewer, BorderLayout.CENTER);
+            jRViewer.setZoomRatio((float) 1);
+            jRViewer.setVisible(true);
+            VisorReportes.jpContainer.repaint();
+            VisorReportes.jpContainer.revalidate();
+            cn.close();
+        } catch (JRException ex) {
+            System.err.println(ex.getMessage());
+        }
+        vr.setLocationRelativeTo(this);
+        vr.setVisible(true);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         GrupoReporte = new javax.swing.ButtonGroup();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        PnlNuevo2 = new rojeru_san.rspanel.RSPanelImage();
+        btnGenerar = new RSMaterialComponent.RSButtonIconUno();
+        Separador9 = new javax.swing.JSeparator();
+        LabelTitulo9 = new javax.swing.JLabel();
+        txtFDesdeR = new javax.swing.JTextField();
+        btnSalir = new RSMaterialComponent.RSButtonIconUno();
         jPanel1 = new javax.swing.JPanel();
         rbCajaF = new javax.swing.JRadioButton();
         dcFDesde = new datechooser.beans.DateChooserCombo();
         txtFDesde = new javax.swing.JTextField();
         cboCajaN = new javax.swing.JComboBox<>();
-        jPanel2 = new javax.swing.JPanel();
-        btnGenerar = new javax.swing.JButton();
-        btnSalir = new javax.swing.JButton();
-        txtFDesdeR = new javax.swing.JTextField();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        itemNuevoGenerar = new javax.swing.JMenuItem();
-        jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        itemSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Generador de Reportes");
+        setUndecorated(true);
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
+        jPanel3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel3KeyPressed(evt);
+            }
+        });
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setBackground(new java.awt.Color(17, 35, 46));
+        jPanel4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel4KeyPressed(evt);
+            }
+        });
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        PnlNuevo2.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        PnlNuevo2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PnlNuevo2KeyPressed(evt);
+            }
+        });
+        PnlNuevo2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnGenerar.setBackground(new java.awt.Color(0, 102, 0));
+        btnGenerar.setToolTipText("GENERAR DOCUMENTO");
+        btnGenerar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnGenerar.setForegroundHover(new java.awt.Color(0, 102, 0));
+        btnGenerar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DASHBOARD);
+        btnGenerar.setRippleColor(java.awt.Color.white);
+        btnGenerar.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarActionPerformed(evt);
+            }
+        });
+        btnGenerar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnGenerarKeyPressed(evt);
+            }
+        });
+        PnlNuevo2.add(btnGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 13, 45, 45));
+
+        Separador9.setForeground(new java.awt.Color(204, 204, 204));
+        PnlNuevo2.add(Separador9, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 66, 76, 3));
+
+        LabelTitulo9.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        LabelTitulo9.setForeground(new java.awt.Color(17, 35, 46));
+        LabelTitulo9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        LabelTitulo9.setText("GENERAR");
+        PnlNuevo2.add(LabelTitulo9, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 71, 76, -1));
+
+        jPanel4.add(PnlNuevo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 100));
+
+        txtFDesdeR.setEditable(false);
+        txtFDesdeR.setBackground(new java.awt.Color(255, 255, 204));
+        txtFDesdeR.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
+        txtFDesdeR.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPanel4.add(txtFDesdeR, new org.netbeans.lib.awtextra.AbsoluteConstraints(181, 59, 143, -1));
+
+        btnSalir.setBackground(new java.awt.Color(17, 35, 46));
+        btnSalir.setToolTipText("F12");
+        btnSalir.setBackgroundHover(new java.awt.Color(205, 0, 0));
+        btnSalir.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.CLOSE);
+        btnSalir.setRippleColor(java.awt.Color.white);
+        btnSalir.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        btnSalir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnSalirKeyPressed(evt);
+            }
+        });
+        jPanel4.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(418, 2, 20, 20));
+
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 100));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         GrupoReporte.add(rbCajaF);
+        rbCajaF.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         rbCajaF.setSelected(true);
         rbCajaF.setText("Resumen de caja de la fecha:");
         rbCajaF.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +198,7 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
                 rbCajaFActionPerformed(evt);
             }
         });
+        jPanel1.add(rbCajaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 10, -1, 23));
 
         dcFDesde.setEnabled(false);
         dcFDesde.addCommitListener(new datechooser.events.CommitListener() {
@@ -68,188 +206,53 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
                 dcFDesdeOnCommit(evt);
             }
         });
+        jPanel1.add(dcFDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(279, 10, 27, 23));
 
         txtFDesde.setEditable(false);
-        txtFDesde.setBackground(new java.awt.Color(255, 255, 204));
-        txtFDesde.setFont(new java.awt.Font("Microsoft Sans Serif", 1, 11)); // NOI18N
+        txtFDesde.setBackground(new java.awt.Color(255, 255, 255));
+        txtFDesde.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         txtFDesde.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtFDesde.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtFDesde.setEnabled(false);
         txtFDesde.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFDesdeActionPerformed(evt);
             }
         });
+        txtFDesde.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtFDesdeKeyPressed(evt);
+            }
+        });
+        jPanel1.add(txtFDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 100, 23));
 
-        cboCajaN.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        cboCajaN.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        cboCajaN.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         cboCajaN.setEnabled(false);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(rbCajaF)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtFDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dcFDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cboCajaN, 0, 79, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(cboCajaN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(dcFDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(rbCajaF)
-                        .addComponent(txtFDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.setLayout(new java.awt.GridLayout(1, 6));
-
-        btnGenerar.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnGenerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reporte x 40.png"))); // NOI18N
-        btnGenerar.setText("Generar Reporte - F6");
-        btnGenerar.setToolTipText("Registrar Nuevo Artículo");
-        btnGenerar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnGenerar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGenerarActionPerformed(evt);
+        cboCajaN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                cboCajaNKeyPressed(evt);
             }
         });
-        jPanel2.add(btnGenerar);
+        jPanel1.add(cboCajaN, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 101, 23));
 
-        btnSalir.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 9)); // NOI18N
-        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back40.png"))); // NOI18N
-        btnSalir.setText("Salir-Alt+F4");
-        btnSalir.setToolTipText("Salir");
-        btnSalir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnSalir.setPreferredSize(new java.awt.Dimension(53, 47));
-        btnSalir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnSalir);
-
-        txtFDesdeR.setEditable(false);
-        txtFDesdeR.setBackground(new java.awt.Color(255, 255, 204));
-        txtFDesdeR.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 11)); // NOI18N
-        txtFDesdeR.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-
-        jMenu1.setText("Opciones");
-        jMenu1.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
-        jMenu1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-
-        itemNuevoGenerar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
-        itemNuevoGenerar.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemNuevoGenerar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/reports.png"))); // NOI18N
-        itemNuevoGenerar.setText("Generar Reporte          ");
-        itemNuevoGenerar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemNuevoGenerarActionPerformed(evt);
-            }
-        });
-        jMenu1.add(itemNuevoGenerar);
-        jMenu1.add(jSeparator3);
-
-        itemSalir.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
-        itemSalir.setFont(new java.awt.Font("Calibri", 0, 11)); // NOI18N
-        itemSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/back15.png"))); // NOI18N
-        itemSalir.setText("Salir");
-        itemSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemSalirActionPerformed(evt);
-            }
-        });
-        jMenu1.add(itemSalir);
-
-        jMenuBar1.add(jMenu1);
-
-        setJMenuBar(jMenuBar1);
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 420, 44));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtFDesdeR)
-                        .addGap(77, 77, 77))))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtFDesdeR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void itemNuevoGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemNuevoGenerarActionPerformed
-        // TODO add your handling code here:
-        btnGenerar.doClick();
-    }//GEN-LAST:event_itemNuevoGenerarActionPerformed
-
-    private void itemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemSalirActionPerformed
-        // TODO add your handling code here:
-        btnSalirActionPerformed(null);
-    }//GEN-LAST:event_itemSalirActionPerformed
-
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
-        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
-        if (rpta == 0) {
-            this.dispose();
-        }
-    }//GEN-LAST:event_btnSalirActionPerformed
-
-    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        // TODO add your handling code here:
-        try {
-            if (rbCajaF.isSelected()) {
-                if (txtFDesde.getText().trim().isEmpty()) {
-                    Mensajes.informacion("Fije una fecha para el reporte");
-                } else if (cboCajaN.getSelectedItem().toString().equals("SELEC.")) {
-                    Mensajes.informacion("Indique el N° de caja para generar el reporte");
-                } else {
-                    System.out.println(cboCajaN.getSelectedItem().toString());
-                    jasper.reporteUnParametroVertical("\\Reports\\caja\\ResumenCaja.jasper", "caja", Integer.valueOf(cboCajaN.getSelectedItem().toString()));
-                    jasper.cerrar();
-                }
-            }
-        } catch (NumberFormatException e) {
-            Mensajes.error("Ocurrio un error generando el reporte");
-
-        }
-
-    }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void rbCajaFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCajaFActionPerformed
         // TODO add your handling code here:
@@ -272,6 +275,68 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_txtFDesdeActionPerformed
+
+    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (rbCajaF.isSelected()) {
+                if (txtFDesde.getText().trim().isEmpty()) {
+                    Mensajes.informacion("Fije una fecha para el reporte");
+                } else if (cboCajaN.getSelectedItem().toString().equals("SELEC.")) {
+                    Mensajes.informacion("Indique el N° de caja para generar el reporte");
+                } else {
+                    System.out.println(cboCajaN.getSelectedItem().toString());
+                    llamarReporteHistorial(Integer.parseInt(cboCajaN.getSelectedItem().toString()));
+                }
+            }
+        } catch (NumberFormatException | SQLException e) {
+            Mensajes.error("Ocurrio un error generando el reporte");
+
+        }
+    }//GEN-LAST:event_btnGenerarActionPerformed
+
+    private void btnGenerarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnGenerarKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnGenerarKeyPressed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        int rpta = Mensajes.confirmar("¿Seguro que desea salir del formulario?");
+        if (rpta == 0) {
+            this.dispose();
+        }
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnSalirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSalirKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_btnSalirKeyPressed
+
+    private void txtFDesdeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFDesdeKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtFDesdeKeyPressed
+
+    private void cboCajaNKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cboCajaNKeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_cboCajaNKeyPressed
+
+    private void jPanel3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel3KeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_jPanel3KeyPressed
+
+    private void PnlNuevo2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PnlNuevo2KeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_PnlNuevo2KeyPressed
+
+    private void jPanel4KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel4KeyPressed
+        // TODO add your handling code here:
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_jPanel4KeyPressed
 
     /**
      * @param args the command line arguments
@@ -334,17 +399,16 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup GrupoReporte;
-    private javax.swing.JButton btnGenerar;
-    private javax.swing.JButton btnSalir;
+    private javax.swing.JLabel LabelTitulo9;
+    private rojeru_san.rspanel.RSPanelImage PnlNuevo2;
+    private javax.swing.JSeparator Separador9;
+    public static RSMaterialComponent.RSButtonIconUno btnGenerar;
+    public static RSMaterialComponent.RSButtonIconUno btnSalir;
     private javax.swing.JComboBox<String> cboCajaN;
     public static datechooser.beans.DateChooserCombo dcFDesde;
-    private javax.swing.JMenuItem itemNuevoGenerar;
-    private javax.swing.JMenuItem itemSalir;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton rbCajaF;
     public static javax.swing.JTextField txtFDesde;
     public static javax.swing.JTextField txtFDesdeR;

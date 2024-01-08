@@ -167,7 +167,10 @@ public class GestionarFactura {
         sql.append("factura_l.estado,");
         sql.append("factura_l.fac_totalfinal,");
         sql.append("vendedor.ven_codigo,");
-        sql.append("factura_l.fac_indicador");
+        sql.append("factura_l.fac_indicador,");
+        sql.append("factura_l.fac_exenta,");
+        sql.append("factura_l.fac_iva5,");
+        sql.append("factura_l.fac_iva10");
         sql.append(" FROM factura_l ");
         sql.append(" JOIN vendedor ON factura_l.vendedor_ven_codigo = vendedor.ven_codigo");
         sql.append(" JOIN clientes ON factura_l.clientes_cli_codigo = clientes.cli_codigo");
@@ -437,7 +440,11 @@ public class GestionarFactura {
         sql.append("articulo.art_codbarra,");
         sql.append("articulo.art_descripcion,");
         sql.append("detalle_factura_l.ven_precio,");
-        sql.append("detalle_factura_l.ven_total");
+        sql.append("detalle_factura_l.ven_total,");
+        sql.append("articulo.art_iva,");
+        sql.append("detalle_factura_l.exenta,");
+        sql.append("detalle_factura_l.5,");
+        sql.append("detalle_factura_l.10");
         sql.append(" FROM detalle_factura_l");
         sql.append(" JOIN articulo ON detalle_factura_l.articulo_art_codigo = articulo.art_codigo");
         sql.append(" JOIN factura_l ON detalle_factura_l.factura_l_fac_codigo = factura_l.fac_codigo");

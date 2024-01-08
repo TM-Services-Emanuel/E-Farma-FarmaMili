@@ -24,10 +24,10 @@ public class controlGestStock {
     public static String addDetalleStock()
     {
         String msg;
-        int codArt = Integer.valueOf(dlgCantStock.lblCodA.getText());
-        int codMot = Integer.valueOf(dlgCantStock.txtCodMov.getText());
-        int st_a = Integer.valueOf(dlgCantStock.lblStA.getText());
-        int st_n = Integer.valueOf(dlgCantStock.txtStock.getText());
+        int codArt = Integer.parseInt(dlgCantStock.lblCodA.getText());
+        int codMot = Integer.parseInt(dlgCantStock.txtCodMov.getText());
+        int st_a = Integer.parseInt(dlgCantStock.lblStA.getText());
+        int st_n = Integer.parseInt(dlgCantStock.txtStock.getText());
         String obs;
         if(dlgCantStock.txtObs.getText().isEmpty()){
             obs=" ";

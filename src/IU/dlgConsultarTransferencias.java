@@ -409,7 +409,6 @@ public class dlgConsultarTransferencias extends javax.swing.JDialog {
         ReporteF gr;
         gr = new ReporteF();
         gr.FacturaLegal("\\Reports\\ventas\\facturaLegal.jasper", "cod", cod, "Letra", Letra);
-        gr.cerrar();
     }
     private void tbTransferenciasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTransferenciasMousePressed
         // TODO add your handling code here:

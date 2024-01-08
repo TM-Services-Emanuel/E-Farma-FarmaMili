@@ -2002,13 +2002,20 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        try {
-            dlgAjusteStock ajuste = new dlgAjusteStock(this, true);
-            ajuste.setLocationRelativeTo(null);
-            ajuste.setVisible(true);
-        } catch (Exception e) {
-            Mensajes.informacion("Servidor no esta activo");
+        System.out.println("abrirAjusteStock() min: " + dlgAjusteStock.min);
+        if (dlgAjusteStock.min != 1) {
+            try {
+                dlgAjusteStock ajuste = new dlgAjusteStock(this, true);
+                ajuste.setLocationRelativeTo(null);
+                ajuste.setVisible(true);
+            } catch (Exception e) {
+                Mensajes.informacion("Servidor no esta activo");
+            }
+        } else {
+            Notif.Notify_Minim_dlgAjusteStopck("Notificación del sistema", "Formulario de Ajutes de Stock minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
+
+
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
@@ -2151,14 +2158,14 @@ public final class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem36ActionPerformed
 
     private void jMenuItem42ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem42ActionPerformed
-        try {
+        /*try {
             // TODO add your handling code here:
             ReporteF nr;
             nr = new ReporteF();
             nr.cerrar();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println("Error levantando reporte: " + ex.getMessage());
-        }
+        }*/
     }//GEN-LAST:event_jMenuItem42ActionPerformed
 
     private void mnGPEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnGPEActionPerformed
@@ -2344,7 +2351,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void jMenuItem26ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem26ActionPerformed
         // TODO add your handling code here:
         try {
-            dlgReporteResumenCaja rsc = new dlgReporteResumenCaja(this, false);
+            dlgReporteResumenCaja rsc = new dlgReporteResumenCaja(this, true);
             rsc.setLocationRelativeTo(null);
             rsc.setVisible(true);
         } catch (SQLException e) {
@@ -2432,7 +2439,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private void jMenuItem66ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem66ActionPerformed
         // TODO add your handling code here:
         try {
-            dlgReporteTotalVentas rsc = new dlgReporteTotalVentas(this, false);
+            dlgReporteTotalVentas rsc = new dlgReporteTotalVentas(this, true);
             rsc.setLocationRelativeTo(null);
             rsc.setVisible(true);
         } catch (SQLException e) {
@@ -2813,6 +2820,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         }
         if (PrincipalMinimizado != 1 && dlgClientes.min == 1) {
             Notif.Notify_Minim_dlgClientes("Notificación del sistema", "Formulario de Gestionar Clientes minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+        }
+        
+        if (PrincipalMinimizado != 1 && dlgAjusteStock.min == 1) {
+            Notif.Notify_Minim_dlgAjusteStopck("Notificación del sistema", "Formulario de Ajutes de Stock minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
     }//GEN-LAST:event_formWindowDeiconified
     void abrirTransferencias() {

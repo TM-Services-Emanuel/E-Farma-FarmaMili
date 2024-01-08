@@ -233,7 +233,6 @@ public class dlgReporteStockCritico extends javax.swing.JDialog {
                     st.close();
                     cn.close();
                     jasper.StockCrL("\\Reports\\articulos\\controlstockxlaboratorio.jasper", "codLab", codLab);
-                    jasper.cerrar();
                 } catch (Exception pr) {
                     Mensajes.error("Error al querer obtener ID del laboratorio");
                 }
@@ -252,7 +251,6 @@ public class dlgReporteStockCritico extends javax.swing.JDialog {
                     st.close();
                     cn.close();
                     jasper.StockCrL("\\Reports\\articulos\\controlstockxfamilia.jasper", "codFam", codFam);
-                    jasper.cerrar();
                 } catch (Exception pr) {
                     Mensajes.error("Error al querer obtener ID de la Familia");
                 }

@@ -1,6 +1,7 @@
 package IU;
 
 import Componentes.DataSourceService;
+import Componentes.Empresa;
 import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.ReporteF;
@@ -8,22 +9,27 @@ import Componentes.Mensajes;
 import Componentes.Notif;
 import Componentes.Numero_a_Letra;
 import Componentes.Operacion;
+import Componentes.PrinterService;
 import Componentes.RenderDecimal1;
 import Componentes.RenderDecimalVenta;
 import Componentes.Software;
+import Componentes.Timbrado;
 import Controladores.CabecerasTablas;
 import Controladores.controlFactura;
 import java.awt.HeadlessException;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
+import java.io.UnsupportedEncodingException;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
+
     public ReporteF jasper;
-    Numero_a_Letra L;
+    public static Numero_a_Letra L;
     static DataSourceService dss = new DataSourceService();
     private static Point point;
 
@@ -37,9 +43,12 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
         btnActualizarActionPerformed(null);
         txtFechaF.setVisible(false);
         L = new Numero_a_Letra();
-
+        txtTotal.setVisible(false);
+        txtExenta.setVisible(false);
+        txt5.setVisible(false);
+        txt10.setVisible(false);
     }
-    
+
     private void AccesoRapido(int n) {
 
         switch (n) {
@@ -81,6 +90,10 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
         txtCondicion.setText("");
         txtPago.setText("");
         txtEstado.setText("");
+        txtTotal.setText("");
+        txtExenta.setText("");
+        txt5.setText("");
+        txt10.setText("");
     }
 
     @SuppressWarnings("unchecked")
@@ -105,6 +118,10 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
         btnAnular = new RSMaterialComponent.RSButtonIconUno();
         Separador8 = new javax.swing.JSeparator();
         LabelTitulo8 = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JTextField();
+        txt10 = new javax.swing.JTextField();
+        txtExenta = new javax.swing.JTextField();
+        txt5 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         dcFecha = new datechooser.beans.DateChooserCombo();
         jLabel1 = new javax.swing.JLabel();
@@ -155,7 +172,7 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
         txtCodCliente.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         txtCodCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCodCliente.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        panelOscuro.add(txtCodCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 13, 39, -1));
+        panelOscuro.add(txtCodCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 39, -1));
 
         btnSalir.setBackground(new java.awt.Color(17, 35, 46));
         btnSalir.setToolTipText("F12");
@@ -174,7 +191,7 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
             }
         });
         panelOscuro.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 3, 20, 20));
-        panelOscuro.add(txtFechaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 45, 90, -1));
+        panelOscuro.add(txtFechaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 90, -1));
 
         jPanel4.setOpaque(false);
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -278,6 +295,16 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
         jPanel4.add(PnlEliminarG, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 3, 100, 100));
 
         panelOscuro.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        panelOscuro.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 70, 110, -1));
+        panelOscuro.add(txt10, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, 130, -1));
+
+        txtExenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtExentaActionPerformed(evt);
+            }
+        });
+        panelOscuro.add(txtExenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 100, -1));
+        panelOscuro.add(txt5, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 20, 130, -1));
 
         Blanco.add(panelOscuro, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 883, 102));
 
@@ -506,8 +533,7 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
     public void llamarReporteFactura(int cod, String Letra) throws SQLException {
         ReporteF gr;
         gr = new ReporteF();
-        gr.FacturaLegal("\\Reports\\ventas\\facturaLegal.jasper", "cod", cod,"Letra",Letra);
-        gr.cerrar();
+        gr.FacturaLegal("\\Reports\\ventas\\facturaLegal.jasper", "cod", cod, "Letra", Letra);
     }
     private void tbFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbFacturaMouseClicked
         // TODO add your handling code here:
@@ -568,26 +594,30 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
                     try {
                         String cod = dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 0).toString();
                         String condicion = dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 7).toString();
-                        String total = dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 9).toString();    
-                        String Letra= L.Convertir(total, true);
-                        llamarReporteFactura(Integer.parseInt(cod), Letra);
-                        //jasper.FacturaLegal("\\Reports\\ventas\\facturaLegal.jasper", "cod", Integer.parseInt(cod),"Letra",Letra);
+                        String Letra = L.Convertir(txtTotal.getText().replace(".", "").replace(",", ""), true);
+                        //llamarReporteFactura(Integer.parseInt(cod), Letra);
+                        String nroF = dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 6).toString();
+                        String F = dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 2).toString();
+                        String H = dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 3).toString();
+                        int C = Integer.parseInt(dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 13).toString());
+                        int D = Integer.parseInt(dlgConsultarFacturasLegal.tbFactura.getValueAt(x, 14).toString());
+                        imprimirFacturaOriginal(nroF, F, H, C, D, Integer.parseInt(txtExenta.getText()), Integer.parseInt(txt5.getText()), Integer.parseInt(txt10.getText()));
                         try {
-                                StringBuilder sql = new StringBuilder("INSERT INTO reimpresiones (re_fac_codigo, re_descripcion, re_tipo, fecha, usu) VALUES (");
-                                sql.append(cod).append(", ");
-                                sql.append("'RE-IMPRESION DE FACTURA LEGAL','");
-                                sql.append(condicion).append("',");
-                                sql.append("now(),'");
-                                sql.append(Login.getUsuarioLogueado()).append("')");
-                                String msg = Operacion.exeOperacion(sql.toString());
-                                if (msg == null) {
-                                    System.out.println("la re-impresion ha sido registrada");
-                                } else {
-                                    System.out.println("Error en registrar la re-impresion: " + msg);
-                                }
-                            } catch (Exception e) {
-                                Mensajes.error("Hubo un error en el registro de la re-impresión");
+                            StringBuilder sql = new StringBuilder("INSERT INTO reimpresiones (re_fac_codigo, re_descripcion, re_tipo, fecha, usu) VALUES (");
+                            sql.append(cod).append(", ");
+                            sql.append("'RE-IMPRESION DE FACTURA LEGAL','");
+                            sql.append(condicion).append("',");
+                            sql.append("now(),'");
+                            sql.append(Login.getUsuarioLogueado()).append("')");
+                            String msg = Operacion.exeOperacion(sql.toString());
+                            if (msg == null) {
+                                System.out.println("la re-impresion ha sido registrada");
+                            } else {
+                                System.out.println("Error en registrar la re-impresion: " + msg);
                             }
+                        } catch (Exception e) {
+                            Mensajes.error("Hubo un error en el registro de la re-impresión");
+                        }
                     } catch (Exception e) {
                         Mensajes.informacion(e.getMessage());
                     }
@@ -621,18 +651,18 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
             if (estado.equals("ANULADO")) {
                 Notif.NotifyFail("Notificación del sistema", "No es posible procesar la operación.\r\nEsta Venta ya fue anulada");
             } else {
-                    String msg;
-                    int rpta = Mensajes.confirmar("¿Seguro que desea Anular esta Venta?");
-                    if (rpta == 0) {
-                        try {
-                            msg = controlFactura.anularFacturaL();
-                            if (msg == null) {
-                                btnActualizarActionPerformed(null);
-                            }
-
-                        } catch (Exception e) {
+                String msg;
+                int rpta = Mensajes.confirmar("¿Seguro que desea Anular esta Venta?");
+                if (rpta == 0) {
+                    try {
+                        msg = controlFactura.anularFacturaL();
+                        if (msg == null) {
+                            btnActualizarActionPerformed(null);
                         }
+
+                    } catch (Exception e) {
                     }
+                }
             }
         }
     }//GEN-LAST:event_btnAnularActionPerformed
@@ -741,6 +771,10 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
         this.setLocation(x, y);
     }//GEN-LAST:event_panelOscuroMouseDragged
 
+    private void txtExentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtExentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtExentaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -775,7 +809,7 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
             try {
                 dlgConsultarFacturasLegal dialog = new dlgConsultarFacturasLegal(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    
+
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -833,13 +867,184 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
             return false;
         }
     };
+    public static javax.swing.JTextField txt10;
+    public static javax.swing.JTextField txt5;
     public static javax.swing.JTextField txtCodCliente;
     public static javax.swing.JTextField txtCondicion;
     public static javax.swing.JTextField txtEstado;
+    public static javax.swing.JTextField txtExenta;
     private javax.swing.JTextField txtFechaF;
     public static javax.swing.JTextField txtPago;
     public static javax.swing.JTextField txtRazonSocial;
     public static javax.swing.JTextField txtRuc;
+    public static javax.swing.JTextField txtTotal;
     public static javax.swing.JTextField txtVendedor;
     // End of variables declaration//GEN-END:variables
+ public static void imprimirFacturaOriginal(String nFactura, String fecha, String hora, int cinco, int diez , int exenta, int iva5, int iva10) {
+        //Impresora matricial tmu-220
+        PrinterService printerService = new PrinterService();
+        //final byte[] openCD = {27, 112, 0, 60, 120};
+        final byte[] ESC_ALIGN_LEFT = new byte[]{0x1b, 'a', 0x00};
+        final byte[] ESC_ALIGN_CENTER = new byte[]{0x1b, 'a', 0x01};
+        final byte[] cutP = new byte[]{0x1d, 'V', 1};
+        try {
+            int filas = tbDetalleFactura.getRowCount();
+            DecimalFormat formateador = new DecimalFormat("#,###");
+            String msg0 = Empresa.getEmpresa() + "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg0, 1, 1, 1, 1));
+            String msg00 = "----------------------------------------\n";
+            msg00 += "Ventas al por menor de productos farmacéuticos y medicinales, cosméticos y Art. de Tocador\n";
+            msg00 += "----------------------------------------\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg00, 1, 1, 0, 0));
+            //String msg = "\n";
+            String msg = "RUC: " + Empresa.getRUC() + "\n";
+            msg += "CEL: " + Empresa.getCelular() + "\n";
+            msg += Empresa.getDireccion() + "\n";
+            msg += "CAACUPE - DPTO. DE CORDILLERA - PY\n";
+            //msg += "CNEL. OVIEDO - DPTO. DE CAAGUAZU - PY\n";
+            //msg += "PARAGUAY\n";
+            msg += "-----\n";
+            msg += "TIMBRADO: " + Timbrado.getTimbrado() + "\n";
+            msg += "VALIDO DESDE: " + Timbrado.getDesde() + "\n";
+            msg += "VALIDO HASTA: " + Timbrado.getHasta() + "\n";
+            msg += "I.V.A. INCLUIDO\n";
+            msg += "----------------------------------------\n";
+            //int flat = 
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            //if (flat == 1) {
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg1 = "FACTURA "+txtCondicion.getText().trim()+" NRO: " + nFactura+ "\n";
+            //msg1 += "CONDICION: " + txtCondicion.getText().trim() + "\n";
+            msg1 += "FECHA/HORA: " + fecha + " " + hora + "\n";
+            msg1 += "VENDEDOR: " + txtVendedor.getText().trim() + "\n";
+            msg1 += "\n";
+            msg1 += "CLIENTE: " + txtRazonSocial.getText().trim() + "\n";
+            msg1 += "RUC/CI: " + txtRuc.getText().trim() + "\n";
+            msg1 += "----------------------------------------\n";
+            msg1 += "IVA    CANT.     P.UNIT       SUB-TOTAL\n";
+            msg1 += "----------------------------------------\n";
+            for (int i = 0; i < filas; i++) {
+                String codbarra = tbDetalleFactura.getValueAt(i, 2).toString().trim();
+                String Descripcion = tbDetalleFactura.getValueAt(i, 3).toString().trim();
+                String Cant = tbDetalleFactura.getValueAt(i, 0).toString();
+                String Punit = tbDetalleFactura.getValueAt(i, 4).toString().trim();
+                String Mont = tbDetalleFactura.getValueAt(i, 5).toString().trim();
+                String iva = tbDetalleFactura.getValueAt(i, 6).toString().trim();
+                msg1 += String.format("%1$1s", "COD-BARRA: " + codbarra + "\n");
+                msg1 += String.format("%1$1s", Descripcion + "\n");
+                msg1 += String.format("%1$-7s %2$-8s %3$-12s %4$-1s", iva + "%", Cant,
+                        formateador.format(Integer.parseInt(Punit.replace(".", "").replace(",", ""))),
+                        formateador.format(Integer.parseInt(Mont.replace(".", "").replace(",", "")))) + "\n";
+            }
+            //msg1 += "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_LEFT);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg1, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg2 = "========================================\n";
+            String tot = formateador.format(Integer.parseInt(txtTotal.getText().replace(".", "").replace(",", "")));
+            msg2 += "TOTAL A PAGAR Gs: " + tot + "\n";
+            msg2 += "========================================\n";
+            String letras = L.Convertir(tot.replace(".", "").replace(",", ""), true);
+            msg2 += String.format("%1$1s", letras + "\n");
+            //Ticket += "\n";
+            msg2 += "========================================\n";
+            //msg2 += "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg2, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg3 = "---- TOTALES GRAVADA ----\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg3, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg4 = "EXENTAS     ----> " + exenta + "\n";
+            msg4 += "GRAVADA 5%  ----> " + formateador.format(iva5) + "\n";
+            msg4 += "GRAVADA 10% ----> " + formateador.format(iva10) + "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_LEFT);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg4, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg5 = "---- LIQUIDACION DEL I.V.A. ----\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg5, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg6 = "I.V.A. 5%   ----> " + formateador.format(cinco) + "\n";
+            msg6 += "I.V.A. 10%  ----> " + formateador.format(diez) + "\n";
+            msg6 += "----------------------------------------\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_LEFT);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg6, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            int totaliva = (cinco + diez);
+            //String msg7 = String.format("%1$5s %2$23s", "TOTAL I.V.A.", formateador.format((totaliva))) + "\n";
+            String msg7 = "TOTAL I.V.A. " + formateador.format((totaliva)) + "\n";
+            msg7 += "----------------------------------------\n";
+            msg7 += "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg7, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg8 = "EFECTIVO: 0\n";
+            msg8 += "VUELTO:   0\n";
+            msg8 += "\n";
+            msg8 += "ORIGINAL:  CLIENTE\n";
+            msg8 += "DUPLICADO: ARCHIVO TRIBUTARIO\n";
+            msg8 += "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_LEFT);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg8, 0, 1, 0, 0));
+            //*******************************************************************************************************************************
+            String msg9 = Empresa.getEmpresa() + "\n";
+            msg9 += "AGRADECE SU PREFERENCIA\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            msg9 += "\n";
+            printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
+            printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg9, 0, 1, 0, 0));
+            //printerService.printBytes2(Timbrado.getImpresora(), "\r\n\n\n".getBytes());
+            printerService.printBytes2(Timbrado.getImpresora(), cutP);
+            //}
+
+        } catch (Exception e) {
+            Mensajes.error("No se encuentra instalada la impresora predeterminada para este punto de impresión");
+        }
+    }
+
+    public static byte[] getByteString(String str, int bold, int font, int widthsize, int heigthsize) {
+
+        if (str.length() == 0 | widthsize < 0 | widthsize > 3 | heigthsize < 0 | heigthsize > 3
+                | font < 0 | font > 1) {
+            return null;
+        }
+
+        byte[] strData;
+        try {
+            //strData = str.getBytes("iso-8859-1");
+            strData = str.getBytes("CP437");
+            //strData = str.getBytes("US-ASCII");
+            //strData = str.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
+
+        byte[] command = new byte[strData.length + 9];
+
+        byte[] intToWidth = {0x00, 0x10, 0x20, 0x30};//
+        byte[] intToHeight = {0x00, 0x01, 0x02, 0x03};//
+
+        command[0] = 27;// caracter ESC para darle comandos a la impresora
+        command[1] = 69;
+        command[2] = ((byte) bold);
+        command[3] = 27;
+        command[4] = 77;
+        command[5] = ((byte) font);
+        command[6] = 29;
+        command[7] = 33;
+        command[8] = (byte) (intToWidth[widthsize] + intToHeight[heigthsize]);
+
+        System.arraycopy(strData, 0, command, 9, strData.length);
+        return command;
+    }
 }

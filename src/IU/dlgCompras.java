@@ -1065,6 +1065,7 @@ public final class dlgCompras extends javax.swing.JDialog {
         // TODO add your handling code here:
         try {
             controlCompra.delRenglon(tbDetalle);
+            cant();
         } catch (Exception e) {
             Mensajes.error("Seleccione una fila de la tabla");
         }

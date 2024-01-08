@@ -377,7 +377,6 @@ public class dlgConsNotaCredito extends javax.swing.JDialog {
         gr = new ReporteF();
         int codF = Integer.parseInt(txtCodNotaCred.getText());
         //gr.MostrarReporteConParametro(System.getProperty("user.dir")+"/Reportes/NotasCredito/notacredito.jasper", "Notas de Credito", codF,"NCreditos/NCred-"+codF+".pdf");
-        gr.cerrar();
     }
 
     /**
