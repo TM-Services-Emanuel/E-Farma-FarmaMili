@@ -219,8 +219,8 @@ public class GestionarArticulos {
         return Operacion.getTabla(sql);
     }
     public static List filtrarCodBarraActivo(String cad) {
-                String sql = new StringBuffer("SELECT cod, barra, fam, lab, prov, descripcion, principio, accion, stock, stockmin, costo, iva, costoiva,")
-                .append(" ppublico, des, pventa,ganstandar, gan, venta, activo FROM v_articulo_activo")
+                String sql = new StringBuffer("SELECT cod, barra, fam, lab, prov, descripcion, principio, accion, stock, stockmin, ppublico, des, costo, iva, costoiva,")
+                .append(" pventa,ganstandar, gan, venta, activo FROM v_articulo_activo")
                 //.append(" WHERE activo='SI' AND ind= 'S'")
                 .append(" WHERE barra LIKE '%")
                 .append(cad)
@@ -234,8 +234,8 @@ public class GestionarArticulos {
     }
     
     public static List filtrarGral(String cad) {
-                String sql = new StringBuffer("SELECT cod, barra, fam, lab, prov, descripcion, principio, accion, stock, stockmin, costo, iva, costoiva,")
-                .append(" ppublico, des, pventa,ganstandar, gan, venta, activo FROM v_articulo")
+                String sql = new StringBuffer("SELECT cod, barra, fam, lab, prov, descripcion, principio, accion, stock, stockmin, ppublico, des, costo, iva, costoiva,")
+                .append(" pventa,ganstandar, gan, venta, activo FROM v_articulo")
                 .append(" WHERE barra LIKE '%")
                 .append(cad)
                 .append("%' OR principio LIKE '%")

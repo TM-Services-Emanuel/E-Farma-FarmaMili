@@ -29,7 +29,6 @@ import javax.swing.table.DefaultTableModel;
 public class controlFactura {
 
     static Cliente cl;
-    //static Articulo art;
     static DetalleFactura dfa;
     static DetalleTransferencia dft;
     static ArregloFactura array = new ArregloFactura();
@@ -426,11 +425,11 @@ public class controlFactura {
             }
             int iva = art.getIva();
             int ppub = art.getPpublico();
-            DetalleFactura dfac = new DetalleFactura(codA);
-            if (array.busca(dfac.getCodArticulo()) != -1) {
+            dfa = new DetalleFactura(codA);
+            if (array.busca(dfa.getCodArticulo()) != -1) {
                 Mensajes.error("Articulo ya fue agregado");
             } else {
-                array.agregar(dfac);
+                array.agregar(dfa);
                 insertar(String.valueOf(codA), codB, desc, String.valueOf(cant), String.valueOf(prec), String.valueOf(mont), iva, String.valueOf(descuento), String.valueOf(porcDesc), String.valueOf(neto), String.valueOf(ppub), tabla);
                 String total = String.valueOf(getTotal());
                 String exentas = String.valueOf(getExcetas());
@@ -510,11 +509,11 @@ public class controlFactura {
             double Ganancia = CalcGananciaT(Double.valueOf(art.getPventa()), Double.valueOf(costo));
             double Descuento = CalcDescuentoT(Double.valueOf(art.getPventa()), Double.valueOf(art.getPpublico()));
             int Orden = tabla.getRowCount() + 1;
-            DetalleTransferencia dftc = new DetalleTransferencia(codA);
-            if (arrayTransf.busca(dftc.getCodArticulo()) != -1) {
+            dft = new DetalleTransferencia(codA);
+            if (arrayTransf.busca(dft.getCodArticulo()) != -1) {
                 Mensajes.error("Articulo ya fue agregado");
             } else {
-                arrayTransf.agregar(dftc);
+                arrayTransf.agregar(dft);
                 insertarTransferencia(String.valueOf(codA), codB, desc, String.valueOf(cant), String.valueOf(costo), String.valueOf(mont), iv, Ganancia, Descuento, Orden, costoiva, tabla);
                 String total = String.valueOf(getTotalTransferencia());
                 String exentas = String.valueOf(getExcetasTransferencia());
@@ -539,7 +538,7 @@ public class controlFactura {
             Mensajes.informacion("Articulo no existe");
         } else {
             dfa = array.getFila(p);
-            int codA = dfa.getCodArticulo();
+            //int codA = dfa.getCodArticulo();
         }
     }
 
@@ -555,8 +554,12 @@ public class controlFactura {
                 DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
                 tb.removeRow(fila);
                 String total = String.valueOf((getTotal()));
+                String descuent = String.valueOf(getDescuento());
+                String net = String.valueOf(getNeto());
                 DecimalFormat df = new DecimalFormat("#,###");
                 dlgVentas.txtTotal.setText(df.format(Integer.valueOf(total.trim().replace(".", "").replace(",", ""))));
+                dlgVentas.txtDescuento.setText(df.format(Integer.valueOf(descuent.trim().replace(".", "").replace(",", ""))));
+                dlgVentas.txtNeto.setText(df.format(Integer.valueOf(net.replace(".", "").replace(",", ""))));
             }
         }
     }
@@ -567,8 +570,6 @@ public class controlFactura {
         int p = arrayTransf.busca(cod);
         if (p == -1) {
             Mensajes.informacion("Articulo no existe");
-        } else {
-            dft = arrayTransf.getFila(p);
         }
     }
 

@@ -9,7 +9,7 @@ public class CabecerasTablas {
     private static final String puntoEmision[] = {"ID", "IDT", "TIMBRADO", "EST.", "P.E.", "DIRECCIÓN", "F.INICIO", "F.FIN", "F.ACTUAL", "TIPO", "DIR. IP", "ESTADO", "IMPRESORA PREDETERMINADA"};
     private static final String timbrado[] = {"ID", "TIMBRADO", "DESDE", "HASTA", "ESTADO"};
     private static final String articulos[] = {"CODIGO", "CODBARRA", "FAMILIA", "LABORATORIO", "PROVEEDOR", "NOMBRE COMERCIAL", "PRINCIPIO ACTIVO", "ACCION TERAPEUTICA",
-        "STOCK", "ST.MIN", "COSTO", "IVA", "COST.IVA", "P.PUBLICO", "% DESC", "P.VENTA", "% FLIA", "% LUCRO", "VENTA", "ACT"};
+        "STOCK", "ST.MIN", "P.PUBLICO", "% DESC", "COSTO", "IVA", "COST.IVA", "P.VENTA", "% FLIA", "% LUCRO", "VENTA", "ACT"};
     private static final String familia[] = {"ID", "FAMILIA", "%", "I.V.A."};
     private static final String laboratorio[] = {"ID", "LABORATORIO"};
     private static final String empresa[] = {"ID", "NOMBRE FANTASÍA", "RAZÓN SOCIAL", "R.U.C.", "DIRECCIÓN", "TELÉFONO", "CELULAR", "ACTIVO"};
@@ -1476,14 +1476,8 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(10);
         colum.setPreferredWidth(70);
-        colum.setMaxWidth(0);
-        colum.setMinWidth(0);
-        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(11);
         colum.setPreferredWidth(70);
-        colum.setMaxWidth(0);
-        colum.setMinWidth(0);
-        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(12);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1491,14 +1485,14 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(13);
         colum.setPreferredWidth(70);
-        /*colum.setMaxWidth(0);
+        colum.setMaxWidth(0);
         colum.setMinWidth(0);
-        colum.setPreferredWidth(0);*/
+        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(14);
         colum.setPreferredWidth(70);
-        //colum.setMaxWidth(0);
-        //colum.setMinWidth(0);
-        //colum.setPreferredWidth(0);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(15);
         colum.setPreferredWidth(70);
         // colum.setMaxWidth(0);
@@ -1580,19 +1574,13 @@ public class CabecerasTablas {
         colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(11);
         colum.setPreferredWidth(70);
-        colum.setMaxWidth(0);
-        colum.setMinWidth(0);
-        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(12);
         colum.setPreferredWidth(70);
+        colum = tabla.getColumnModel().getColumn(13);
+        colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
         colum.setMinWidth(0);
         colum.setPreferredWidth(0);
-        colum = tabla.getColumnModel().getColumn(13);
-        colum.setPreferredWidth(70);
-        /*colum.setMaxWidth(0);
-        colum.setMinWidth(0);
-        colum.setPreferredWidth(0);*/
         colum = tabla.getColumnModel().getColumn(14);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1600,9 +1588,6 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(15);
         colum.setPreferredWidth(70);
-        /*colum.setMaxWidth(0);
-        colum.setMinWidth(0);
-        colum.setPreferredWidth(0);*/
         colum = tabla.getColumnModel().getColumn(16);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1610,11 +1595,8 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(17);
         colum.setPreferredWidth(70);
-        colum.setMaxWidth(0);
-        colum.setMinWidth(0);
-        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(18);
-        colum.setPreferredWidth(20);
+        colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
         colum.setMinWidth(0);
         colum.setPreferredWidth(0);
@@ -1677,6 +1659,9 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(10);
         colum.setPreferredWidth(70);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(11);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1684,9 +1669,6 @@ public class CabecerasTablas {
         colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(12);
         colum.setPreferredWidth(70);
-        colum.setMaxWidth(0);
-        colum.setMinWidth(0);
-        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(13);
         colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
@@ -1943,13 +1925,16 @@ public class CabecerasTablas {
         colum.setPreferredWidth(40);
         colum = tabla.getColumnModel().getColumn(12);
         colum.setPreferredWidth(60);
+        colum = tabla.getColumnModel().getColumn(13);
+        colum.setPreferredWidth(70);
         colum.setMaxWidth(0);
         colum.setMinWidth(0);
         colum.setPreferredWidth(0);
-        colum = tabla.getColumnModel().getColumn(13);
-        colum.setPreferredWidth(70);
         colum = tabla.getColumnModel().getColumn(14);
         colum.setPreferredWidth(60);
+        colum.setMaxWidth(0);
+        colum.setMinWidth(0);
+        colum.setPreferredWidth(0);
         colum = tabla.getColumnModel().getColumn(15);
         colum.setPreferredWidth(60);
         colum = tabla.getColumnModel().getColumn(16);

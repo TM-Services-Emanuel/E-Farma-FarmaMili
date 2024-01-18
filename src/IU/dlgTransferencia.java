@@ -1019,16 +1019,25 @@ public final class dlgTransferencia extends javax.swing.JDialog {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        controlFactura.addTablaTransferencia(txtCodArticulo.getText(), tbDetalle);
-        txtCodArticulo.setText("");
-        txtArt.setText("");
-        txtCant.setText("");
-        txtCosto.setText("");
-        habilitarCANTCOSTO();
-        Rendes();
-        Deshabilitar();
-        cant();
-        btnBuscarArticuloActionPerformed(null);
+        if(tbDetalle.getRowCount() < 20){
+            controlFactura.addTablaTransferencia(txtCodArticulo.getText(), tbDetalle);
+            txtCodArticulo.setText("");
+            txtArt.setText("");
+            txtCant.setText("");
+            txtCosto.setText("");
+            habilitarCANTCOSTO();
+            Rendes();
+            Deshabilitar();
+            cant();
+            btnBuscarArticuloActionPerformed(null);
+        }else{
+            Mensajes.Sistema("Por cuestiones de integridad de los datos a transferir, se ha colocado un tope de 20 items máximos.");
+            txtCodArticulo.setText("");
+            txtArt.setText("");
+            txtCant.setText("");
+            txtCosto.setText("");
+        }
+        
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnRestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestarActionPerformed

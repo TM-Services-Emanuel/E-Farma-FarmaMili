@@ -78,8 +78,8 @@ public class dlgArticulos extends javax.swing.JDialog {
     }
 
     public static void Renders() {
-        dlgArticulos.tbProductos.getColumnModel().getColumn(10).setCellRenderer(new RenderDecimalCosto());
-        dlgArticulos.tbProductos.getColumnModel().getColumn(13).setCellRenderer(new RenderDecimalPublico());
+        dlgArticulos.tbProductos.getColumnModel().getColumn(12).setCellRenderer(new RenderDecimalCosto());
+        dlgArticulos.tbProductos.getColumnModel().getColumn(10).setCellRenderer(new RenderDecimalPublico());
         dlgArticulos.tbProductos.getColumnModel().getColumn(15).setCellRenderer(new RenderDecimalVenta());
         dlgArticulos.tbProductos.getColumnModel().getColumn(14).setCellRenderer(new RenderDecimal1conPuntos());
         dlgArticulos.tbProductos.getColumnModel().getColumn(17).setCellRenderer(new RenderDecimal1conPuntos());

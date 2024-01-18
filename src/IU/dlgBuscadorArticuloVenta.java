@@ -36,7 +36,7 @@ public class dlgBuscadorArticuloVenta extends javax.swing.JDialog {
     
     public static void Renders() {
         dlgBuscadorArticuloVenta.tbDetalle.getColumnModel().getColumn(15).setCellRenderer(new RenderDecimalVenta());
-        dlgBuscadorArticuloVenta.tbDetalle.getColumnModel().getColumn(13).setCellRenderer(new RenderDecimalPublico());
+        dlgBuscadorArticuloVenta.tbDetalle.getColumnModel().getColumn(10).setCellRenderer(new RenderDecimalPublico());
     }
     /**
      * This method is called from within the constructor to initialize the form.

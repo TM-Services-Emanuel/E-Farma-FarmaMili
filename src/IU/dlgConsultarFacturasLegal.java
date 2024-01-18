@@ -148,7 +148,7 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
         setUndecorated(true);
         setResizable(false);
 
-        Blanco.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        Blanco.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(17, 35, 46)));
         Blanco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Recursos/fondoBlanco.jpg"))); // NOI18N
         Blanco.setPreferredSize(new java.awt.Dimension(690, 418));
         Blanco.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
