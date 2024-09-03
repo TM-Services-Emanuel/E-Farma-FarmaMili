@@ -5,6 +5,8 @@
 package IU;
 
 import Componentes.RenderDecimalCosto;
+import Componentes.RenderDecimalPublico;
+import Componentes.RenderDecimalVenta;
 import Componentes.RenderDecimalsinColor;
 import Componentes.Software;
 import Controladores.CabecerasTablas;
@@ -39,7 +41,9 @@ public class dlgBuscadorArticuloTransferencia extends javax.swing.JDialog {
     }
     
     public static void Renders() {
+        dlgBuscadorArticuloTransferencia.tbDetalle.getColumnModel().getColumn(10).setCellRenderer(new RenderDecimalPublico());
         dlgBuscadorArticuloTransferencia.tbDetalle.getColumnModel().getColumn(12).setCellRenderer(new RenderDecimalCosto());
+        dlgBuscadorArticuloTransferencia.tbDetalle.getColumnModel().getColumn(15).setCellRenderer(new RenderDecimalVenta());
         dlgBuscadorArticuloTransferencia.tbDetalle.getColumnModel().getColumn(8).setCellRenderer(new RenderDecimalsinColor());
     }
     /**

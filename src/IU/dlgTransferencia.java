@@ -185,8 +185,8 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         txtIdDestino.setText("");
         lbSucursalOrigen.setText("");
         CabecerasTablas.limpiarTablaTransferencias(tbDetalle);
-        CabecerasTablas.Transferencias(tbDetalle);
-        controlFactura.canCelar();
+        //CabecerasTablas.Transferencias(tbDetalle);
+        controlFactura.canCelarTransf();
     }
 
     public static void habilitarCANTCOSTO() {
@@ -241,6 +241,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
 
         menuEmergente = new javax.swing.JPopupMenu();
         itemCantidad = new javax.swing.JMenuItem();
+        itemPrecio = new javax.swing.JMenuItem();
         GrupoOpciones = new javax.swing.ButtonGroup();
         dlgMinimizado = new javax.swing.JFrame();
         jPanel3 = new javax.swing.JPanel();
@@ -315,6 +316,16 @@ public final class dlgTransferencia extends javax.swing.JDialog {
             }
         });
         menuEmergente.add(itemCantidad);
+
+        itemPrecio.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        itemPrecio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/baseline_edit_black_20.png"))); // NOI18N
+        itemPrecio.setText("Modificar precio de costo");
+        itemPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPrecioActionPerformed(evt);
+            }
+        });
+        menuEmergente.add(itemPrecio);
 
         dlgMinimizado.setUndecorated(true);
 
@@ -1019,7 +1030,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        if(tbDetalle.getRowCount() < 20){
+        if (tbDetalle.getRowCount() < 20) {
             controlFactura.addTablaTransferencia(txtCodArticulo.getText(), tbDetalle);
             txtCodArticulo.setText("");
             txtArt.setText("");
@@ -1030,14 +1041,14 @@ public final class dlgTransferencia extends javax.swing.JDialog {
             Deshabilitar();
             cant();
             btnBuscarArticuloActionPerformed(null);
-        }else{
+        } else {
             Mensajes.Sistema("Por cuestiones de integridad de los datos a transferir, se ha colocado un tope de 20 items máximos.");
             txtCodArticulo.setText("");
             txtArt.setText("");
             txtCant.setText("");
             txtCosto.setText("");
         }
-        
+
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnRestarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestarActionPerformed
@@ -1495,12 +1506,28 @@ public final class dlgTransferencia extends javax.swing.JDialog {
         } else if (btnBuscarArticulo.isEnabled() && cboDestino.getSelectedIndex() == 0 && txtCodArticulo.getText().isEmpty()) {
             cboDestino.setPopupVisible(true);
             cboDestino.requestFocus();
-        }else if(btnBuscarArticulo.isEnabled() && cboDestino.getSelectedIndex() != 0 && txtCodArticulo.getText().isEmpty()){
+        } else if (btnBuscarArticulo.isEnabled() && cboDestino.getSelectedIndex() != 0 && txtCodArticulo.getText().isEmpty()) {
             btnBuscarArticulo.requestFocus();
-        }else if(btnBuscarArticulo.isEnabled() && cboDestino.getSelectedIndex() != 0 && !txtCodArticulo.getText().isEmpty()){
+        } else if (btnBuscarArticulo.isEnabled() && cboDestino.getSelectedIndex() != 0 && !txtCodArticulo.getText().isEmpty()) {
             txtCant.requestFocus();
         }
     }//GEN-LAST:event_formWindowActivated
+
+    private void itemPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPrecioActionPerformed
+        // TODO add your handling code here:
+        if (rEntrada.isSelected()) {
+            if (dlgTransferencia.tbDetalle.getSelectedRowCount() != 0) {
+                try {
+                    controlFactura.actPrecioTransferencia(tbDetalle);
+                } catch (Exception e) {
+                    System.out.println("Error btnModCantidad: " + e.getMessage());
+                }
+            }
+        } else {
+                Mensajes.Sistema("Esta opción esta bloqueada para la modalidad de salida.");
+        }
+
+    }//GEN-LAST:event_itemPrecioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1571,6 +1598,7 @@ public final class dlgTransferencia extends javax.swing.JDialog {
     private javax.swing.JFrame dlgMinimizado;
     public static javax.swing.JLabel etiCant;
     private javax.swing.JMenuItem itemCantidad;
+    private javax.swing.JMenuItem itemPrecio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

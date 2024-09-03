@@ -661,8 +661,8 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
     }
     private void tblFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFacturaMouseClicked
         // TODO add your handling code here:
-        /*try {
-            CabecerasTablas.limpiarTablas(tblDetalle);
+         /*try {
+            CabecerasTablas.limpiarTablaDetalleFactura(tblDetalle);
             controlFactura.listDetalle(tblDetalle);
             controlFactura.ListClientes();
             controlFactura.selecVendedor();
@@ -728,8 +728,8 @@ public class dlgConsultarFacturas extends javax.swing.JDialog {
                         if (condicion.equals("CONTADO")) {
                             obtenerImpresoraPredeterminada(fact, fecha, hora, total, condicion, cod);
                         } else {
-                            obtenerImpresoraPredeterminadaCredito(fact, fecha, hora, total, condicion, cod);
-                            //jasper.BoletaCreditoRE("\\Reports\\ventas\\venta_credito_reimpresion.jasper", "cod", Integer.valueOf(cod));
+                            //obtenerImpresoraPredeterminadaCredito(fact, fecha, hora, total, condicion, cod);
+                            jasper.BoletaCreditoRE("\\Reports\\ventas\\venta_credito_reimpresion.jasper", "cod", Integer.valueOf(cod));
                             
                             try {
                                 StringBuilder sql = new StringBuilder("INSERT INTO reimpresiones (re_fac_codigo, re_descripcion, re_tipo, fecha, usu) VALUES (");

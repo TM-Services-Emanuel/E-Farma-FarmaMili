@@ -11,7 +11,7 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 
 public class dlgConsultarCompras extends javax.swing.JDialog {
-    
+
     private static Point point;
 
     public dlgConsultarCompras(java.awt.Frame parent, boolean modal) {
@@ -20,11 +20,11 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         titulo();
         CabecerasTablas.consCompras(tbCompra);
         CabecerasTablas.consDetalleCompras(tbDetalleCompra);
-        controlCompra.listarCompras(tbCompra);
+        controlCompra.listarCompras(tbCompra, txtBuscar.getText().trim());
         Renders();
-
+        txtBuscar.requestFocus();
     }
-    
+
     private void AccesoRapido(int n) {
 
         switch (n) {
@@ -70,6 +70,7 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
         btnAnular = new RSMaterialComponent.RSButtonIconUno();
         Separador8 = new javax.swing.JSeparator();
         LabelTitulo8 = new javax.swing.JLabel();
+        txtBuscar = new RSMaterialComponent.RSTextFieldMaterialIcon();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -188,6 +189,31 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
 
         panelCabecera.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
+        txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
+        txtBuscar.setColorIcon(new java.awt.Color(255, 102, 0));
+        txtBuscar.setColorMaterial(new java.awt.Color(255, 102, 0));
+        txtBuscar.setFont(new java.awt.Font("Roboto", 1, 13)); // NOI18N
+        txtBuscar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.SEARCH);
+        txtBuscar.setPhColor(new java.awt.Color(102, 102, 102));
+        txtBuscar.setPlaceholder("Barra de busqueda");
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
+        panelCabecera.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(572, 70, 310, 30));
+
         jPanel3.add(panelCabecera, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 1, 883, 102));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
@@ -205,6 +231,7 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbCompra.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tbCompra.setGridColor(new java.awt.Color(204, 204, 204));
         tbCompra.setRowHeight(20);
         tbCompra.setShowGrid(true);
@@ -217,6 +244,11 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 tbCompraMousePressed(evt);
+            }
+        });
+        tbCompra.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                tbCompraPropertyChange(evt);
             }
         });
         tbCompra.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -348,9 +380,10 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
+        txtBuscar.setText("");
         CabecerasTablas.limpiarTablaConsCompras(tbCompra);
         CabecerasTablas.limpiarTablaConsDetalleCompras(tbDetalleCompra);
-        controlCompra.listarCompras(tbCompra);
+        controlCompra.listarCompras(tbCompra, txtBuscar.getText().trim());
         Renders();
         txtCodCompra.setText("");
         txtFechaCompra.setText("");
@@ -376,13 +409,14 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
                     if (rpta == 0) {
                         msg = controlCompra.anularCompra();
                         if (msg == null) {
-                            CabecerasTablas.limpiarTablaConsCompras(tbCompra);
-                            CabecerasTablas.limpiarTablaConsDetalleCompras(tbDetalleCompra);
-                            controlCompra.listarCompras(tbCompra);
+                            //CabecerasTablas.limpiarTablaConsCompras(tbCompra);
+                            //CabecerasTablas.limpiarTablaConsDetalleCompras(tbDetalleCompra);
+                            //controlCompra.listarCompras(tbCompra, txtBuscar.getText().trim());
+                            btnActualizarActionPerformed(null);
                         }
                     }
                 } catch (Exception e) {
-                    Mensajes.informacion("Error anulando compra: "+e.getMessage());
+                    Mensajes.informacion("Error anulando compra: " + e.getMessage());
                 }
             }
         }
@@ -413,6 +447,10 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
 
     private void tbCompraKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbCompraKeyPressed
         // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            txtBuscar.requestFocus();
+            txtBuscar.selectAll();
+        }
         AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_tbCompraKeyPressed
 
@@ -455,6 +493,55 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
 
         this.setLocation(x, y);
     }//GEN-LAST:event_panelCabeceraMouseDragged
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+        System.out.println(txtBuscar.getText().length());
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (tbCompra.getRowCount() <= 0) {
+                txtBuscar.requestFocus();
+                txtBuscar.selectAll();
+            } else {
+                tbCompra.requestFocus();
+                tbCompra.getSelectionModel().setSelectionInterval(0, 0);
+            }
+        }
+        AccesoRapido(evt.getKeyCode());
+    }//GEN-LAST:event_txtBuscarKeyPressed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        // TODO add your handling code here:
+        System.out.println(txtBuscar.getText().trim().length());
+        try {
+            CabecerasTablas.limpiarTablaConsCompras(tbCompra);
+            CabecerasTablas.limpiarTablaConsDetalleCompras(tbDetalleCompra);
+            controlCompra.listarCompras(tbCompra, txtBuscar.getText().trim());
+            Renders();
+            txtCodCompra.setText("");
+            txtFechaCompra.setText("");
+            txtProveedor.setText("");
+        } catch (Exception e) {
+            System.out.println("Mensaje de Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if (Character.isLowerCase(c)) {
+            String cad = ("" + c).toUpperCase();
+            c = cad.charAt(0);
+            evt.setKeyChar(c);
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void tbCompraPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_tbCompraPropertyChange
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbCompraPropertyChange
 
     /**
      * @param args the command line arguments
@@ -531,6 +618,7 @@ public class dlgConsultarCompras extends javax.swing.JDialog {
             return false;
         }
     };
+    public static RSMaterialComponent.RSTextFieldMaterialIcon txtBuscar;
     public static javax.swing.JTextField txtCodCompra;
     public static javax.swing.JTextField txtFechaCompra;
     public static javax.swing.JTextField txtProveedor;

@@ -1,0 +1,40 @@
+                                        
+            TICKET DE CIERRE            
+ ***************************************
+ APERTURADO POR: ESOSA                  
+ FECHA: 15/08/2024 09:22                
+ ***************************************
+ CERRADO POR: ESOSA                     
+ FECHA: 15/08/2024 11:37                
+ ***************************************
+ CAJA N°: 107                           
+ CAJA BASE:50.000                       
+ VALOR A ENTREGAR:50.000                
+ VALOR ENTREGADO:50.000                 
+ DIFERENCIA:0                           
+ ESTADO: CERRADO                        
+ ---------------------------------------
+        DETALLES DE MOVIMIENTOS         
+ ---------------------------------------
+              INGRESOS:                 
+ VENTAS CONTADO: 50.000                 
+ COBRANZAS Y OTROS INGRESOS: 0          
+ VENTAS CREDITO: 0                      
+                                        
+          TOTAL DE INGRESOS: 50.000     
+ ---------------------------------------
+              EGRESOS:                  
+ COMPRAS CONTADO: 0                     
+ PAGOS Y RETIROS: 0                     
+ COMPRAS CREDITO: 0                     
+ ---------------------------------------
+                                        
+                                        
+      _____________________________     
+          FIRMA DEL RESPONSABLE         
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        

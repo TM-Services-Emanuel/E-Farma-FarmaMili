@@ -100,161 +100,158 @@ WHERE
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{ca_id}]]></groupExpression>
 		<groupHeader>
-			<band height="140">
+			<band height="124">
 				<textField isBlankWhenNull="true">
-					<reportElement style="SubTitle" x="26" y="8" width="410" height="24" forecolor="#000000" uuid="91d5865d-2791-4d53-8ab5-f5bedeea756b"/>
-					<textElement verticalAlignment="Middle">
-						<font isBold="true"/>
+					<reportElement style="SubTitle" x="0" y="3" width="555" height="24" forecolor="#000000" uuid="91d5865d-2791-4d53-8ab5-f5bedeea756b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Consolas" size="11" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[" PERTENECIENTE A LA CAJA N° "+$F{ca_id}]]></textFieldExpression>
 				</textField>
-				<rectangle>
-					<reportElement mode="Opaque" x="0" y="8" width="22" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="a60f080a-41ef-421c-93cf-34257c2e2b0a"/>
-				</rectangle>
 				<textField pattern="dd-MM-yyyy" isBlankWhenNull="true">
-					<reportElement x="70" y="66" width="120" height="17" uuid="6c9d1817-d4cf-451e-b054-05b45e4d402f"/>
+					<reportElement x="70" y="50" width="120" height="17" uuid="6c9d1817-d4cf-451e-b054-05b45e4d402f"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Arial" size="11"/>
+						<font fontName="Consolas" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ca_fechainicio}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="40" width="280" height="20" uuid="e54d1ebb-ff12-4a21-b76d-30e83810e30a"/>
+					<reportElement x="0" y="27" width="280" height="20" uuid="e54d1ebb-ff12-4a21-b76d-30e83810e30a"/>
 					<box>
-						<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid"/>
 					</box>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="11" isBold="true"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[ Datos de apertura:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="10" y="66" width="60" height="17" uuid="bde27c10-573e-4698-b21a-10db1e67926a">
+					<reportElement x="10" y="50" width="60" height="17" uuid="bde27c10-573e-4698-b21a-10db1e67926a">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Arial" size="11" isBold="true"/>
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Fecha:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="10" y="83" width="60" height="17" uuid="aa799a1b-48d5-44b8-a9c6-22ec638847c1"/>
+					<reportElement x="10" y="67" width="60" height="17" uuid="aa799a1b-48d5-44b8-a9c6-22ec638847c1"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Arial" size="11" isBold="true"/>
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Hora:]]></text>
 				</staticText>
 				<textField pattern="HH:mm" isBlankWhenNull="true">
-					<reportElement x="70" y="83" width="120" height="17" uuid="d5dffc3b-d5cb-44f7-874d-74597a697fc8"/>
+					<reportElement x="70" y="67" width="120" height="17" uuid="d5dffc3b-d5cb-44f7-874d-74597a697fc8"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="11"/>
+						<font fontName="Consolas" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ca_horainicio}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="280" y="40" width="275" height="20" uuid="29dfdd2e-b572-4fcb-bdab-e5fedfcae559"/>
+					<reportElement x="280" y="27" width="275" height="20" uuid="29dfdd2e-b572-4fcb-bdab-e5fedfcae559"/>
 					<box>
-						<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid"/>
 					</box>
-					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="11" isBold="true"/>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[ Datos de cierre:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="10" y="100" width="60" height="17" uuid="01912ddc-c617-4294-aa59-d0ebb64255ce"/>
+					<reportElement x="10" y="84" width="60" height="17" uuid="01912ddc-c617-4294-aa59-d0ebb64255ce"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Arial" size="11" isBold="true"/>
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Usuario:]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="70" y="100" width="120" height="17" uuid="f88acc36-044d-4569-99dc-c745b181a449"/>
+					<reportElement x="70" y="84" width="120" height="17" uuid="f88acc36-044d-4569-99dc-c745b181a449"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="11"/>
+						<font fontName="Consolas" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ca_usuarioinicio}]]></textFieldExpression>
 				</textField>
 				<textField pattern="&apos;Gs&apos; #,##0.###;#,##0.###-" isBlankWhenNull="true">
-					<reportElement x="70" y="117" width="120" height="17" uuid="5a2af619-de82-401c-9a62-9059dd67077c">
+					<reportElement x="70" y="101" width="120" height="17" uuid="5a2af619-de82-401c-9a62-9059dd67077c">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="11"/>
+						<font fontName="Consolas" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ca_inicial}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="10" y="117" width="60" height="17" uuid="9970032c-4ef0-429e-bddf-6d0951bfa2ab"/>
+					<reportElement x="10" y="101" width="60" height="17" uuid="9970032c-4ef0-429e-bddf-6d0951bfa2ab"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Arial" size="11" isBold="true"/>
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Caja base:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="289" y="66" width="65" height="17" uuid="8d177dad-ed43-4663-8fcb-c74e46fa3d8e">
+					<reportElement x="289" y="50" width="65" height="17" uuid="8d177dad-ed43-4663-8fcb-c74e46fa3d8e">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Arial" size="11" isBold="true"/>
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Fecha:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="289" y="83" width="65" height="17" uuid="2860b09b-8157-4d37-a72c-8bfa730353a3"/>
+					<reportElement x="289" y="67" width="65" height="17" uuid="2860b09b-8157-4d37-a72c-8bfa730353a3"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Arial" size="11" isBold="true"/>
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Hora:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="289" y="100" width="65" height="17" uuid="7e5f313b-6d5f-4376-ac15-ab964db4a88c"/>
+					<reportElement x="289" y="84" width="65" height="17" uuid="7e5f313b-6d5f-4376-ac15-ab964db4a88c"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Arial" size="11" isBold="true"/>
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Usuario:]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="289" y="117" width="65" height="17" uuid="46e92e25-dba9-4477-8d03-5eb3dd82296f"/>
+					<reportElement x="289" y="101" width="65" height="17" uuid="46e92e25-dba9-4477-8d03-5eb3dd82296f"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Arial" size="11" isBold="true"/>
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Caja cierre:]]></text>
 				</staticText>
 				<textField pattern="dd-MM-yyyy" isBlankWhenNull="true">
-					<reportElement x="354" y="66" width="120" height="17" uuid="23b5ae03-0a17-48bf-9b06-0cd742ae70b3"/>
+					<reportElement x="354" y="50" width="120" height="17" uuid="23b5ae03-0a17-48bf-9b06-0cd742ae70b3"/>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="Arial" size="11"/>
+						<font fontName="Consolas" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ca_fechafin}]]></textFieldExpression>
 				</textField>
 				<textField pattern="HH:mm" isBlankWhenNull="true">
-					<reportElement x="354" y="83" width="120" height="17" uuid="ebb66ba6-ab81-4919-a883-545c4406e290"/>
+					<reportElement x="354" y="67" width="120" height="17" uuid="ebb66ba6-ab81-4919-a883-545c4406e290"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="11"/>
+						<font fontName="Consolas" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ca_horafin}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="354" y="100" width="120" height="17" uuid="7f07e6e1-6c40-421a-84e4-b57f0ffcf1f7"/>
+					<reportElement x="354" y="84" width="120" height="17" uuid="7f07e6e1-6c40-421a-84e4-b57f0ffcf1f7"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="11"/>
+						<font fontName="Consolas" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ca_usuariocierre}]]></textFieldExpression>
 				</textField>
 				<textField pattern="&apos;Gs&apos; #,##0.###;#,##0.###-" isBlankWhenNull="true">
-					<reportElement x="354" y="117" width="120" height="17" uuid="678c6a75-f3f7-487f-97a4-74e52831d856">
+					<reportElement x="354" y="101" width="120" height="17" uuid="678c6a75-f3f7-487f-97a4-74e52831d856">
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="11"/>
+						<font fontName="Consolas" size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{ca_final}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="0" y="134" width="555" height="6" uuid="e45be0b8-c105-4833-87db-cc123f64d29a"/>
+					<reportElement x="0" y="118" width="555" height="6" uuid="e45be0b8-c105-4833-87db-cc123f64d29a"/>
 					<box>
-						<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+						<bottomPen lineWidth="0.25" lineStyle="Solid"/>
 					</box>
 					<textElement verticalAlignment="Middle">
 						<font fontName="Arial" size="11" isBold="true"/>
@@ -265,13 +262,13 @@ WHERE
 		</groupHeader>
 	</group>
 	<title>
-		<band height="115" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="0" y="0" width="555" height="115" uuid="524767a9-e7e5-4041-9b08-5a7210b38e22"/>
+				<reportElement style="Title" x="0" y="0" width="555" height="30" uuid="524767a9-e7e5-4041-9b08-5a7210b38e22"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="40" isBold="false"/>
+					<font fontName="Consolas" size="15" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Movimiento de Caja]]></text>
+				<text><![CDATA[RESUMEN DE VALORES]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -279,16 +276,21 @@ WHERE
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="10" splitType="Stretch">
+		<band height="6" splitType="Stretch">
 			<frame>
-				<reportElement mode="Opaque" x="0" y="5" width="555" height="5" backcolor="#666666" uuid="eb0fefed-b830-492b-a0c9-ec23411537a7"/>
+				<reportElement mode="Opaque" x="0" y="5" width="555" height="1" backcolor="#FFFFFF" uuid="eb0fefed-b830-492b-a0c9-ec23411537a7">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+				</box>
 			</frame>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="323" splitType="Stretch">
 			<subreport>
-				<reportElement x="-20" y="10" width="575" height="23" uuid="c10ffdac-5129-467b-a424-83f6ff517250">
+				<reportElement x="-20" y="2" width="575" height="23" uuid="c10ffdac-5129-467b-a424-83f6ff517250">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<subreportParameter name="caja">
@@ -298,7 +300,7 @@ WHERE
 				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalVContado.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="-20" y="76" width="575" height="23" uuid="068da335-9e19-47e9-a373-1392f6944794">
+				<reportElement x="-20" y="60" width="575" height="23" uuid="068da335-9e19-47e9-a373-1392f6944794">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<subreportParameter name="caja">
@@ -308,7 +310,7 @@ WHERE
 				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalIngreso.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="-20" y="120" width="575" height="23" uuid="c57200e9-b032-446b-80fd-61ca5c02c57e">
+				<reportElement x="-20" y="98" width="575" height="23" uuid="c57200e9-b032-446b-80fd-61ca5c02c57e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<subreportParameter name="caja">
@@ -318,7 +320,7 @@ WHERE
 				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalCContado.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="-20" y="143" width="575" height="23" uuid="cdd2610d-8125-410f-8ca3-d9ea46797102">
+				<reportElement x="-20" y="121" width="575" height="23" uuid="cdd2610d-8125-410f-8ca3-d9ea46797102">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<subreportParameter name="caja">
@@ -328,7 +330,7 @@ WHERE
 				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalGastos.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="-20" y="277" width="575" height="23" uuid="311aa4aa-cac4-4453-b987-7eb402732809">
+				<reportElement x="-20" y="210" width="575" height="23" uuid="311aa4aa-cac4-4453-b987-7eb402732809">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<subreportParameter name="caja">
@@ -338,7 +340,7 @@ WHERE
 				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalVCredito.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="-20" y="300" width="575" height="23" uuid="9672a7b3-295e-4c2a-be11-ce6cc712bde9">
+				<reportElement x="-20" y="233" width="575" height="23" uuid="9672a7b3-295e-4c2a-be11-ce6cc712bde9">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<subreportParameter name="caja">
@@ -348,7 +350,7 @@ WHERE
 				<subreportExpression><![CDATA["C:/FAST-FARMA/Reports/caja/TotalCCredito.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
-				<reportElement x="-20" y="33" width="575" height="23" uuid="569d5973-c643-4212-9882-726fbc6be458">
+				<reportElement x="-20" y="25" width="575" height="23" uuid="569d5973-c643-4212-9882-726fbc6be458">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<subreportParameter name="caja">
@@ -364,7 +366,7 @@ WHERE
 			<textField pattern="EEEEE&apos;,&apos; dd-MM-yyyy">
 				<reportElement style="Column header" x="0" y="0" width="131" height="20" forecolor="#000000" uuid="f8570c2f-4404-4725-885a-4eb3c26abb4a"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="12" isBold="false"/>
+					<font fontName="Consolas" size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>

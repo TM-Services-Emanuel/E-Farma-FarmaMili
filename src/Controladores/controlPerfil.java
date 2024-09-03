@@ -89,9 +89,9 @@ public class controlPerfil {
             frmPrincipal.mnSeguridad.setVisible(false);
             frmPrincipal.mnArticulos.setVisible(false);
             frmPrincipal.mnCompras.setVisible(false);
-            frmPrincipal.mnReportes.setVisible(false);
-            frmPrincipal.rpCompras.setVisible(false);
-            frmPrincipal.rpArticulos.setVisible(false);
+            frmPrincipal.mnReportes.setVisible(true);
+            frmPrincipal.rpCompras.setVisible(true);
+            frmPrincipal.rpArticulos.setVisible(true);
             frmPrincipal.rpDevoluciones.setVisible(false);
             frmPrincipal.rpPresupuestos.setVisible(false);
             frmPrincipal.rpClientes.setVisible(false);

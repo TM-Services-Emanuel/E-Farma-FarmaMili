@@ -28,14 +28,14 @@ WHERE
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0c544d21-535a-4b96-b780-7a854f7345c9"/>
 					</reportElement>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="Arial" size="12" isBold="true"/>
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{SUM( ing_importe)}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="0" y="0" width="375" height="15" uuid="c393d205-2203-47b5-8881-e6727df46da8"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="Arial" size="12" isBold="false"/>
+						<font fontName="Consolas" size="10" isBold="false"/>
 					</textElement>
 					<text><![CDATA[Suma de las cobranzas y otros ingresos en efectivo:]]></text>
 				</staticText>

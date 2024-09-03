@@ -29,6 +29,8 @@ public class GestionarVendedor {
         String msg;
         StringBuilder sql = new StringBuilder("INSERT INTO vendedor VALUES (");
         sql.append(getCodigo());
+        sql.append(",");
+        sql.append(v.getCi());
         sql.append(",'");
         sql.append(v.getNombreV());
         sql.append("','");
@@ -37,13 +39,21 @@ public class GestionarVendedor {
         sql.append(v.getTelefono());
         sql.append("','");
         sql.append(v.getCelular());
+        sql.append("','");
+        sql.append(v.getFech_ingreso());
         sql.append("',");
         sql.append(v.getSueldo());
         sql.append(",");
-        sql.append(v.getComision());
+        sql.append(v.getPer_pago());
         sql.append(",'");
-        sql.append(v.getObs());
-        sql.append("','S','");
+        sql.append(v.getFuncon());
+        sql.append("','");
+        sql.append(v.getPer_adelanto());
+        sql.append("',");
+        sql.append(v.getFrecuencia());
+        sql.append(",");
+        sql.append(v.getMonto_adelanto());
+        sql.append(",'S','");
         sql.append(usuario);
         sql.append("')");
         msg = Operacion.exeOperacion(sql.toString());
@@ -98,7 +108,9 @@ public class GestionarVendedor {
 
     public static String actVendedor(Vendedor v, String usuario) {
         String msg;
-        StringBuilder sql = new StringBuilder("UPDATE vendedor SET ven_nombre='");
+        StringBuilder sql = new StringBuilder("UPDATE vendedor SET ven_ci=");
+        sql.append(v.getCi());
+        sql.append(",'");
         sql.append(v.getNombreV());
         sql.append("',ven_direccion='");
         sql.append(v.getDireccion());
@@ -106,13 +118,21 @@ public class GestionarVendedor {
         sql.append(v.getTelefono());
         sql.append("',ven_celular='");
         sql.append(v.getCelular());
+        sql.append("',fecha_ingreso='");
+        sql.append(v.getFech_ingreso());
         sql.append("',ven_sueldo=");
         sql.append(v.getSueldo());
-        sql.append(",ven_comision=");
-        sql.append(v.getComision());
-        sql.append(",ven_observacion='");
-        sql.append(v.getObs());
-        sql.append("',usu='");
+        sql.append(",periodo_pago=");
+        sql.append(v.getPer_pago());
+        sql.append(",funcion='");
+        sql.append(v.getFuncon());
+        sql.append("',per_adelanto='");
+        sql.append(v.getPer_adelanto());
+        sql.append("',frecuencia=");
+        sql.append(v.getFrecuencia());
+        sql.append(",monto_adelanto=");
+        sql.append(v.getMonto_adelanto());
+        sql.append(",usu='");
         sql.append(usuario);
         sql.append("' WHERE ven_codigo = ");
         sql.append(v.getCodVe());
@@ -129,13 +149,18 @@ public class GestionarVendedor {
         if (filaObt != null) {
             v = new Vendedor();
             v.setCodVe(Integer.parseInt(filaObt[0].toString()));
-            v.setNombreV(filaObt[1].toString());
-            v.setDireccion(filaObt[2].toString());
-            v.setTelefono(filaObt[3].toString());
-            v.setCelular(filaObt[4].toString());
-            v.setSueldo(Integer.parseInt(filaObt[5].toString()));
-            v.setComision(Double.parseDouble(filaObt[6].toString()));
-            v.setObs(filaObt[7].toString());
+            v.setCi(Integer.parseInt(filaObt[1].toString()));
+            v.setNombreV(filaObt[2].toString());
+            v.setDireccion(filaObt[3].toString());
+            v.setTelefono(filaObt[4].toString());
+            v.setCelular(filaObt[5].toString());
+            v.setFech_ingreso(filaObt[6].toString());
+            v.setSueldo(Integer.parseInt(filaObt[7].toString()));
+            v.setPer_pago(Integer.parseInt(filaObt[8].toString()));
+            v.setFuncon(filaObt[9].toString());
+            v.setPer_adelanto(filaObt[10].toString());
+            v.setFrecuencia((filaObt[11].toString()));
+            v.setMonto_adelanto(Integer.parseInt(filaObt[12].toString()));
         } else {
             System.out.println("No encontrado");
         }

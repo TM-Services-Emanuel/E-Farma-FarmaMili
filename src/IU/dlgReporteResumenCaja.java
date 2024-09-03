@@ -79,6 +79,37 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
         vr.setLocationRelativeTo(this);
         vr.setVisible(true);
     }
+    
+    public void llamarReporteHistorial1(int cod) throws SQLException {
+        VisorReportes vr = new VisorReportes(null, true);
+        try (Connection cn = dss.getDataSource().getConnection()) {
+            String jasperUrl = System.getProperty("user.dir").concat("\\Reports\\caja\\ResumenCajaP.jasper");
+            JasperReport report = (JasperReport) JRLoader.loadObjectFromFile(jasperUrl);
+            //para los parametro
+            Map parametros = new HashMap();
+            parametros.clear();
+            //Nuestro parametro se llama "pLastName"
+            parametros.put("caja", cod);
+            //agregamos los parametros y la conexion a la base de datos
+            JasperPrint jasperPrint = JasperFillManager.fillReport(report, parametros, cn);
+            //se crea el visor con el reporte
+            JRViewer jRViewer = new JRViewer(jasperPrint);
+            //se elimina elementos del contenedor JPanel
+            VisorReportes.jpContainer.removeAll();
+            //para el tamaño del reporte se agrega un BorderLayout
+            VisorReportes.jpContainer.setLayout(new BorderLayout());
+            VisorReportes.jpContainer.add(jRViewer, BorderLayout.CENTER);
+            jRViewer.setZoomRatio((float) 1);
+            jRViewer.setVisible(true);
+            VisorReportes.jpContainer.repaint();
+            VisorReportes.jpContainer.revalidate();
+            cn.close();
+        } catch (JRException ex) {
+            System.err.println(ex.getMessage());
+        }
+        vr.setLocationRelativeTo(this);
+        vr.setVisible(true);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -98,6 +129,7 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
         dcFDesde = new datechooser.beans.DateChooserCombo();
         txtFDesde = new javax.swing.JTextField();
         cboCajaN = new javax.swing.JComboBox<>();
+        rbCajaF1 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Generador de Reportes");
@@ -191,14 +223,13 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
 
         GrupoReporte.add(rbCajaF);
         rbCajaF.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
-        rbCajaF.setSelected(true);
-        rbCajaF.setText("Resumen de caja de la fecha:");
+        rbCajaF.setText("Resumen valores de la fecha y caja");
         rbCajaF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbCajaFActionPerformed(evt);
             }
         });
-        jPanel1.add(rbCajaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 10, -1, 23));
+        jPanel1.add(rbCajaF, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, -1, 23));
 
         dcFDesde.setEnabled(false);
         dcFDesde.addCommitListener(new datechooser.events.CommitListener() {
@@ -236,7 +267,18 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
         });
         jPanel1.add(cboCajaN, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 101, 23));
 
-        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 420, 44));
+        GrupoReporte.add(rbCajaF1);
+        rbCajaF1.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        rbCajaF1.setSelected(true);
+        rbCajaF1.setText("Resumen de movimiento de productos de la fecha y caja");
+        rbCajaF1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbCajaF1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(rbCajaF1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, -1, 23));
+
+        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 420, 90));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -248,7 +290,9 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -287,6 +331,15 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
                 } else {
                     System.out.println(cboCajaN.getSelectedItem().toString());
                     llamarReporteHistorial(Integer.parseInt(cboCajaN.getSelectedItem().toString()));
+                }
+            }else if (rbCajaF1.isSelected()) {
+                if (txtFDesde.getText().trim().isEmpty()) {
+                    Mensajes.informacion("Fije una fecha para el reporte");
+                } else if (cboCajaN.getSelectedItem().toString().equals("SELEC.")) {
+                    Mensajes.informacion("Indique el N° de caja para generar el reporte");
+                } else {
+                    System.out.println(cboCajaN.getSelectedItem().toString());
+                    llamarReporteHistorial1(Integer.parseInt(cboCajaN.getSelectedItem().toString()));
                 }
             }
         } catch (NumberFormatException | SQLException e) {
@@ -337,6 +390,10 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
         // TODO add your handling code here:
         AccesoRapido(evt.getKeyCode());
     }//GEN-LAST:event_jPanel4KeyPressed
+
+    private void rbCajaF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbCajaF1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbCajaF1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -410,6 +467,7 @@ public class dlgReporteResumenCaja extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JRadioButton rbCajaF;
+    private javax.swing.JRadioButton rbCajaF1;
     public static javax.swing.JTextField txtFDesde;
     public static javax.swing.JTextField txtFDesdeR;
     // End of variables declaration//GEN-END:variables

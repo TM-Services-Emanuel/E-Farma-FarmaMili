@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Listado_Articulos" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e115bc59-fd0f-446b-a585-04725e27d7f0">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="bd_farmacia"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="farmacia.jrdax"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
@@ -101,12 +101,12 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 		<property name="com.jaspersoft.studio.field.label" value="ganstandar"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="familia"/>
 	</field>
-	<field name="gan" class="java.lang.Long">
+	<field name="gan" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="gan"/>
 		<property name="com.jaspersoft.studio.field.label" value="gan"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="articulo"/>
 	</field>
-	<field name="des" class="java.lang.Long">
+	<field name="des" class="java.lang.Double">
 		<property name="com.jaspersoft.studio.field.name" value="des"/>
 		<property name="com.jaspersoft.studio.field.label" value="des"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="articulo"/>
@@ -139,11 +139,11 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{codLab}]]></groupExpression>
 		<groupHeader>
-			<band height="24">
+			<band height="20">
 				<textField>
 					<reportElement style="SubTitle" x="20" y="0" width="657" height="20" forecolor="#000000" uuid="8caf7870-b3f6-4e56-b258-6eaf7c7087bd"/>
 					<textElement verticalAlignment="Middle">
-						<font size="16" isBold="true"/>
+						<font fontName="consolas" size="11" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{codLab}+" - "+$F{lab}]]></textFieldExpression>
 				</textField>
@@ -154,11 +154,11 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 		</groupHeader>
 	</group>
 	<title>
-		<band height="68" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="0" y="0" width="802" height="67" uuid="1dcadd54-7d50-4470-85ed-189e4d910b25"/>
+				<reportElement style="Title" x="0" y="0" width="802" height="30" uuid="1dcadd54-7d50-4470-85ed-189e4d910b25"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="35" isBold="false"/>
+					<font fontName="Consolas" size="20" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Listado de Artículos]]></text>
 			</staticText>
@@ -168,16 +168,18 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="25" splitType="Stretch">
+		<band height="15" splitType="Stretch">
 			<staticText>
 				<reportElement style="Column header" x="0" y="0" width="100" height="15" forecolor="#000000" uuid="002adc5c-8054-4c1e-bb57-bebcfc831602">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce9766aa-bda0-4ba9-830f-8d1cec0777fd"/>
 				</reportElement>
 				<box>
 					<pen lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="consolas" size="10"/>
+				</textElement>
 				<text><![CDATA[Cod Barra]]></text>
 			</staticText>
 			<staticText>
@@ -186,9 +188,11 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 				</reportElement>
 				<box>
 					<pen lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="consolas" size="10"/>
+				</textElement>
 				<text><![CDATA[Familia]]></text>
 			</staticText>
 			<staticText>
@@ -197,9 +201,11 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 				</reportElement>
 				<box>
 					<pen lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="consolas" size="10"/>
+				</textElement>
 				<text><![CDATA[St.]]></text>
 			</staticText>
 			<staticText>
@@ -208,9 +214,11 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 				</reportElement>
 				<box>
 					<pen lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="consolas" size="10"/>
+				</textElement>
 				<text><![CDATA[St. Min.]]></text>
 			</staticText>
 			<staticText>
@@ -219,9 +227,11 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 				</reportElement>
 				<box>
 					<pen lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="consolas" size="10"/>
+				</textElement>
 				<text><![CDATA[IVA]]></text>
 			</staticText>
 			<staticText>
@@ -230,9 +240,11 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 				</reportElement>
 				<box>
 					<pen lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="consolas" size="10"/>
+				</textElement>
 				<text><![CDATA[P.Costo]]></text>
 			</staticText>
 			<staticText>
@@ -241,9 +253,11 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 				</reportElement>
 				<box>
 					<pen lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="consolas" size="10"/>
+				</textElement>
 				<text><![CDATA[Gan]]></text>
 			</staticText>
 			<staticText>
@@ -252,9 +266,11 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 				</reportElement>
 				<box>
 					<pen lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="consolas" size="10"/>
+				</textElement>
 				<text><![CDATA[P.Publico]]></text>
 			</staticText>
 			<staticText>
@@ -263,9 +279,11 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 				</reportElement>
 				<box>
 					<pen lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="consolas" size="10"/>
+				</textElement>
 				<text><![CDATA[Desc]]></text>
 			</staticText>
 			<staticText>
@@ -274,9 +292,11 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 				</reportElement>
 				<box>
 					<pen lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="consolas" size="10"/>
+				</textElement>
 				<text><![CDATA[P.Venta]]></text>
 			</staticText>
 			<staticText>
@@ -285,21 +305,23 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 				</reportElement>
 				<box>
 					<pen lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="consolas" size="10"/>
+				</textElement>
 				<text><![CDATA[Descripción]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="17" splitType="Stretch">
 			<textField>
 				<reportElement style="Detail" x="0" y="0" width="100" height="15" uuid="7318f35f-fc0f-465c-bcb0-77294ae2125f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce9766aa-bda0-4ba9-830f-8d1cec0777fd"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="consolas" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{barra}]]></textFieldExpression>
 			</textField>
@@ -308,7 +330,7 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6222119e-a759-400e-81f3-37454c4b03c0"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="consolas" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
@@ -317,7 +339,7 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="40ab30ce-4c12-4006-ad01-514c8f87d2f0"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="consolas" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{stock}]]></textFieldExpression>
 			</textField>
@@ -326,7 +348,7 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ce7f886b-cd1f-46d9-b0c7-e7968e125249"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="consolas" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{stockmin}]]></textFieldExpression>
 			</textField>
@@ -335,7 +357,7 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="68abaf1c-c22b-4e2b-b0ff-c64873f53a9a"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="consolas" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{iva}+"%"]]></textFieldExpression>
 			</textField>
@@ -344,7 +366,7 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="63479d00-a63f-4c51-a6e5-59a21c6d1f88"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="consolas" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{costo}]]></textFieldExpression>
 			</textField>
@@ -353,7 +375,7 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="77a8afad-3574-40a5-abab-1d4c3c42466c"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="consolas" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{gan}+"%"]]></textFieldExpression>
 			</textField>
@@ -362,7 +384,7 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b6eb8ca-ce47-4497-a354-95ec27037a5e"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="consolas" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ppublico}]]></textFieldExpression>
 			</textField>
@@ -371,7 +393,7 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70bfc51e-5239-4709-ae1c-d5337122d425"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="consolas" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{des}+"%"]]></textFieldExpression>
 			</textField>
@@ -380,14 +402,14 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3c6a5f29-daa3-4696-bfe8-8eccc0c507cb"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="consolas" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{pventa}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="2" uuid="e5f21b91-7f24-498e-97a1-0e93db9225a4"/>
 				<graphicElement>
-					<pen lineWidth="0.5" lineColor="#999999"/>
+					<pen lineWidth="0.2" lineColor="#000000"/>
 				</graphicElement>
 			</line>
 			<textField>
@@ -395,7 +417,7 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ac1303d1-8b83-40c4-b95b-5d82de90a49c"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font size="10"/>
+					<font fontName="consolas" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fam}]]></textFieldExpression>
 			</textField>
@@ -405,25 +427,25 @@ Order by codLab ASC, fam ASC, descripcion ASC]]>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="50" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement style="Column header" x="0" y="0" width="131" height="20" forecolor="#000000" uuid="95484ca0-40b4-4752-95d8-1afbc33c820b"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="12" isBold="false"/>
+					<font fontName="Consolas" size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement style="Column header" x="682" y="0" width="80" height="20" forecolor="#050505" uuid="018035d0-24e2-4acd-8937-60f4ab03a4b8"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="false"/>
+					<font fontName="Consolas" size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement style="Column header" x="762" y="0" width="40" height="20" forecolor="#050505" uuid="2df50bdf-2b00-463b-a6f3-dc114478e24d"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="false"/>
+					<font fontName="Consolas" size="10" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>

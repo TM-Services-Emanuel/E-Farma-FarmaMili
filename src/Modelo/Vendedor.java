@@ -3,25 +3,37 @@ package Modelo;
 public class Vendedor {
     
     private int codVe;
+    private int ci;
     private String nombreV;
     private String direccion;
     private String telefono;
     private String celular;
+    private String fech_ingreso;
     private int Sueldo;
-    private double comision;
-    public String Obs;
+    private int per_pago;
+    private String funcon;
+    public String per_adelanto;
+    private String frecuencia;
+    private int monto_adelanto;
 
     //Constructor
-    public Vendedor(int codVe, String nombreV, String direccion, String telefono, String celular, int Sueldo, double comision, String Obs) {
+
+    public Vendedor(int codVe, int ci, String nombreV, String direccion, String telefono, String celular, String fech_ingreso, int Sueldo, int per_pago, String funcon, String per_adelanto, String frecuencia, int monto_adelanto) {
         this.codVe = codVe;
+        this.ci = ci;
         this.nombreV = nombreV;
         this.direccion = direccion;
         this.telefono = telefono;
         this.celular = celular;
+        this.fech_ingreso = fech_ingreso;
         this.Sueldo = Sueldo;
-        this.comision = comision;
-        this.Obs = Obs;
+        this.per_pago = per_pago;
+        this.funcon = funcon;
+        this.per_adelanto = per_adelanto;
+        this.frecuencia = frecuencia;
+        this.monto_adelanto = monto_adelanto;
     }
+    
     
 
     //Constructor Vacio
@@ -29,13 +41,6 @@ public class Vendedor {
     }
 
     //Getter y Setter
-    public String getCelular() {
-        return celular;
-    }
-
-    public void setCelular(String celular) {
-        this.celular = celular;
-    }
 
     public int getCodVe() {
         return codVe;
@@ -45,20 +50,12 @@ public class Vendedor {
         this.codVe = codVe;
     }
 
-    public double getComision() {
-        return comision;
+    public int getCi() {
+        return ci;
     }
 
-    public void setComision(double comision) {
-        this.comision = comision;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setCi(int ci) {
+        this.ci = ci;
     }
 
     public String getNombreV() {
@@ -69,12 +66,36 @@ public class Vendedor {
         this.nombreV = nombreV;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
     public String getTelefono() {
         return telefono;
     }
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
+    }
+
+    public String getFech_ingreso() {
+        return fech_ingreso;
+    }
+
+    public void setFech_ingreso(String fech_ingreso) {
+        this.fech_ingreso = fech_ingreso;
     }
 
     public int getSueldo() {
@@ -85,11 +106,44 @@ public class Vendedor {
         this.Sueldo = Sueldo;
     }
 
-    public String getObs() {
-        return Obs;
+    public int getPer_pago() {
+        return per_pago;
     }
 
-    public void setObs(String Obs) {
-        this.Obs = Obs;
+    public void setPer_pago(int per_pago) {
+        this.per_pago = per_pago;
     }
+
+    public String getFuncon() {
+        return funcon;
+    }
+
+    public void setFuncon(String funcon) {
+        this.funcon = funcon;
+    }
+
+    public String getPer_adelanto() {
+        return per_adelanto;
+    }
+
+    public void setPer_adelanto(String per_adelanto) {
+        this.per_adelanto = per_adelanto;
+    }
+
+    public String getFrecuencia() {
+        return frecuencia;
+    }
+
+    public void setFrecuencia(String frecuencia) {
+        this.frecuencia = frecuencia;
+    }
+
+    public int getMonto_adelanto() {
+        return monto_adelanto;
+    }
+
+    public void setMonto_adelanto(int monto_adelanto) {
+        this.monto_adelanto = monto_adelanto;
+    }
+    
 }

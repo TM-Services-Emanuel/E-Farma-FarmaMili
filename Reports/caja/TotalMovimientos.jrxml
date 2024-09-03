@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.5.final using JasperReports Library version 6.20.5-3efcf2e67f959db3888d79f73dde2dbd7acb4f8e  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TotalContado" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="e9bb1a27-f975-4aa4-98f9-75524c5daafa">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="farmacia.jrdax"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#FFFFFF" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="caja" class="java.lang.Integer"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT caj, codart, art_codbarra, lab_nombre, ncomercial, SUM(cant), SUM(monto), st_actual
+FROM v_ventaranking_general WHERE caj= $P{caja}  AND indi='S'
+GROUP BY codart]]>
+	</queryString>
+	<field name="caj" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="caj"/>
+		<property name="com.jaspersoft.studio.field.label" value="caj"/>
+	</field>
+	<field name="codart" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="codart"/>
+		<property name="com.jaspersoft.studio.field.label" value="codart"/>
+	</field>
+	<field name="art_codbarra" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="art_codbarra"/>
+		<property name="com.jaspersoft.studio.field.label" value="art_codbarra"/>
+	</field>
+	<field name="lab_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="lab_nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="lab_nombre"/>
+	</field>
+	<field name="ncomercial" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="ncomercial"/>
+		<property name="com.jaspersoft.studio.field.label" value="ncomercial"/>
+	</field>
+	<field name="SUM(cant)" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SUM(cant)"/>
+		<property name="com.jaspersoft.studio.field.label" value="SUM(cant)"/>
+	</field>
+	<field name="SUM(monto)" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SUM(monto)"/>
+		<property name="com.jaspersoft.studio.field.label" value="SUM(monto)"/>
+	</field>
+	<field name="st_actual" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="st_actual"/>
+		<property name="com.jaspersoft.studio.field.label" value="st_actual"/>
+	</field>
+	<variable name="SUM(monto)1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{SUM(monto)}]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="16">
+			<staticText>
+				<reportElement x="0" y="1" width="60" height="15" uuid="67697227-5817-45da-aae2-2c4d1ee76cb4">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Consolas" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="1" width="100" height="15" uuid="6db72db6-fd39-42ee-be16-2545fb2e5143">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Consolas" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COD BARRA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="1" width="235" height="15" uuid="a034170d-c997-4ce4-b532-b836f77040c8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Consolas" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE COMERCIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="1" width="50" height="15" uuid="b06a55b1-a828-4edd-91d5-d571fbac098a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Consolas" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="1" width="69" height="15" uuid="8ca38a27-3d22-49f0-80c3-c0329bcd91aa">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Consolas" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VALOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="514" y="1" width="41" height="15" uuid="2ee2afdb-6ff3-4557-b613-fa85ab0a4603">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.5" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Consolas" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[STOCK]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="1" width="60" height="20" uuid="13211499-7b88-40e7-9288-70873cc04371">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Consolas" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codart}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="1" width="100" height="20" uuid="23596941-4c58-4233-b0c8-5b37192c7691"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Consolas" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{art_codbarra}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="1" width="235" height="20" uuid="1daf632a-a6a1-4949-bc49-11402ba5df11">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Consolas" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ncomercial}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="1" width="50" height="20" uuid="9f11b96a-9829-4394-a2d8-c00ad053c347"/>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Consolas" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUM(cant)}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.###;(-#,##0.###)">
+				<reportElement x="445" y="1" width="69" height="20" uuid="5f7379fc-81f5-459b-b03c-c750b6298a51">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Consolas" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUM(monto)}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="514" y="1" width="41" height="20" uuid="27ee6ec2-a785-4712-bd64-baeca6b8b923">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Consolas" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{st_actual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="15">
+			<textField pattern="#,##0.###;(-#,##0.###)">
+				<reportElement x="445" y="0" width="69" height="15" uuid="4fc84f7c-cd2e-4aae-931e-1d6a926fd8dc">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Double"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Consolas" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUM(monto)1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

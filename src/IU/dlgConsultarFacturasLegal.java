@@ -893,7 +893,8 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
             String msg0 = Empresa.getEmpresa() + "\n";
             printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
             printerService.printBytes2(Timbrado.getImpresora(), getByteString(msg0, 1, 1, 1, 1));
-            String msg00 = "----------------------------------------\n";
+            String msg00 = "DE ALFONSO AVALOS GIMENEZ\n";
+            msg00 += "----------------------------------------\n";
             msg00 += "Ventas al por menor de productos farmacéuticos y medicinales, cosméticos y Art. de Tocador\n";
             msg00 += "----------------------------------------\n";
             printerService.printBytes2(Timbrado.getImpresora(), ESC_ALIGN_CENTER);
@@ -902,8 +903,8 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
             String msg = "RUC: " + Empresa.getRUC() + "\n";
             msg += "CEL: " + Empresa.getCelular() + "\n";
             msg += Empresa.getDireccion() + "\n";
-            msg += "CAACUPE - DPTO. DE CORDILLERA - PY\n";
-            //msg += "CNEL. OVIEDO - DPTO. DE CAAGUAZU - PY\n";
+            //msg += "CAACUPE - DPTO. DE CORDILLERA - PY\n";
+            msg += "CNEL. OVIEDO - DPTO. DE CAAGUAZU - PY\n";
             //msg += "PARAGUAY\n";
             msg += "-----\n";
             msg += "TIMBRADO: " + Timbrado.getTimbrado() + "\n";

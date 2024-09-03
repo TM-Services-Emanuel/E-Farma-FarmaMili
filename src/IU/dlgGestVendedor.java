@@ -393,7 +393,6 @@ public final class dlgGestVendedor extends javax.swing.JDialog {
 
         txtTelefono.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtTelefono.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtTelefono.setText("0986-540423");
         txtTelefono.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -434,7 +433,6 @@ public final class dlgGestVendedor extends javax.swing.JDialog {
 
         txtCI.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         txtCI.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtCI.setText("4744832");
         txtCI.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         txtCI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1122,7 +1120,7 @@ public final class dlgGestVendedor extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel6;
     public static javax.swing.JLabel lblCodV;
     private rojeru_san.rsdate.RSDateChooser rSDateChooser1;
-    private javax.swing.JTextField txtAdelanto;
+    public static javax.swing.JTextField txtAdelanto;
     public static javax.swing.JTextField txtCI;
     public static javax.swing.JTextField txtCelular;
     public static javax.swing.JTextField txtDireccion;

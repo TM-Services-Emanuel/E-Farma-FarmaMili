@@ -215,11 +215,11 @@ public class controlCompra {
             if (Gan <= 0) {
                 Mensajes.error("Ganancia no válido.\nValor negativo o igual a 0");
             } else {
-                DetalleCompra dco = new DetalleCompra(codA);
-                if (array.busca(dco.getCodArticulo()) != -1) {
+                dc = new DetalleCompra(codA);
+                if (array.busca(dc.getCodArticulo()) != -1) {
                     Mensajes.informacion("EL ARTICULO YA FUE AGREGADO");
                 } else {
-                    array.agregar(dco);
+                    array.agregar(dc);
                     insertar(String.valueOf(codA), codB, desc, String.valueOf(cant), String.valueOf(costo), String.valueOf(mont), iv, String.valueOf(costoiva), String.valueOf(Gan), String.valueOf(Des), tabla);
                     long total = getTotal();
                     String exentas = String.valueOf(getExcetas());
@@ -271,9 +271,9 @@ public class controlCompra {
         array.vaciar();
     }
 
-    public static void listarCompras(JTable tabla) {
+    public static void listarCompras(JTable tabla, String busqueda) {
         List lista;
-        lista = GestionarCompra.listarCompras();
+        lista = GestionarCompra.listarCompras(busqueda);
         for (int i = 1; i < lista.size(); i++) {
             DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
             Object[] fila = (Object[]) lista.get(i);

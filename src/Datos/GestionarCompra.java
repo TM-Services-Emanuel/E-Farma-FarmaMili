@@ -74,9 +74,9 @@ public class GestionarCompra {
         return msg;
     }
 
-    public static List listarCompras() {
-        StringBuilder sql = new StringBuilder("SELECT compra.com_codigo,");
-        sql.append("compra.caja_ca_id,");
+     public static List listarCompras(String busc) {
+        StringBuilder sql = new StringBuilder("SELECT * from v_compras1");
+        /*sql.append("compra.caja_ca_id,");
         sql.append(" compra.com_fecha,");
         sql.append(" compra.com_hora,");
         sql.append(" proveedor.pro_ruc,");
@@ -87,8 +87,8 @@ public class GestionarCompra {
         sql.append(" compra.com_total,");
         sql.append(" compra.com_indicador");
         sql.append(" FROM compra ");
-        sql.append(" JOIN proveedor ON compra.proveedor_pro_codigo = proveedor.pro_codigo");
-        //sql.append(" WHERE compra.com_indicador='S'");
+        sql.append(" JOIN proveedor ON compra.proveedor_pro_codigo = proveedor.pro_codigo");*/
+        sql.append(" WHERE pro_ruc LIKE '%").append(busc).append("%' OR pro_razonsocial LIKE '%").append(busc).append("%' OR com_factura LIKE '%").append(busc).append("%'");
         return Operacion.getTabla(sql.toString());
     }
 

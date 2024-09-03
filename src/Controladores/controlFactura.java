@@ -177,7 +177,7 @@ public class controlFactura {
         }
         return (total);
     }
-    
+
     public static int getExcetasConsultaFacturaLegal() {
         int total = 0;
         DefaultTableModel tb = (DefaultTableModel) dlgConsultarFacturasLegal.tbDetalleFactura.getModel();
@@ -187,7 +187,7 @@ public class controlFactura {
         }
         return (total);
     }
-    
+
     public static int get5ConsultaFacturaLegal() {
         int total = 0;
         DefaultTableModel tb = (DefaultTableModel) dlgConsultarFacturasLegal.tbDetalleFactura.getModel();
@@ -197,6 +197,7 @@ public class controlFactura {
         }
         return (total);
     }
+
     public static int get10ConsultaFacturaLegal() {
         int total = 0;
         DefaultTableModel tb = (DefaultTableModel) dlgConsultarFacturasLegal.tbDetalleFactura.getModel();
@@ -226,7 +227,7 @@ public class controlFactura {
         }
         return (total / 21);
     }
-    
+
     public static int get5Completo() {
         int total = 0;
         DefaultTableModel tb = (DefaultTableModel) dlgVentas.tbDetalle.getModel();
@@ -256,6 +257,7 @@ public class controlFactura {
         }
         return (total / 11);
     }
+
     public static int get10Completo() {
         int total = 0;
         DefaultTableModel tb = (DefaultTableModel) dlgVentas.tbDetalle.getModel();
@@ -570,6 +572,9 @@ public class controlFactura {
         int p = arrayTransf.busca(cod);
         if (p == -1) {
             Mensajes.informacion("Articulo no existe");
+        } else {
+            dft = arrayTransf.getFila(p);
+            //int codA = dfa.getCodArticulo();
         }
     }
 
@@ -731,6 +736,66 @@ public class controlFactura {
             dlgTransferencia.txtTotal.setText(df.format(Integer.valueOf(total.replace(".", "").replace(",", ""))));
         } catch (NumberFormatException e) {
             Mensajes.informacion("Seleccione una fila de la tabla");
+        }
+    }
+
+    public static void actPrecioTransferencia(JTable tabla) {
+        try {
+
+            int fila = dlgTransferencia.tbDetalle.getSelectedRow();
+            String cod = (dlgTransferencia.tbDetalle.getValueAt(fila, 0).toString());
+            Articulo art = GestionarArticulos.busArticulo(cod);
+            int cant = Integer.parseInt(dlgTransferencia.tbDetalle.getValueAt(fila, 3).toString());
+            int pre = Integer.parseInt(dlgTransferencia.tbDetalle.getValueAt(fila, 4).toString());
+            int costo = Mensajes.ingresarPrecioC(pre);
+            int iv = art.getIva();
+            double costoiva = 0;
+            switch (iv) {
+                case 0 ->
+                    costoiva = 0;
+                case 5 ->
+                    costoiva = (double) (costo / 21);
+                case 10 ->
+                    costoiva = (double) (costo / 11);
+                default -> {
+                }
+            }
+
+            double Gan = CalcGananciaT(Double.valueOf(art.getPventa()), Double.valueOf(costo));
+            double Des = CalcDescuentoT(Double.valueOf(art.getPventa()), Double.valueOf(art.getPpublico()));
+
+            long monto = (long) (cant * costo);
+
+            dlgTransferencia.tbDetalle.setValueAt(String.valueOf(costo), fila, 4);
+
+            switch (iv) {
+                case 10 -> {
+                    dlgTransferencia.tbDetalle.setValueAt(String.valueOf(monto), fila, 7);
+                }
+                case 5 -> {
+                    dlgTransferencia.tbDetalle.setValueAt(String.valueOf(monto), fila, 6);
+                }
+                default -> {
+                    dlgTransferencia.tbDetalle.setValueAt(String.valueOf(monto), fila, 5);
+                }
+            }
+            dlgTransferencia.tbDetalle.setValueAt(String.valueOf(monto), fila, 8);
+            dlgTransferencia.tbDetalle.setValueAt(String.valueOf(costoiva), fila, 12);
+            dlgTransferencia.tbDetalle.setValueAt(String.valueOf(Gan), fila, 9);
+            dlgTransferencia.tbDetalle.setValueAt(String.valueOf(Des), fila, 10);
+
+            long total = getTotalTransferencia();
+            String exentas = String.valueOf(getExcetasTransferencia());
+            String iva5 = String.valueOf(get5Transferencia());
+            String iva10 = String.valueOf(get10Transferencia());
+            DecimalFormat df = new DecimalFormat("#,###");
+            dlgTransferencia.txtExenta.setText(df.format(Integer.valueOf(exentas.trim().replace(".", "").replace(",", ""))));
+            dlgTransferencia.txt5.setText(df.format(Integer.valueOf(iva5.replace(".", "").replace(",", ""))));
+            dlgTransferencia.txt10.setText(df.format(Integer.valueOf(iva10.replace(".", "").replace(",", ""))));
+            dlgTransferencia.txtTotal.setText(df.format((total)));
+
+        } catch (NumberFormatException e) {
+            Mensajes.error("Seleccione una fila de la tabla");
         }
     }
 
@@ -1168,7 +1233,7 @@ public class controlFactura {
             Object[] fila = (Object[]) lista.get(i);
             tb.addRow(fila);
         }
-        
+
         dlgConsultarFacturasLegal.txtExenta.setText(String.valueOf(getExcetasConsultaFacturaLegal()));
         dlgConsultarFacturasLegal.txt5.setText(String.valueOf(get5ConsultaFacturaLegal()));
         dlgConsultarFacturasLegal.txt10.setText(String.valueOf(get10ConsultaFacturaLegal()));
