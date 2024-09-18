@@ -1,5 +1,6 @@
 package Controladores;
 
+import Componentes.Config;
 import Componentes.DataSourceService;
 import Componentes.Empresa;
 import Componentes.Fecha;
@@ -39,9 +40,6 @@ public class ControlLogeo {
         u = Logeo.logear(user, pass);
 
         if (u.getPefil().equalsIgnoreCase("ADMINISTRADOR")) {
-            //ip=u.getIp();
-            //System.out.println(u.getIp()+" vs "+ traerIP.getIP() );
-            //if (ip.equals(traerIP.getIP())) {
             String msg = Logeo.acceso(u);
             abrirPrincipal();
             frmPrincipal.lblUsuario.setText(u.getNomUsuario());
@@ -51,12 +49,7 @@ public class ControlLogeo {
             Login.setPasswordLogeado(u.getPassword());
             Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
             frmPrincipal.lbPerfil.setText(u.getPefil());
-            //} else {
-            //    frmAcceso.lblMensaje.setText("Dirección IP no autorizada para la conexión, verifique la Configuración.");
-            //}
         } else if (u.getPefil().equalsIgnoreCase("VENTA")) {
-            //ip=u.getIp();
-            //if (ip.equals(traerIP.getIP())) {
             String msg = Logeo.acceso(u);
             abrirPrincipal();
             frmPrincipal.lblUsuario.setText(u.getNomUsuario());
@@ -66,12 +59,7 @@ public class ControlLogeo {
             Login.setPasswordLogeado(u.getPassword());
             Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
             frmPrincipal.lbPerfil.setText(u.getPefil());
-            //} else {
-            //    frmAcceso.lblMensaje.setText("Dirección IP no autorizada para la conexión, verifique la Configuración.");
-            //}
         } else if (u.getPefil().equalsIgnoreCase("COMPRA")) {
-            //ip=u.getIp();
-            //if (ip.equals(traerIP.getIP())) {
             String msg = Logeo.acceso(u);
             abrirPrincipal();
             frmPrincipal.lblUsuario.setText(u.getNomUsuario());
@@ -81,12 +69,7 @@ public class ControlLogeo {
             Login.setPasswordLogeado(u.getPassword());
             Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
             frmPrincipal.lbPerfil.setText(u.getPefil());
-            //} else {
-            //    frmAcceso.lblMensaje.setText("Dirección IP no autorizada para la conexión, verifique la Configuración.");
-            //}
         } else if (u.getPefil().equalsIgnoreCase("ALMACEN")) {
-            //ip=u.getIp();
-            //if (ip.equals(traerIP.getIP())) {
             String msg = Logeo.acceso(u);
             abrirPrincipal();
             frmPrincipal.lblUsuario.setText(u.getNomUsuario());
@@ -96,12 +79,7 @@ public class ControlLogeo {
             Login.setPasswordLogeado(u.getPassword());
             Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
             frmPrincipal.lbPerfil.setText(u.getPefil());
-            //} else {
-            //    frmAcceso.lblMensaje.setText("Dirección IP no autorizada para la conexión, verifique la Configuración.");
-            //}
         } else if (u.getPefil().equalsIgnoreCase("DESARROLLADOR")) {
-            //ip=u.getIp();
-            //if (ip.equals(traerIP.getIP())) {
             String msg = Logeo.acceso(u);
             abrirPrincipal();
             frmPrincipal.lblUsuario.setText(u.getNomUsuario());
@@ -111,9 +89,6 @@ public class ControlLogeo {
             Login.setPasswordLogeado(u.getPassword());
             Login.setIdLogueado(String.valueOf(u.getCodUsuario()));
             frmPrincipal.lbPerfil.setText(u.getPefil());
-            //} else {
-            //    frmAcceso.lblMensaje.setText("Dirección IP no autorizada para la conexión, verifique la Configuración.");
-            //}
         }
         return String.valueOf(u.getNomUsuario());
     }
@@ -145,7 +120,7 @@ public class ControlLogeo {
 
     public static void Timbrado_Ticket() {
         try {
-            String sql = "SELECT * FROM v_puntoemision3 WHERE ip='" + traerIP.getIP() + "' AND tipo='L' AND estado='Activo'";
+            String sql = "SELECT * FROM v_puntoemision3 WHERE ip='" + Config.getIPLocal() + "' AND tipo='L' AND estado='Activo'";
             try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql);) {
                 rs.last();
                 if (rs.getRow() != 0) {
@@ -203,7 +178,7 @@ public class ControlLogeo {
         }
 
         try {
-            String sql = "SELECT * FROM v_puntoemision3 WHERE ip='" + traerIP.getIP() + "' AND tipo='T' AND estado='Activo'";
+            String sql = "SELECT * FROM v_puntoemision3 WHERE ip='" + Config.getIPLocal() + "' AND tipo='T' AND estado='Activo'";
             try (Connection cn = dss.getDataSource().getConnection(); Statement st = cn.createStatement(); ResultSet rs = st.executeQuery(sql);) {
                 rs.last();
                 if (rs.getRow() != 0) {

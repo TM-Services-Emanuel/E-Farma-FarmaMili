@@ -1,5 +1,6 @@
 package IU;
 
+import Componentes.Config;
 import Componentes.Empresa;
 import Componentes.Fecha;
 import Componentes.ReporteF;
@@ -82,7 +83,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Informacion Gral: " + e.getMessage());
         }
-        lbDIP.setText("HOST IP : " + traerIP.getIP());
+        lbDIP.setText("HOST IP : " + traerIP.getIP()+" / "+"IP SOFT: "+Config.getIPLocal());
     }
 
     @SuppressWarnings("unchecked")
@@ -159,6 +160,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
         btnVentas1 = new RSMaterialComponent.RSButtonIconUno();
         jSeparator35 = new javax.swing.JSeparator();
         jLabel25 = new javax.swing.JLabel();
+        panelProductos1 = new rojeru_san.rspanel.RSPanelImage();
+        btnArticulos1 = new RSMaterialComponent.RSButtonIconUno();
+        jSeparator37 = new javax.swing.JSeparator();
+        jLabel27 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
         jLabel5 = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
@@ -710,6 +715,30 @@ public final class frmPrincipal extends javax.swing.JFrame {
         jLabel25.setText("Transferencias");
         panelTransferencias.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
 
+        panelProductos1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Recursos/CONTENEDOR2.png"))); // NOI18N
+        panelProductos1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnArticulos1.setBackground(new java.awt.Color(255, 0, 0));
+        btnArticulos1.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnArticulos1.setForegroundHover(new java.awt.Color(255, 0, 0));
+        btnArticulos1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_LIBRARY);
+        btnArticulos1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
+        btnArticulos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArticulos1ActionPerformed(evt);
+            }
+        });
+        panelProductos1.add(btnArticulos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 15, 60, 60));
+
+        jSeparator37.setForeground(new java.awt.Color(204, 204, 204));
+        panelProductos1.add(jSeparator37, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 80, 110, -1));
+
+        jLabel27.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(17, 35, 46));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel27.setText("Consultor Externo");
+        panelProductos1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 85, 110, -1));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -738,9 +767,12 @@ public final class frmPrincipal extends javax.swing.JFrame {
                                 .addComponent(panelGestFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(panelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panelProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(panelProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(panelProductos1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -748,7 +780,9 @@ public final class frmPrincipal extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelProductos1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
                 .addComponent(panelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
@@ -787,7 +821,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 .addComponent(CONTENEDOR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(303, Short.MAX_VALUE))
+                .addContainerGap(316, Short.MAX_VALUE))
         );
         panelImage1Layout.setVerticalGroup(
             panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -799,12 +833,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 661, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         jToolBar1.setBackground(new java.awt.Color(17, 35, 46));
-        jToolBar1.setFloatable(false);
         jToolBar1.setForeground(new java.awt.Color(0, 153, 204));
         jToolBar1.setBorderPainted(false);
         jToolBar1.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
@@ -2296,6 +2329,21 @@ public final class frmPrincipal extends javax.swing.JFrame {
             Notif.Notify_Minim_dlgArticulos("Notificación del sistema", "Formulario de Gestión de Productos minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
     }
+    
+    void abrirArticulos1() {
+        System.out.println("abrirArticulos1() min: " + dlgArticulos1.min);
+        if (dlgArticulos1.min != 1) {
+            try {
+                dlgArticulos1 articulo1 = new dlgArticulos1(this, true);
+                articulo1.setLocationRelativeTo(null);
+                articulo1.setVisible(true);
+            } catch (SQLException e) {
+                Mensajes.informacion("Servidor no esta activo");
+            }
+        } else {
+            Notif.Notify_Minim_dlgArticulos1("Notificación del sistema", "Formulario de Consultor Externo de Productos minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
+        }
+    }
 
     void abrirTimbradoMovil() {
         try {
@@ -2826,6 +2874,10 @@ public final class frmPrincipal extends javax.swing.JFrame {
             Notif.Notify_Minim_dlgAjusteStopck("Notificación del sistema", "Formulario de Ajutes de Stock minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
     }//GEN-LAST:event_formWindowDeiconified
+
+    private void btnArticulos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArticulos1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnArticulos1ActionPerformed
     void abrirTransferencias() {
         System.out.println("abrirTransferencia() min: " + dlgTransferencia.min);
         if (dlgTransferencia.min != 1) {
@@ -2909,6 +2961,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     public static javax.swing.JPopupMenu.Separator Separator13;
     private javax.swing.JMenu TICKETS;
     public static RSMaterialComponent.RSButtonIconUno btnArticulos;
+    public static RSMaterialComponent.RSButtonIconUno btnArticulos1;
     public static RSMaterialComponent.RSButtonIconUno btnCerrarSesion;
     public static RSMaterialComponent.RSButtonIconUno btnClientes;
     public static RSMaterialComponent.RSButtonIconUno btnCompras;
@@ -2955,6 +3008,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -3023,6 +3077,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator34;
     private javax.swing.JSeparator jSeparator35;
     private javax.swing.JSeparator jSeparator36;
+    private javax.swing.JSeparator jSeparator37;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
@@ -3083,6 +3138,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
     public static rojeru_san.rspanel.RSPanelImage panelGestionarCompras;
     private org.edisoncor.gui.panel.PanelImage panelImage1;
     public static rojeru_san.rspanel.RSPanelImage panelProductos;
+    public static rojeru_san.rspanel.RSPanelImage panelProductos1;
     public static rojeru_san.rspanel.RSPanelImage panelProveedores;
     public static rojeru_san.rspanel.RSPanelImage panelTransferencias;
     public static rojeru_san.rspanel.RSPanelImage panelVentas;

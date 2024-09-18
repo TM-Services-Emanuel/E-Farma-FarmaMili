@@ -135,7 +135,23 @@ public class Notif {
                     }
                 });
     }
-    
+
+    public static void Notify_Minim_dlgArticulos1(String titulo, String mensaje) {
+        DesktopNotify.showDesktopMessage(titulo,
+                mensaje,
+                DesktopNotify.HELP, (ActionEvent evt) -> {
+                    if (frmPrincipal.PrincipalMinimizado != 1) {
+                        if (dlgArticulos1.min == 1) {
+                            try {
+                                dlgArticulos1.btnEvento1.doClick();
+                            } catch (Exception e) {
+                                System.out.println("Error Notify_Minim_dlgArticulos1: " + e.getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
     public static void Notify_Minim_dlgVentas(String titulo, String mensaje) {
         DesktopNotify.showDesktopMessage(titulo,
                 mensaje,
@@ -151,7 +167,7 @@ public class Notif {
                     }
                 });
     }
-    
+
     public static void Notify_Minim_dlgAjusteStopck(String titulo, String mensaje) {
         DesktopNotify.showDesktopMessage(titulo,
                 mensaje,
@@ -167,7 +183,7 @@ public class Notif {
                     }
                 });
     }
-    
+
     public static void Notify_Minim_dlgCompras(String titulo, String mensaje) {
         DesktopNotify.showDesktopMessage(titulo,
                 mensaje,
@@ -183,7 +199,7 @@ public class Notif {
                     }
                 });
     }
-    
+
     public static void Notify_Minim_dlgTransferencia(String titulo, String mensaje) {
         DesktopNotify.showDesktopMessage(titulo,
                 mensaje,
@@ -199,7 +215,7 @@ public class Notif {
                     }
                 });
     }
-    
+
     public static void Notify_Minim_dlgProveedores(String titulo, String mensaje) {
         DesktopNotify.showDesktopMessage(titulo,
                 mensaje,
@@ -215,7 +231,7 @@ public class Notif {
                     }
                 });
     }
-    
+
     public static void Notify_Minim_dlgClientes(String titulo, String mensaje) {
         DesktopNotify.showDesktopMessage(titulo,
                 mensaje,

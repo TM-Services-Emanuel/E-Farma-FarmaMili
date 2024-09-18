@@ -1,5 +1,6 @@
 package IU;
 
+import Componentes.Config;
 import Componentes.Mensajes;
 import Componentes.Software;
 import Componentes.traerIP;
@@ -18,7 +19,7 @@ public final class frmAcceso extends javax.swing.JFrame {
         titulo();
         cargarIcono();
         try {
-            lblIP.setText("HOST IP : " + traerIP.getIP());
+            lblIP.setText("HOST IP : " + traerIP.getIP()+" / IP SOFT: "+ Config.getIPLocal());
             lblHost.setText("HOST: " + traerIP.getHostname());
         } catch (Exception e) {
         }
@@ -177,8 +178,8 @@ public final class frmAcceso extends javax.swing.JFrame {
         rSPanelGradiente2Layout.setHorizontalGroup(
             rSPanelGradiente2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rSPanelGradiente2Layout.createSequentialGroup()
-                .addContainerGap(223, Short.MAX_VALUE)
-                .addComponent(lblIP, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(113, Short.MAX_VALUE)
+                .addComponent(lblIP, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         rSPanelGradiente2Layout.setVerticalGroup(
