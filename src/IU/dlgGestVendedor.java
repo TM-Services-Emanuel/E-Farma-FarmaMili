@@ -18,7 +18,7 @@ public final class dlgGestVendedor extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         cargarIcono();
-        txtNombre.requestFocus();
+        txtCI.requestFocus();
     }
 
     private void SueldoFinal() {
@@ -45,7 +45,7 @@ public final class dlgGestVendedor extends javax.swing.JDialog {
         }
     }
     
-    private void HabilitarAdelantos(){
+    public static void HabilitarAdelantos(){
         if(cbAdelantos.isSelected()){
             cbFrecuencia.setEnabled(true);
             txtAdelanto.setEnabled(true);
@@ -96,7 +96,7 @@ public final class dlgGestVendedor extends javax.swing.JDialog {
         txtCI = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        rSDateChooser1 = new rojeru_san.rsdate.RSDateChooser();
+        rdFechaIngreso = new rojeru_san.rsdate.RSDateChooser();
         jLabel9 = new javax.swing.JLabel();
         txtSueldo = new javax.swing.JTextField();
         cbPeriodo = new RSMaterialComponent.RSComboBox();
@@ -520,15 +520,15 @@ public final class dlgGestVendedor extends javax.swing.JDialog {
         jLabel11.setText("FECHA DE INGRESO:");
         jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 30, 148, 23));
 
-        rSDateChooser1.setColorBackground(new java.awt.Color(204, 204, 204));
-        rSDateChooser1.setColorButtonHover(new java.awt.Color(17, 35, 46));
-        rSDateChooser1.setColorDiaActual(new java.awt.Color(204, 102, 0));
-        rSDateChooser1.setColorForeground(new java.awt.Color(0, 0, 0));
-        rSDateChooser1.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
-        rSDateChooser1.setFormatoFecha("dd/MM/yyyy");
-        rSDateChooser1.setFuente(new java.awt.Font("Roboto", 1, 11)); // NOI18N
-        rSDateChooser1.setPlaceholder("");
-        jPanel2.add(rSDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 137, 23));
+        rdFechaIngreso.setColorBackground(new java.awt.Color(204, 204, 204));
+        rdFechaIngreso.setColorButtonHover(new java.awt.Color(17, 35, 46));
+        rdFechaIngreso.setColorDiaActual(new java.awt.Color(204, 102, 0));
+        rdFechaIngreso.setColorForeground(new java.awt.Color(0, 0, 0));
+        rdFechaIngreso.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        rdFechaIngreso.setFormatoFecha("dd/MM/yyyy");
+        rdFechaIngreso.setFuente(new java.awt.Font("Roboto", 1, 11)); // NOI18N
+        rdFechaIngreso.setPlaceholder("");
+        jPanel2.add(rdFechaIngreso, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 137, 23));
 
         jLabel9.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jLabel9.setText("SUELDO A PERCIBIR:");
@@ -1100,9 +1100,9 @@ public final class dlgGestVendedor extends javax.swing.JDialog {
     public static RSMaterialComponent.RSButtonIconUno btnModificar;
     public static RSMaterialComponent.RSButtonIconUno btnNuev;
     private RSMaterialComponent.RSButtonIconUno btnSalir;
-    private rojerusan.RSCheckBox cbAdelantos;
-    private RSMaterialComponent.RSComboBox cbFrecuencia;
-    private RSMaterialComponent.RSComboBox cbPeriodo;
+    public static rojerusan.RSCheckBox cbAdelantos;
+    public static RSMaterialComponent.RSComboBox cbFrecuencia;
+    public static RSMaterialComponent.RSComboBox cbPeriodo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1119,7 +1119,7 @@ public final class dlgGestVendedor extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     public static javax.swing.JLabel lblCodV;
-    private rojeru_san.rsdate.RSDateChooser rSDateChooser1;
+    public static rojeru_san.rsdate.RSDateChooser rdFechaIngreso;
     public static javax.swing.JTextField txtAdelanto;
     public static javax.swing.JTextField txtCI;
     public static javax.swing.JTextField txtCelular;

@@ -13,12 +13,12 @@ public class Vendedor {
     private int per_pago;
     private String funcon;
     public String per_adelanto;
-    private String frecuencia;
+    private int frecuencia;
     private int monto_adelanto;
 
     //Constructor
 
-    public Vendedor(int codVe, int ci, String nombreV, String direccion, String telefono, String celular, String fech_ingreso, int Sueldo, int per_pago, String funcon, String per_adelanto, String frecuencia, int monto_adelanto) {
+    public Vendedor(int codVe, int ci, String nombreV, String direccion, String telefono, String celular, String fech_ingreso, int Sueldo, int per_pago, String funcon, String per_adelanto, int frecuencia, int monto_adelanto) {
         this.codVe = codVe;
         this.ci = ci;
         this.nombreV = nombreV;
@@ -130,11 +130,11 @@ public class Vendedor {
         this.per_adelanto = per_adelanto;
     }
 
-    public String getFrecuencia() {
+    public int getFrecuencia() {
         return frecuencia;
     }
 
-    public void setFrecuencia(String frecuencia) {
+    public void setFrecuencia(int frecuencia) {
         this.frecuencia = frecuencia;
     }
 

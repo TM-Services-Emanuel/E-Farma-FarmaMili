@@ -84,6 +84,20 @@ public class Fecha {
         return fechas;
     }
     
+    public static Date formatoFechaD2(String fecha) {
+        Date fechas = null;
+        try {
+            SimpleDateFormat fe = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat myFecha = new SimpleDateFormat("yyyy-MM-dd");
+
+            String fech = (myFecha.format(fecha));
+            fechas = fe.parse(fech);
+        }catch (Exception e) {
+            System.out.println("No se pudo convertir "+e.getMessage());
+        }
+        return fechas;
+    }
+    
     public static String fechaCompleta(String fecha){
         String fechas = null;
         String horas = null;

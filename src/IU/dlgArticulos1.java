@@ -1,5 +1,6 @@
 package IU;
 
+import Componentes.DataSourceService1;
 import Componentes.Mensajes;
 import Componentes.Notif;
 import Componentes.RenderDecimal1conPuntos;
@@ -10,14 +11,13 @@ import Componentes.ReporteF;
 import Componentes.Software;
 import Componentes.clsExportarExcel;
 import Controladores.CabecerasTablas;
+import Controladores.ControlLogeo;
 import Controladores.controlArticulo;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 
 public class dlgArticulos1 extends javax.swing.JDialog {
 
@@ -25,15 +25,27 @@ public class dlgArticulos1 extends javax.swing.JDialog {
     public ReporteF jasper;
     private static Point point;
     public static int min;
+    public static DataSourceService1 dssCruce = new DataSourceService1();
 
     public dlgArticulos1(java.awt.Frame parent, boolean modal) throws SQLException {
         super(parent, modal);
         min = 0;
         initComponents();
         titulo();
+        txtBandConnect.setVisible(false);
+        PanelContenedor.setVisible(false);
+        PanelContenedor1.setVisible(false);
+        PanelContenedor2.setVisible(false);
         jasper = new ReporteF();
-        CabecerasTablas.Articulos(tbProductos);
-        controlArticulo.filtrarGral(tbProductos, "");
+        dssCruce.getReconect();
+        if (ControlLogeo.perfil().equalsIgnoreCase("VENTA")) {
+            CabecerasTablas.ArticulosCruceVenta(tbProductos);
+        } else if (ControlLogeo.perfil().equalsIgnoreCase("ADMINISTRADOR")) {
+            CabecerasTablas.Articulos(tbProductos);
+        } else if (ControlLogeo.perfil().equalsIgnoreCase("DESARROLLADOR")) {
+            CabecerasTablas.Articulos(tbProductos);
+        }
+        controlArticulo.filtrarGralCruce(tbProductos, "");
         Renders();
         txtBuscar.requestFocus();
         System.out.println("inicializando min: " + min);
@@ -47,7 +59,7 @@ public class dlgArticulos1 extends javax.swing.JDialog {
         }
     }
 
-    void Volver2() {
+    /*void Volver2() {
         try {
             CabecerasTablas.tablaArticuloAuxiliar(dlgBuscarArticuloCompra.tbDetalle);
             CabecerasTablas.limpiarTablaTablaArticuloAuxiliar(dlgBuscarArticuloCompra.tbDetalle);
@@ -59,8 +71,7 @@ public class dlgArticulos1 extends javax.swing.JDialog {
         } catch (Exception e) {
             System.out.println("Error volviendo a dlgBuscarArticuloCompra: " + e.getMessage());
         }
-    }
-
+    }*/
     private void AccesoRapido(int n) {
 
         switch (n) {
@@ -115,6 +126,8 @@ public class dlgArticulos1 extends javax.swing.JDialog {
         txtBuscar = new RSMaterialComponent.RSTextFieldMaterialIcon();
         btnSalir = new RSMaterialComponent.RSButtonIconUno();
         btnEvento = new RSMaterialComponent.RSButtonIconUno();
+        lbConeccion = new javax.swing.JLabel();
+        txtBandConnect = new javax.swing.JTextField();
 
         dlgMinimizado.setUndecorated(true);
 
@@ -202,6 +215,7 @@ public class dlgArticulos1 extends javax.swing.JDialog {
         btnNuevo.setBackground(new java.awt.Color(0, 102, 0));
         btnNuevo.setToolTipText("F1");
         btnNuevo.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnNuevo.setEnabled(false);
         btnNuevo.setForegroundHover(new java.awt.Color(0, 102, 0));
         btnNuevo.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.ADD);
         btnNuevo.setRippleColor(java.awt.Color.white);
@@ -232,6 +246,7 @@ public class dlgArticulos1 extends javax.swing.JDialog {
         btnModificar.setBackground(new java.awt.Color(255, 102, 0));
         btnModificar.setToolTipText("F5");
         btnModificar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnModificar.setEnabled(false);
         btnModificar.setForegroundHover(new java.awt.Color(255, 102, 0));
         btnModificar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.EDIT);
         btnModificar.setRippleColor(java.awt.Color.white);
@@ -263,6 +278,7 @@ public class dlgArticulos1 extends javax.swing.JDialog {
         btnEliminar.setBackground(new java.awt.Color(255, 0, 0));
         btnEliminar.setToolTipText("DELETE");
         btnEliminar.setBackgroundHover(new java.awt.Color(255, 255, 255));
+        btnEliminar.setEnabled(false);
         btnEliminar.setForegroundHover(new java.awt.Color(255, 0, 0));
         btnEliminar.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.DELETE);
         btnEliminar.setRippleColor(java.awt.Color.white);
@@ -451,6 +467,12 @@ public class dlgArticulos1 extends javax.swing.JDialog {
         });
         FondoBlanco.add(btnEvento, new org.netbeans.lib.awtextra.AbsoluteConstraints(1214, 4, 25, 25));
 
+        lbConeccion.setFont(new java.awt.Font("Roboto", 3, 11)); // NOI18N
+        lbConeccion.setForeground(new java.awt.Color(255, 102, 0));
+        lbConeccion.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        FondoBlanco.add(lbConeccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 2, 620, 25));
+        FondoBlanco.add(txtBandConnect, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 40, 50, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -467,12 +489,12 @@ public class dlgArticulos1 extends javax.swing.JDialog {
 
     private void tbProductosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMousePressed
         // TODO add your handling code here:
-        if (SwingUtilities.isRightMouseButton(evt)) {
+        /*      if (SwingUtilities.isRightMouseButton(evt)) {
             Point p = evt.getPoint();
             int number = tbProductos.rowAtPoint(p);
             ListSelectionModel modelos = tbProductos.getSelectionModel();
             modelos.setSelectionInterval(number, number);
-        }
+        }*/
     }//GEN-LAST:event_tbProductosMousePressed
     public static void nuevoArticulo() {
         dlgGestArticulos gestArticulos = new dlgGestArticulos(null, true);
@@ -521,21 +543,22 @@ public class dlgArticulos1 extends javax.swing.JDialog {
                 }
             }
         } catch (Exception e) {
-           // Mensajes.Sistema("La eliminación no puede ser procesada.\nSeleccione en la tabla el producto que desea eliminar definitivamente de la base de datos.");
+            // Mensajes.Sistema("La eliminación no puede ser procesada.\nSeleccione en la tabla el producto que desea eliminar definitivamente de la base de datos.");
         }
     }
     private void tbProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProductosMouseClicked
         // TODO add your handling code here:
-        if (evt.getClickCount() == 2) {
+        /*    if (evt.getClickCount() == 2) {
             modArticulo();
-        }
+        }*/
     }//GEN-LAST:event_tbProductosMouseClicked
 
     private void tbProductosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tbProductosKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        /*   if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             modArticulo();
-        } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+        } else */
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             txtBuscar.requestFocus();
             txtBuscar.selectAll();
         }
@@ -552,11 +575,14 @@ public class dlgArticulos1 extends javax.swing.JDialog {
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         // TODO add your handling code here:
-        CabecerasTablas.limpiarTablaArticulos(tbProductos);
-        controlArticulo.filtrarGral(tbProductos, "");
-        Renders();
-        txtBuscar.setText("");
-        txtBuscar.requestFocus();
+        if (txtBandConnect.getText().equals("1")) {
+            CabecerasTablas.limpiarTablaArticulos(tbProductos);
+            controlArticulo.filtrarGralCruce(tbProductos, "");
+            Renders();
+            txtBuscar.setText("");
+            txtBuscar.requestFocus();
+        }
+
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
@@ -587,29 +613,35 @@ public class dlgArticulos1 extends javax.swing.JDialog {
 
     private void txtBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyPressed
         // TODO add your handling code here:
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (tbProductos.getRowCount() <= 0) {
-                txtBuscar.requestFocus();
-                txtBuscar.selectAll();
-            } else {
-                tbProductos.requestFocus();
-                tbProductos.getSelectionModel().setSelectionInterval(0, 0);
+        if (txtBandConnect.getText().equals("1")) {
+            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                if (tbProductos.getRowCount() <= 0) {
+                    txtBuscar.requestFocus();
+                    txtBuscar.selectAll();
+                } else {
+                    tbProductos.requestFocus();
+                    tbProductos.getSelectionModel().setSelectionInterval(0, 0);
+                }
             }
+            AccesoRapido(evt.getKeyCode());
         }
-        AccesoRapido(evt.getKeyCode());
+
     }//GEN-LAST:event_txtBuscarKeyPressed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         // TODO add your handling code here:
         System.out.println(txtBuscar.getText().trim().length());
-        try {
-            String cod = txtBuscar.getText();
-            CabecerasTablas.limpiarTablaArticulos(tbProductos);
-            controlArticulo.filtrarGral(tbProductos, cod);
-            Renders();
-        } catch (Exception e) {
-            System.out.println("Mensaje de Error: " + e.getMessage());
+        if (txtBandConnect.getText().equals("1")) {
+            try {
+                String cod = txtBuscar.getText();
+                CabecerasTablas.limpiarTablaArticulos(tbProductos);
+                controlArticulo.filtrarGralCruce(tbProductos, cod);
+                Renders();
+            } catch (Exception e) {
+                System.out.println("Mensaje de Error: " + e.getMessage());
+            }
         }
+
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
@@ -627,7 +659,8 @@ public class dlgArticulos1 extends javax.swing.JDialog {
         int rpta = Mensajes.confirmar("¿Seguro que desea cerrar este formulario?");
         if (rpta == 0) {
             try {
-                Volver2();
+                //Volver2();
+
                 System.out.println("btnCerrar min: " + min);
                 min = 0;
                 this.dispose();
@@ -778,6 +811,7 @@ public class dlgArticulos1 extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private final javax.swing.JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
+    public static javax.swing.JLabel lbConeccion;
     public static final javax.swing.JTable tbProductos = new javax.swing.JTable()
     {
         public boolean isCellEditable(int rowInddex, int celIndex)
@@ -785,6 +819,7 @@ public class dlgArticulos1 extends javax.swing.JDialog {
             return false;
         }
     };
+    public static javax.swing.JTextField txtBandConnect;
     public static RSMaterialComponent.RSTextFieldMaterialIcon txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

@@ -60,6 +60,8 @@ public class cargarConfig {
                         Config.setUserServerCruce((String) lineas[i]);
                     case 10 ->
                         Config.setPasswordServerCruce((String) lineas[i]);
+                    case 11 ->
+                        Config.setNombreServerCruce((String) lineas[i]);
                     default -> {
                     }
                 }

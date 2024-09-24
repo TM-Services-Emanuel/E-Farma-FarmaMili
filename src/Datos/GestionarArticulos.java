@@ -246,6 +246,20 @@ public class GestionarArticulos {
                 .toString();
         return Operacion.getTabla(sql);
     }
+    
+    public static List filtrarGralCruce(String cad) {
+                String sql = new StringBuffer("SELECT cod, barra, fam, lab, prov, descripcion, principio, accion, stock, stockmin, ppublico, des, costo, iva, costoiva,")
+                .append(" pventa,ganstandar, gan, venta, activo FROM v_articulo")
+                .append(" WHERE barra LIKE '%")
+                .append(cad)
+                .append("%' OR principio LIKE '%")
+                .append(cad)
+                .append("%' OR descripcion LIKE '%")
+                .append(cad)
+                .append("%' ORDER BY fam")
+                .toString();
+        return Operacion.getTablaCruce(sql);
+    }
     /*public static List filtrarCodBarraActivo(String cad) {
         String sql = new StringBuffer("SELECT cod, barra, fam, lab, prov, descripcion, principio, accion, stock, stockmin, costo, iva, costoiva, ")
                 .append("ppublico, des, pventa,ganstandar, gan, venta, activo FROM v_articulo ")

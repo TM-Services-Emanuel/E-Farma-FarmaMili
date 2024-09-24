@@ -1,6 +1,7 @@
 package IU;
 
 import Componentes.Config;
+import Componentes.DataSourceService1;
 import Componentes.Empresa;
 import Componentes.Fecha;
 import Componentes.ReporteF;
@@ -8,6 +9,7 @@ import Componentes.Mensajes;
 import Componentes.Notif;
 import Componentes.Reloj;
 import Componentes.Software;
+import Componentes.cargarConfig;
 import Componentes.generarCodigos;
 import Componentes.traerIP;
 import Controladores.ControlLogeo;
@@ -83,7 +85,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Informacion Gral: " + e.getMessage());
         }
-        lbDIP.setText("HOST IP : " + traerIP.getIP()+" / "+"IP SOFT: "+Config.getIPLocal());
+        lbDIP.setText("HOST IP : " + traerIP.getIP() + " / " + "IP SOFT: " + Config.getIPLocal());
     }
 
     @SuppressWarnings("unchecked")
@@ -329,7 +331,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         CONTENEDOR_EMPRESA.add(encabezado_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(89, 30, 210, 20));
 
         jSeparator13.setForeground(new java.awt.Color(204, 204, 204));
-        CONTENEDOR_EMPRESA.add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 59, 340, 4));
+        CONTENEDOR_EMPRESA.add(jSeparator13, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 59, 334, 4));
 
         iconoEmpresa.setBackground(new java.awt.Color(255, 255, 255));
         iconoEmpresa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -339,7 +341,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         CONTENEDOR_EMPRESA.add(iconoEmpresa, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 60, 300, 210));
 
         jSeparator11.setForeground(new java.awt.Color(204, 204, 204));
-        CONTENEDOR_EMPRESA.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 273, 340, -1));
+        CONTENEDOR_EMPRESA.add(jSeparator11, new org.netbeans.lib.awtextra.AbsoluteConstraints(27, 273, 334, -1));
 
         jLabel3.setFont(new java.awt.Font("Roboto", 1, 11)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(17, 35, 46));
@@ -458,11 +460,11 @@ public final class frmPrincipal extends javax.swing.JFrame {
         CONTENEDOR.setLayout(CONTENEDORLayout);
         CONTENEDORLayout.setHorizontalGroup(
             CONTENEDORLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CONTENEDORLayout.createSequentialGroup()
-                .addGroup(CONTENEDORLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(CONTENEDOR_EMPRESA, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
-                    .addComponent(CONTENEDOR_ACCESO, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CONTENEDORLayout.createSequentialGroup()
+                .addGroup(CONTENEDORLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(CONTENEDOR_ACCESO, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(CONTENEDOR_EMPRESA, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE))
+                .addGap(5, 5, 5))
         );
         CONTENEDORLayout.setVerticalGroup(
             CONTENEDORLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -481,7 +483,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         btnArticulos.setBackground(new java.awt.Color(0, 153, 204));
         btnArticulos.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnArticulos.setForegroundHover(new java.awt.Color(0, 153, 204));
-        btnArticulos.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_HOSPITAL);
+        btnArticulos.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_PHARMACY);
         btnArticulos.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnArticulos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -721,7 +723,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         btnArticulos1.setBackground(new java.awt.Color(255, 0, 0));
         btnArticulos1.setBackgroundHover(new java.awt.Color(255, 255, 255));
         btnArticulos1.setForegroundHover(new java.awt.Color(255, 0, 0));
-        btnArticulos1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_LIBRARY);
+        btnArticulos1.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.LOCAL_PHARMACY);
         btnArticulos1.setTypeBorder(RSMaterialComponent.RSButtonIconUno.TYPEBORDER.CIRCLE);
         btnArticulos1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -746,35 +748,29 @@ public final class frmPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(panelCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(panelGestionarCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(panelVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, 0)
-                                        .addComponent(panelGestTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(panelTransferencias, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, 0)
-                                        .addComponent(panelGestTransferencias, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelGestFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(panelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(panelProductos1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(panelCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(panelGestionarCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(panelProveedores, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(panelProductos1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(panelVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(panelGestTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(panelTransferencias, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, 0)
+                                .addComponent(panelGestTransferencias, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, 0)
+                        .addComponent(panelGestFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(192, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -821,7 +817,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
                 .addComponent(CONTENEDOR, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(316, Short.MAX_VALUE))
+                .addContainerGap(131, Short.MAX_VALUE))
         );
         panelImage1Layout.setVerticalGroup(
             panelImage1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2329,8 +2325,18 @@ public final class frmPrincipal extends javax.swing.JFrame {
             Notif.Notify_Minim_dlgArticulos("Notificación del sistema", "Formulario de Gestión de Productos minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
     }
-    
+
     void abrirArticulos1() {
+        try {
+            cargarConfig me = new cargarConfig();
+            me.cargarArchivo("C:\\FAST-FARMA\\Config.properties");
+            me.contarLineas();
+            me.leerArchivo();
+        } catch (Exception e) {
+            //Notif.NotifyError("Notificación del sistema", "No es posible conectar con el servidor externo.\n\rFavor verifique los siguientes puntos:\n\r1 - Si el equipo esta encendido.\n\r2 - Si el equipo tiene acceso a internet.\n\r3 - Si la IP del servidor a acceder es la correcta.");
+        System.out.println("error cargando cargaConfig: "+ e.getMessage());
+        }
+        System.out.println("Mostrando ip del cruce: "+Config.getIPServerCruce());
         System.out.println("abrirArticulos1() min: " + dlgArticulos1.min);
         if (dlgArticulos1.min != 1) {
             try {
@@ -2869,7 +2875,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
         if (PrincipalMinimizado != 1 && dlgClientes.min == 1) {
             Notif.Notify_Minim_dlgClientes("Notificación del sistema", "Formulario de Gestionar Clientes minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
-        
+
         if (PrincipalMinimizado != 1 && dlgAjusteStock.min == 1) {
             Notif.Notify_Minim_dlgAjusteStopck("Notificación del sistema", "Formulario de Ajutes de Stock minimizado.\r\n\nHaga click sobre esta notificación para visualizarlo nuevamente.");
         }
@@ -2877,6 +2883,7 @@ public final class frmPrincipal extends javax.swing.JFrame {
 
     private void btnArticulos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArticulos1ActionPerformed
         // TODO add your handling code here:
+        abrirArticulos1();
     }//GEN-LAST:event_btnArticulos1ActionPerformed
     void abrirTransferencias() {
         System.out.println("abrirTransferencia() min: " + dlgTransferencia.min);

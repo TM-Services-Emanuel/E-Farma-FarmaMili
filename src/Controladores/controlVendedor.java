@@ -1,5 +1,6 @@
 package Controladores;
 
+import Componentes.Fecha;
 import Componentes.Login;
 import Componentes.Mensajes;
 import Datos.GestionarVendedor;
@@ -7,12 +8,16 @@ import IU.dlgGestVendedor;
 import IU.dlgVendedor;
 import Modelo.Vendedor;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class controlVendedor {
+
     public static void aModificar() {
         int x = dlgVendedor.tablaEmpleados.getSelectedRow();
         DefaultTableModel m = (DefaultTableModel) dlgVendedor.tablaEmpleados.getModel();
@@ -21,14 +26,41 @@ public class controlVendedor {
         Vendedor v = GestionarVendedor.busVendedor(cod);
         DecimalFormat df = new DecimalFormat("#,###");
         dlgGestVendedor.lblCodV.setText(String.valueOf(v.getCodVe()));
+        dlgGestVendedor.txtCI.setText(String.valueOf(v.getCi()));
         dlgGestVendedor.txtNombre.setText(v.getNombreV());
         dlgGestVendedor.txtDireccion.setText(v.getDireccion());
         dlgGestVendedor.txtTelefono.setText(v.getTelefono());
         dlgGestVendedor.txtCelular.setText(v.getCelular());
+        dlgGestVendedor.rdFechaIngreso.setDatoFecha(Fecha.formatoFechaD2(v.getFech_ingreso()));
         dlgGestVendedor.txtSueldo.setText(df.format(Integer.valueOf(v.getSueldo())));
-        //dlgGestVendedor.txtComision.setText(String.valueOf(v.getComision()));
-        //dlgGestVendedor.txaS.setText(v.getObs());
-        
+        int per_pago= v.getPer_pago();
+        switch (per_pago) {
+            case 1 -> dlgGestVendedor.cbPeriodo.setSelectedIndex(1);
+            case 2 -> dlgGestVendedor.cbPeriodo.setSelectedIndex(2);
+            case 3 -> dlgGestVendedor.cbPeriodo.setSelectedIndex(3);
+            default -> {
+            }
+        }
+        dlgGestVendedor.txtFuncion.setText(v.getFuncon());
+        String per_adelanto = v.getPer_adelanto();
+        if(per_adelanto.equals("N")){
+            dlgGestVendedor.cbAdelantos.setSelected(false);
+            dlgGestVendedor.HabilitarAdelantos();
+        }else if(per_adelanto.equals("S")){
+            dlgGestVendedor.cbAdelantos.setSelected(true);
+            dlgGestVendedor.HabilitarAdelantos();
+        }
+        int frec = v.getFrecuencia();
+        switch (frec) {
+            case 1 -> dlgGestVendedor.cbFrecuencia.setSelectedIndex(1);
+            case 2 -> dlgGestVendedor.cbFrecuencia.setSelectedIndex(2);
+            case 3 -> dlgGestVendedor.cbFrecuencia.setSelectedIndex(3);
+            case 4 -> dlgGestVendedor.cbFrecuencia.setSelectedIndex(4);
+            default -> {
+            }
+        }
+        dlgGestVendedor.txtAdelanto.setText(String.valueOf(v.getMonto_adelanto()));
+
     }
 
     public static Vendedor capturarCampos() {
@@ -40,20 +72,20 @@ public class controlVendedor {
         String obs;
         int codV = Integer.parseInt(dlgGestVendedor.lblCodV.getText());
         String nombreV = dlgGestVendedor.txtNombre.getText();
-        if(dlgGestVendedor.txtDireccion.getText().trim()== null){
-            direccion="''";   
-        }else{
+        if (dlgGestVendedor.txtDireccion.getText().trim() == null) {
+            direccion = "''";
+        } else {
             direccion = dlgGestVendedor.txtDireccion.getText();
         }
-        if(dlgGestVendedor.txtTelefono.getText().trim()== null){
-            telef="''";   
-        }else{
+        if (dlgGestVendedor.txtTelefono.getText().trim() == null) {
+            telef = "''";
+        } else {
             telef = dlgGestVendedor.txtTelefono.getText();
         }
         String celu = dlgGestVendedor.txtCelular.getText();
-        if((dlgGestVendedor.txtSueldo.getText().trim()==null)){
-            sueldo=0;
-        }else{
+        if ((dlgGestVendedor.txtSueldo.getText().trim() == null)) {
+            sueldo = 0;
+        } else {
             sueldo = Integer.parseInt(dlgGestVendedor.txtSueldo.getText().replace(".", "").replace(",", ""));
         }
         /*if(dlgGestVendedor.txtComision.getText().trim()==null){

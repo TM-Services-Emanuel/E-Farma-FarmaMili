@@ -1,6 +1,7 @@
 package Datos;
 
 import Componentes.DataSourceService;
+import Componentes.Fecha;
 import Componentes.Mensajes;
 import Componentes.Operacion;
 import Componentes.SeleccionarImagen;
@@ -159,7 +160,7 @@ public class GestionarVendedor {
             v.setPer_pago(Integer.parseInt(filaObt[8].toString()));
             v.setFuncon(filaObt[9].toString());
             v.setPer_adelanto(filaObt[10].toString());
-            v.setFrecuencia((filaObt[11].toString()));
+            v.setFrecuencia(Integer.parseInt(filaObt[11].toString()));
             v.setMonto_adelanto(Integer.parseInt(filaObt[12].toString()));
         } else {
             System.out.println("No encontrado");

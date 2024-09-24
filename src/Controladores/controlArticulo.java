@@ -1,10 +1,13 @@
 package Controladores;
 
+import Componentes.Config;
 import Componentes.DataSourceService;
 import Componentes.Login;
 import Componentes.Mensajes;
+import Componentes.Notif;
 import Datos.GestionarArticulos;
 import IU.dlgArticulos;
+import IU.dlgArticulos1;
 import IU.dlgGestArticulos;
 import Modelo.Articulo;
 import java.text.DecimalFormat;
@@ -300,6 +303,25 @@ public class controlArticulo {
                 Object[] fila = (Object[]) lista1.get(i);
                 tb.addRow(fila);
             }
+        }
+    }
+
+    public static void filtrarGralCruce(JTable tabla, String cod) {
+        String C = cod;
+        List lista1;
+        lista1 = GestionarArticulos.filtrarGralCruce(cod);
+        if (lista1 != null) {
+            for (int i = 1; i < lista1.size(); i++) {
+                DefaultTableModel tb = (DefaultTableModel) tabla.getModel();
+                Object[] fila = (Object[]) lista1.get(i);
+                tb.addRow(fila);
+            }
+            dlgArticulos1.lbConeccion.setText("Conectado al servidor con el nombre: " + Config.getNombreServerCruce()+" con HOST IP: "+ Config.getIPServerCruce());
+            dlgArticulos1.txtBandConnect.setText("1");
+        } else {
+            //Notif.NotifyError("Notificación del sistema", "No es posible conectar con el servidor externo.\n\rFavor verifique los siguientes puntos:\n\r1 - Si el equipo esta encendido.\n\r2 - Si el equipo tiene acceso a internet.\n\r3 - Si la IP del servidor a acceder es la correcta.");
+            dlgArticulos1.lbConeccion.setText("Sin Conexión");
+            dlgArticulos1.txtBandConnect.setText("0");
         }
     }
 

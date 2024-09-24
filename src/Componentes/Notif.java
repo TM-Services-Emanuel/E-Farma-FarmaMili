@@ -2,6 +2,7 @@ package Componentes;
 
 import IU.dlgAjusteStock;
 import IU.dlgArticulos;
+import IU.dlgArticulos1;
 import IU.dlgClientes;
 import IU.dlgCompras;
 import IU.dlgProveedores;
@@ -70,7 +71,7 @@ public class Notif {
         DesktopNotify.showDesktopMessage(
                 titulo,
                 mensaje,
-                DesktopNotify.FAIL, 6000L);
+                DesktopNotify.FAIL, 15000L);
 
     }
 

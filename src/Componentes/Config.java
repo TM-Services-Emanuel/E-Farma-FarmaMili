@@ -182,5 +182,22 @@ public class Config {
     }
 
     private static String PasswordServerCruce = "";
+    
+    
+    /**
+     * @return the NombreServerCruce
+     */
+    public static String getNombreServerCruce() {
+        return NombreServerCruce;
+    }
+
+    /**
+     * @param aNombreServerCruce the NombreServerCruce to set
+     */
+    public static void setNombreServerCruce(String aNombreServerCruce) {
+        NombreServerCruce = aNombreServerCruce;
+    }
+
+    private static String NombreServerCruce = "";
 
 }

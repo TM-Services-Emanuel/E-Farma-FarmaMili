@@ -903,8 +903,8 @@ public class dlgConsultarFacturasLegal extends javax.swing.JDialog {
             String msg = "RUC: " + Empresa.getRUC() + "\n";
             msg += "CEL: " + Empresa.getCelular() + "\n";
             msg += Empresa.getDireccion() + "\n";
-            //msg += "CAACUPE - DPTO. DE CORDILLERA - PY\n";
-            msg += "CNEL. OVIEDO - DPTO. DE CAAGUAZU - PY\n";
+            msg += "CAACUPE - DPTO. DE CORDILLERA - PY\n";
+            //msg += "CNEL. OVIEDO - DPTO. DE CAAGUAZU - PY\n";
             //msg += "PARAGUAY\n";
             msg += "-----\n";
             msg += "TIMBRADO: " + Timbrado.getTimbrado() + "\n";

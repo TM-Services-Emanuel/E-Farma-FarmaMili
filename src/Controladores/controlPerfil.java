@@ -8,6 +8,7 @@ public class controlPerfil {
         String perf = ControlLogeo.perfil();
         if (perf.equalsIgnoreCase("ALMACEN"))
         {
+            frmPrincipal.panelProductos1.setVisible(false);
             frmPrincipal.panelClientes.setVisible(false);
             frmPrincipal.panelProveedores.setVisible(false);
             frmPrincipal.panelCompras.setVisible(false);
@@ -41,6 +42,7 @@ public class controlPerfil {
             frmPrincipal.jSeparator23.setVisible(false);
         } else if (perf.equalsIgnoreCase("COMPRA"))
         {
+            frmPrincipal.panelProductos1.setVisible(false);
             frmPrincipal.panelProductos.setVisible(false);
             frmPrincipal.panelVentas.setVisible(false);
             frmPrincipal.panelClientes.setVisible(false);
@@ -80,6 +82,7 @@ public class controlPerfil {
             frmPrincipal.jSeparator23.setVisible(false);
         } else if (perf.equalsIgnoreCase("VENTA"))
         {
+            frmPrincipal.panelProductos1.setVisible(true);
             frmPrincipal.panelProductos.setVisible(false);
             frmPrincipal.panelProveedores.setVisible(false);
             frmPrincipal.panelCompras.setVisible(false);
@@ -118,6 +121,7 @@ public class controlPerfil {
             frmPrincipal.jSeparator23.setVisible(false);
             
         } else if (perf.equalsIgnoreCase("ADMINISTRADOR")) {
+            frmPrincipal.panelProductos1.setVisible(true);
             frmPrincipal.btnArticulos.setVisible(true);
             frmPrincipal.btnProveedores.setVisible(true);
             frmPrincipal.btnCompras.setVisible(true);
@@ -141,6 +145,7 @@ public class controlPerfil {
             frmPrincipal.mnGPE.setVisible(false);
             frmPrincipal.jSeparator23.setVisible(false);
         } else if (perf.equalsIgnoreCase("DESARROLLADOR")) {
+            frmPrincipal.panelProductos1.setVisible(true);
             frmPrincipal.btnArticulos.setVisible(true);
             frmPrincipal.btnProveedores.setVisible(true);
             frmPrincipal.btnCompras.setVisible(true);
@@ -156,6 +161,7 @@ public class controlPerfil {
             frmPrincipal.mnConfiguracion.setVisible(true);
             frmPrincipal.mnTransferencias.setVisible(true);
         }else {
+            frmPrincipal.panelProductos1.setVisible(false);
             frmPrincipal.btnArticulos.setVisible(false);
             frmPrincipal.btnProveedores.setVisible(false);
             frmPrincipal.btnCompras.setVisible(false);
